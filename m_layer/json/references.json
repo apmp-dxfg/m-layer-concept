@@ -1,0 +1,34 @@
+[
+    {
+        "__type__": "Reference",
+        "uid": [
+            "si-kilogram",
+            188151331508313165897603768130808181784
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram",
+                "symbol": "kg"
+            }
+        },
+        "unit-system": "SI",
+        "metadata": {
+            "url": "https://en.wikipedia.org/wiki/Kilogram"
+        }
+    },
+    {
+        "__type__": "Reference",
+        "uid": [
+            "imp-pound",
+            188380796861507506602975683857494523991
+        ],
+        "locale": {
+            "default": {
+                "name": "pound",
+                "symbol": "lb"
+            }
+        },
+        "metadata": {
+            "url": "https://en.wikipedia.org/wiki/Pound_(mass)"
+        }
+    }]
