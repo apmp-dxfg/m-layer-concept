@@ -28,7 +28,7 @@ class ApiDocs(Command):
             '--module-first',  # put module documentation before submodule documentation
             '--separate',  # put documentation for each module on its own page
             '-o', './docs/_autosummary',  # where to save the output files
-            'dxfg.m-layer',  # the path to the Python package to document
+            'm_layer',  # the path to the Python package to document
         ]
 
         import sphinx
@@ -86,7 +86,7 @@ def read(filename):
 
 def fetch_init(key):
     # open the __init__.py file to determine the value instead of importing the package to get the value
-    init_text = read('dxfg.m-layer/__init__.py')
+    init_text = read('m_layer/__init__.py')
     return re.compile(r'{}\s*=\s*(.*)'.format(key)).search(init_text).group(1)[1:-1]
 
 
@@ -113,13 +113,13 @@ sphinx = docs_require + install_requires if needs_sphinx else []
 
 
 setup(
-    name='dxfg.m-layer',
+    name='m_layer',
     version=fetch_init('version'),
     author='APMP Focus Group on Digital Transformation in Metrology',
     author_email='apmp.dxfg.lead@gmail.com',
     url='https://github.com/apmp-dxfg/m-layer-concept',
     description='M-layer extends conventional units with information about kind of quantity and level of measurement (class of scale)',
-    long_description=read('README.rst'),
+    long_description=read('README.md'),
     platforms='any',
     license='MIT',
     classifiers=[
@@ -143,5 +143,5 @@ setup(
         'docs': docs_require
     },
     cmdclass={'docs': BuildDocs, 'apidocs': ApiDocs},
-    packages=find_packages(include=('dxfg.m-layer*',)),
+    packages=find_packages(include=('m_layer*',)),
 )
