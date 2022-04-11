@@ -2,10 +2,8 @@
 import json 
 import os.path
 
-# from m_layer import scale_register 
 from m_layer import register 
 from m_layer import conversion_register 
-# from m_layer import aspect_register 
 
 __all__ = (
     'Context',
