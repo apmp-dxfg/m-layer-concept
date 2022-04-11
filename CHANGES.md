@@ -2,10 +2,10 @@
 Release Notes
 =============
 
-Version 0.1.0 (2022-??-??)
+Version 0.1.0 (2022-01-11)
 ==========================
 
-    The M-layer concept in JSON and Python code.    
+    The M-layer concept in JSON and Python code. 
     
     
     
