@@ -2,7 +2,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "si-mass",
+            "mass",
             321881801928222308627062904049725548287
         ],
         "locale": {
@@ -12,7 +12,55 @@
             }
         },
         "metadata": {
-            "url": "https://en.wikipedia.org/wiki/Mass"
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "temperature",
+            316901515895475271730171605211001099255
+        ],
+        "locale": {
+            "default": {
+                "name": "temperature",
+                "symbol": "T"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "temperature-difference",
+            212368324110263031011700652725345220325
+        ],
+        "locale": {
+            "default": {
+                "name": "temperature-difference",
+                "symbol": "dT"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "plane-angle",
+            95173225557230344956477808929590724690
+        ],
+        "locale": {
+            "default": {
+                "name": "plane-angle",
+                "symbol": "ang"
+            }
+        },
+        "metadata": {
+            "url": "none"
         }
     }
 ]

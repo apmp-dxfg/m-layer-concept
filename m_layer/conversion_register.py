@@ -1,6 +1,10 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 import json
 
+# Terms in JSON strings for numerical factors are converted to numbers using 
+# `eval()`. By importing math, we can include defined constants, like math.pi.
+import math
+
 # ---------------------------------------------------------------------------
 class ConversionRegister(object):
     
@@ -43,8 +47,19 @@ class ConversionRegister(object):
             dst_type = _scales[uid_ml_ref_dst]['scale_type']
                                       
         # Conversion function parameter values are in a sequence 
-        factors = tuple( entry['factors'] )
+        # they are stored as strings to allow fractions 
+        factors = tuple(  eval(x_i) for x_i in entry['factors'] )
         
         # Set the conversion function
         if (src_type,dst_type) == ('ratio-scale','ratio-scale'):
             self._table[uid_pair] = lambda x: factors[0]*x 
+        elif (
+            (src_type,dst_type) == ('interval-scale','interval-scale') or 
+            (src_type,dst_type) == ('ratio-scale','interval-scale') or
+            (src_type,dst_type) == ('interval-scale','ratio-scale')
+        ):
+            self._table[uid_pair] = lambda x: factors[0]*x + factors[1]
+        else:
+            raise RuntimeError(
+                "unrecognised case: {}".format((src_type,dst_type))
+            )

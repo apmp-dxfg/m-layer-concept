@@ -2,10 +2,10 @@
 import json 
 import os.path
 
-from m_layer import scale_register 
-from m_layer import reference_register 
+# from m_layer import scale_register 
+from m_layer import register 
 from m_layer import conversion_register 
-from m_layer import aspect_register 
+# from m_layer import aspect_register 
 
 __all__ = (
     'Context',
@@ -29,17 +29,17 @@ class Context(object):
         self.locale = locale 
         
         if scale_reg is None:
-            self.scale_reg = scale_register.ScaleRegister(self)
+            self.scale_reg = register.Register(self)
         else:
             self.scale_reg = scale_reg
         
         if reference_reg is None:
-            self.reference_reg = reference_register.ReferenceRegister(self)
+            self.reference_reg = register.Register(self)
         else:
             self.reference_reg = reference_reg
         
         if aspect_reg is None:
-            self.aspect_reg = aspect_register.AspectRegister(self)
+            self.aspect_reg = register.Register(self)
         else:
             self.aspect_reg = aspect_reg
 
@@ -119,9 +119,15 @@ default_context = Context()
 
 path = os.path.join( os.path.dirname(__file__),'json')
 
-default_context.load(os.path.join(path,'scales.json'))
 default_context.load(os.path.join(path,'aspects.json'))
-default_context.load(os.path.join(path,'references.json'))
+
+default_context.load(os.path.join(path,'temperature_scales.json'))
+default_context.load(os.path.join(path,'plane_angle_scales.json'))
+default_context.load(os.path.join(path,'mass_scales.json'))
+
+default_context.load(os.path.join(path,'temperature_references.json'))
+default_context.load(os.path.join(path,'plane_angle_references.json'))
+default_context.load(os.path.join(path,'mass_references.json'))
 
 # ===========================================================================
 if __name__ == '__main__':

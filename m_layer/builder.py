@@ -77,6 +77,93 @@ class Builder(object):
             **kwargs 
         )
 
+# ---------------------------------------------------------------------------
+def create():
+    """
+    Helper for creating JSON entries.
+    
+    """
+    record = ''
+    
+    prompt = "Type: "
+    data = input(prompt).strip()
+    line = '"__type__": "{}",'.format(data)
+    # print(line)
+    record += line
+    
+    prompt = "uid (n)? "
+    data = input(prompt).strip()
+    if len(data):
+        line = '"uid": [ "{}", {} ],'.format( data,uuid.uuid4().int )
+        # print(line)
+        record += line
+        
+    prompt = "locale required (n)? "
+    if input(prompt).strip().upper() == 'Y':
+        line = '"locale":{'
+        while True:
+            prompt = "locale name, or return: "
+            lname = input(prompt).strip()
+            if len(lname):
+                line += '"{}": {{'.format(lname)
+                while True:
+                    prompt = 'key, or return: '
+                    key = input(prompt).strip()
+                    if not len(key):
+                        if line[-1] == ',': 
+                            line = line[:-1] + '},'
+                        break
+                    prompt = 'value: '
+                    value = input(prompt).strip()
+                    line += '"{}":"{}",'.format(key,value)
+            else:
+                if line[-1] == ',': 
+                    line = line[:-1] + '},'
+                break                    
+        # print(line)
+        record += line
+    
+    line = ''
+    while True:
+        prompt = "JSON object name (n)? "
+        xname = input(prompt).strip()
+        if not len(xname):
+            break            
+                
+        line += '"{}":{{'.format(xname)
+        while True:
+            prompt = "item name or return: "
+            xkey = input(prompt).strip()
+            if not len(xkey):
+                if line[-1] == ',': 
+                    line = line[:-1] + '},'
+                if line[-1] == '{': 
+                    line += '},'
+                break                    
+            prompt = "item value: "
+            xvalue = input(prompt).strip()
+            line += '"{}":"{}",'.format(xkey,xvalue)
+                    
+    # Done
+    if line[-1] == ',': line = line[:-1]
+    # print(line)
+    record += line
+    
+    try:
+        j = json.loads('[{{ {} }}]'.format(record) )
+       
+    except json.decoder.JSONDecodeError as e:
+        print("JSON error:")
+        print(e)
+        print(record)
+    else:
+        print()
+        print( json.dumps(j,indent=4) )
+
+        
+def UUID():
+    print(uuid.uuid4().int) 
+    
 # ===========================================================================
 if __name__ == '__main__':
     
@@ -99,10 +186,12 @@ if __name__ == '__main__':
     }
 ]"""
 
-    build = Builder()
-    build.loads(json_data)
-    # with open('scales.json','w') as fp:
-    print( build.dumps() ) 
-        
+    # build = Builder()
+    # build.loads(json_data)
+    # # with open('scales.json','w') as fp:
+    # print( build.dumps() ) 
+    
+    # create()
+    UUID()
         
 

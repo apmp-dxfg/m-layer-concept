@@ -1,0 +1,74 @@
+[
+    {
+        "__type__": "Scale",
+        "uid": [
+            "ml-imp-degree", 
+            22817745368296240233220712518826840767
+        ],
+        "reference": [
+            "imp-degree",
+            277818260541443964889383928855946049570
+        ],
+        "scale_type": "ratio-scale"
+    },
+    {
+        "__type__": "Scale",
+        "uid": [
+            "ml-si-radian", 
+            273301153578020696303516833405033923738
+        ],
+        "reference": [
+            "si-radian",
+            311561499536022904630229742672799278060
+        ],
+        "scale_type": "ratio-scale"
+    },
+    {
+        "__type__": "Scale",
+        "uid": [
+            "ml-si-radian-pi", 
+            181367268705518406168243034119604185497
+        ],
+        "reference": [
+            "si-radian",
+            311561499536022904630229742672799278060
+        ],
+        "scale_type": "bounded-interval-scale"
+    },
+    {
+        "__type__": "Scale",
+        "uid": [
+            "ml-si-radian-two-pi", 
+            300556212736422769570885306883285535638
+        ],
+        "reference": [
+            "si-radian",
+            311561499536022904630229742672799278060
+        ],
+        "scale_type": "bounded-interval-scale"
+    },
+    {
+        "__type__": "Conversion",
+        "src": [
+            "ml-si-radian", 
+            273301153578020696303516833405033923738
+        ],
+        "dst":[
+            "ml-imp-degree", 
+            22817745368296240233220712518826840767
+        ],
+        "factors": [ "180/math.pi" ]
+    },
+    {
+        "__type__": "Conversion",
+        "src": [
+            "ml-imp-degree", 
+            22817745368296240233220712518826840767
+        ],
+        "dst": [
+            "ml-si-radian", 
+            273301153578020696303516833405033923738
+        ],
+        "factors": [ "math.pi/180" ]
+    }
+]

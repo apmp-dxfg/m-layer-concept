@@ -1,0 +1,34 @@
+[
+    {
+        "__type__": "Reference",
+        "uid": [
+            "si-radian",
+            311561499536022904630229742672799278060
+        ],
+        "locale": {
+            "default": {
+                "name": "radian",
+                "symbol": "rad"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Reference",
+        "uid": [
+            "imp-degree",
+            277818260541443964889383928855946049570
+        ],
+        "locale": {
+            "default": {
+                "name": "degree",
+                "symbol": "deg"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    }
+]

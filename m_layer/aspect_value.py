@@ -4,6 +4,10 @@ import m_layer
 
 cxt = context.default_context
 
+__all__ = (
+    'AspectValue', 'AV',
+    'convert'
+)
 # ---------------------------------------------------------------------------
 class AspectValue(object):
     """
@@ -54,15 +58,4 @@ def convert(src_av,dst_ml_ref_id):
 # ===========================================================================
 if __name__ == '__main__':
     
-    from m_layer import aspect
-    from m_layer import si_unit 
-    from m_layer import imperial_unit 
-    
-    x = AV(aspect.mass,12,si_unit.kg)
-    print(x)
-    print( "{}: {} {}".format( x.aspect(), x.value, x.ref() ) )
-
-    y = convert(x,imperial_unit.lb)
-    print( "{}: {} {}".format( y.aspect(), y.value, y.ref() ) )
-    
-
+    pass
