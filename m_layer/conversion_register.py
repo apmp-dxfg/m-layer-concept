@@ -58,7 +58,17 @@ class ConversionRegister(object):
             (src_type,dst_type) == ('ratio-scale','interval-scale') or
             (src_type,dst_type) == ('interval-scale','ratio-scale')
         ):
+            # `factors[0]` is the scale divisions conversion factor 
+            # `factors[1]` is the offset
             self._table[uid_pair] = lambda x: factors[0]*x + factors[1]
+        elif (
+            (src_type,dst_type) == ('bounded-interval-scale','bounded-interval-scale')
+        ):
+            # `factors[0]` is the scale divisions conversion factor 
+            # `factors[1]` is the lower bound of the dst scale 
+            # `factors[2]` is the range of values in the dst scale
+            self._table[uid_pair] = lambda x: \
+                (factors[0]*x - + factors[1]) % factors[2] + factors[1]
         else:
             raise RuntimeError(
                 "unrecognised case: {}".format((src_type,dst_type))
