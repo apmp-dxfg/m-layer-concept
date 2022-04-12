@@ -1,13 +1,12 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 import json 
-import os.path
 
 from m_layer import register 
 from m_layer import conversion_register 
 
 __all__ = (
     'Context',
-    'default_context'
+    'default_context',
 )
 
 # ---------------------------------------------------------------------------
@@ -109,10 +108,12 @@ class Context(object):
         else:
             return table[ (src_ml_ref_id,dst_ml_ref_id) ]
                 
-        
+
 # ---------------------------------------------------------------------------
 # Configure a default context object
 #
+import os.path
+
 default_context = Context()
 
 path = os.path.join( os.path.dirname(__file__),'json')
@@ -128,7 +129,4 @@ default_context.load(os.path.join(path,'plane_angle_references.json'))
 default_context.load(os.path.join(path,'mass_references.json'))
 
 # ===========================================================================
-if __name__ == '__main__':
-    
-    pass 
     
