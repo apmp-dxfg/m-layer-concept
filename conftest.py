@@ -25,8 +25,7 @@ def add_m_layer(doctest_namespace):
 
 pytest_collect_file = Sybil(
     parsers=[
-        DocTestParser(optionflags=NORMALIZE_WHITESPACE | ELLIPSIS),
-        CodeBlockParser(future_imports=['division']),
+        DocTestParser(optionflags=NORMALIZE_WHITESPACE | ELLIPSIS)
     ],
     pattern='*.md',
     fixtures=['add_m_layer']
