@@ -6,7 +6,6 @@ from m_layer import imperial_unit
 
 def display(av):
     print(av)
-    print( "{}: {} {}".format( av.aspect(), av.value, av.ref() ) )
     print(repr(av))
     print()
 

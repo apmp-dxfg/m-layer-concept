@@ -19,7 +19,7 @@ class Register(object):
         """
         """
         # `uid` may be a list from json
-        return self._objects.get( tuple(uid), default) 
+        return self._objects.get( tuple(uid), default ) 
         
     # There is a difference between minting a new reference and reading a record.
     # The context will mint new reference objects, here we just register them
@@ -34,23 +34,23 @@ class Register(object):
         
         if uid in self._objects:
             raise RuntimeError(
-                "existing reference_register entry: {}".format(uid)
+                "existing register entry: {}".format(uid)
             )
         else:
             self._objects[uid] = entry 
                           
-    def dumps_entry(self,uid): 
-         """
-         """
-         return json.dumps( self._objects[uid] )
+    # def dumps_entry(self,uid): 
+         # """
+         # """
+         # return json.dumps( self._objects[uid] )
      
-    def dumps(self,choice=None):
-        """
-        """
-        if choice is None:
-            choice = self._objects.keys()
+    # def dumps(self,choice=None):
+        # """
+        # """
+        # if choice is None:
+            # choice = self._objects.keys()
             
-        return json.dumps( [ 
-            self.dumps_entry(uid) for uid in choice
-        ] )
+        # return json.dumps( [ 
+            # self.dumps_entry(uid) for uid in choice
+        # ] )
                 

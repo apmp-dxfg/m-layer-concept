@@ -9,6 +9,8 @@ import math
 class ConversionRegister(object):
     
     """
+    A `ConversionRegister` holds a mapping scale pairs 
+    to conversion functions. 
     """
     
     def __init__(self,context):
@@ -23,14 +25,20 @@ class ConversionRegister(object):
         
     def get(self,uid_pair,default=None):
         """
+        Return a conversion function 
         """
         # `uid` may be a list from json
-        return self._table.get( uid_pair, default) 
+        return self._table.get( uid_pair, default ) 
         
     # Extract a uid pair for the entry and then a conversion function
     # from one M-layer reference to the other.
     def set(self,entry):
         """
+        Create an entry for a conversion function
+        The type of the source and destination scales
+        determines the form of the conversion function
+        and the function parameters are elements in `entry`.
+        
         """
         uid_ml_ref_src = tuple( entry['src'] )        
         uid_ml_ref_dst = tuple( entry['dst'] )
