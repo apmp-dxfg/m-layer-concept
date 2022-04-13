@@ -2,7 +2,8 @@
 import json 
 
 from m_layer import register 
-from m_layer import conversion_register 
+from m_layer import conversion_register
+from m_layer import scales_for_aspect_register
 
 __all__ = (
     'Context',
@@ -10,20 +11,38 @@ __all__ = (
 )
 
 # ---------------------------------------------------------------------------
+def uid_as_str(uid,short=True):
+    """
+    Shorten the number of digits in the UUID for human readers, 
+    because the chances of a collision in just a few digits is small.
+    
+    """
+    s = str( uid )
+    return "{}...".format(s[:6]) if short else s 
+          
+
+# ---------------------------------------------------------------------------
 class Context(object):
     
     """
+    A `Context` contains information about aspects, scales, conversions,
+    and conventional references that provide contextual information about 
+    `AspectValue` objects. 
     """
     
     def __init__(
             self,
             locale = 'default',
+            value_fmt = "{:.5f}",
             scale_reg = None,
             reference_reg = None,
             aspect_reg = None,
-            conversion_reg = None
+            conversion_reg = None,
+            scales_for_aspect_reg = None
+            
         ):
         self.locale = locale 
+        self.value_fmt = value_fmt
         
         if scale_reg is None:
             self.scale_reg = register.Register(self)
@@ -45,6 +64,13 @@ class Context(object):
         else:
             self.conversion_reg = conversion_reg
 
+        if scales_for_aspect_reg is None:
+            self.scales_for_aspect_reg =\
+                scales_for_aspect_register.ScalesForAspectRegister(self)
+        else:
+            self.scales_for_aspect_reg = scales_for_aspect_reg
+
+
     def _load_entity(self,entity):
         entity_type = entity['__type__']
         if entity_type == "Reference":
@@ -55,6 +81,8 @@ class Context(object):
             self.scale_reg.set(entity)
         elif entity_type == "Conversion":
             self.conversion_reg.set(entity)
+        elif entity_type == "ScalesForAspect":
+            self.scales_for_aspect_reg.set(entity)
         else:
             raise RuntimeError(
                "unknown type: {}".format(entity_type)
@@ -90,6 +118,9 @@ class Context(object):
         
     def conversion_fn(self,src_av,dst_ml_ref_id):
         """
+        Return the function to convert the value in `src_av` 
+        to a different scale `dst_ml_ref_id`.
+        
         """        
         # The aspect will stay the same
         aspect_id = src_av._aspect
@@ -108,7 +139,6 @@ class Context(object):
         else:
             return table[ (src_ml_ref_id,dst_ml_ref_id) ]
                 
-
 # ---------------------------------------------------------------------------
 # Configure a default context object
 #
@@ -118,8 +148,6 @@ default_context = Context()
 
 path = os.path.join( os.path.dirname(__file__),'json')
 
-default_context.load(os.path.join(path,'aspects.json'))
-
 default_context.load(os.path.join(path,'temperature_scales.json'))
 default_context.load(os.path.join(path,'plane_angle_scales.json'))
 default_context.load(os.path.join(path,'mass_scales.json'))
@@ -127,6 +155,9 @@ default_context.load(os.path.join(path,'mass_scales.json'))
 default_context.load(os.path.join(path,'temperature_references.json'))
 default_context.load(os.path.join(path,'plane_angle_references.json'))
 default_context.load(os.path.join(path,'mass_references.json'))
+
+default_context.load(os.path.join(path,'aspects.json'))
+default_context.load(os.path.join(path,'scales_for_aspects.json'))
 
 # ===========================================================================
     
