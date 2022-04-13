@@ -167,7 +167,7 @@ html_show_copyright = False
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'M-Layer_Doc'
+htmlhelp_basename = 'MLayerDoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -195,7 +195,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'M-Layer.tex', u'M-Layer Documentation',
-     u'APMP-DXFG', 'manual'),
+     u'Measurement Standards Laboratory of New Zealand', 'manual'),
 ]
 
 
