@@ -6,7 +6,6 @@ from setuptools import (
     Command,
 )
 
-
 class ApiDocs(Command):
     """
     A custom command that calls sphinx-apidoc
@@ -100,22 +99,17 @@ tests_require = [
     'sybil',
 ]
 
-docs_require = [
-    'sphinx',
-    'sphinx_rtd_theme',
-]
-
 testing = {'test', 'tests', 'pytest'}.intersection(sys.argv)
 pytest_runner = ['pytest-runner'] if testing else []
 
 needs_sphinx = {'doc', 'docs', 'apidoc', 'apidocs', 'build_sphinx'}.intersection(sys.argv)
-sphinx = docs_require + install_requires if needs_sphinx else []
+sphinx = ['sphinx', 'sphinx_rtd_theme'] + install_requires if needs_sphinx else []
 
 
 setup(
     name='m_layer',
     version=fetch_init('version'),
-    author='APMP Focus Group on Digital Transformation in Metrology',
+    author='Measurement Standards Laboratory of New Zealand',
     author_email='apmp.dxfg.lead@gmail.com',
     url='https://github.com/apmp-dxfg/m-layer-concept',
     description='M-layer extends conventional units with information about kind of quantity and level of measurement (class of scale)',
@@ -138,10 +132,7 @@ setup(
     setup_requires=sphinx + pytest_runner,
     tests_require=tests_require,
     install_requires=install_requires,
-    extras_require={
-        'tests': tests_require, 
-        'docs': docs_require
-    },
+    extras_require={'tests': tests_require},
     cmdclass={'docs': BuildDocs, 'apidocs': ApiDocs},
-    packages=find_packages(include=('m_layer*',)),
+    packages=find_packages( include=('m_layer*',) ),
 )
