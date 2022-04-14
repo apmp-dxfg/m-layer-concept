@@ -11,8 +11,9 @@
                 "symbol": "degree C"
             }
         },
-        "metadata": {
-            "url": "none"
+        "UCUM": {
+            "code": "Cel",
+            "description": "degree Celsius"
         }
     },
     {
@@ -27,8 +28,9 @@
                 "symbol": "K"
             }
         },
-        "metadata": {
-            "url": "none"
+        "UCUM": {
+            "code": "K",
+            "description": "degree Kelvin"
         }
     },
     {
@@ -43,7 +45,8 @@
                 "symbol": "degree F"
             }
         },
-        "metadata": {
-            "url": "none"
+        "UCUM": {
+            "code": "[degF]",
+            "description": "degrees Fahrenheit"
         }
     }]

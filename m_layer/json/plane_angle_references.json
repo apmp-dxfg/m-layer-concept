@@ -11,8 +11,9 @@
                 "symbol": "rad"
             }
         },
-        "metadata": {
-            "url": "none"
+        "UCUM": {
+            "code": "rad",
+            "description": "radian"
         }
     },
     {
@@ -27,8 +28,9 @@
                 "symbol": "deg"
             }
         },
-        "metadata": {
-            "url": "none"
+        "UCUM": {
+            "code": "deg",
+            "description": "degree - plane angle"
         }
     }
 ]

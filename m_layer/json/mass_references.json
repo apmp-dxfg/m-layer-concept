@@ -12,8 +12,9 @@
             }
         },
         "unit-system": "SI",
-        "metadata": {
-            "url": "https://en.wikipedia.org/wiki/Kilogram"
+        "UCUM": {
+            "code": "kg",
+            "description": "kilogram"
         }
     },
     {
@@ -28,8 +29,9 @@
                 "symbol": "lb"
             }
         },
-        "metadata": {
-            "url": "https://en.wikipedia.org/wiki/Pound_(mass)"
+        "UCUM": {
+            "code": "[lb_av]",
+            "description": "pound"
         }
     }
 ]
