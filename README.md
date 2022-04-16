@@ -5,3 +5,6 @@ The M-layer concept was presented in a [paper](http://dx.doi.org/10.1016/j.mease
 The [wiki](https://github.com/apmp-dxfg/m-layer-concept/wiki) has additional information about the design of the `m-layer-concept` software, examples, etc.
 
 This project is intended to demonstrate the M-layer concept and explore implementation choices.
+
++++ Installation
+Clone this repository and add the location of `m-layer-concept` on your system to `PYTHONPATH`.
