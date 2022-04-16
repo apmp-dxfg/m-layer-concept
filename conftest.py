@@ -27,6 +27,6 @@ pytest_collect_file = Sybil(
     parsers=[
         DocTestParser(optionflags=NORMALIZE_WHITESPACE | ELLIPSIS)
     ],
-    pattern='*.md',
+    pattern='*.rst',
     fixtures=['add_m_layer']
 ).pytest()

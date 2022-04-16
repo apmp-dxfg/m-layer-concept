@@ -22,7 +22,7 @@ from m_layer import version, copyright
 
 # -- Project information -----------------------------------------------------
 
-project = u'M-Layer'
+project = u'M-layer'
 copyright =copyright
 author = u'Measurement Standards Laboratory of New Zealand'
 
@@ -85,7 +85,7 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = '.md'
+source_suffix = '.rst'
 
 # The master toctree document.
 master_doc = 'index'
@@ -204,7 +204,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'mlayer', u'M-Layer Documentation',
+    (master_doc, 'mlayer', u'M-layer Documentation',
      [author], 1)
 ]
 
@@ -215,7 +215,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'mlayer', u'M-Layer Documentation',
+    (master_doc, 'mlayer', u'M-layer Documentation',
      author, 'MLayer', 'One line description of project.',
      'Miscellaneous'),
 ]
