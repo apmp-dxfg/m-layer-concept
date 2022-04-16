@@ -7,7 +7,7 @@ Introduction
 .. contents::
    :local:
 
-Why is the M-layer needed?
+Why is the M-Layer needed?
 ==========================
 
 The *International System of Units* (SI) has a few quirks. For many SI units, the name is easily associated with a particular type of quantity (like the kilogram and the metre are units of mass and length, respectively). So, we get used to thinking that the name of a unit can identify the quantity involved. However, this is unreliable, because some units apply to different quantities. We must use information from the surrounding context to tell us exactly what a kind of quantity is referred to. The most obvious cases of ambiguity are those quantities that are expressed with the SI unit 'one' (quantities of dimension zero, or dimensionless quantities, like aspect ratio, reflectance, refractive index, etc.).
@@ -19,12 +19,12 @@ Another difficulty with SI units is related to angle. The SI unit for angle is t
 
 Although these may appear to be just a few exceptional cases, they are features of measurement scales and units of measurement that are not recognised explicitly in the SI. 
 
-The M-layer can represent quantities and units in digital systems because it provides rigorous support for these ideas.  
+The M-Layer can represent quantities and units in digital systems because it provides rigorous support for these ideas.  
 
-What is the M-layer?
+What is the M-Layer?
 ====================
 
-Traditionally, a quantity is expressed by pairing a number with the name, or symbol, for a unit, like 10 kg. However, this is not enough for digital systems, because there is extra information that people use to interpret such expressions. The M-layer takes into account two extra things when expressing a quantity: 
+Traditionally, a quantity is expressed by pairing a number with the name, or symbol, for a unit, like 10 kg. However, this is not enough for digital systems, because there is extra information that people use to interpret such expressions. The M-Layer takes into account two extra things when expressing a quantity: 
 
     * the aspect of the quantity (mass, temperature, angle, etc.)
     * the type of scale (based on the conversion operations required)

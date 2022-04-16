@@ -11,12 +11,12 @@ __all__ = (
 class AspectValue(object):
     
     """
-    An `AspectValue` combines an aspect, a value and an M-layer scale. 
+    An `AspectValue` combines an aspect, a value and an M-Layer scale. 
     Only UIDs for the aspect and scale are stored. Corresponding details
     are accessed in a `Context` using these UIDs.
     """
     
-    # Notation distinguishes between an M-layer reference ('ml_ref'), which 
+    # Notation distinguishes between an M-Layer reference ('ml_ref'), which 
     # includes information about the scale type, and a conventional reference.
     __slots__ = ("_value","_ml_ref","_aspect")
     

@@ -22,7 +22,7 @@ from m_layer import version, copyright
 
 # -- Project information -----------------------------------------------------
 
-project = u'M-layer'
+project = u'M-Layer'
 copyright =copyright
 author = u'Measurement Standards Laboratory of New Zealand'
 
@@ -204,7 +204,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'mlayer', u'M-layer Documentation',
+    (master_doc, 'mlayer', u'M-Layer Documentation',
      [author], 1)
 ]
 
@@ -215,7 +215,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'mlayer', u'M-layer Documentation',
+    (master_doc, 'mlayer', u'M-Layer Documentation',
      author, 'MLayer', 'One line description of project.',
      'Miscellaneous'),
 ]

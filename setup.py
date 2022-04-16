@@ -112,7 +112,7 @@ setup(
     author='Measurement Standards Laboratory of New Zealand',
     author_email='apmp.dxfg.lead@gmail.com',
     url='https://github.com/apmp-dxfg/m-layer-concept',
-    description='M-layer extends conventional units with information about kind of quantity and level of measurement (class of scale)',
+    description='M-Layer extends conventional units with information about kind of quantity and level of measurement (class of scale)',
     long_description=read('README.rst'),
     platforms='any',
     license='MIT',

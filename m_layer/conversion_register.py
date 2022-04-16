@@ -49,7 +49,7 @@ class ConversionRegister(object):
                 "existing conversion entry: {}".format(uid_pair)
             )
         else:
-            # The M-layer reference identifies the type of scale
+            # The M-Layer reference identifies the type of scale
             _scales = self._context.scale_reg
             src_type = _scales[uid_ml_ref_src]['scale_type']
             dst_type = _scales[uid_ml_ref_dst]['scale_type']
