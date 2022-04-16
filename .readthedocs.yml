@@ -14,7 +14,7 @@ formats:
 
 python:
   install:
-    - method: setuptools
+    - method: pip
       path .
 build:
   os: ubuntu-20.04
