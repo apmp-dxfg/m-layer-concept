@@ -12,6 +12,10 @@ formats:
   - epub
   - pdf
 
+python:
+  install:
+    - method: setuptools
+    - path .
 build:
   os: ubuntu-20.04
   tools:
