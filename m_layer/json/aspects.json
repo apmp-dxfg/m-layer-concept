@@ -62,5 +62,53 @@
         "metadata": {
             "url": "none"
         }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "transmittance",
+            106338157389217634821305827494648287004
+        ],
+        "locale": {
+            "default": {
+                "name": "transmittance",
+                "symbol": "T"
+            }
+        },
+        "metadata": {
+            "url": "https://en.wikipedia.org/wiki/Transmittance"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "absorbance",
+            86383731859836773954686958763955022575
+        ],
+        "locale": {
+            "default": {
+                "name": "absorbance",
+                "symbol": "A"
+            }
+        },
+        "metadata": {
+            "url": "https://en.wikipedia.org/wiki/Transmittance#Beer%E2%80%93Lambert_law"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "reflectance",
+            77619173328682587252206794509402414758
+        ],
+        "locale": {
+            "default": {
+                "name": "reflectance",
+                "symbol": "R"
+            }
+        },
+        "metadata": {
+            "url": "https://en.wikipedia.org/wiki/Reflectance"
+        }
     }
 ]
