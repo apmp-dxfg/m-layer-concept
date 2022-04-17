@@ -34,7 +34,8 @@ class CastingRegister(object):
         
     # # Extract a uid pair for the entry and then a conversion function
     # # from one M-layer reference to the other.
-    # def set(self,entry):
+    def set(self,entry):
+        pass
         # """
         # Create an entry for a conversion function
         # The type of the source and destination scales

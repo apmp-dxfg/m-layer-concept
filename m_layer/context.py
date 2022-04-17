@@ -3,6 +3,7 @@ import json
 
 from m_layer import register 
 from m_layer import conversion_register
+from m_layer import casting_register
 from m_layer import scales_for_aspect_register
 
 __all__ = (
@@ -151,23 +152,16 @@ class Context(object):
 # Configure a default context object
 #
 import os.path
+import glob
+
+path = os.path.join( 
+    os.path.dirname(__file__),
+    r'json/*.json'
+)
 
 default_context = Context()
-
-path = os.path.join( os.path.dirname(__file__),'json')
-
-default_context.load(os.path.join(path,'temperature_scales.json'))
-default_context.load(os.path.join(path,'plane_angle_scales.json'))
-default_context.load(os.path.join(path,'mass_scales.json'))
-default_context.load(os.path.join(path,'radiometry_scales.json'))
-
-default_context.load(os.path.join(path,'si_unity_reference.json'))
-default_context.load(os.path.join(path,'temperature_references.json'))
-default_context.load(os.path.join(path,'plane_angle_references.json'))
-default_context.load(os.path.join(path,'mass_references.json'))
-
-default_context.load(os.path.join(path,'aspects.json'))
-default_context.load(os.path.join(path,'scales_for_aspects.json'))
+for f_json in glob.glob( path ):
+    default_context.load( f_json )
 
 # ===========================================================================
     
