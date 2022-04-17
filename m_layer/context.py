@@ -38,6 +38,7 @@ class Context(object):
             reference_reg = None,
             aspect_reg = None,
             conversion_reg = None,
+            casting_reg = None,
             scales_for_aspect_reg = None
             
         ):
@@ -64,6 +65,11 @@ class Context(object):
         else:
             self.conversion_reg = conversion_reg
 
+        if casting_reg is None:
+            self.casting_reg = casting_register.CastingRegister(self)
+        else:
+            self.conversion_reg = conversion_reg
+
         if scales_for_aspect_reg is None:
             self.scales_for_aspect_reg =\
                 scales_for_aspect_register.ScalesForAspectRegister(self)
@@ -81,6 +87,8 @@ class Context(object):
             self.scale_reg.set(entity)
         elif entity_type == "Conversion":
             self.conversion_reg.set(entity)
+        elif entity_type == "Cast":
+            self.casting_reg.set(entity)
         elif entity_type == "ScalesForAspect":
             self.scales_for_aspect_reg.set(entity)
         else:
@@ -151,7 +159,9 @@ path = os.path.join( os.path.dirname(__file__),'json')
 default_context.load(os.path.join(path,'temperature_scales.json'))
 default_context.load(os.path.join(path,'plane_angle_scales.json'))
 default_context.load(os.path.join(path,'mass_scales.json'))
+default_context.load(os.path.join(path,'radiometry_scales.json'))
 
+default_context.load(os.path.join(path,'si_unity_reference.json'))
 default_context.load(os.path.join(path,'temperature_references.json'))
 default_context.load(os.path.join(path,'plane_angle_references.json'))
 default_context.load(os.path.join(path,'mass_references.json'))
