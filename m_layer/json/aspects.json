@@ -18,6 +18,38 @@
     {
         "__type__": "Aspect",
         "uid": [
+            "frequency",
+            153247472008167864427404739264717558529
+        ],
+        "locale": {
+            "default": {
+                "name": "frequency",
+                "symbol": "f"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "energy",
+            12139911566084412692636353460656684046
+        ],
+        "locale": {
+            "default": {
+                "name": "energy",
+                "symbol": "E"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
             "temperature",
             316901515895475271730171605211001099255
         ],

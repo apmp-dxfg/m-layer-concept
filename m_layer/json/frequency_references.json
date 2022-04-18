@@ -1,0 +1,20 @@
+[
+    {
+        "__type__": "Reference",
+        "uid": [
+            "si-hertz,
+            198610898083606115768120013170738979781
+        ],
+        "locale": {
+            "default": {
+                "name": "hertz",
+                "symbol": "Hz"
+            }
+        },
+        "unit-system": "SI",
+        "UCUM": {
+            "code": "Hz",
+            "description": "hertz"
+        }
+    }
+]
