@@ -34,6 +34,38 @@
     {
         "__type__": "Aspect",
         "uid": [
+            "wavelength",
+            286560112267714281146712032556984229473
+        ],
+        "locale": {
+            "default": {
+                "name": "wavelength",
+                "symbol": "\\lambda"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "period",
+            86706581527829787194017804485248983592
+        ],
+        "locale": {
+            "default": {
+                "name": "period",
+                "symbol": "T"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
             "energy",
             12139911566084412692636353460656684046
         ],
