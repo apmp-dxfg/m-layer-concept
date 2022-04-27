@@ -4,7 +4,7 @@ from m_layer import context
 cxt = context.default_context
 
 __all__ = (
-    'AspectValue', 'AV', 'convert'
+    'AspectValue', 'AV'
 )
 
 # ---------------------------------------------------------------------------
@@ -59,28 +59,29 @@ class AspectValue(object):
             
         return aspect_json['locale'][locale][locale_key]
 
+
+    # ---------------------------------------------------------------------------
+    def convert(self,ml_ref):
+        """
+        Convert `av` to an expression in terms of `ml_ref`
+        """
+        # `ml_ref` is the ID for an M-Layer extended scale 
         
+        if ml_ref in cxt.scales_for_aspect_reg[self._aspect]:
+            
+            fn = cxt.conversion_fn(self,ml_ref)
+            return AV(
+                self._aspect,
+                fn( self._value ),
+                ml_ref
+            )
+        else: 
+            raise RuntimeError(
+                "cannot convert {} to {}".format(self._ml_ref,ml_ref)
+            )
+
 AV = AspectValue
 
-# ---------------------------------------------------------------------------
-def convert(av,ml_ref):
-    """
-    Convert `av` to an expression in terms of `ml_ref`
-    """
-    # `ml_ref` is the ID for an M-Layer extended scale 
-    
-    if ml_ref in cxt.scales_for_aspect_reg[av._aspect]:
-        
-        fn = cxt.conversion_fn(av,ml_ref)
-        return AV(
-            av._aspect,
-            fn( av._value ),
-            ml_ref
-        )
-    else: 
-        raise RuntimeError(
-            "cannot convert {} to {}".format(av._ml_ref,ml_ref)
-        )
 
 # ===========================================================================
 if __name__ == '__main__':
