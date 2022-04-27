@@ -12,7 +12,9 @@ The `wiki <https://github.com/apmp-dxfg/m-layer-concept/wiki>`_ has additional i
 
 This project is intended to demonstrate the M-Layer concept and explore implementation choices.
 
-+++ Installation
+Installation
+============
+
 Clone this repository and then either use the python command `setup install m_layer` to install the package or you can add the location of the `m-layer-concept` clone on your system to `PYTHONPATH`.
 
 Documentation
