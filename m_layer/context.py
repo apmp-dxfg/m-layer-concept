@@ -161,7 +161,12 @@ path = os.path.join(
 
 default_context = Context()
 for f_json in glob.glob( path ):
-    default_context.load( f_json )
+    try:
+        default_context.load( f_json )
+    except json.decoder.JSONDecodeError as e:
+        # Report errors but do not stop execution
+        print("json.decoder.JSONDecodeError",e, 'in:',f_json)
+
 
 # ===========================================================================
     
