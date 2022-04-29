@@ -10,7 +10,9 @@ class ConversionRegister(object):
     
     """
     A `ConversionRegister` holds a mapping scale pairs 
-    to conversion functions. 
+    to information about how to convert between scales. 
+    Conversion does not change the type of scale, which 
+    differs from 'casting'.
     """
     
     def __init__(self,context):
@@ -53,6 +55,12 @@ class ConversionRegister(object):
             _scales = self._context.scale_reg
             src_type = _scales[uid_ml_ref_src]['scale_type']
             dst_type = _scales[uid_ml_ref_dst]['scale_type']
+            
+        if src_type != dst_type:
+            raise RuntimeError(
+                "scale types must be the same: {} and {}".format(
+                src_type,dst_type)
+            )
                                       
         # Conversion function parameter values are in a sequence 
         # they are stored as strings to allow fractions 
@@ -62,9 +70,7 @@ class ConversionRegister(object):
         if (src_type,dst_type) == ('ratio-scale','ratio-scale'):
             self._table[uid_pair] = lambda x: factors[0]*x 
         elif (
-            (src_type,dst_type) == ('interval-scale','interval-scale') or 
-            (src_type,dst_type) == ('ratio-scale','interval-scale') or
-            (src_type,dst_type) == ('interval-scale','ratio-scale')
+            (src_type,dst_type) == ('interval-scale','interval-scale')  
         ):
             # `factors[0]` is the scale divisions conversion factor 
             # `factors[1]` is the offset
