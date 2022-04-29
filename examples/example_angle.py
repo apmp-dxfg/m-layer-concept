@@ -12,5 +12,5 @@ def display(av):
 a = AV(aspect.plane_angle,-90,imperial_unit.degree_180)
 display(a)
 
-a_360 = convert(a,si_unit.rad_2pi)
+a_360 = a.convert(si_unit.rad_2pi)
 display(a_360)

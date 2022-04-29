@@ -12,6 +12,6 @@ def display(av):
 t = AV(aspect.temperature,72,imperial_unit.degree_F)
 display(t)
 
-t_C = convert(t,si_unit.deg_C_interval)
+t_C = t.convert(si_unit.deg_C_interval)
 display(t_C)
 
