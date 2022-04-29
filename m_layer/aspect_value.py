@@ -63,7 +63,10 @@ class AspectValue(object):
     # ---------------------------------------------------------------------------
     def convert(self,ml_ref):
         """
-        Convert `av` to an expression in terms of `ml_ref`
+        Return a new `AspectValue` expressed in terms of `ml_ref`
+        
+        Conversion may not change the type of scale
+        
         """
         # `ml_ref` is the ID for an M-Layer extended scale 
         
@@ -78,6 +81,29 @@ class AspectValue(object):
         else: 
             raise RuntimeError(
                 "cannot convert {} to {}".format(self._ml_ref,ml_ref)
+            )
+
+    # ---------------------------------------------------------------------------
+    def cast(self,ml_ref):
+        """
+        Return a new `AspectValue` expressed in terms of `ml_ref`
+        
+        Casting changes the type of scale 
+        
+        """
+        # `ml_ref` is the ID for an M-Layer extended scale 
+        
+        if ml_ref in cxt.scales_for_aspect_reg[self._aspect]:
+            
+            fn = cxt.casting_fn(self,ml_ref)
+            return AV(
+                self._aspect,
+                fn( self._value ),
+                ml_ref
+            )
+        else: 
+            raise RuntimeError(
+                "cannot cast {} to {}".format(self._ml_ref,ml_ref)
             )
 
 AV = AspectValue
