@@ -1,5 +1,6 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 import json 
+import glob
 
 from m_layer import register 
 from m_layer import conversion_register
@@ -98,8 +99,8 @@ class Context(object):
             )
         
     def _loader(self,data):
-        # A single entity in json will be presented as a dict
-        # A json array will be presented as a list.
+        # A single entity will be presented as a dict
+        # A json array is a list.
         if isinstance(data,list):
             for l_i in data:
                 self._load_entity(l_i)
@@ -112,11 +113,20 @@ class Context(object):
         data = json.loads(json_str,**kwargs)
         self._loader(data)
             
-    def load(self,file_path,**kwargs):
+    def load_json(self,file_path,**kwargs):
         with open(file_path,'r') as f:
             data = json.load(f,**kwargs)        
         self._loader(data)
-        
+ 
+    def load(self,path,**kwargs):
+        for f_json in glob.glob( path ):
+            try:
+                print(f_json)
+                default_context.load_json( f_json, **kwargs )
+            except json.decoder.JSONDecodeError as e:
+                # Report errors but do not stop execution
+                print("json.decoder.JSONDecodeError",e, 'in:',f_json)
+ 
     @property
     def locale(self):
         return self._locale 
@@ -128,7 +138,7 @@ class Context(object):
     def conversion_fn(self,src_av,dst_ml_ref_id):
         """
         Return the function to convert the value in `src_av` 
-        to a different scale `dst_ml_ref_id`.
+        to a different expression in terms of `dst_ml_ref_id`.
         
         """        
         # The aspect will stay the same
@@ -147,25 +157,49 @@ class Context(object):
             )
         else:
             return table[ (src_ml_ref_id,dst_ml_ref_id) ]
+
+    def casting_fn(self,src_av,dst_ml_ref_id):
+        """
+        Return the function to cast the value in `src_av` 
+        to a different scale `dst_ml_ref_id`.
+        
+        """        
+        # The aspect will stay the same
+        aspect_id = src_av._aspect
+        
+        # The M-layer extended reference 
+        src_ml_ref_id = src_av._ml_ref
                 
+        table = self.casting_reg
+        if (src_ml_ref_id,dst_ml_ref_id) not in table:
+            raise RuntimeError(
+                "no cast defined from '{}' to '{}'".format(
+                    src_ml_ref_id[0],
+                    dst_ml_ref_id[0]
+                )
+            )
+        else:
+            return table[ (src_ml_ref_id,dst_ml_ref_id) ]
+
 # ---------------------------------------------------------------------------
 # Configure a default context object
 #
 import os.path
-import glob
-
-path = os.path.join( 
-    os.path.dirname(__file__),
-    r'json/*.json'
-)
 
 default_context = Context()
-for f_json in glob.glob( path ):
-    try:
-        default_context.load( f_json )
-    except json.decoder.JSONDecodeError as e:
-        # Report errors but do not stop execution
-        print("json.decoder.JSONDecodeError",e, 'in:',f_json)
+
+for p_i in (
+        r'json/references', 
+        r'json/scales',
+        r'json/conversion_casting',
+        r'json/aspects'
+    ):
+    path = os.path.join( 
+        os.path.dirname(__file__), 
+        p_i, 
+        r'*.json'
+    )
+    default_context.load(path)
 
 
 # ===========================================================================
