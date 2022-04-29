@@ -15,3 +15,5 @@ display(t)
 t_C = t.convert(si_unit.deg_C_interval)
 display(t_C)
 
+t_K = t_C.cast(si_unit.kelvin)
+display(t_K)
