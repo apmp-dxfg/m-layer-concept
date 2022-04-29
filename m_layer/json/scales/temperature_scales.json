@@ -46,29 +46,6 @@
             314545844086913572859566825785893557749
         ],
         "scale_type": "interval-scale"
-    },
-    {
-        "__type__": "Conversion",
-        "src": [
-            "ml-si-celsius-interval", 
-            245795086332095731716589481707012001072
-        ],
-        "dst":[
-            "ml-imp-fahrenheit-interval", 
-            22817745368296240233220712518826840767
-        ],
-        "factors": [ "9/5", "32" ]
-    },
-    {
-        "__type__": "Conversion",
-        "src": [
-            "ml-imp-fahrenheit-interval", 
-            22817745368296240233220712518826840767
-        ],
-        "dst": [
-            "ml-si-celsius-interval", 
-            245795086332095731716589481707012001072
-        ],
-        "factors": [ "5/9", "-32*5/9" ]
-    }]
+    }
+]
     
