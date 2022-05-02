@@ -21,8 +21,6 @@ class Register(object):
         # `uid` may be a list from json
         return self._objects.get( tuple(uid), default ) 
         
-    # There is a difference between minting a new reference and reading a record.
-    # The context will mint new reference objects, here we just register them
     def set(self,entry):
         """
         """
