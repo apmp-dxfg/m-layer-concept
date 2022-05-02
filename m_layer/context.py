@@ -121,7 +121,6 @@ class Context(object):
     def load(self,path,**kwargs):
         for f_json in glob.glob( path ):
             try:
-                print(f_json)
                 default_context.load_json( f_json, **kwargs )
             except json.decoder.JSONDecodeError as e:
                 # Report errors but do not stop execution
