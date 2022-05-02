@@ -18,6 +18,22 @@
     {
         "__type__": "Aspect",
         "uid": [
+            "length",
+            993853592179723568440264076369400241
+        ],
+        "locale": {
+            "default": {
+                "name": "length",
+                "symbol": "L"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
             "frequency",
             153247472008167864427404739264717558529
         ],
@@ -25,6 +41,22 @@
             "default": {
                 "name": "frequency",
                 "symbol": "f"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "wavenumber",
+            144971063540877887430756064314490007964
+        ],
+        "locale": {
+            "default": {
+                "name": "wavenumber",
+                "symbol": "\\sigma"
             }
         },
         "metadata": {

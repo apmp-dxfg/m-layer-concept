@@ -1,0 +1,20 @@
+[
+    {
+        "__type__": "Reference",
+        "uid": [
+            "si-metre",
+            61268972265076316018593147152102406832
+        ],
+        "locale": {
+            "default": {
+                "name": "metre",
+                "symbol": "m"
+            }
+        },
+        "unit-system": "SI",
+        "UCUM": {
+            "code": "m",
+            "description": "meter"
+        }
+    }
+]

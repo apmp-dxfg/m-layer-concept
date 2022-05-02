@@ -1,0 +1,23 @@
+[
+    {
+        "__type__": "Reference",
+        "uid": [
+            "si-per-metre",
+            276726793797424878828710191985121127007
+        ],
+        "locale": {
+            "default": {
+                "name": "per metre",
+                "symbol": "1/m"
+            },
+            "latex": {
+                "symbol": "\\per\\metre"
+            }
+        },
+        "unit-system": "SI",
+        "UCUM": {
+            "code": "/m",
+            "description": "1/meter"
+        }
+    }
+]

@@ -16,5 +16,23 @@
             "code": "Hz",
             "description": "hertz"
         }
+    },
+    {
+        "__type__": "Reference",
+        "uid": [
+            "si-per-second",
+            116741812607130898126240371497946537198
+        ],
+        "locale": {
+            "default": {
+                "name": "per-second",
+                "symbol": "1/s"
+            }
+        },
+        "unit-system": "SI",
+        "UCUM": {
+            "code": "/s",
+            "description": "per second"
+        }
     }
 ]
