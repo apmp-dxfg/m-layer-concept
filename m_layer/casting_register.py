@@ -57,9 +57,6 @@ class CastingRegister(object):
                                       
         # Casting function parameter values are in a sequence 
         # they are stored as strings to allow fractions 
-        print(entry)
-        for x_i in entry['factors']:
-            print(x_i)
         factors = tuple(  eval(x_i) for x_i in entry['factors'] )
         
         # Set the conversion function
