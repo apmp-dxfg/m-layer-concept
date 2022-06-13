@@ -17,6 +17,7 @@
             "description": "hertz"
         }
     },
+    {
         "__type__": "Reference",
         "uid": [
             "si-terahertz",
