@@ -5,13 +5,16 @@ import json
 # `eval()`. By importing math, we can include defined constants, like math.pi.
 import math
 
+# e = 1.602176634E-19 coulomb
+# c = 2.99792458E8 meter per second
+# h = 6.62607015E-34 joule second
+
 # ---------------------------------------------------------------------------
 class CastingRegister(object):
     
     """
-    A `CastingRegister` holds a mapping of scale pairs 
-    to information about how to convert between scales. 
-    Casting involves a change in the type of scalee.
+    A `CastingRegister` holds a mapping of aspect-scale pairs 
+    to information about how to cast between expressions. 
     """
     
     def __init__(self,context):
@@ -35,19 +38,21 @@ class CastingRegister(object):
     # to cast from one M-layer reference to the other.
     def set(self,entry):
         """
-        Create an entry for a conversion function
-        The type of the source and destination scales
-        determines the form of the conversion function
-        and the function parameters are elements in `entry`.
+        Create an entry for a casting function
+        The aspect and type of the source and destination scales
+        are used to identify the function
         
         """
+        # TODO: aspect-scale required for src & dst 
+        # This function needs finishing !
+        
         uid_ml_ref_src = tuple( entry['src'] )        
         uid_ml_ref_dst = tuple( entry['dst'] )
             
         uid_pair = (uid_ml_ref_src,uid_ml_ref_dst)
         if uid_pair in self._table:
             raise RuntimeError(
-                "existing casting entry: {}".format(uid_pair)
+                "existing cast entry: {}".format(uid_pair)
             )
         else:
             # The M-Layer reference identifies the type of scale
@@ -55,18 +60,18 @@ class CastingRegister(object):
             src_type = _scales[uid_ml_ref_src]['scale_type']
             dst_type = _scales[uid_ml_ref_dst]['scale_type']
                                       
-        # Casting function parameter values are in a sequence 
-        # they are stored as strings to allow fractions 
-        factors = tuple(  eval(x_i) for x_i in entry['factors'] )
+        # Parameter values are stored as strings in a dictionary
+        parameters_dict = entry['parameters'] 
         
-        # Set the conversion function
+        # Safe mode, but too restrictive
+        fn = eval(entry['function'],{"__builtins__": None},parameters_dict)
+        
+        # Set the casting function
         if (
             (src_type,dst_type) == ('interval-scale','ratio-scale')  
         or  (src_type,dst_type) == ('ratio-scale','interval-scale') 
         ):
-            # `factors[0]` is the scale divisions conversion factor 
-            # `factors[1]` is the offset
-            self._table[uid_pair] = lambda x: factors[0]*x + factors[1]
+            self._table[uid_pair] = eval(entry['function'],parameters_dict)
         else:
             raise RuntimeError(
                 "unrecognised case: {}".format((src_type,dst_type))
