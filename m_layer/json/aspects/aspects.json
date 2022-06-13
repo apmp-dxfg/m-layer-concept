@@ -34,6 +34,38 @@
     {
         "__type__": "Aspect",
         "uid": [
+            "torque",
+            130931339493516375135609650190501980170
+        ],
+        "locale": {
+            "default": {
+                "name": "torque",
+                "symbol": "M"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "work",
+            253161982591064007446238888026090562042
+        ],
+        "locale": {
+            "default": {
+                "name": "work",
+                "symbol": "W"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
             "frequency",
             153247472008167864427404739264717558529
         ],
@@ -41,6 +73,22 @@
             "default": {
                 "name": "frequency",
                 "symbol": "f"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "activity",
+            20106649997056189817632954430448298015
+        ],
+        "locale": {
+            "default": {
+                "name": "activity",
+                "symbol": "A"
             }
         },
         "metadata": {
@@ -114,6 +162,22 @@
     {
         "__type__": "Aspect",
         "uid": [
+            "photon-energy",
+            291306321925738991196807372973812640971
+        ],
+        "locale": {
+            "default": {
+                "name": "photon energy",
+                "symbol": "E"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },    
+    {
+        "__type__": "Aspect",
+        "uid": [
             "temperature",
             316901515895475271730171605211001099255
         ],
@@ -128,6 +192,21 @@
         }
     },
     {
+        "__type__": "Aspect",
+        "uid": [
+            "ITS-90",
+            333567868916523888067500483865254994090
+        ],
+        "locale": {
+            "default": {
+                "name": "ITS-90",
+                "symbol": "T_90"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },    {
         "__type__": "Aspect",
         "uid": [
             "temperature-difference",
@@ -188,10 +267,25 @@
             }
         },
         "metadata": {
-            "url": "https://en.wikipedia.org/wiki/Transmittance#Beer%E2%80%93Lambert_law"
+            "url": "https://en.wikipedia.org/wiki/Absorbance"
         }
     },
     {
+        "__type__": "Aspect",
+        "uid": [
+            "optical-density",
+            246281658431686855826084788549817949261
+        ],
+        "locale": {
+            "default": {
+                "name": "optical density",
+                "symbol": "OD"
+            }
+        },
+        "metadata": {
+            "url": "https://en.wikipedia.org/wiki/Absorbance"
+        }
+    },    {
         "__type__": "Aspect",
         "uid": [
             "reflectance",

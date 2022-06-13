@@ -1,0 +1,33 @@
+[
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "Vickers-hardness",
+            22764066689128529062358332498159884424
+        ],
+        "locale": {
+            "default": {
+                "name": "Vickers",
+                "symbol": "?"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "Mohs-hardness",
+            301609995418669955585394848633185126850
+        ],
+        "locale": {
+            "default": {
+                "name": "mohs",
+                "symbol": "mohs"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    }]

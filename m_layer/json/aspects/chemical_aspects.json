@@ -1,0 +1,33 @@
+[
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "amount-of-H_2",
+            22874499152608371964181019881919989519
+        ],
+        "locale": {
+            "default": {
+                "name": "amount-of-H_2",
+                "symbol": "H_2"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__type__": "Aspect",
+        "uid": [
+            "amount-of-Na_2SO_4",
+            4303594025179229828240367600027145012
+        ],
+        "locale": {
+            "default": {
+                "name": "amount-of-Na_2SO_4",
+                "symbol": "H_2"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    }]
