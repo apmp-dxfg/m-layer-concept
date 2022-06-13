@@ -19,5 +19,25 @@
             "code": "/m",
             "description": "1/meter"
         }
-    }
-]
+    },
+    {
+        "__type__": "Reference",
+        "uid": [
+            "si-per-centimetre",
+            78709620630780303268211656738112203703
+        ],
+        "locale": {
+            "default": {
+                "name": "per centimetre",
+                "symbol": "1/cm"
+            },
+            "latex": {
+                "symbol": "\\per\\centimetre"
+            }
+        },
+        "unit-system": "SI",
+        "UCUM": {
+            "code": "/cm",
+            "description": "1/centieter"
+        }
+    }]

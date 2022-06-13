@@ -285,7 +285,8 @@
         "metadata": {
             "url": "https://en.wikipedia.org/wiki/Absorbance"
         }
-    },    {
+    },    
+    {
         "__type__": "Aspect",
         "uid": [
             "reflectance",

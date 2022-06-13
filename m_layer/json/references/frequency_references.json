@@ -17,6 +17,23 @@
             "description": "hertz"
         }
     },
+        "__type__": "Reference",
+        "uid": [
+            "si-terahertz",
+            310850909458796788849032855422762414462
+        ],
+        "locale": {
+            "default": {
+                "name": "terahertz",
+                "symbol": "THz"
+            }
+        },
+        "unit-system": "SI",
+        "UCUM": {
+            "code": "THz",
+            "description": "terahertz"
+        }
+    },
     {
         "__type__": "Reference",
         "uid": [
