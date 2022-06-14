@@ -70,7 +70,7 @@ class Context(object):
         if casting_reg is None:
             self.casting_reg = casting_register.CastingRegister(self)
         else:
-            self.conversion_reg = conversion_reg
+            self.casting_reg = casting_reg
 
         if scales_for_aspect_reg is None:
             self.scales_for_aspect_reg =\
@@ -140,48 +140,56 @@ class Context(object):
         to a different expression in terms of `dst_ml_ref_id`.
         
         """        
-        # The aspect will stay the same
+        # The aspect stays the same
         aspect_id = src_av._aspect
         
         # The M-layer extended reference 
         src_ml_ref_id = src_av._ml_ref
                 
-        table = self.conversion_reg
-        if (src_ml_ref_id,dst_ml_ref_id) not in table:
+        reg = self.conversion_reg
+        if (src_ml_ref_id,dst_ml_ref_id) not in reg:
             raise RuntimeError(
-                "no conversion from '{}' to '{}'".format(
+                "no conversion for '{}' from '{}' to '{}'".format(
+                    aspect_id[0],
                     src_ml_ref_id[0],
                     dst_ml_ref_id[0]
                 )
             )
         else:
-            return table[ (src_ml_ref_id,dst_ml_ref_id) ]
+            return reg[ (src_ml_ref_id,dst_ml_ref_id) ]
 
-    def casting_fn(self,src_av,dst_ml_ref_id):
+    def casting_fn(self,av_src,dst):
+    
+        # Casting may occur between any aspect-scale pairs,
+        # that is, between any form of expression.
+        # The source expression and the destination aspect-scale 
+        # are needed to see if a cast has been registered.
+        
         """
-        Return the function to cast the value in `src_av` 
-        to a different scale `dst_ml_ref_id`.
+        Return the function to cast the value in `av_src` 
+        to a different scale `av_dst`.
         
         """        
-        # The aspect will stay the same
-        aspect_id = src_av._aspect
-        
-        # The M-layer extended reference 
-        src_ml_ref_id = src_av._ml_ref
+        src = (av_src._aspect,av_src._ml_ref)
                 
-        table = self.casting_reg
-        if (src_ml_ref_id,dst_ml_ref_id) not in table:
+        reg = self.casting_reg
+        
+        if (src,dst) not in reg:
+            for k_i in reg._table.keys():
+                print(k_i,'\n')
+            print
             raise RuntimeError(
                 "no cast defined from '{}' to '{}'".format(
-                    src_ml_ref_id[0],
-                    dst_ml_ref_id[0]
+                    src,
+                    dst
                 )
             )
         else:
-            return table[ (src_ml_ref_id,dst_ml_ref_id) ]
+            return reg[ (src,dst) ]
 
 # ---------------------------------------------------------------------------
-# Configure a default context object
+# Configure a default context object by reading all JSON files
+# in the directories.
 #
 import os.path
 
@@ -191,8 +199,9 @@ for p_i in (
         r'json/references', 
         r'json/scales',
         r'json/conversion_casting',
-        r'json/aspects'
-    ):
+        r'json/aspects',
+        r'json/scales_for_aspects'
+      ):
     path = os.path.join( 
         os.path.dirname(__file__), 
         p_i, 
