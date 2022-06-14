@@ -67,16 +67,16 @@ class ConversionRegister(object):
         factors = tuple(  eval(x_i) for x_i in entry['factors'] )
         
         # Set the conversion function
-        if (src_type,dst_type) == ('ratio-scale','ratio-scale'):
+        if (src_type,dst_type) == ('ratio','ratio'):
             self._table[uid_pair] = lambda x: factors[0]*x 
         elif (
-            (src_type,dst_type) == ('interval-scale','interval-scale')  
+            (src_type,dst_type) == ('interval','interval')  
         ):
             # `factors[0]` is the scale divisions conversion factor 
             # `factors[1]` is the offset
             self._table[uid_pair] = lambda x: factors[0]*x + factors[1]
         elif (
-            (src_type,dst_type) == ('bounded-interval-scale','bounded-interval-scale')
+            (src_type,dst_type) == ('bounded','bounded')
         ):
             # `factors[0]` is the scale divisions conversion factor 
             # `factors[1]` is the lower bound of the dst scale 
