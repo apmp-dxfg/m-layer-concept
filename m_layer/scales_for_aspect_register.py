@@ -1,5 +1,8 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-
+"""
+Declared conversions must be enabled for each aspect.
+This register holds a sequence of M-layer scales for each aspect. 
+"""
 from m_layer.register import Register
 
 # ---------------------------------------------------------------------------
