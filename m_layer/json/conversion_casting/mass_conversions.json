@@ -2,7 +2,7 @@
     {
         "__type__": "ScalesForAspect",
         "aspect" : [
-            "mass",
+            "ml-mass",
             321881801928222308627062904049725548287
         ],
         "scales" : [

@@ -2,7 +2,7 @@
     {
         "__type__": "ScalesForAspect",
         "aspect" : [
-            "energy",
+            "ml-energy",
             12139911566084412692636353460656684046
         ],
         "scales" : [

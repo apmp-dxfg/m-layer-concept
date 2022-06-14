@@ -2,7 +2,7 @@
     {
         "__type__": "ScalesForAspect",
         "aspect" : [
-            "temperature",
+            "ml-temperature",
             316901515895475271730171605211001099255
         ],
         "scales" : [
@@ -27,7 +27,7 @@
     {
         "__type__": "ScalesForAspect",
         "aspect" : [
-            "temperature-difference",
+            "ml-temperature-difference",
             212368324110263031011700652725345220325
         ],
         "scales" : [
