@@ -1,9 +1,9 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 import json
 
-# Terms in JSON strings for numerical factors are converted to numbers using 
-# `eval()`. By importing math, we can include defined constants, like math.pi.
+# Numerical terms in JSON strings are converted to numbers using `eval()`. 
 import math
+from m_layer import si_constants as si 
 
 # ---------------------------------------------------------------------------
 class ConversionRegister(object):
@@ -87,3 +87,4 @@ class ConversionRegister(object):
             raise RuntimeError(
                 "unrecognised case: {}".format((src_type,dst_type))
             )
+            
