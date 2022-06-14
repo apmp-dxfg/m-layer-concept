@@ -2,25 +2,25 @@
     {
         "__type__": "Scale",
         "uid": [
-            "ml-si-kilogram",
+            "ml-si-kilogram-ratio",
             12782167041499057092439851237297548539
         ],
         "reference": [
             "si-kilogram",
             188151331508313165897603768130808181784
         ],
-        "scale_type": "ratio-scale"
+        "scale_type": "ratio"
     },
     {
         "__type__": "Scale",
         "uid": [
-            "ml-imp-pound", 
+            "ml-imp-pound-ratio", 
             188380796861507506602975683857494523991
         ],
         "reference": [
             "imp-pound",
             188380796861507506602975683857494523991
         ],
-        "scale_type": "ratio-scale"
+        "scale_type": "ratio"
     }
 ]

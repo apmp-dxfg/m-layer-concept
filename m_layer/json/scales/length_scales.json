@@ -2,24 +2,24 @@
     {
         "__type__": "Scale",
         "uid": [
-            "ml-si-metre",
+            "ml-si-metre-ratio",
             17771593641054934856197983478245767638
         ],
         "reference": [
             "si-metre",
             61268972265076316018593147152102406832
         ],
-        "scale_type": "ratio-scale"
+        "scale_type": "ratio"
     },
     {
         "__type__": "Scale",
         "uid": [
-            "ml-si-nanometre",
+            "ml-si-nanometre-ratio",
             257091757625055920788370123828667027186
         ],
         "reference": [
             "si-nanometre",
             230327124043985678197012494098272082173
         ],
-        "scale_type": "ratio-scale"
+        "scale_type": "ratio"
     }]

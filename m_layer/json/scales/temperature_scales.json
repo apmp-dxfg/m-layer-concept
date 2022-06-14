@@ -2,14 +2,14 @@
     {
         "__type__": "Scale",
         "uid": [
-            "ml-si-kelvin", 
+            "ml-si-kelvin-ratio", 
             302952256288207449238881076502466548054
         ],
         "reference": [
             "si-kelvin",
             25703533220788919988679332108037098600
         ],
-        "scale_type": "ratio-scale"
+        "scale_type": "ratio"
     },
     {
         "__type__": "Scale",
@@ -21,7 +21,7 @@
             "si-celsius",
             318617443485372744730332268230803752214
         ],
-        "scale_type": "interval-scale"
+        "scale_type": "interval"
     },
     {
         "__type__": "Scale",
@@ -33,7 +33,7 @@
             "si-celsius",
             318617443485372744730332268230803752214
         ],
-        "scale_type": "ratio-scale"
+        "scale_type": "ratio"
     },
     {
         "__type__": "Scale",
@@ -45,7 +45,7 @@
             "imp-fahrenheit",
             314545844086913572859566825785893557749
         ],
-        "scale_type": "interval-scale"
+        "scale_type": "interval"
     }
 ]
     

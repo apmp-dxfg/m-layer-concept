@@ -7,27 +7,27 @@
         ],
         "scales" : [
             [
-                "ml-imp-degree", 
+                "ml-imp-degree-ratio", 
                 124567088583703716502057160299542649451
             ],
             [
-                "ml-si-radian", 
+                "ml-si-radian-ratio", 
                 273301153578020696303516833405033923738
             ],
             [
-                "ml-si-radian-pi", 
+                "ml-si-radian-bounded-pi", 
                 181367268705518406168243034119604185497
             ],
             [
-                "ml-si-radian-two-pi", 
+                "ml-si-radian-bounded-two-pi", 
                 300556212736422769570885306883285535638
             ],
             [
-                "ml-imp-degree-360", 
+                "ml-imp-degree-bounded-360", 
                 125066222841962802760576607996391537405
             ],
             [
-                "ml-imp-degree-180", 
+                "ml-imp-degree-bounded-180", 
                 273805538217618733078298377573965188309
             ]
         ]
@@ -35,11 +35,11 @@
     {
         "__type__": "Conversion",
         "src": [
-            "ml-si-radian", 
+            "ml-si-radian-ratio", 
             273301153578020696303516833405033923738
         ],
         "dst":[
-            "ml-imp-degree", 
+            "ml-imp-degree-ratio", 
             124567088583703716502057160299542649451
         ],
         "factors": [ "180/math.pi" ]
@@ -47,11 +47,11 @@
     {
         "__type__": "Conversion",
         "src": [
-            "ml-imp-degree", 
+            "ml-imp-degree-ratio", 
             124567088583703716502057160299542649451
         ],
         "dst": [
-            "ml-si-radian", 
+            "ml-si-radian-ratio", 
             273301153578020696303516833405033923738
         ],
         "factors": [ "math.pi/180" ]
@@ -59,11 +59,11 @@
     {
         "__type__": "Conversion",
         "src": [
-            "ml-imp-degree-360", 
+            "ml-imp-degree-bounded-360", 
             125066222841962802760576607996391537405
         ],
         "dst": [
-            "ml-imp-degree-180", 
+            "ml-imp-degree-bounded-180", 
             273805538217618733078298377573965188309
         ],
         "factors": [ "1", "-180", "360" ]
@@ -71,11 +71,11 @@
     {
         "__type__": "Conversion",
         "src": [
-            "ml-imp-degree-180", 
+            "ml-imp-degree-bounded-180", 
             273805538217618733078298377573965188309
         ],
         "dst": [
-            "ml-imp-degree-360", 
+            "ml-imp-degree-bounded-360", 
             125066222841962802760576607996391537405
         ],
         "factors": [ "1", "0", "360" ]
@@ -83,11 +83,11 @@
     {
         "__type__": "Conversion",
         "src": [
-            "ml-si-radian-two-pi", 
+            "ml-si-radian-bounded-two-pi", 
             300556212736422769570885306883285535638
         ],
         "dst": [
-            "ml-si-radian-pi", 
+            "ml-si-radian-bounded-pi", 
             181367268705518406168243034119604185497
         ],
         "factors": [ "1", "-math.pi", "2*math.pi" ]
@@ -95,11 +95,11 @@
     {
         "__type__": "Conversion",
         "src": [
-            "ml-si-radian-pi", 
+            "ml-si-radian-bounded-pi", 
             181367268705518406168243034119604185497
         ],
         "dst": [
-            "ml-si-radian-two-pi", 
+            "ml-si-radian-bounded-two-pi", 
             300556212736422769570885306883285535638
         ],
         "factors": [ "1", "0", "2*math.pi" ]
@@ -111,7 +111,7 @@
             300556212736422769570885306883285535638
         ],
         "dst": [
-            "ml-imp-degree-360", 
+            "ml-imp-degree-bounded-360", 
             125066222841962802760576607996391537405
         ],
         "factors": [ "180/math.pi", "0", "360" ]
@@ -119,7 +119,7 @@
     {
         "__type__": "Conversion",
         "src": [
-            "ml-imp-degree-360", 
+            "ml-imp-degree-bounded-360", 
             125066222841962802760576607996391537405
         ],
         "dst": [
@@ -131,11 +131,11 @@
     {
         "__type__": "Conversion",
         "src": [
-            "ml-imp-degree-180", 
+            "ml-imp-degree-bounded-180", 
             273805538217618733078298377573965188309
         ],
         "dst": [
-            "ml-si-radian-two-pi", 
+            "ml-si-radian-bounded-two-pi", 
             300556212736422769570885306883285535638
         ],
         "factors": [ "math.pi/180", "0", "2*math.pi" ]
@@ -143,11 +143,11 @@
     {
         "__type__": "Conversion",
         "src": [
-            "ml-imp-degree-180", 
+            "ml-imp-degree-bounded-180", 
             273805538217618733078298377573965188309
         ],
         "dst": [
-            "ml-si-radian-pi", 
+            "ml-si-radian-bounded-pi", 
             181367268705518406168243034119604185497
         ],
         "factors": [ "math.pi/180", "-math.pi", "2*math.pi" ]
@@ -155,11 +155,11 @@
     {
         "__type__": "Conversion",
         "src": [
-            "ml-imp-degree-360", 
+            "ml-imp-degree-bounded-360", 
             125066222841962802760576607996391537405
         ],
         "dst": [
-            "ml-si-radian-pi", 
+            "ml-si-radian-bounded-pi", 
             181367268705518406168243034119604185497
         ],
         "factors": [ "math.pi/180", "-math.pi", "2*math.pi" ]

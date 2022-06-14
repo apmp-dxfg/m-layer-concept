@@ -2,37 +2,37 @@
 {
         "__type__": "Scale",
         "uid": [
-            "ml-reflectance",
+            "ml-reflectance-ratio",
             231644681522224058023728516454961855496
         ],
         "reference": [
             "si-one",
             86027072402622903744975433595176472531
         ],
-        "scale_type": "ratio-scale"
+        "scale_type": "ratio"
     },
     {
         "__type__": "Scale",
         "uid": [
-            "ml-transmittance", 
+            "ml-transmittance-ratio", 
             230956687661085864018320632402706271588
         ],
         "reference": [
             "si-one",
             86027072402622903744975433595176472531
         ],
-        "scale_type": "ratio-scale"
+        "scale_type": "ratio"
     },
     {
         "__type__": "Scale",
         "uid": [
-            "ml-absorbance", 
+            "ml-absorbance-ratio", 
             201921699186292116923276028634282863251
         ],
         "reference": [
             "si-one",
             86027072402622903744975433595176472531
         ],
-        "scale_type": "ratio-scale"
+        "scale_type": "ratio"
     }
 ]

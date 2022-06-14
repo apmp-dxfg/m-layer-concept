@@ -9,7 +9,7 @@
             "imp-degree",
             277818260541443964889383928855946049570
         ],
-        "scale_type": "ratio-scale"
+        "scale_type": "ratio"
     },
     {
         "__type__": "Scale",
@@ -21,7 +21,7 @@
             "si-radian",
             311561499536022904630229742672799278060
         ],
-        "scale_type": "ratio-scale"
+        "scale_type": "ratio"
     },
     {
         "__type__": "Scale",
@@ -33,7 +33,7 @@
             "si-radian",
             311561499536022904630229742672799278060
         ],
-        "scale_type": "bounded-interval-scale"
+        "scale_type": "bounded-interval"
     },
     {
         "__type__": "Scale",
@@ -45,7 +45,7 @@
             "si-radian",
             311561499536022904630229742672799278060
         ],
-        "scale_type": "bounded-interval-scale"
+        "scale_type": "bounded-interval"
     },
     {
         "__type__": "Scale",
@@ -57,7 +57,7 @@
             "imp-degree",
             277818260541443964889383928855946049570
         ],
-        "scale_type": "bounded-interval-scale"
+        "scale_type": "bounded-interval"
     },
     {
         "__type__": "Scale",
@@ -69,6 +69,6 @@
             "imp-degree",
             277818260541443964889383928855946049570
         ],
-        "scale_type": "bounded-interval-scale"
+        "scale_type": "bounded-interval"
     }
 ]
