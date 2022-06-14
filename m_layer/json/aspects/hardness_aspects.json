@@ -2,7 +2,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "Vickers-hardness",
+            "ml-Vickers-hardness",
             22764066689128529062358332498159884424
         ],
         "locale": {
@@ -18,7 +18,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "Mohs-hardness",
+            "ml-Mohs-hardness",
             301609995418669955585394848633185126850
         ],
         "locale": {

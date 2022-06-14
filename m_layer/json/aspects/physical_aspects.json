@@ -2,7 +2,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "mass",
+            "ml-mass",
             321881801928222308627062904049725548287
         ],
         "locale": {
@@ -18,7 +18,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "length",
+            "ml-length",
             993853592179723568440264076369400241
         ],
         "locale": {
@@ -34,7 +34,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "torque",
+            "ml-torque",
             130931339493516375135609650190501980170
         ],
         "locale": {
@@ -50,7 +50,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "work",
+            "ml-work",
             253161982591064007446238888026090562042
         ],
         "locale": {
@@ -66,7 +66,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "frequency",
+            "ml-frequency",
             153247472008167864427404739264717558529
         ],
         "locale": {
@@ -82,7 +82,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "activity",
+            "ml-activity",
             20106649997056189817632954430448298015
         ],
         "locale": {
@@ -98,7 +98,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "wavenumber",
+            "ml-wavenumber",
             144971063540877887430756064314490007964
         ],
         "locale": {
@@ -114,7 +114,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "wavelength",
+            "ml-wavelength",
             286560112267714281146712032556984229473
         ],
         "locale": {
@@ -130,7 +130,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "period",
+            "ml-period",
             86706581527829787194017804485248983592
         ],
         "locale": {
@@ -146,7 +146,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "energy",
+            "ml-energy",
             12139911566084412692636353460656684046
         ],
         "locale": {
@@ -162,7 +162,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "photon-energy",
+            "ml-photon-energy",
             291306321925738991196807372973812640971
         ],
         "locale": {
@@ -178,7 +178,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "temperature",
+            "ml-temperature",
             316901515895475271730171605211001099255
         ],
         "locale": {
@@ -194,7 +194,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "ITS-90",
+            "ml-ITS-90",
             333567868916523888067500483865254994090
         ],
         "locale": {
@@ -209,7 +209,7 @@
     },    {
         "__type__": "Aspect",
         "uid": [
-            "temperature-difference",
+            "ml-temperature-difference",
             212368324110263031011700652725345220325
         ],
         "locale": {
@@ -225,7 +225,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "plane-angle",
+            "ml-plane-angle",
             95173225557230344956477808929590724690
         ],
         "locale": {
@@ -241,7 +241,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "transmittance",
+            "ml-transmittance",
             106338157389217634821305827494648287004
         ],
         "locale": {
@@ -257,7 +257,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "absorbance",
+            "ml-absorbance",
             86383731859836773954686958763955022575
         ],
         "locale": {
@@ -273,7 +273,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "optical-density",
+            "ml-optical-density",
             246281658431686855826084788549817949261
         ],
         "locale": {
@@ -289,7 +289,7 @@
     {
         "__type__": "Aspect",
         "uid": [
-            "reflectance",
+            "ml-reflectance",
             77619173328682587252206794509402414758
         ],
         "locale": {
