@@ -6,12 +6,12 @@ ml_si_kelvin_ratio = ('ml-si-kelvin-ratio', 302952256288207449238881076502466548
 ml_si_celsius_interval = ('ml-si-celsius-interval', 245795086332095731716589481707012001072)
 ml_imp_fahrenheit_interval = ('ml-imp-fahrenheit-interval', 22817745368296240233220712518826840767)
 
-def display(av):
-    print(av)
-    print(repr(av))
+def display(xp):
+    print(xp)
+    print(repr(xp))
     print()
 
-t = AV(ml_temperature,72,ml_imp_fahrenheit_interval)
+t = XP(ml_temperature,72,ml_imp_fahrenheit_interval)
 display(t)
 
 t_C = t.convert(ml_si_celsius_interval)

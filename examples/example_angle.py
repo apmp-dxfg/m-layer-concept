@@ -9,12 +9,12 @@ ml_si_radian_bounded_two_pi = ('ml-si-radian-bounded-two-pi', 300556212736422769
 # ml_imp_degree_bounded_360 = ('ml-imp-degree-bounded-360', 125066222841962802760576607996391537405)
 ml_imp_degree_bounded_180 = ('ml-imp-degree-bounded-180', 273805538217618733078298377573965188309)
 
-def display(av):
-    print(av)
-    print(repr(av))
+def display(xp):
+    print(xp)
+    print(repr(xp))
     print()
 
-a = AV(ml_plane_angle,-90,ml_imp_degree_bounded_180)
+a = XP(ml_plane_angle,-90,ml_imp_degree_bounded_180)
 display(a)
 
 a_360 = a.convert(ml_si_radian_bounded_two_pi)
