@@ -1,17 +1,9 @@
 from m_layer.context import default_context
-from m_layer.aspect_value import (AspectValue, AV)
-
-# from m_layer import aspect
-# from m_layer import si_unit 
-# from m_layer import imperial_unit 
-
+from m_layer.expression import (Expression, XP)
 
 __all__ = (
-    'AspectValue', 'AV',
+    'Expression', 'XP',
     'default_context',
-    # 'aspect',
-    # 'si_unit',
-    # 'imperial_unit',
 )
 
 #----------------------------------------------------------------------------

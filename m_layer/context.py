@@ -149,7 +149,7 @@ class Context(object):
         reg = self.conversion_reg
         if (src_ml_ref_id,dst_ml_ref_id) not in reg:
             raise RuntimeError(
-                "no conversion for '{}' from '{}' to '{}'".format(
+                "no conversion for '{!r}' from '{!r}' to '{!r}'".format(
                     aspect_id[0],
                     src_ml_ref_id[0],
                     dst_ml_ref_id[0]
@@ -179,7 +179,7 @@ class Context(object):
                 print(k_i,'\n')
             print
             raise RuntimeError(
-                "no cast defined from '{}' to '{}'".format(
+                "no cast defined from '{!r}' to '{!r}'".format(
                     src,
                     dst
                 )
