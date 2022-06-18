@@ -148,13 +148,15 @@ class Context(object):
                 
         reg = self.conversion_reg
         if (src_ml_ref_id,dst_ml_ref_id) not in reg:
-            raise RuntimeError(
-                "no conversion for '{!r}' from '{!r}' to '{!r}'".format(
-                    aspect_id[0],
-                    src_ml_ref_id[0],
-                    dst_ml_ref_id[0]
-                )
-            )
+        # TODO: checking happens earlier, this is redundant
+            assert False
+            # raise RuntimeError(
+                # "no conversion for '{!r}' from '{!r}' to '{!r}'".format(
+                    # aspect_id[0],
+                    # src_ml_ref_id[0],
+                    # dst_ml_ref_id[0]
+                # )
+            # )
         else:
             return reg[ (src_ml_ref_id,dst_ml_ref_id) ]
 
@@ -201,7 +203,7 @@ for p_i in (
         r'json/conversion_casting',
         r'json/aspects',
         r'json/scales_for_aspects'
-      ):
+    ):
     path = os.path.join( 
         os.path.dirname(__file__), 
         p_i, 
