@@ -7,6 +7,7 @@ __all__ = (
     'Expression', 'XP'
 )
 
+  
 # ---------------------------------------------------------------------------
 class Expression(object):
     
@@ -19,10 +20,10 @@ class Expression(object):
     
     __slots__ = ("_value","_ml_ref","_aspect")
     
-    def __init__(self,aspect,value,ref):
+    def __init__(self,value,ref,aspect=None):
         self._value = value 
-        self._aspect = aspect
         self._ml_ref = ref
+        self._aspect = aspect
         
     def __str__(self):
         return "{} {}".format( 
@@ -31,11 +32,14 @@ class Expression(object):
         )
         
     def __repr__(self):
-        a = "{}".format( self.aspect(locale=cxt.locale), short=False )
         v = "{}".format( self.value() )
         r = "{}".format( self.ref(locale=cxt.locale,short=False) )
         
-        return "Expression({},{},{})".format(a,v,r)
+        if self._aspect is None:
+            return "Expression({},{})".format(v,r)
+        else:
+            a = "{}".format( self.aspect(locale=cxt.locale), short=False )
+            return "Expression({},{},{})".format(v,r,a)
         
     def value(self):
         """
@@ -75,13 +79,12 @@ class Expression(object):
         """
         Return a new `Expression` in terms of the scale provided
         
-        Conversion does not change the aspect or the type of scale
-        
         """
         
-        # If there is a src-dst pair of scales in the register
-        # then use it, without checking aspect.
+        # If there is a pair of scales in the register
+        # then use it without checking aspect.
         fn = cxt.conversion_reg.get( (self._ml_ref,ml_ref) ) 
+        
         if fn is not None:
         # if ( 
             # (self._ml_ref,ml_ref) in cxt.conversion_reg
@@ -90,16 +93,17 @@ class Expression(object):
         # ):         
             # fn = cxt.conversion_fn(self,ml_ref)
             return Expression(
-                self._aspect,
                 fn( self._value ),
-                ml_ref
+                ml_ref,
+                self._aspect
             )
             
         # If the first search fails, look for additional 
         # conversions that are aspect specific 
         # (e.g., wavenumber to frequency for photon energy)
+        # Need to check that aspect != None
         else:
-            pass
+            assert False
             
         # This is a failure    
         raise RuntimeError(
@@ -115,14 +119,17 @@ class Expression(object):
         Return a new `Expression` in terms of the aspect and scale provided
         
         """
-        dst = (aspect_dst,scale_dst) 
+        if self._aspect is None:
+            raise RuntimeError(
+                "{!r} has no declared aspect, so it cannot be cast".format(self)
+            )
         
-        fn = cxt.casting_fn(self,dst)
+        fn = cxt.casting_fn(self, (aspect_dst,scale_dst) )
         
         return Expression(
-            aspect_dst,
             fn( self._value ),
-            scale_dst
+            scale_dst,
+            aspect_dst
         )
 
 XP = Expression
