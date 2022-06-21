@@ -11,7 +11,8 @@ def display(xp):
     print(repr(xp))
     print()
 
-t = XP(ml_temperature,72,ml_imp_fahrenheit_interval)
+# t = XP(72,ml_imp_fahrenheit_interval,ml_temperature)
+t = XP(72,ml_imp_fahrenheit_interval)
 display(t)
 
 t_C = t.convert(ml_si_celsius_interval)

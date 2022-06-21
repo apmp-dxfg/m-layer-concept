@@ -14,7 +14,7 @@ def display(xp):
     print(repr(xp))
     print()
 
-a = XP(ml_plane_angle,-90,ml_imp_degree_bounded_180)
+a = XP(-90,ml_imp_degree_bounded_180,ml_plane_angle)
 display(a)
 
 a_360 = a.convert(ml_si_radian_bounded_two_pi)
