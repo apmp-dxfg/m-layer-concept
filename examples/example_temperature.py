@@ -11,12 +11,13 @@ def display(xp):
     print(repr(xp))
     print()
 
-# t = XP(72,ml_imp_fahrenheit_interval,ml_temperature)
-t = XP(72,ml_imp_fahrenheit_interval)
+t = XP(72,ml_imp_fahrenheit_interval,ml_temperature)
+# t = XP(72,ml_imp_fahrenheit_interval)
 display(t)
 
 t_C = t.convert(ml_si_celsius_interval)
 display(t_C)
 
-t_K = t_C.cast(ml_temperature, ml_si_kelvin_ratio)
+# t_K = t_C.cast(ml_si_kelvin_ratio,ml_temperature)
+t_K = t_C.cast(ml_si_kelvin_ratio)  # unspecified => same aspect
 display(t_K)

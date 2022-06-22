@@ -7,11 +7,12 @@ import sys
 from m_layer import * 
 
 #----------------------------------------------------------------------------
+# Identify the directory path on the current system
+#
 import m_layer
 here = os.path.dirname(m_layer.__file__)
 json_files = os.path.join( here, r'json')
-
-    
+ 
 #----------------------------------------------------------------------------
 class TestInit(unittest.TestCase):
 
@@ -117,13 +118,14 @@ class TestInit(unittest.TestCase):
                         s = i['dst']
                         self.assertTrue( str(s[1]) in scales, msg=s )
                     elif i['__type__'] == 'Cast':
+                        # aspects follow scales in the JSON files 
                         x = i['src']
-                        self.assertTrue( str(x[0][1]) in aspects, msg=x )
-                        self.assertTrue( str(x[1][1]) in scales, msg=x )
+                        self.assertTrue( str(x[0][1]) in scales, msg=x )
+                        self.assertTrue( str(x[1][1]) in aspects, msg=x )
                         
                         x = i['dst']
-                        self.assertTrue( str(x[0][1]) in aspects, msg=x )
-                        self.assertTrue( str(x[1][1]) in scales, msg=x )
+                        self.assertTrue( str(x[0][1]) in scales, msg=x )
+                        self.assertTrue( str(x[1][1]) in aspects, msg=x )
                     else:
                         msg = "unknown type: {} in {}".format(i['__type__'],f_json)
                         self.fail(msg)
