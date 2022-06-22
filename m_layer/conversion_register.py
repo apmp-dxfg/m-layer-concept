@@ -12,24 +12,23 @@ def _set_conversion_fn(self,entry,_tbl, uid_pair):
     and enter it into a mapping, indexed by the pair of ML scale uids
     
     """
-    uid_ml_ref_src,uid_ml_ref_dst = uid_pair
 
     if uid_pair in _tbl:
         raise RuntimeError(
             "existing conversion entry: {}".format(uid_pair)
         )
-    else:
-        # The M-Layer reference identifies the type of scale
-        _scales = self._context.scale_reg
-        src_type = _scales[uid_ml_ref_src]['scale_type']
-        dst_type = _scales[uid_ml_ref_dst]['scale_type']
+        
+    # The M-Layer reference identifies the type of scale
+    _scales = self._context.scale_reg
+    src_type = _scales[ uid_pair[0] ]['scale_type']
+    dst_type = _scales[ uid_pair[1] ]['scale_type']
 
     if src_type != dst_type:
         raise RuntimeError(
             "scale types must be the same: {} and {}".format(
             src_type,dst_type)
         )
-                                  
+                              
     # Conversion function parameter values are in a sequence 
     # they are stored as strings to allow fractions 
     factors = tuple(  eval(x_i) for x_i in entry['factors'] )
