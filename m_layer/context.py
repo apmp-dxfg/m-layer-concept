@@ -134,60 +134,66 @@ class Context(object):
     def locale(self,l):
         self._locale = l 
         
-    def conversion_fn(self,src_av,dst_ml_ref_id):
+    def conversion_fn(self,src_exp,dst_scale_id):
         """
-        Return the function to convert the value in `src_av` 
-        to a different expression in terms of `dst_ml_ref_id`.
+        Return a function to convert the value in `src_exp` 
+        to a different expression in terms of `dst_scale_id`.
         
-        """        
-        # The aspect stays the same
-        aspect_id = src_av._aspect
+        """                
+        scale_uid_pair = (src_exp._scale,dst_scale_id)
         
-        # The M-layer extended reference 
-        src_ml_ref_id = src_av._ml_ref
+        # If there is a pair of scales in the register
+        # then use it without checking aspect.
+        fn = self.conversion_reg.get( scale_uid_pair ) 
+        
+        if fn is not None: 
+            return fn
                 
-        reg = self.conversion_reg
-        if (src_ml_ref_id,dst_ml_ref_id) not in reg:
-        # TODO: checking happens earlier, this is redundant
-            assert False
-            # raise RuntimeError(
-                # "no conversion for '{!r}' from '{!r}' to '{!r}'".format(
-                    # aspect_id[0],
-                    # src_ml_ref_id[0],
-                    # dst_ml_ref_id[0]
-                # )
-            # )
-        else:
-            return reg[ (src_ml_ref_id,dst_ml_ref_id) ]
+        else:    
+            # If the first search fails, look for  
+            # conversions that are aspect-specific 
+            # (e.g., wavenumber to frequency for photon energy)
+        
+            # Has an aspect has been declared?
+            _aspect = src_exp._aspect
+            if( _aspect is not None 
+            and _aspect in self.scales_for_aspect_reg
+            ):
+                fn = self.scales_for_aspect_reg.get(
+                    _aspect, 
+                    scale_uid_pair, 
+                    None 
+                )
+            
+                if fn is not None:
+                    return fn
+            
+        # This is a failure    
+        raise RuntimeError(
+            "no conversion for '{!r}' to '{!r}'".format(
+                src_exp,
+                dst_scale_id
+            )
+        )
 
-    def casting_fn(self,av_src,dst):
-    
-        # Casting may occur between any aspect-scale pairs,
-        # that is, between any form of expression.
-        # The source expression and the destination aspect-scale 
-        # are needed to see if a cast has been registered.
-        
+    def casting_fn(self,src_exp,dst_scale_aspect):
         """
-        Return the function to cast the value in `av_src` 
-        to a different scale `av_dst`.
+        Return a function to cast the value in `src_exp` to a 
+        different scale and aspect.
         
         """        
-        src = (av_src._aspect,av_src._ml_ref)
-                
-        reg = self.casting_reg
-        
-        if (src,dst) not in reg:
-            for k_i in reg._table.keys():
-                print(k_i,'\n')
-            print
+        src_scale_aspect = (src_exp._scale,src_exp._aspect)
+                        
+        try:
+            return self.casting_reg[ (src_scale_aspect,dst_scale_aspect) ]
+            
+        except KeyError:
             raise RuntimeError(
                 "no cast defined from '{!r}' to '{!r}'".format(
-                    src,
-                    dst
+                    src_scale_aspect,
+                    dst_scale_aspect
                 )
-            )
-        else:
-            return reg[ (src,dst) ]
+            )            
 
 # ---------------------------------------------------------------------------
 # Configure a default context object by reading all JSON files
