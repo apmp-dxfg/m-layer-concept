@@ -15,7 +15,7 @@ This project is intended to demonstrate the M-Layer concept and explore implemen
 Installation
 ============
 
-Clone this repository and then either use the python command ``setup install m_layer`` to install the package or you can add the location of the ``m-layer-concept`` clone on your system to ``PYTHONPATH``.
+Clone this repository and then either install the package using the python command ``setup install m_layer``, or add the location of the ``m-layer-concept`` clone on your system to ``PYTHONPATH``.
 
 Documentation
 =============
