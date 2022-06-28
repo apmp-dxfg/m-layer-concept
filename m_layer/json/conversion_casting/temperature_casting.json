@@ -22,7 +22,7 @@
             ]
         ],
         "function": "lambda x: a*x + b",
-        "parameters": { "a" : 1, "b" : 273.15}
+        "parameters": { "a" : "1", "b" : "273.15"}
     }
 ]
     
