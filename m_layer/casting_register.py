@@ -59,7 +59,10 @@ class CastingRegister(object):
             )            
                                        
         # Parameter values are stored as strings in a dictionary
-        parameters_dict = entry['parameters'] 
+        parameters_dict = { 
+            k : eval(v) 
+                for (k,v) in entry['parameters'].items() 
+        }
                 
         # Set the casting function
         self._table[uid_pair] = eval(entry['function'],parameters_dict)
