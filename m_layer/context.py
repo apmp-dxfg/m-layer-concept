@@ -134,17 +134,17 @@ class Context(object):
     def locale(self,l):
         self._locale = l 
         
-    def conversion_fn(self,src_exp,dst_scale_id):
+    def conversion_fn(self,src_exp,dst_scale):
         """
         Return a function to convert the value in `src_exp` 
-        to a different expression in terms of `dst_scale_id`.
+        to a different expression in terms of `dst_scale`.
         
         """                
-        scale_uid_pair = (src_exp._scale,dst_scale_id)
+        scale_pair = (src_exp._scale.uid,dst_scale.uid)
         
         # If there is a pair of scales in the register
         # then use it without checking aspect.
-        fn = self.conversion_reg.get( scale_uid_pair ) 
+        fn = self.conversion_reg.get( scale_pair ) 
         
         if fn is not None: 
             return fn
@@ -161,7 +161,7 @@ class Context(object):
             ):
                 fn = self.scales_for_aspect_reg.get(
                     _aspect, 
-                    scale_uid_pair, 
+                    scale_pair, 
                     None 
                 )
             
@@ -172,7 +172,7 @@ class Context(object):
         raise RuntimeError(
             "no conversion for '{!r}' to '{!r}'".format(
                 src_exp,
-                dst_scale_id
+                dst_scale
             )
         )
 
@@ -182,16 +182,17 @@ class Context(object):
         different scale and aspect.
         
         """        
-        src_scale_aspect = (src_exp._scale,src_exp._aspect)
-                        
+        src_pair = (src_exp._scale.uid,src_exp._aspect.uid)
+        dst_pair = (dst_scale_aspect[0].uid,dst_scale_aspect[1].uid)  
+        
         try:
-            return self.casting_reg[ (src_scale_aspect,dst_scale_aspect) ]
+            return self.casting_reg[ (src_pair,dst_pair) ]
             
         except KeyError:
             raise RuntimeError(
                 "no cast defined from '{!r}' to '{!r}'".format(
-                    src_scale_aspect,
-                    dst_scale_aspect
+                    src_pair,
+                    dst_pair
                 )
             )            
 
