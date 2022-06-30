@@ -157,13 +157,10 @@ class Context(object):
             # Has an aspect has been declared?
             _aspect = src_exp._aspect
             if( _aspect is not None 
-            and _aspect in self.scales_for_aspect_reg
+            and _aspect.uid in self.scales_for_aspect_reg
             ):
-                fn = self.scales_for_aspect_reg.get(
-                    _aspect, 
-                    scale_pair, 
-                    None 
-                )
+                _for_aspect = self.scales_for_aspect_reg[_aspect.uid]
+                fn = _for_aspect.get(scale_pair, None)
             
                 if fn is not None:
                     return fn
