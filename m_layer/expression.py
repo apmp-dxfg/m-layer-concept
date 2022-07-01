@@ -24,7 +24,7 @@ class Expression(object):
         locale=cxt.locale       
         
         return "{} {}".format( 
-            self.value(), 
+            self._value, 
             self._scale._json_scale_to_ref(locale,short) 
         )
         
@@ -32,7 +32,7 @@ class Expression(object):
         locale=cxt.locale
         short=False
         
-        v = "{}".format( self.value() )
+        v = "{}".format( cxt.value_fmt.format(self._value) )
         r = "{}".format( self._scale._json_scale_to_ref(locale,short) )
         
         if self._aspect is None:
@@ -40,15 +40,19 @@ class Expression(object):
         else:
             a = "{}".format( self._aspect._from_json(locale,short) )
             return "Expression({},{},{})".format(v,r,a)
-        
+   
+    @property
     def value(self):
-        """
-        Return the value 
+        return self._value
+
+    @property
+    def scale(self):
+        return self._scale 
         
-        """
-        return cxt.value_fmt.format(self._value)
-
-
+    @property 
+    def aspect(self):
+        return self._aspect
+    
     # ---------------------------------------------------------------------------
     def convert(self,dst_scale):
         """
