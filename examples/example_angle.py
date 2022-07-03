@@ -15,7 +15,7 @@ def display(xp):
     print(repr(xp))
     print()
 
-a = Expression.from_scale_aspect(-90,ml_imp_degree_bounded_180,ml_plane_angle)
+a = expr(-90,ml_imp_degree_bounded_180,ml_plane_angle)
 
 display(a)
 

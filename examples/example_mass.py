@@ -11,7 +11,7 @@ ml_si_kilogram_ratio = Scale( ('ml-si-kilogram-ratio', 1278216704149905709243985
 ml_imp_pound_ratio = Scale( ('ml-imp-pound-ratio', 188380796861507506602975683857494523991) )
 
 # x = XP(12,ml_si_kilogram_ratio,ml_mass)
-x = Expression.from_scale(12,ml_si_kilogram_ratio)
+x = expr(12,ml_si_kilogram_ratio)
 display(x)
 
 y = x.convert(ml_imp_pound_ratio)
