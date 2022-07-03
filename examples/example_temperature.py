@@ -11,7 +11,7 @@ def display(xp):
     print(repr(xp))
     print()
 
-t = XP(72,ml_imp_fahrenheit_interval,ml_temperature)
+t = Expression(72, ScaleAspect( ml_imp_fahrenheit_interval,ml_temperature) )
 # t = XP(72,ml_imp_fahrenheit_interval)
 display(t)
 

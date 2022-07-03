@@ -2,14 +2,16 @@
 from m_layer import default_context as cxt
 
 __all__ = (
-    'Expression', 'XP',
+    'Expression', 
     'token', 'value',
     'convert', 
     'cast',
     'aspect', 'kind_of_quantity',
     'scale',
+    'scale_aspect',
 )
-  
+
+
 # ---------------------------------------------------------------------------
 class Expression(object):
     
@@ -18,20 +20,33 @@ class Expression(object):
     A third component called aspect may also be specified.
     """
     
-    __slots__ = ("_token","_scale","_aspect")
+    __slots__ = ("_token","_scale_aspect")
     
-    def __init__(self,token,scale,aspect=None):
+    def __init__(self,token,scale_aspect):
         self._token = token 
-        self._scale = scale
-        self._aspect = aspect
-        
+        self._scale_aspect = scale_aspect
+         
+    @staticmethod
+    def from_scale(token,scale):
+        return Expression( 
+            token,
+            scale.to_scale_aspect(None) 
+        ) 
+ 
+    @staticmethod
+    def from_scale_aspect(token,scale,aspect):
+        return Expression(
+            token,
+            scale.to_scale_aspect(aspect)
+        ) 
+ 
     def __str__(self):
         short=True
         locale=cxt.locale       
         
         return "{} {}".format( 
             self._token, 
-            self._scale._json_scale_to_ref(locale,short) 
+            self._scale_aspect.scale._json_scale_to_ref(locale,short) 
         )
         
     def __repr__(self):
@@ -39,24 +54,17 @@ class Expression(object):
         short=False
         
         v = "{}".format( self.token )
-        r = "{}".format( self._scale._json_scale_to_ref(locale,short) )
+        r = "{}".format( self._scale_aspect.scale._json_scale_to_ref(locale,short) )
         
-        if self._aspect is None:
+        if self.aspect is None:
             return "Expression({},{})".format(v,r)
         else:
-            a = "{}".format( self._aspect._from_json(locale,short) )
+            a = "{}".format( self.aspect._from_json(locale,short) )
             return "Expression({},{},{})".format(v,r,a)
+            
     @property
     def token(self):
         return self._token
-
-    @property
-    def scale(self):
-        return self._scale 
-        
-    @property 
-    def aspect(self):
-        return self._aspect
 
     # Alias
     # In future it may be sensible to define a subclass of Expression 
@@ -65,32 +73,42 @@ class Expression(object):
  
     @property 
     def scale(self):
-        return self._scale 
+        return self._scale_aspect.scale 
  
     @property 
     def aspect(self):
-        return self._aspect 
+        return self._scale_aspect.aspect 
         
     # Alias
     # See also the comment for ``value`` above     
     kind_of_quantity = aspect 
-    
+ 
+    @property 
+    def scale_aspect(self):
+        return self._scale_aspect
+        
+ 
     # ---------------------------------------------------------------------------
     def convert(self,dst_scale):
         """
         Return a new ``Expression`` in terms of the scale provided
         
         """
+        if hasattr(dst_scale,'aspect'):
+            # treat as a ScaleAspect 
+            dst_scale = dst_scale.scale 
+            
+        dst_scale_aspect = dst_scale.to_scale_aspect()
+        
         fn = cxt.conversion_fn( self, dst_scale )
  
         return Expression(
             fn( self._token ),
-            dst_scale,
-            self._aspect
+            dst_scale.to_scale_aspect(self._scale_aspect.aspect)
         )
 
     # ---------------------------------------------------------------------------
-    def cast(self,dst_scale,dst_aspect=None):
+    def cast(self,dst_scale_aspect):
         """
         Return a new ``Expression`` in terms of the aspect and scale provided
 
@@ -98,21 +116,25 @@ class Expression(object):
         new expression will be the same as ``self``.
                 
         """
-        if self._aspect is None:
+        # `dst_scale_aspect` could be a Scale or a ScaleAspect
+        dst_scale_aspect = dst_scale_aspect.to_scale_aspect()
+        
+        if self._scale_aspect.aspect is None:
             raise RuntimeError(
                 "{!r} has no declared aspect, so it cannot be cast".format(self)
             )
 
         # No destination aspect => reuse the object's aspect
-        if dst_aspect is None: 
-            dst_aspect = self._aspect
+        if dst_scale_aspect.aspect is None: 
+            dst_scale_aspect = dst_scale_aspect.scale.to_scale_aspect(
+                self._scale_aspect.aspect
+            )
 
-        fn = cxt.casting_fn(self, (dst_scale, dst_aspect) )
+        fn = cxt.casting_fn(self, dst_scale_aspect )
         
         return Expression(
             fn( self._token ),
-            dst_scale,
-            dst_aspect
+            dst_scale_aspect
         )
 
 XP = Expression
@@ -128,8 +150,8 @@ value = token
 def convert(xp,dst_scale):
     return xp.convert(dst_scale)
     
-def cast(xp,dst_scale,dst_aspect=None):
-    return xp.cast(dst_scale,dst_aspect)
+def cast(xp,dst_scale_aspect):
+    return xp.cast(dst_scale_aspect)
     
 def aspect(xp):
     return xp.aspect 
@@ -138,7 +160,13 @@ kind_of_quantity = aspect
     
 def scale(xp):
     return xp.scale 
-    
+
+def scale_aspect(xp):
+    return xp.scale_aspect 
+   
+def expression():
+    """
+    """
 # ===========================================================================
 if __name__ == '__main__':
     

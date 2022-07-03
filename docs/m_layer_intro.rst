@@ -16,29 +16,21 @@ There are also problems with the units for temperature. You can legitimately exp
 
 Another difficulty occurs with plane angles. The name of the SI unit for angle is radian, but the range of values is not specified and can be limited. Sometimes the range extends from -pi to +pi, and sometimes from 0 to 2pi; in other cases there are no limits. This circular, or cyclic, property is quite different from any other SI unit.
 
-Although these are just exceptional cases, they reflect properties of measurement scales and units of measurement that the SI cannot support properly. To represent a wide range of quantities and units in digital systems, these properties should be handled better.  
+Although these are just exceptional cases, they reflect properties of measurement scales and units of measurement that the SI cannot support properly. To represent a wide range of quantities and units in digital systems, these properties should be handled better. The purpose of the M-layer is to provide a framework to support digital representations of measured data in general. 
 
 What is the M-layer?
 ====================
 
-A quantity is traditionally expressed by pairing a number with the name, or symbol, for a unit, like 10 kg. However, to interpret expressions, people can use other contextual information as well. 
-
-Digital systems are not as good as people at handling ambiguity, so the M-layer addresses the need for unambiguous and legitimate conversion of digital data. It does this by taking into account: 
+A quantity is traditionally expressed by pairing a number with the name, or symbol, for a unit, like 10 kg. However, people often need to use contextual information to interpret expressions like this. Digital systems are not as good as people at handling ambiguity, so the M-layer provides a framework to assist with the interpretation of digital data. It does this by taking into account: 
 
     * the type of scale being used (relates to conversion operations)
     * the nature what is being expressed (mass, temperature, angle, etc.)
     
-The first point is handled by combining units with scale types to extend the traditional notion of a unit, or reference. These new entities overcome the ambiguity caused, for example, by allowing degrees Celsius to express both temperature and temperature difference, because the type of scale is different in each case. They are called M-layer 'scales'.
+The first point is handled by extending the traditional notion of a unit, or reference. The M-layer uses an entity called 'Scale' to associate a unit, or reference, with a type of scale. These entities overcome the ambiguity caused, for example, by allowing the unit degrees Celsius to express both temperature and temperature difference.
 
-The second point is handled by explicitly registering different kinds of quantity. We call this new component the 'aspect'. The meaning of 'aspect' is similar to, but broader than, 'kind of quantity' as used in relation to SI units.
+The second point is handled by explicitly recognising different kinds of quantity in entities called 'Aspect'. The sense of 'aspect' is similar to, but broader than, 'kind of quantity' as used in relation to SI units.
 
-The M-layer can express data with three components. For some datum ``q``, there is: 
-
-    * a value, ``{q}``; 
-    * a scale, ``|[q]|``.  
-    * an aspect, ``<q>``; 
-
-Here is a simple example involving mass. The script creates an expression of 12 kg and then converts it to an expression in Imperial pounds. ::
+Here is a simple example involving mass. The script declares local names (``ml_mass``, ``ml_kg``, and ``ml_lb``) for uniquely identified M-layer records. It uses the kilogram scale and the mass aspect to create an expression of 12 kg and then converts that expression to another in Imperial pounds. ::
 
     from m_layer import *
     

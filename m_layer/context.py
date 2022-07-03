@@ -140,7 +140,7 @@ class Context(object):
         to a different expression in terms of `dst_scale`.
         
         """                
-        scale_pair = (src_exp._scale.uid,dst_scale.uid)
+        scale_pair = (src_exp.scale.uid,dst_scale.uid)
         
         # If there is a pair of scales in the register
         # then use it without checking aspect.
@@ -155,12 +155,12 @@ class Context(object):
             # (e.g., wavenumber to frequency for photon energy)
         
             # Has an aspect has been declared?
-            _aspect = src_exp._aspect
-            if( _aspect is not None 
-            and _aspect.uid in self.scales_for_aspect_reg
+            aspect = src_exp.aspect
+            if( aspect is not None 
+            and aspect.uid in self.scales_for_aspect_reg
             ):
-                _for_aspect = self.scales_for_aspect_reg[_aspect.uid]
-                fn = _for_aspect.get(scale_pair, None)
+                for_aspect = self.scales_for_aspect_reg[aspect.uid]
+                fn = for_aspect.get(scale_pair, None)
             
                 if fn is not None:
                     return fn
@@ -179,8 +179,8 @@ class Context(object):
         different scale and aspect.
         
         """        
-        src_pair = (src_exp._scale.uid,src_exp._aspect.uid)
-        dst_pair = (dst_scale_aspect[0].uid,dst_scale_aspect[1].uid)  
+        src_pair = src_exp.scale_aspect.uid
+        dst_pair = dst_scale_aspect.uid  
         
         try:
             return self.casting_reg[ (src_pair,dst_pair) ]

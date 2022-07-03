@@ -1,5 +1,9 @@
 from m_layer import default_context as cxt
 
+from m_layer.scale_aspect import ScaleAspect
+
+__all__ = ('Scale','to_scale_aspect',)
+
 # ---------------------------------------------------------------------------
 class Scale(object):
 
@@ -33,11 +37,14 @@ class Scale(object):
         return self._scale_uid
         
     def __eq__(self,other):
-        # True if the UUIDs match
         return self.uid[1] == other.uid[1] 
         
     def __str__(self):
         return str( self._from_json() )
         
     def __repr__(self):
-        return "Scale{!r}".format( self.uid )
+        return "Scale({!r})".format( self.uid )
+
+    def to_scale_aspect(self,aspect=None):
+        return ScaleAspect(self,aspect) 
+         

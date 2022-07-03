@@ -9,12 +9,13 @@ ml_si_radian_bounded_two_pi = Scale( ('ml-si-radian-bounded-two-pi', 30055621273
 # ml_imp_degree_bounded_360 = ('ml-imp-degree-bounded-360', 125066222841962802760576607996391537405)
 ml_imp_degree_bounded_180 = Scale( ('ml-imp-degree-bounded-180', 273805538217618733078298377573965188309) )
 
+
 def display(xp):
     print(xp)
     print(repr(xp))
     print()
 
-a = XP(-90,ml_imp_degree_bounded_180,ml_plane_angle)
+a = Expression.from_scale_aspect(-90,ml_imp_degree_bounded_180,ml_plane_angle)
 
 display(a)
 
