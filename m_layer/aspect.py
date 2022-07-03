@@ -1,4 +1,4 @@
-from m_layer import default_context as cxt
+from m_layer.context import default_context as cxt
 
 # ---------------------------------------------------------------------------
 class Aspect(object):
