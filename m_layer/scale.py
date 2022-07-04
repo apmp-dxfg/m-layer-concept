@@ -33,9 +33,11 @@ class Scale(object):
         
     @property 
     def uid(self):
+        "The M-layer identifier for this aspect"
         return self._scale_uid
         
     def __eq__(self,other):
+        "True when both objects have the same uids"
         return self.uid[1] == other.uid[1] 
         
     def __str__(self):
@@ -45,5 +47,9 @@ class Scale(object):
         return "Scale({!r})".format( self.uid )
 
     def to_scale_aspect(self,aspect=None):
+        """Return a :class:`~scale_aspect.ScaleAspect` object 
+        with the same scale and aspect ``aspect``.
+        
+        """
         return ScaleAspect(self,aspect) 
          

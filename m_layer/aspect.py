@@ -25,10 +25,11 @@ class Aspect(object):
 
     @property 
     def uid(self):
+        "The M-layer identifier for this aspect"
         return self._aspect_uid
         
     def __eq__(self,other):
-        # True if the UUIDs match
+        "True when both objects have the same uids"
         return self.uid[1] == other.uid[1] 
         
     def __str__(self):
