@@ -6,21 +6,49 @@ M-layer API
 
 .. contents::
    :local:
+  
+Functions
+---------  
+.. autofunction:: expression.expr
 
-.. _api_module:
+.. autofunction:: expression.convert
+.. autofunction:: expression.cast
+.. autofunction:: expression.token
 
-.. automodule:: api
-	:members: 
-	:inherited-members:
+.. py:function:: value(xp) 
+
+    An alias for :func:`~expression.token` that returns the value of an expression
     
+.. autofunction:: expression.scale
+.. autofunction:: expression.aspect
+
+.. py:function:: kind_of_quantity(xp) 
+
+    An alias for :func:`~expression.aspect` that returns the kind of quantity of an expression
+ 
+Classes
+-------
+ 
+.. autoclass:: expression.Expression
+    :members: token, value, scale, aspect, scale_aspect, convert, cast 
+
 .. autoclass:: aspect.Aspect
     :members: uid
     :special-members: __eq__
     
 .. autoclass:: scale.Scale
-    :members: uid, to_scale_aspect
+    :members: uid
     :special-members: __eq__
     
 .. autoclass:: scale_aspect.ScaleAspect
-    :members: uid, to_scale_aspect, scale, aspect
+    :members: uid, scale, aspect
     :special-members: __eq__
+   
+Utility functions
+-----------------
+The Python module `ml_to_py_key.py` can be used to display the aspects and scales in the M-layer register. 
+
+The output is convenient for copy-and-pasting during script development.
+   
+.. automodule:: ml_to_py_key
+   

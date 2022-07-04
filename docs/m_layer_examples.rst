@@ -106,10 +106,10 @@ Explicit use of aspects  will avoid ambiguity and is recommended. If an aspect h
     ...
     RuntimeError: incompatible aspects: [Aspect('ml-temperature-difference', 212368324110263031011700652725345220325), Aspect('ml-temperature', 316901515895475271730171605211001099255)]
     
-Working with scale-aspect pairs
--------------------------------
+Scale-aspect pairs
+------------------
 
-Often pairs of scales and aspects that provide a convenient way of expressing data in a particular context can be identified. The M-layer provides a class to encapsulate scale-aspect pairs :class:`~scale_aspect.ScaleAspect`. Here, the cases shown above are handled with scale-aspect pairs::
+Often, paired scales and aspects provide a convenient way of expressing data in a particular context. The M-layer has the :class:`~scale_aspect.ScaleAspect` class to encapsulate scale-aspect pairs. The following code uses scale-aspect pairs to handle the cases shown above::
 
     >>> celsius_dT = ScaleAspect( celsius_ratio, dT )
     >>> celsius_T = ScaleAspect( celsius_interval, T )
