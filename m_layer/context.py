@@ -1,3 +1,8 @@
+"""
+The Context is an interface between external M-layer registers 
+and the local Python session where the M-layer is being used.
+
+"""
 import json 
 import glob
 
@@ -26,9 +31,8 @@ def uid_as_str(uid,short=True):
 class Context(object):
     
     """
-    A `Context` contains information about aspects, scales, conversions,
-    and conventional references that provide contextual information about 
-    `AspectValue` objects. 
+    A `Context` object contains M-layer records for aspects, scales, 
+    conversions, casting, and conventional references. 
     """
     
     def __init__(
@@ -107,8 +111,6 @@ class Context(object):
             self._load_entity(data)
             
     def loads(self,json_str,**kwargs):
-        """
-        """
         data = json.loads(json_str,**kwargs)
         self._loader(data)
             
@@ -118,6 +120,14 @@ class Context(object):
         self._loader(data)
  
     def load(self,path,**kwargs):
+        """
+        Called to initialise internal M-layer records
+        
+        Args:
+            path: an expression to glob M-layer JSON files 
+            **kwargs: keyword arguments passed to glob
+            
+        """
         for f_json in glob.glob( path ):
             try:
                 default_context.load_json( f_json, **kwargs )
@@ -138,6 +148,17 @@ class Context(object):
         Return a function to convert a value expressed 
         in `src_scale` to an expression in terms of `dst_scale`.
         
+        The ``aspect`` argument is used to expand the search for 
+        conversion definitions to those specified for a particular aspect.  
+        
+        Args:
+            src_scale (:class:`~scale.Scale`): the initial scale 
+            dst_scale (:class:`~scale.Scale`): the final scale
+            aspect (:class:`~aspect.Aspect`, optional): the aspect for scales
+        
+        Returns:
+            A Python function 
+            
         """                
         scale_pair = (src_scale.uid,dst_scale.uid)
         
@@ -182,9 +203,13 @@ class Context(object):
 
     def casting_fn(self,src_exp,dst_scale_aspect):
         """
-        Return a function to cast the value in `src_exp` to a 
-        different scale and aspect.
+        Return a function to cast the value of ``src_exp`` to an
+        expression in ``dst_scale_aspect``.
         
+        Args:
+            src_exp (:class:`~expression.Expression`): the initial expression
+            dst_scale_aspect (:class:`scale_aspect.ScaleAspect`): the scale-aspect pair for the final expression
+            
         """        
         src_pair = src_exp.scale_aspect.uid
         dst_pair = dst_scale_aspect.uid  

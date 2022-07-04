@@ -1,4 +1,9 @@
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+"""
+Casting can change the scale and aspect of an expression. 
+
+Legitimate castings are recorded in a :class:`~.casting_register.CastingRegister`, which is an attribute of the :class:`~context.Context` object.
+
+"""
 import json
 
 # Terms in JSON strings for numerical factors are converted to numbers using 
@@ -9,20 +14,21 @@ import math
 from m_layer import si_constants as si 
 
 # ---------------------------------------------------------------------------
-def to_tuple(lst):
+def _to_tuple(lst):
     """
     Convert nested lists to nested tuples
     """
     return tuple(
-        to_tuple(i) if isinstance(i, list) else i for i in lst
+        _to_tuple(i) if isinstance(i, list) else i for i in lst
     )
     
 # ---------------------------------------------------------------------------
 class CastingRegister(object):
     
     """
-    Holds a mapping of scale-aspect pairs 
-    to information about how to cast between expressions. 
+    A ``CastingRegister`` maps scale-aspect pairs 
+    to a function that will convert tokens between expressions
+    in different scale-aspects. 
     """
     
     def __init__(self,context):
@@ -38,6 +44,10 @@ class CastingRegister(object):
     def get(self,uid_pair,default=None):
         """
         Return a conversion function 
+        
+        Args:
+            uid_pair: a pair of M-layer scale-aspect uids
+            
         """
         return self._table.get( uid_pair, default ) 
         
@@ -47,9 +57,12 @@ class CastingRegister(object):
         """
         Create an entry for a casting function
         
+        Args:
+            entry: the M-layer record for a casting
+        
         """
-        uid_src = to_tuple( entry['src'] )        
-        uid_dst = to_tuple( entry['dst'] )
+        uid_src = _to_tuple( entry['src'] )        
+        uid_dst = _to_tuple( entry['dst'] )
             
         uid_pair = (uid_src,uid_dst)
 

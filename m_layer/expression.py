@@ -13,7 +13,6 @@ __all__ = (
     'scale_aspect',
 )
 
-
 # ---------------------------------------------------------------------------
 class Expression(object):
     
@@ -52,6 +51,7 @@ class Expression(object):
             
     @property
     def token(self):
+        "The token or value of the Expression"
         return self._token
 
     # Alias
@@ -61,10 +61,12 @@ class Expression(object):
  
     @property 
     def scale(self):
+        "The Scale of the Expression"
         return self._scale_aspect.scale 
  
     @property 
     def aspect(self):
+        "The Aspect of the Expression"
         return self._scale_aspect.aspect 
         
     # Alias
@@ -73,6 +75,7 @@ class Expression(object):
  
     @property 
     def scale_aspect(self):
+        "The ScaleAspect of the Expression"
         return self._scale_aspect
         
  
@@ -80,17 +83,17 @@ class Expression(object):
     def convert(self,dst_scale,aspect=None):
         """Return a new M-layer expression in the scale ``dst_scale``
         
-        The aspect of ``xp`` will be used for the new expression
-        if ``dst_scale`` is an :class:`~scale.Scale` object
-        or an :class:`~scale_aspect.ScaleAspect` object with 
-        no defined aspect.
+        If ``dst_scale`` is a :class:`~scale.Scale` object,
+        or a :class:`~scale_aspect.ScaleAspect` object with 
+        no defined aspect, then the aspect of the existing
+        expression will be applied to the new expression
         
-        The ``aspect`` argument must match that used in the 
-        expression, but if no aspect has been defined, the 
-        ``aspect`` argument will be applied to the new expression.
+        If ``aspect`` is defined, it must match the aspect in the 
+        existing expression. 
+        If the existing expression has no defined aspect, ``aspect`` 
+        will be applied to the new expression.
         
         Args:
-            xp (:class:`~expression.Expression`) : the expression to be converted    
             dst_scale (:class:`~scale_aspect.ScaleAspect` or :class:`~scale.Scale`): the scale-aspect pair for the new expression 
             aspect (:class:`~aspect.Aspect`,optional): an aspect may be specified
         
@@ -98,7 +101,7 @@ class Expression(object):
             :class:`~expression.Expression` 
             
         Raises:
-            RuntimeError: if ``aspect`` defined and differs from the aspect used in the expression being converted.
+            RuntimeError: if ``aspect`` differs from the aspect of the existing expression.
 
         """ 
         # Rules for determining the aspect:
@@ -145,12 +148,10 @@ class Expression(object):
     def cast(self,dst_scale_aspect):
         """Return a new M-layer expression in the scale-aspect ``dst_scale_aspect``
             
-        The aspect of ``xp`` will be used for the new expression
-        if ``dst_scale_aspect`` is has no defined aspect.
+        If ``dst_scale_aspect`` does not define an aspect, the aspect of the 
+        existing expression will be applied to the new expression.
 
-        Args:
-            xp(:class:`~expression.Expression`): the expression to be converted.
-            
+        Args:            
             dst_scale_aspect(:class:`~scale_aspect.ScaleAspect` or :class:`~scale.Scale`): 
                 the scale-aspect pair for the new expression. 
 
@@ -158,7 +159,7 @@ class Expression(object):
             an  M-layer :class:`~expression.Expression` 
 
         Raises:
-            RuntimeError: if no aspect is specified by ``xp`` 
+            RuntimeError: if no aspect is specified in the existing expression 
             
         """
         # `dst_scale_aspect` could be a Scale or a ScaleAspect
@@ -186,6 +187,7 @@ class Expression(object):
 # Unbound functions and aliases corresponding to ``Expression`` operations
 #
 def token(xp):
+    "Return the token or value from an expression"
     return xp.token
 
 value = token
@@ -193,11 +195,11 @@ value = token
 def convert(xp,dst_scale,aspect=None):
     """Return a new M-layer expression in the scale ``dst_scale``
     
-    The aspect of ``xp`` will be used for the new expression
-    if ``dst_scale`` is an :class:`~scale.Scale` object
-    or an :class:`~scale_aspect.ScaleAspect` object with 
-    no defined aspect.
-    
+    If ``dst_scale`` is a :class:`~scale.Scale` object,
+    or a :class:`~scale_aspect.ScaleAspect` object with 
+    no defined aspect, the aspect of ``xp`` will be 
+    applied to the new expression
+
     Args:
         xp (:class:`~expression.Expression`) : the expression to be converted    
         dst_scale (:class:`~scale_aspect.ScaleAspect` or :class:`~scale.Scale`): the scale-aspect pair for the new expression 
@@ -211,8 +213,8 @@ def convert(xp,dst_scale,aspect=None):
 def cast(xp,dst_scale_aspect):
     """Return a new M-layer expression in the scale-aspect ``dst_scale_aspect``
             
-    The aspect of ``xp`` will be used for the new expression
-    if ``dst_scale_aspect`` is has no defined aspect.
+    If ``dst_scale_aspect`` does not specify an aspect,
+    the aspect of ``xp`` will be applied to the new expression
 
     Args:
         xp (:class:`~expression.Expression`): the expression to be converted.
@@ -230,14 +232,17 @@ def cast(xp,dst_scale_aspect):
     return xp.cast(dst_scale_aspect)
     
 def aspect(xp):
+    "Return the aspect or kind of quantity of an expression"
     return xp.aspect 
     
 kind_of_quantity = aspect
     
 def scale(xp):
+    "Return the scale of an expression"
     return xp.scale 
 
 def scale_aspect(xp):
+    "Return the scale-aspect of an :class:`~expression.Expression`"
     return xp.scale_aspect 
   
 # ---------------------------------------------------------------------------
@@ -247,10 +252,9 @@ def expr(v,s,a=None):
     """Returns an M-layer expression 
     
     Args:
-        v: the value or token of the expression 
-        s(:class:`~scale_aspect.ScaleAspect` or :class:`~scale.Scale`): 
-        the scale-aspect pair for the expression 
-        a(:class:`~aspect.Aspect`, optional) the aspect fro the expression
+        v: the expression value or token
+        s(:class:`~scale_aspect.ScaleAspect` or :class:`~scale.Scale`): the scale-aspect pair for the expression 
+        a(:class:`~aspect.Aspect`, optional): the expression aspect 
     Returns:
         an  M-layer :class:`~expression.Expression`  
     

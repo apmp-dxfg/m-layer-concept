@@ -1,9 +1,11 @@
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-import json
+"""
+A special category of conversions can be declared where the scales involved are 
+not considered equivalent unless a specified aspect is involved. The 
+:class:`~scales_for_aspect_register.ScalesForAspectRegister` is used to hold 
+those records.
 
 """
-"""
-# Numerical terms in JSON strings are converted to numbers using `eval()`. 
+import json
 import math
 
 from m_layer import si_constants as si 
@@ -11,7 +13,10 @@ from m_layer.conversion_register import _set_conversion_fn
 
 # ---------------------------------------------------------------------------
 class ScalesForAspectRegister(object):
+
     """
+    A ``ScalesForAspectRegister`` maps an aspect to a mapping 
+    of scale pairs that index conversion functions. 
     """
     
     def __init__(self,context):
@@ -31,12 +36,25 @@ class ScalesForAspectRegister(object):
         return self._table[ aspect ]
  
     def get(self,aspect,default):
+        """
+        Return a mapping of scale-pairs to conversion functions
+        (same format as conversion_register entries)
+        
+        Args:
+            aspect (:class:`~aspect.Aspect`)
+            
+        """
         return self._table.get( aspect, default )
 
     # This method goes down to the second level 
     def get_fn(self,aspect,scale_uid_pair,default=None):
         """
         Return a conversion function 
+        
+        Args:
+            aspect (:class:`~aspect.Aspect`)
+            scale_uid_pair: a pair of M-layer scale uids
+            
         """        
         return self._table.get( aspect, {} ).get( scale_uid_pair, default ) 
                 

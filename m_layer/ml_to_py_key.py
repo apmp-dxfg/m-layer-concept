@@ -1,9 +1,28 @@
 """
-Script to display name-UID tuples that can be 
-copied into a python module and edited to give appropriate 
-local names for the tuples. 
+``ml_to_py_key`` is a command line script that displays name-UID declarations which could be copied directly into a  module. 
 
-A sequence of JSON file names can be given on the command line.
+The names can be changed to appropriate local names. 
+
+Usage:
+
+.. code:: text
+
+    C:\m_layer>python ml_to_py_key.py
+
+    C:\m_layer\json\\aspects\physical_aspects.json
+    ml_mass = Aspect( ('ml-mass', 321881801928222308627062904049725548287) )
+    ml_length = Aspect( ('ml-length', 993853592179723568440264076369400241) )
+    ml_frequency = Aspect( ('ml-frequency', 153247472008167864427404739264717558529) )
+    
+    C:\m_layer\json\scales\\frequency_scales.json
+    ml_si_hertz_ratio = Scale( ('ml-si-hertz-ratio', 307647520921278207356294979342476646905) )
+    ml_si_terahertz_ratio = Scale( ('ml-si-terahertz-ratio', 271382954339420591832277422907953823861) )
+    
+    C:\m_layer\json\scales\length_scales.json
+    ml_si_metre_ratio = Scale( ('ml-si-metre-ratio', 17771593641054934856197983478245767638) )
+    ml_si_nanometre_ratio = Scale( ('ml-si-nanometre-ratio', 257091757625055920788370123828667027186) )
+    
+    ...
     
 """
 import json 
@@ -16,11 +35,14 @@ fmt = dict(
     scales=r"{} = Scale( ('{}', {}) )"
 )
 
-root_dir = r"C:\proj_py\m-layer-concept\m_layer\json\scales"
+root_dir = r"C:\m_layer\json"
+# print("Root: ", root_dir)
+print()
 
 for sa in ('aspects','scales'):
 
     file_path = os.path.join( root_dir,sa,'*.json' )
+    # print(file_path,'\n')
     
     for f_json in glob.glob( file_path ):
         print(f_json)

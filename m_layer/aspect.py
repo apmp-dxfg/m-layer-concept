@@ -1,11 +1,17 @@
+"""
+The M-layer introduces the notion of a kind of quantity as an explicit component 
+in the expression of measured data. The term 'aspect' broader in meaning
+than 'kind of quantity'. 
+
+"""
 from m_layer.context import default_context as cxt
 
 # ---------------------------------------------------------------------------
 class Aspect(object):
 
     """
-    Lightweight wrapper around the unique identifier for 
-    an M-layer aspect.  
+    Aspect objects provide a lightweight wrapper around the 
+    unique identifier for an M-layer aspect.  
     """
 
     __slots__ = (

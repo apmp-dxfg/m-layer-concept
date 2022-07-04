@@ -1,4 +1,9 @@
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+"""
+Conversion changes the scale of an expression but leaves the type of scale and aspect unchanged. 
+
+Legitimate conversions are recorded in a :class:`~.conversion_register.ConversionRegister`, which is an attribute of the :class:`~context.Context` object.
+
+"""
 import json
 
 # Numerical terms in JSON strings are converted to numbers using `eval()`. 
@@ -59,10 +64,8 @@ def _set_conversion_fn(self,entry,_tbl, uid_pair):
 class ConversionRegister(object):
     
     """
-    A `ConversionRegister` holds a mapping scale pairs 
-    to information about how to convert between scales. 
-    Conversion does not change the type of scale, which 
-    differs from 'casting'.
+    A ``ConversionRegister`` maps scale pairs 
+    to a function that will convert tokens between scales. 
     """
     
     def __init__(self,context):
@@ -78,6 +81,10 @@ class ConversionRegister(object):
     def get(self,uid_pair,default=None):
         """
         Return a conversion function 
+        
+        Args:
+            uid_pair: a pair of M-layer scale uids
+            
         """
         # `uid` may be a list from json
         
@@ -91,6 +98,9 @@ class ConversionRegister(object):
         The type of the source and destination scales
         determines the form of the conversion function
         and the function parameters are elements in `entry`.
+        
+        Args:
+            entry: the M-layer record for a conversion
         
         """
         uid_ml_ref_src = tuple( entry['src'] )        

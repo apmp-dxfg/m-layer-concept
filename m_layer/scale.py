@@ -1,3 +1,8 @@
+"""
+The M-layer extends the traditional notion of a unit by pairing a scale type
+with a unit, or reference. 
+
+"""
 from m_layer.context import default_context as cxt
 from m_layer.scale_aspect import ScaleAspect
 
@@ -7,8 +12,8 @@ __all__ = ('Scale','to_scale_aspect',)
 class Scale(object):
 
     """
-    Lightweight wrapper around the unique identifier for 
-    an M-layer scale.  
+    Scale objects provide a lightweight wrapper around the 
+    unique identifier for an M-layer scale.  
     """
 
     __slots__ = (

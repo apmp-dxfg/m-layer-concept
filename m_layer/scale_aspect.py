@@ -1,12 +1,13 @@
-__all__ = (
-    'ScaleAspect', 
-) 
+"""
+The full expression of a datum in the M-layer combined a scale and an aspect with a token, or value. 
+
+"""
 
 # ---------------------------------------------------------------------------
 class ScaleAspect(object):
 
     """
-    A scale-aspect pair 
+    A lightweight wrapper around a scale-aspect pair
     """
 
     __slots__ = ("_scale","_aspect")
@@ -22,7 +23,7 @@ class ScaleAspect(object):
         
     @property 
     def aspect(self):
-        "The aspect"
+        "The aspect or kind of quantity"
         return self._aspect
             
     # Alias
@@ -30,7 +31,7 @@ class ScaleAspect(object):
 
     @property 
     def uid(self):
-        "A tuple of the M-layer identifiers for scale and aspect"
+        "A pair of M-layer identifiers for scale and aspect"
         return (self.scale.uid,self.aspect.uid)
         
     def __eq__(self,other):
