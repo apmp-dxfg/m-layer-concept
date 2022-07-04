@@ -68,7 +68,7 @@ extensions = [
 # Napoleon settings
 napoleon_google_docstring = True
 napoleon_numpy_docstring = False
-napoleon_include_init_with_doc = False
+napoleon_include_init_with_doc = True
 napoleon_include_private_with_doc = False
 napoleon_include_special_with_doc = False
 napoleon_use_admonition_for_examples = False
@@ -105,8 +105,6 @@ exclude_patterns = [u'_build', 'Thumbs.db', '.DS_Store']
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
 add_module_names = False
-
-
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
