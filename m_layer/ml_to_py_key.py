@@ -11,36 +11,16 @@ import sys
 import glob 
 import os.path
 
-# set as appropriate 
-# root_dir = r"C:\proj_py\m-layer-concept\m_layer\json\scales"
-# fmt = r"{} = Scale( ('{}', {}) )"
+fmt = dict( 
+    aspects=r"{} = Aspect( ('{}', {}) )",
+    scales=r"{} = Scale( ('{}', {}) )"
+)
 
-root_dir = r"C:\proj_py\m-layer-concept\m_layer\json\aspects"
-fmt = r"{} = Aspect( ('{}', {}) )"
+root_dir = r"C:\proj_py\m-layer-concept\m_layer\json\scales"
 
-# One or more JSON file names (without extension)
-if len(sys.argv) > 1:
-    for a_i in sys.argv[1:]:
+for sa in ('aspects','scales'):
 
-        file_path = os.path.join(
-            root_dir,
-            a_i + '.json'
-        )
-        
-        with open(file_path,'r') as f:
-            data = json.load(f)        
-        
-        for d_i in data:
-            
-            d = d_i['uid']
-            new_name = d[0].replace('-','_')
-            str_exp = fmt.format(new_name,d[0],d[1])
-        
-            print(str_exp)
-            
-        print()
-else:
-    file_path = os.path.join( root_dir,'*.json' )
+    file_path = os.path.join( root_dir,sa,'*.json' )
     
     for f_json in glob.glob( file_path ):
         print(f_json)
@@ -51,7 +31,7 @@ else:
             
             d = d_i['uid']
             new_name = d[0].replace('-','_')
-            str_exp = fmt.format(new_name,d[0],d[1])
+            str_exp = fmt[sa].format(new_name,d[0],d[1])
         
             print(str_exp)
             
