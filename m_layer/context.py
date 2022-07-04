@@ -133,16 +133,16 @@ class Context(object):
     def locale(self,l):
         self._locale = l 
         
-    def conversion_fn(self,src_exp,dst_scale):
+    def conversion_fn(self,src_scale,dst_scale,aspect=None):
         """
-        Return a function to convert the value in `src_exp` 
-        to a different expression in terms of `dst_scale`.
+        Return a function to convert a value expressed 
+        in `src_scale` to an expression in terms of `dst_scale`.
         
         """                
-        scale_pair = (src_exp.scale.uid,dst_scale.uid)
+        scale_pair = (src_scale.uid,dst_scale.uid)
         
-        # If there is a pair of scales in the register
-        # then use it without checking aspect.
+        # If there is a pair of matching scales in the register
+        # then use that without checking aspect.
         fn = self.conversion_reg.get( scale_pair ) 
         
         if fn is not None: 
@@ -154,7 +154,6 @@ class Context(object):
             # (e.g., wavenumber to frequency for photon energy)
         
             # Has an aspect has been declared?
-            aspect = src_exp.aspect
             if( aspect is not None 
             and aspect.uid in self.scales_for_aspect_reg
             ):
@@ -164,13 +163,22 @@ class Context(object):
                 if fn is not None:
                     return fn
             
-        # This is a failure    
-        raise RuntimeError(
-            "no conversion for '{!r}' to '{!r}'".format(
-                src_exp,
-                dst_scale
+        # This is a failure 
+        if aspect is None:
+            raise RuntimeError(
+                "no conversion from {!r} to {!r}".format(
+                    src_scale,
+                    dst_scale
+                )
             )
-        )
+        else:
+            raise RuntimeError(
+                "no conversion from {!r} to {!r} for {!r}".format(
+                    src_scale,
+                    dst_scale,
+                    aspect
+                )
+            )
 
     def casting_fn(self,src_exp,dst_scale_aspect):
         """
