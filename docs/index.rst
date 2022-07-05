@@ -10,6 +10,13 @@ Introduction
     Introduction <m_layer_intro>
     Examples <m_layer_examples>
 
+Concepts
+--------
+.. toctree::
+   :maxdepth: 1
+
+    Concepts <m_layer_concepts>
+
 Application programming interface
 ---------------------------------
 .. toctree::

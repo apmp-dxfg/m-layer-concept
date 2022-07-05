@@ -2,7 +2,7 @@
 M-Layer
 =======
 
-|docs|
+|docs| |github tests|
 
 The idea of an M-Layer is to support quantity expressions in digital systems. The M-Layer extends conventional units with information about kind of quantity and level of measurement (class of scale). 
 
@@ -26,3 +26,5 @@ The documentation for the latest version of **M-Layer** can be found `here <http
     :target: https://m-layer-concept.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
       
+.. |github tests| image:: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml/badge.svg
+   :target: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml
