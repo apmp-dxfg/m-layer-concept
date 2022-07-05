@@ -5,7 +5,10 @@ Release Notes
 Version 0.2.0 (2022-??-??)
 ==========================
 
-    * Read The Docs documentation supported
+    * A unit test suite is included
+    * Documentation has been started, which includes examples of use and details about the current API
+    * Continuous integration on github now runs the unit test suite and doctests 
+    * Building the Read The Docs documentation is automated on github
 
 Version 0.1.0 (2022-04-11)
 ==========================
