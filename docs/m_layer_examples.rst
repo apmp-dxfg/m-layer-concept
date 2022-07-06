@@ -27,9 +27,9 @@ So, conversion between Fahrenheit and degree Celsius can be carried out::
     ...    print()
     
     >>> celsius_interval = Scale( ('ml-si-celsius-interval', 245795086332095731716589481707012001072) )
-    >>> fahrenheit = Scale( ('ml-imp-fahrenheit-interval', 22817745368296240233220712518826840767) )
+    >>> fahrenheit_interval = Scale( ('ml-imp-fahrenheit-interval', 22817745368296240233220712518826840767) )
     
-    >>> t = expr(72,fahrenheit)
+    >>> t = expr(72,fahrenheit_interval)
     >>> display(t)
     72 degree F
     Expression(72,fahrenheit)
@@ -64,7 +64,7 @@ Information about the aspect can be specified when initially creating an express
 Temperature difference  
 ----------------------
 
-The nuance between units for temperature and temperature difference is manageable with the M-layer. For example, a temperature difference expressed in degree Celsius is not convertible to Fahrenheit, because the type of scale is different::
+The nuance between temperature and temperature difference is manageable with the M-layer. Firstly, a temperature difference expressed in degrees Celsius is not convertible to temperature in degrees Fahrenheit, because that conversion is not considered legitimate::
 
     >>> celsius_ratio = Scale( ('ml-si-celsius-ratio', 278784445377172064355281533676474538407) )
 
@@ -73,26 +73,26 @@ The nuance between units for temperature and temperature difference is manageabl
     10 degree C
     Expression(10,celsius)
     <BLANKLINE>
-    >>> t_diff_C.convert(fahrenheit)
+    >>> t_diff_C.convert(fahrenheit_interval)
     Traceback (most recent call last):
     ...
     RuntimeError: no conversion from Scale(('ml-si-celsius-ratio', 278784445377172064355281533676474538407)) to Scale(('ml-imp-fahrenheit-interval', 22817745368296240233220712518826840767))
 
-It is, however, convertible to kelvin::
+However, degrees Celsius are convertible to kelvin::
 
     >>> display( t_diff_C.convert(kelvin) )
     10 K
     Expression(10,kelvin)
     <BLANKLINE>
     
-It is important to note that these expressions have left the aspect undefined, so the illegal conversion is detected requesting a change of scale type during conversion. The following conversion would be allowed, because the aspect was not specified earlier ::
+It is important to note that these expressions have not defined the aspect. That means the following (probably erroneous) conversion would be allowed, because the aspect was not specified earlier::
 
     >>> display( t_diff_C.convert(kelvin,T) )
     10 K
     Expression(10,kelvin,temperature)
     <BLANKLINE>
     
-Explicit use of aspects  will avoid ambiguity and is recommended. If an aspect had been specified initially, the illegal conversion above could have been detected, as shown below. 
+Explicit use of aspects is recommended to avoid such ambiguity. If an aspect had been specified initially, the conversion above could have been flagged as illegal:: 
 
     >>> dT = Aspect( ('ml-temperature-difference', 212368324110263031011700652725345220325) )
 
@@ -101,7 +101,7 @@ Explicit use of aspects  will avoid ambiguity and is recommended. If an aspect h
     10 degree C
     Expression(10,celsius,temperature-difference)
     <BLANKLINE>
-    >>> display( t_diff_C.convert(kelvin,T) )
+    >>> display( t_diff_C.convert(kelvin,T) ) # Cannot convert to a different aspect
     Traceback (most recent call last):
     ...
     RuntimeError: incompatible aspects: [Aspect('ml-temperature-difference', 212368324110263031011700652725345220325), Aspect('ml-temperature', 316901515895475271730171605211001099255)]
@@ -109,11 +109,11 @@ Explicit use of aspects  will avoid ambiguity and is recommended. If an aspect h
 Scale-aspect pairs
 ------------------
 
-Often, paired scales and aspects provide a convenient way of expressing data in a particular context. The M-layer has the :class:`~scale_aspect.ScaleAspect` class to encapsulate scale-aspect pairs. The following code uses scale-aspect pairs to handle the cases shown above::
+Pairing scales with aspects provides a convenient way of expressing data in a particular context. The M-layer class :class:`~scale_aspect.ScaleAspect` encapsulates scale-aspect pairs for this purpose. The following code uses scale-aspect pairs to handle the cases shown above::
 
     >>> celsius_dT = ScaleAspect( celsius_ratio, dT )
     >>> celsius_T = ScaleAspect( celsius_interval, T )
-    >>> fahrenheit_T = ScaleAspect( fahrenheit, T )
+    >>> fahrenheit_T = ScaleAspect( fahrenheit_interval, T )
     >>> kelvin_T = ScaleAspect( kelvin, T )
     >>> kelvin_dT = ScaleAspect( kelvin, dT )
     
@@ -134,7 +134,7 @@ Often, paired scales and aspects provide a convenient way of expressing data in 
     Expression(295.3722222222222,kelvin,temperature)
     <BLANKLINE>
 
-    >>> t_diff_C.convert(fahrenheit_T)
+    >>> t_diff_C.convert(fahrenheit_T)  # The difference in aspect is detected 
     Traceback (most recent call last):
     ...
     RuntimeError: incompatible aspects: [Aspect('ml-temperature-difference', 212368324110263031011700652725345220325), Aspect('ml-temperature', 316901515895475271730171605211001099255)]
@@ -221,3 +221,62 @@ The wavelength is inversely related to energy (:math:`\lambda = h\,c / E`), so a
     Expression(1239.8419843320025,nanometre,photon energy)
     <BLANKLINE>
     
+Special unit names
+==================
+The SI defines special names for some units. However, unit names expressed in terms of SI base units remain valid alternatives, which can lead to ambiguity.
+
+A simple example is provided by the special unit names hertz and becquerel used for frequency and (radio) activity, respectively. Regardless of whether measurement data is expressed in hertz or becquerel it can legitimately be converted to :math:`s^{-1}`. However, once in :math:`s^{-1}` it is not clear which of the two special names would apply. 
+
+The M-layer can manage this asymmetry, as the following code demonstrates. ::
+
+    >>> per_second = Scale( ('ml-si-per-second-ratio', 323506565708733284157918472061580302494) )
+    >>> becquerel = Scale( ('ml-si-becquerel-ratio', 327022986202149438703681911339752143822) )
+    
+    >>> x = expr(96,becquerel)
+    >>> display(x)
+    96 Bq
+    Expression(96,becquerel)
+    <BLANKLINE>
+    >>> y = convert(x,per_second)
+    >>> display( y )
+    96 1/s
+    Expression(96,per-second)
+    <BLANKLINE>
+
+Here conversion from the special name becquerel to the generic unit is permitted. However, conversion in the opposite sense is not::
+   
+    >>> convert(y,becquerel)    # The aspect is unspecified
+    Traceback (most recent call last):
+    ...
+    RuntimeError: no conversion from Scale(('ml-si-per-second-ratio', 323506565708733284157918472061580302494)) to Scale(('ml-si-becquerel-ratio', 327022986202149438703681911339752143822))
+
+A conversion back to becquerel requires the aspect to be identified::
+
+    >>> activity = Aspect( ('ml-activity', 20106649997056189817632954430448298015) )
+    >>> display( convert(y,becquerel,activity) ) 
+    96 Bq
+    Expression(96,becquerel,activity)
+    <BLANKLINE>
+
+Similarly, the M-layer can prevent unintended consequences if the aspect is declared initially, because the aspect is retained in conversion. The following lines show that a round-trip from hertz to per-second and back to hertz is permitted when the aspect is known to be frequency, while an attempt to go from hertz to becquerel via per-second is blocked::
+
+    >>> frequency = Aspect( ('ml-frequency', 153247472008167864427404739264717558529) )
+    >>> hertz = Scale( ('ml-si-hertz-ratio', 307647520921278207356294979342476646905) )
+    >>> x = expr(110,hertz,frequency)
+    >>> display(x)
+    110 Hz
+    Expression(110,hertz,frequency)
+    <BLANKLINE>    
+    >>> y = convert(x,per_second)
+    >>> display(y)
+    110 1/s
+    Expression(110,per-second,frequency)
+    <BLANKLINE>
+    >>> display( convert(y,hertz) )
+    110 Hz
+    Expression(110,hertz,frequency)
+    <BLANKLINE>
+    >>> convert(y,becquerel)    # Illegitimate conversion is detected
+    Traceback (most recent call last):
+    ...
+    RuntimeError: no conversion from Scale(('ml-si-per-second-ratio', 323506565708733284157918472061580302494)) to Scale(('ml-si-becquerel-ratio', 327022986202149438703681911339752143822)) for Aspect('ml-frequency', 153247472008167864427404739264717558529)    
