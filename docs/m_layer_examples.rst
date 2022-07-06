@@ -40,22 +40,22 @@ So, conversion between Fahrenheit and degree Celsius can be carried out::
     Expression(22.22222222222222,celsius)
     <BLANKLINE>
 
-However, a casting operation to a different type of scale must be able to identify, or infer, an aspect for the initial expression.
-The M-layer will not allow an expression to be cast without information about the aspect. For example, ::
+However, a conversion to a different type of scale must be able to identify, or infer, the aspect of the initial expression.
+The M-layer will not allow an expression to be converted without this information. For example, ::
 
     >>> kelvin = Scale( ('ml-si-kelvin-ratio', 302952256288207449238881076502466548054) )
 
-    >>> t_K = cast(t_C,kelvin)
+    >>> t_K = convert(t_C,kelvin)
     Traceback (most recent call last):
     ...
-    RuntimeError: Expression(22.22222222222222,celsius) has no declared aspect, so it cannot be cast
+    RuntimeError: no conversion from Scale(('ml-si-celsius-interval', 245795086332095731716589481707012001072)) to Scale(('ml-si-kelvin-ratio', 302952256288207449238881076502466548054))
 
-Information about the aspect can be specified when initially creating an expression, or injected during later conversions, as shown below. However, once specified, conversion opertions cannot change the aspect. Only casting may change a specific aspect in the initial expression to a different one in the final expression. :: 
+Information about the aspect can be specified when initially creating an expression, or injected during conversion, as shown below. However, once specified, conversion operations cannot change the aspect. Only casting may change a specific aspect in the initial expression to a different one in the final expression. :: 
 
     >>> T = Aspect( ('ml-temperature', 316901515895475271730171605211001099255) )
     
     >>> t_C = t.convert(celsius_interval,T)     # Inject the aspect 'T'
-    >>> t_K = cast(t_C,kelvin)
+    >>> t_K = convert(t_C,kelvin)
     >>> display(t_K)
     295.3722222222222 K
     Expression(295.3722222222222,kelvin,temperature)
@@ -128,7 +128,7 @@ Often, paired scales and aspects provide a convenient way of expressing data in 
     Expression(22.22222222222222,celsius,temperature)
     <BLANKLINE>
 
-    >>> t_K = cast(t_C,kelvin_T)
+    >>> t_K = convert(t_C,kelvin_T)
     >>> display(t_K)
     295.3722222222222 K
     Expression(295.3722222222222,kelvin,temperature)
