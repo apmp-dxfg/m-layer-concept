@@ -211,8 +211,8 @@ class Context(object):
             dst_scale_aspect (:class:`scale_aspect.ScaleAspect`): the scale-aspect pair for the final expression
             
         """        
-        src_pair = src_exp.scale_aspect.uid
-        dst_pair = dst_scale_aspect.uid  
+        src_pair = src_exp.scale_aspect.uid     # scale-aspect pair
+        dst_pair = dst_scale_aspect.uid         # scale-aspect pair
         
         try:
             return self.casting_reg[ (src_pair,dst_pair) ]
