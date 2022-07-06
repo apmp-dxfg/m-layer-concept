@@ -20,7 +20,8 @@ display(t)
 t_C = t.convert(celsius_interval)
 display(t_C)
 
-# t_K = t_C.cast(ml_si_kelvin_ratio,ml_temperature)
+t_K = t_C.convert(kelvin,T)
+display(t_K)
 # t_K = cast(t_C,kelvin)  # unspecified => same aspect
 # display(t_K)
 
