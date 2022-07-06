@@ -150,7 +150,7 @@ class TestInit(unittest.TestCase):
                     UUID = str(i['uid'][1])
                     
                     if name in mapping:
-                        msg = "{} is used for {}".format(name,mapping[UUID])
+                        msg = "{} is used for {}".format(name,mapping[name])
                         self.fail(msg)
                     else:
                         mapping[name] = UUID 
