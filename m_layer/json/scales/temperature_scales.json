@@ -46,6 +46,18 @@
             314545844086913572859566825785893557749
         ],
         "scale_type": "interval"
+    },
+    {
+        "__type__": "Scale",
+        "uid": [
+            "ml-imp-fahrenheit-ratio", 
+            101981007467621768906734129174569080512
+        ],
+        "reference": [
+            "imp-fahrenheit",
+            314545844086913572859566825785893557749
+        ],
+        "scale_type": "ratio"
     }
 ]
     
