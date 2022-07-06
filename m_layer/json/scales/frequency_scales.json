@@ -14,6 +14,18 @@
     {
         "__type__": "Scale",
         "uid": [
+            "ml-si-per-second-ratio",
+            323506565708733284157918472061580302494
+        ],
+        "reference": [
+            "si-per-second",
+            116741812607130898126240371497946537198
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__type__": "Scale",
+        "uid": [
             "ml-si-terahertz-ratio",
             271382954339420591832277422907953823861
         ],
