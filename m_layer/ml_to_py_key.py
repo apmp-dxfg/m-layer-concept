@@ -35,7 +35,9 @@ fmt = dict(
     scales=r"{} = Scale( ('{}', {}) )"
 )
 
-root_dir = r"C:\m_layer\json"
+here = os.path.dirname(__file__)
+root_dir = os.path.join( here, r'json')
+
 # print("Root: ", root_dir)
 print()
 
