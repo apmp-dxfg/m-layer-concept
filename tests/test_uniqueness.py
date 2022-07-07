@@ -103,7 +103,7 @@ class TestInit(unittest.TestCase):
                 data = json.load(f)  
                 # Expect a list of dicts 
                 for i in data:
-                    if i['__type__'] == 'ScalesForAspect':
+                    if i['__entry__'] == 'ScalesForAspect':
                         a = i['aspect']
                         self.assertTrue( str(a[1]) in aspects )
                         
@@ -112,12 +112,12 @@ class TestInit(unittest.TestCase):
                             msg = "{} in {}".format(s[0],f_json)
                             self.assertTrue( str(s[1]) in scales, msg=msg )
                             
-                    elif i['__type__'] == 'Conversion':
+                    elif i['__entry__'] == 'Conversion':
                         s = i['src']
                         self.assertTrue( str(s[1]) in scales, msg=s )
                         s = i['dst']
                         self.assertTrue( str(s[1]) in scales, msg=s )
-                    elif i['__type__'] == 'Cast':
+                    elif i['__entry__'] == 'Cast':
                         # aspects follow scales in the JSON files 
                         x = i['src']
                         self.assertTrue( str(x[0][1]) in scales, msg=x )
@@ -127,7 +127,7 @@ class TestInit(unittest.TestCase):
                         self.assertTrue( str(x[0][1]) in scales, msg=x )
                         self.assertTrue( str(x[1][1]) in aspects, msg=x )
                     else:
-                        msg = "unknown type: {} in {}".format(i['__type__'],f_json)
+                        msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
                         self.fail(msg)
                     
     def _make_name_mapping(self,ml_type):
@@ -216,7 +216,7 @@ class TestInit(unittest.TestCase):
                 data = json.load(f)  
                 # Expect a list of dicts 
                 for i in data:
-                    if i['__type__'] == 'ScalesForAspect':
+                    if i['__entry__'] == 'ScalesForAspect':
                         a = i['aspect']
                         self.assertTrue( str(a[0]) in aspects )
                         
@@ -225,12 +225,12 @@ class TestInit(unittest.TestCase):
                             msg = "{} in {}".format(s[0],f_json)
                             self.assertTrue( str(s[0]) in scales, msg=msg )
                             
-                    elif i['__type__'] == 'Conversion':
+                    elif i['__entry__'] == 'Conversion':
                         s = i['src']
                         self.assertTrue( str(s[0]) in scales, msg=s )
                         s = i['dst']
                         self.assertTrue( str(s[0]) in scales, msg=s )
-                    elif i['__type__'] == 'Cast':
+                    elif i['__entry__'] == 'Cast':
                         # aspects follow scales in the JSON files 
                         x = i['src']
                         self.assertTrue( str(x[0][0]) in scales, msg=x )
@@ -240,7 +240,7 @@ class TestInit(unittest.TestCase):
                         self.assertTrue( str(x[0][0]) in scales, msg=x )
                         self.assertTrue( str(x[1][0]) in aspects, msg=x )
                     else:
-                        msg = "unknown type: {} in {}".format(i['__type__'],f_json)
+                        msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
                         self.fail(msg)        
 #============================================================================
 if __name__ == '__main__':
