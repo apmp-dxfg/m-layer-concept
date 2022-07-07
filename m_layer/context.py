@@ -211,6 +211,9 @@ class Context(object):
             src_exp (:class:`~expression.Expression`): the initial expression
             dst_scale_aspect (:class:`scale_aspect.ScaleAspect`): the scale-aspect pair for the final expression
             
+        Returns:
+            A Python function 
+            
         """        
         src_pair = src_exp.scale_aspect.uid     # scale-aspect pair
         dst_pair = dst_scale_aspect.uid         # scale-aspect pair
