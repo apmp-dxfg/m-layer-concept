@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Scale",
+        "__entry__": "Scale",
         "uid": [
             "ml-si-kilogram-ratio",
             12782167041499057092439851237297548539
@@ -12,7 +12,7 @@
         "scale_type": "ratio"
     },
     {
-        "__type__": "Scale",
+        "__entry__": "Scale",
         "uid": [
             "ml-imp-pound-ratio", 
             188380796861507506602975683857494523991

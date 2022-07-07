@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Scale",
+        "__entry__": "Scale",
         "uid": [
             "ml-si-per-metre-ratio",
             123480709627467673691026134370286736361
@@ -12,7 +12,7 @@
         "scale_type": "ratio"
     },
     {
-        "__type__": "Scale",
+        "__entry__": "Scale",
         "uid": [
             "ml-si-per-centimetre-ratio",
             333995508470114516586033303775415043902

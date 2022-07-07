@@ -1,6 +1,6 @@
 [    
     {
-        "__type__": "ScalesForAspect",
+        "__entry__": "ScalesForAspect",
         "aspect" : [
             "ml-photon-energy",
             291306321925738991196807372973812640971
@@ -16,7 +16,7 @@
         "factors": [ "si.tera/si.c*si.centi" ]
     },
     {
-        "__type__": "ScalesForAspect",
+        "__entry__": "ScalesForAspect",
         "aspect" : [
             "ml-photon-energy",
             291306321925738991196807372973812640971
@@ -32,7 +32,7 @@
         "factors": [ "si.hecto*si.c/si.tera" ]
     },
     {
-        "__type__": "ScalesForAspect",
+        "__entry__": "ScalesForAspect",
         "aspect" : [
             "ml-photon-energy",
             291306321925738991196807372973812640971
@@ -48,7 +48,7 @@
         "factors": [ "si.e/si.h/si.tera" ]
     },
     {
-        "__type__": "ScalesForAspect",
+        "__entry__": "ScalesForAspect",
         "aspect" : [
             "ml-photon-energy",
             291306321925738991196807372973812640971

@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Conversion",
+        "__entry__": "Conversion",
         "src": [
             "ml-si-kilogram-ratio",
             12782167041499057092439851237297548539
@@ -12,7 +12,7 @@
         "factors": [ "2.2046" ]
     },
     {
-        "__type__": "Conversion",
+        "__entry__": "Conversion",
         "src":[
             "ml-imp-pound-ratio", 
             188380796861507506602975683857494523991

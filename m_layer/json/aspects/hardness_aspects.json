@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Aspect",
+        "__entry__": "Aspect",
         "uid": [
             "ml-Vickers-hardness",
             22764066689128529062358332498159884424
@@ -16,7 +16,7 @@
         }
     },
     {
-        "__type__": "Aspect",
+        "__entry__": "Aspect",
         "uid": [
             "ml-Mohs-hardness",
             301609995418669955585394848633185126850

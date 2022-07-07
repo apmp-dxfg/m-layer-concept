@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Scale",
+        "__entry__": "Scale",
         "uid": [
             "ml-si-hertz-ratio",
             307647520921278207356294979342476646905
@@ -12,7 +12,7 @@
         "scale_type": "ratio"
     },
     {
-        "__type__": "Scale",
+        "__entry__": "Scale",
         "uid": [
             "ml-si-terahertz-ratio",
             271382954339420591832277422907953823861

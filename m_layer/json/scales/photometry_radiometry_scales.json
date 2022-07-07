@@ -1,6 +1,6 @@
 [
-{
-        "__type__": "Scale",
+    {
+        "__entry__": "Scale",
         "uid": [
             "ml-reflectance-ratio",
             231644681522224058023728516454961855496
@@ -12,7 +12,7 @@
         "scale_type": "ratio"
     },
     {
-        "__type__": "Scale",
+        "__entry__": "Scale",
         "uid": [
             "ml-transmittance-ratio", 
             230956687661085864018320632402706271588
@@ -24,7 +24,7 @@
         "scale_type": "ratio"
     },
     {
-        "__type__": "Scale",
+        "__entry__": "Scale",
         "uid": [
             "ml-absorbance-ratio", 
             201921699186292116923276028634282863251

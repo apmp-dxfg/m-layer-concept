@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Cast",
+        "__entry__": "Cast",
         "src": [
             [
                 "ml-imp-degree-bounded-180", 

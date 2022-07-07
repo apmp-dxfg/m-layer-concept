@@ -59,3 +59,10 @@ Scale-Aspect
     :noindex:
     :members:
     :special-members: __eq__
+    
+JSON register entries
+---------------------
+.. toctree::
+   :maxdepth: 0
+
+   JSON register <m_layer_json>

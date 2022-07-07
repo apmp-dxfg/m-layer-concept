@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-per-metre",
             276726793797424878828710191985121127007
@@ -21,7 +21,7 @@
         }
     },
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-per-centimetre",
             78709620630780303268211656738112203703

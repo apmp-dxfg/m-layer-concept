@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-kilogram",
             188151331508313165897603768130808181784
@@ -18,7 +18,7 @@
         }
     },
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "imp-pound",
             306364418201329042803003449530898574908

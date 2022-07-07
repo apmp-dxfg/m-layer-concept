@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Conversion",
+        "__entry__": "Conversion",
         "src": [
             "ml-si-joule-ratio",
             165050666678496469850612022016789737781
@@ -12,7 +12,7 @@
         "factors": [ "1.0/si.e" ]
     },
     {
-        "__type__": "Conversion",
+        "__entry__": "Conversion",
         "src": [
             "ml-electronvolt-ratio",
             121864523473489992307630707008460819401

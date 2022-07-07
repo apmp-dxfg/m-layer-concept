@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-metre",
             61268972265076316018593147152102406832
@@ -18,7 +18,7 @@
         }
     },
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-nanometre",
             230327124043985678197012494098272082173

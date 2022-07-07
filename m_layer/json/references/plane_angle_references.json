@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-radian",
             311561499536022904630229742672799278060
@@ -17,7 +17,7 @@
         }
     },
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "imp-degree",
             277818260541443964889383928855946049570

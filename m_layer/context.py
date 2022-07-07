@@ -83,7 +83,7 @@ class Context(object):
 
 
     def _load_entity(self,entity):
-        entity_type = entity['__type__']
+        entity_type = entity['__entry__']
         if entity_type == "Reference":
             self.reference_reg.set(entity)
         elif entity_type == "Aspect":

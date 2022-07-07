@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-celsius",
             318617443485372744730332268230803752214
@@ -17,7 +17,7 @@
         }
     },
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-kelvin",
             25703533220788919988679332108037098600
@@ -34,7 +34,7 @@
         }
     },
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "imp-fahrenheit",
             314545844086913572859566825785893557749

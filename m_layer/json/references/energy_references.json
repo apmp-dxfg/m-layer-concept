@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-joule",
             100917883444018504706749879854610536252
@@ -18,7 +18,7 @@
         }
     },
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "electronvolt",
             182363982750140887436275027803151015498

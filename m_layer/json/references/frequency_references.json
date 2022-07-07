@@ -1,6 +1,6 @@
 [
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-hertz",
             198610898083606115768120013170738979781
@@ -18,7 +18,7 @@
         }
     },
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-terahertz",
             310850909458796788849032855422762414462
@@ -36,7 +36,7 @@
         }
     },
     {
-        "__type__": "Reference",
+        "__entry__": "Reference",
         "uid": [
             "si-per-second",
             116741812607130898126240371497946537198
