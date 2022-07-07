@@ -46,9 +46,8 @@ Classes
    
 Utility functions
 -----------------
-The Python module `ml_to_py_key.py` can be used to display the aspects and scales in the M-layer register. 
-
-The output is convenient for copy-and-pasting during script development.
    
 .. automodule:: ml_to_py_key
+
+
    

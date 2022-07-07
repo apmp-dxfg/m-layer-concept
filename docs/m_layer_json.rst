@@ -13,7 +13,7 @@ of scales, aspects, conversions, etc., is implemented in JSON.
 Registry database in JSON files
 ===============================
 
-The is a directory called ``json`` under ``m_layer`` in the Python distribution
+There is a directory called ``json`` under ``m_layer`` in the Python distribution
 with the following substructure::
 
     json/
@@ -36,7 +36,27 @@ Files contain a single JSON array (starting and ending with ``[`` and ``]``),
 which may contain any number of JSON objects (starting and ending with ``{`` and ``}``)
 that define register entries.
 
+M-layer unique identifier names
+-------------------------------
 
+The unique identifiers in this project have two components: a name (string) and a UUID (integer). 
+The UUID is used as the unique identifier of register entries. 
+The name is provided to help people navigate JSON file entries.
+
+Names are formed according to the following formats, where '[some_text]' is intended to be an appropriate text substitution::
+
+    Aspect:
+    
+        ml-[aspect_name]
+        
+    Scale:
+    
+        ml-[reference_name]-[scale_type]
+        
+    Reference:
+    
+        [reference_name]
+        
 Aspect entries
 --------------
 An example of an aspect entry is shown below. The following named elements are used by the M-layer currently:
@@ -211,3 +231,7 @@ The following file is imported during this evaluation process to provide numeric
 .. literalinclude:: ../m_layer/si_constants.py
     :language: py
 
+Utility script for new UUIDs
+----------------------------
+   
+.. automodule:: new_uuid

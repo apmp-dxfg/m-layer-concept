@@ -4,20 +4,8 @@
 M-layer documentation
 =====================
 
-.. contents::
-   :local:
-
-Python code
------------
-
 .. toctree::
    :maxdepth: 1
 
-   Source documentation <m_layer_src>
-    
-JSON register entries
----------------------
-.. toctree::
-   :maxdepth: 1
-
-   JSON register <m_layer_json>
+   Python source code documentation <m_layer_src> 
+   JSON register entries <m_layer_json>
