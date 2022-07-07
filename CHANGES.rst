@@ -2,12 +2,15 @@
 Release Notes
 =============
 
-Version 0.2.0 (2022-??-??)
+Version 0.2.0 (2022-07-08)
 ==========================
 
+    * The M-layer register has been populated with a variety of entries to support examples
+    * An API has been better established
     * A unit test suite is included
-    * Documentation has been started, which includes examples of use and details about the current API
-    * Continuous integration on github now runs the unit test suite and doctests 
+    * Continuous integration on github runs the unit tests and doctests 
+    * Documentation has been extended and includes examples 
+        of use and details about the current API
     * Building the Read The Docs documentation is automated on github
 
 Version 0.1.0 (2022-04-11)
