@@ -189,6 +189,9 @@ There are many different kinds of optical spectroscopy, but often data can be th
 
 Energy data may be expressed in different units, such as electronvolts (:math:`\text{eV}`),  nanometres (:math:`\text{nm}`), wavenumber (:math:`\text{cm}^{-1}`) and terahertz (:math:`\text{THz}`). These units would normally be associated with different aspects (energy, length, inverse length, and frequency, respectively). However, the simple relationships between these quantities for photons makes them a convenient choice for spectroscopists (:math:`E = h\, \nu`, :math:`E = h\, c \, \tilde{\nu}`, etc., where :math:`E` is photon energy, :math:`h` is Planck's constant, :math:`c` is the speed of light, :math:`\nu` is frequency, and :math:`\tilde{\nu}` is wavenumber). 
 
+Photon energy
+-------------
+
 Abscissa data can be expressed without ambiguity by specifying the aspect as photon energy::
 
     >>> photon_energy = Aspect( ('ml-photon-energy', 291306321925738991196807372973812640971) )
@@ -221,6 +224,41 @@ The wavelength is inversely related to energy (:math:`\lambda = h\,c / E`), so t
     1239.8419843320025 nm
     Expression(1239.8419843320025,nanometre,photon energy)
     <BLANKLINE>
+    
+Response data
+-------------
+
+Often response data will be a ratio of the same kind of quantity, such as a reflectance (ratio of reflected to incident flux) or transmittance (ratio of transmitted to incident flux). Such ratios are dimensionless ('dimension one') and would be expressed in terms of the SI unit one. It would not be possible to distinguish between them on the basis of unit alone.
+
+This situation is handled in the M-layer by declaring a different aspect for each type of ratio. These can be combined with the unit one in scale-aspect pairs::
+
+    >>> transmittance = ScaleAspect(
+    ...     Scale( ('ml-si-one', 200437119122738863945813053269398165973) ),
+    ...     Aspect( ('ml-transmittance', 106338157389217634821305827494648287004) )
+    ... )
+    >>> reflectance = ScaleAspect(
+    ...     Scale( ('ml-si-one', 200437119122738863945813053269398165973) ),
+    ...     Aspect( ('ml-reflectance', 77619173328682587252206794509402414758) )
+    ... )
+    >>> x = expr(0.95,transmittance)
+    >>> display(x)
+    0.95
+    Expression(0.95,one,transmittance)
+    <BLANKLINE>
+    >>> y = expr(0.1,reflectance)
+    >>> display(y)
+    0.1
+    Expression(0.1,one,reflectance)
+    <BLANKLINE>
+    
+These expressions are distinct. Their scales are the same (both one), but the aspects are different::
+    
+    >>> x.scale == y.scale
+    True
+    >>> x.aspect == y.aspect 
+    False
+    >>> x.scale_aspect == y.scale_aspect 
+    False
     
 Special unit names
 ==================
