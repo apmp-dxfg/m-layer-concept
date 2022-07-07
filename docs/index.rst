@@ -29,7 +29,8 @@ Source code documentation
 .. toctree::
    :maxdepth: 1
    
-   Documentation <m_layer_src_docs>
+   Documentation <m_layer_docs>
+
    
 Release Notes
 -------------
