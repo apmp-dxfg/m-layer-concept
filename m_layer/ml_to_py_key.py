@@ -35,28 +35,30 @@ fmt = dict(
     scales=r"{} = Scale( ('{}', {}) )"
 )
 
-here = os.path.dirname(__file__)
-root_dir = os.path.join( here, r'json')
+if __name__ == '__main__':
 
-# print("Root: ", root_dir)
-print()
+    here = os.path.dirname(__file__)
+    root_dir = os.path.join( here, r'json')
 
-for sa in ('aspects','scales'):
+    # print("Root: ", root_dir)
+    print()
 
-    file_path = os.path.join( root_dir,sa,'*.json' )
-    # print(file_path,'\n')
-    
-    for f_json in glob.glob( file_path ):
-        print(f_json)
-        with open(f_json,'r') as f:
-            data = json.load(f)        
+    for sa in ('aspects','scales'):
+
+        file_path = os.path.join( root_dir,sa,'*.json' )
+        # print(file_path,'\n')
         
-        for d_i in data:
+        for f_json in glob.glob( file_path ):
+            print(f_json)
+            with open(f_json,'r') as f:
+                data = json.load(f)        
             
-            d = d_i['uid']
-            new_name = d[0].replace('-','_')
-            str_exp = fmt[sa].format(new_name,d[0],d[1])
-        
-            print(str_exp)
+            for d_i in data:
+                
+                d = d_i['uid']
+                new_name = d[0].replace('-','_')
+                str_exp = fmt[sa].format(new_name,d[0],d[1])
             
-        print()
+                print(str_exp)
+                
+            print()
