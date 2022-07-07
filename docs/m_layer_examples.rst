@@ -185,9 +185,9 @@ needs to specify an aspect.
   
 Spectroscopic data
 ==================  
-There are many different kinds of optical spectroscopy, but in many cases data can be thought of as the response of a sample to stimulus at a specific energy (photon energy). Data is typically presented with the energy of incident photons along the abscissa (x-axis) and the response along the ordinate (y-axis).
+There are many different kinds of optical spectroscopy, but often data can be thought of in the same way: as the response of a sample to stimulus at a specific energy (photon energy). The energy of incident photons is typically presented along the abscissa (x-axis) and the response along the ordinate (y-axis).
 
-For abscissa data, energy may be expressed in different units, such as electronvolts (:math:`\text{eV}`),  nanometres (:math:`\text{nm}`), wavenumber (:math:`\text{cm}^{-1}`) and terahertz (:math:`\text{THz}`). These units are normally associated with different aspects (energy, length, inverse length, and frequency, respectively). However, they are used because of the simple relationships between these quantities for photons (:math:`E = h\, \nu`, :math:`E = h\, c \, \tilde{\nu}`, etc., where :math:`E` is photon energy, :math:`h` is Planck's constant, :math:`c` is the speed of light, :math:`\nu` is frequency, and :math:`\tilde{\nu}` is wavenumber). 
+Energy data may be expressed in different units, such as electronvolts (:math:`\text{eV}`),  nanometres (:math:`\text{nm}`), wavenumber (:math:`\text{cm}^{-1}`) and terahertz (:math:`\text{THz}`). These units would normally be associated with different aspects (energy, length, inverse length, and frequency, respectively). However, the simple relationships between these quantities for photons makes them a convenient choice for spectroscopists (:math:`E = h\, \nu`, :math:`E = h\, c \, \tilde{\nu}`, etc., where :math:`E` is photon energy, :math:`h` is Planck's constant, :math:`c` is the speed of light, :math:`\nu` is frequency, and :math:`\tilde{\nu}` is wavenumber). 
 
 Abscissa data can be expressed without ambiguity by specifying the aspect as photon energy::
 
@@ -199,7 +199,7 @@ Abscissa data can be expressed without ambiguity by specifying the aspect as pho
     >>> per_centimetre = Scale( ('ml-si-per-centimetre-ratio', 333995508470114516586033303775415043902) )
     >>> nanometre = Scale( ('ml-si-nanometre-ratio', 257091757625055920788370123828667027186) )
     
-Abscissa data may then be converted correctly::
+The data may then be converted safely::
 
     >>> x = expr(1,electronvolt,photon_energy)
     >>> display(x)
@@ -215,7 +215,7 @@ Abscissa data may then be converted correctly::
     Expression(8065.543937349211,per centimetre,photon energy)
     <BLANKLINE>
 
-The wavelength is inversely related to energy (:math:`\lambda = h\,c / E`), so a cast, rather than a conversion, is required::
+The wavelength is inversely related to energy (:math:`\lambda = h\,c / E`), so the M-layer handles this as a cast, rather than a conversion::
 
     >>> display(x.cast(nanometre)) 
     1239.8419843320025 nm

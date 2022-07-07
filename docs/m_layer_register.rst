@@ -32,17 +32,24 @@ An M-layer 'scale' is an association between a reference and a particular scale 
 
 Expression conversion
 ---------------------
-An expression can be converted from one scale to another if the operation has been registered.
-A legitimate conversion can be queried by providing the unique identifiers of the source and destination (initial and final) 
-scales. The unique identifier of the destination aspect is an additional optional argument.
+An expression can be converted from one scale to another if the operation to do so has been registered.
 
-Conversion in the M-layer is similar to conversion between units in traditional systems.
-However, the M-layer distinguishes between two broad classes of conversion: 1) those that are independent of aspect; and 2) those that 
-are only legitimate for certain aspects. 
-An example of the first is the conversion of an expression in metres to an expression in millimetres.
+Scale conversion in the M-layer is similar to conversion in traditional unit systems.
+However, the M-layer distinguishes between two classes of conversion: 
+
+    1) those that are legitimate for any aspect; and 
+    2) those that are legitimate for a particular aspect. 
+    
+An example of the first is conversion from metres to millimetres.
 An example of the second is the conversion of an expression of photon energy in electronvolts to an expression in terahertz. 
 
-Expression conversion *never* changes the aspect. 
+Aspect-independent conversions are only permitted between scales of the same type, but
+aspect-specific conversions may change the scale type (between ratio and interval scales); 
+conversion *never* changes the aspect. 
+
+A legitimate conversion can be queried by providing the unique identifiers for the source and destination (initial and final) 
+scales, with a unique identifier for aspect as an optional argument.
+
 
 Expression casting 
 ------------------
