@@ -9,42 +9,41 @@ Introduction
 
 Why is the M-layer needed?
 ==========================
-The M-layer provides a framework to support digital representations of measured data. It formalises representations so that data can be interpreted without ambiguity, thus enabling reuse and interoperability. The scope is broad, because measurement data is produced with a variety of properties. The M-layer introduces several notions from measurement science to bring order to the diversity of the problem. The need for these new notions can be perceived already by looking at the *International System of Units* (SI).
+The M-layer provides a framework to support digital representations of measured data. It offers representations that can be interpreted without ambiguity, thus enabling reuse and interoperability of data. The scope is broad, because of the variety of types of measurement data. The M-layer uses several basic notions from measurement science to handle a variety of types of measurement data. The need to incorporate these notions can be perceived by looking at a few difficulties using the *International System of Units* (SI).
 
-The SI has a few quirks. Many SI unit names are easy to associate with a particular type of quantity (like the kilogram and the metre, which are used as units of mass and length, respectively). So, we get used to thinking that the name of a unit will identify the quantity. However, that is not always correct. The same units may be used to express different quantities. The most obvious example being quantities expressed with the SI unit 'one' (quantities of dimension one, or 'dimensionless' quantities, like aspect ratio, reflectance, refractive index, etc.).
+The SI has a few quirks. Many SI unit names may associated with a particular type of quantity (like the kilogram and the metre, which are used as units of mass and length, respectively). So, we get used to thinking that the name of a unit will identify the quantity. However, that is not always correct. The same unit may sometimes be used to express different quantities. The most obvious example being quantities expressed in terms of the SI unit 'one' (quantities of dimension one, or 'dimensionless' quantities, like aspect ratio, reflectance, refractive index, etc.).
+the conversion of a temperature between kelvin and degrees Celsius involves two operations: addition and multiplication. No other SI units behave this way under conversion. Furthermore, those same units can be used to express temperature differences. This is problematic because conversion of temperature differences between kelvin and degrees Celsius *only* involves multiplication (by a conversion factor). So, you cannot determine whether an expression is a temperature or a temperature difference from the SI units alone. The kind of quantity would need to be known to perform unit conversions. 
 
-There are also problems with the units for temperature. You can legitimately express a temperature in kelvin or degrees Celsius in the SI. However, to convert a temperature between kelvin and degrees Celsius requires two operations: addition and multiplication. No other SI units behave this way. Furthermore, those same units can be used when expressing temperature differences, which is especially problematic because conversion of temperature differences between kelvin and degrees Celsius *only* involves multiplication (by a conversion factor). So, you cannot tell whether a quantity is a temperature or a temperature difference from the units alone but you would need to know that to perform unit conversion. 
+Another difficulty occurs with plane angles. The name of the SI unit for angle is radian, but the range of values is not specified and can, in practice, be limited. Sometimes the range of values extends from :math:`-\pi` to :math:`+\pi`, and sometimes from :math:`0` to :math:`2\pi`, while in other cases there are no limits. This circular, or cyclic, structure of data is quite different from any other SI unit.
 
-Another difficulty occurs with plane angles. The name of the SI unit for angle is radian, but the range of values is not specified and can be limited. Sometimes the range extends from -pi to +pi, and sometimes from 0 to 2pi; in other cases there are no limits. This circular, or cyclic, property is quite different from any other SI unit.
-
-Although these are just exceptional cases for the SI, they reflect properties of measurement scales and units of measurement that cannot be properly supported by the current format. The M-layer can address these difficulties, and, in doing so, provides support for a much wider range of measurement data.  
+Although these are exceptional cases for the SI, they indicate properties of the measurement data that cannot be properly supported by the SI format. The M-layer can address these difficulties, and, in doing so, provides support for a wider range of measurement data.  
 
 What is the M-layer?
 ====================
 
-A quantity is traditionally expressed by pairing a number with the name, or symbol, for a unit, like 10 kg. However, people often need to use contextual information to interpret expressions like this. Digital systems are not as good as people at handling ambiguity, so the M-layer provides a framework to assist with the interpretation of digital data. It does this by taking into account: 
+A quantity is traditionally expressed by pairing a number with the name, or symbol, for a unit, like 10 kg. However, people often use contextual information to interpret these expressions. Digital systems are not as good as people at handling ambiguity, so the M-layer provides a more detailed framework to assist with interpretation of data. It does this by taking into account: 
 
     * the type of scale being used (relates to conversion operations)
-    * the nature what is being expressed (mass, temperature, angle, etc.)
+    * the nature of what is being expressed (mass, temperature, angle, etc.)
     
 The first point is handled by extending the traditional notion of a unit, or reference. The M-layer uses an entity called 'Scale' to associate a unit, or reference, with a type of scale. These entities overcome the ambiguity caused, for example, by allowing the unit degrees Celsius to express both temperature and temperature difference.
 
-The second point is handled by explicitly recognising different kinds of quantity in entities called 'Aspect'. The sense of 'aspect' is similar to, but broader than, 'kind of quantity' as used in relation to SI units.
+The second point is explicitly handled by recognising different kinds of quantity in a componentsalled aspect. The sense of the term aspect is similar to, but broader than, kind of quantity as used in SI units.
    
 M-layer identifiers 
 -------------------
    
-The M-layer maintains a register of information about aspects, scales, and conversions. Client software uses objects that index M-layer records containing more details. 
+The M-layer maintains a register of information about aspects, scales, and conversions. Client software handles objects that index M-layer records for aspects, scales, and conversions. 
 
-In the example below, convenient Python names are declared as local references to ``Aspect`` and ``Scale`` objects (``kg``, etc.). The tuples that initialise these objects are M-layer identifiers. Each tuple has two elements: a compound name, and a universal unique identifier (UUID) in integer format. The name need not be unique, it is intended to help people recognise objects.  
+In the example below, convenient Python names refer to ``Aspect`` and ``Scale`` objects (``kg``, etc.) that encapsulate M-layer identifiers. The tuple that initialises these objects has two elements: a compound name, and a universal unique identifier (UUID) in integer format. The name is intended to help people recognise objects but need not be unique.  
 
 Example
 -------
 The script below generates an expression of 12 kg and then converts it to Imperial pounds. 
 
-Initially, local names (``mass``, ``kg``, and ``lb``) are defined for aspect and scale objects initialised by M-layer unique identifiers. 
+The function ``display()`` is used to produce output. It displays the short (``str``) and long (``repr``) string representations of an expression.
 
-The function ``display()`` is used to produce output. It shows the short (``str``) and long (``repr``) string representations of an expression.
+Initially, local names are defined for aspect and scale objects (``mass``, ``kg``, and ``lb``), which are initialised by M-layer identifiers. 
 
 An expression for ``x`` is generated by combining the value 12 with the ``kg`` scale and the ``mass`` aspect. The expression ``x`` may be converted to an expression in Imperial pounds. ::
 
@@ -69,7 +68,7 @@ An expression for ``x`` is generated by combining the value 12 with the ``kg`` s
     Expression(26.4552,pound,mass)
     <BLANKLINE>
     
-The aspect component is not mandatory when generating expressions. So, the example above can be handled in this way:: 
+The aspect is not a mandatory component. So, the example above could be handled in this way too:: 
 
     >>> y = expr(12,kg)
     >>> display(y)
@@ -81,5 +80,5 @@ The aspect component is not mandatory when generating expressions. So, the examp
     Expression(26.4552,pound)
     <BLANKLINE>
     
-Note that no aspect is displayed now (an aspect is not inferred from the scale provided). In many cases, a scale alone is considered sufficient to express a magnitude (as with standard SI formats). However, an aspect is needed to adequately represent a wider range of measurement data and to handle special cases that arise in the SI. 
+Note that no aspect is displayed in this case (aspect is not inferred from the scale provided). A scale alone may be considered sufficient to express a magnitude (as it is with standard SI formats). However, an aspect is needed to adequately represent a wider range of measurement data and to handle special cases that arise in the SI. 
   
