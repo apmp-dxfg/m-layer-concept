@@ -148,8 +148,8 @@ class Context(object):
         Return a function to convert a value expressed 
         in `src_scale` to an expression in terms of `dst_scale`.
         
-        The ``aspect`` argument is used to expand the search for 
-        conversion definitions to those specified for a particular aspect.  
+        The ``aspect`` argument extends the search to
+        aspect-specific conversion definitions.  
         
         Args:
             src_scale (:class:`~scale.Scale`): the initial scale 
@@ -162,28 +162,29 @@ class Context(object):
         """                
         scale_pair = (src_scale.uid,dst_scale.uid)
         
-        # If there is a pair of matching scales in the register
-        # then use that without checking aspect.
-        fn = self.conversion_reg.get( scale_pair ) 
+        # Note, the register should probably not allow an aspect-free conversion 
+        # to be defined when there is already an aspect-specific one defined.
+        # However, by doing the aspect-specific look-up first, this implementation
+        # will allow multiple definitions to coexist and give precedence to 
+        # aspect-specific definitions.
         
-        if fn is not None: 
-            return fn
+        # Has an aspect argument been given that restricts conversions?
+        # Look first in the aspect-specific conversion table
+        if( aspect is not None 
+        and aspect.uid in self.scales_for_aspect_reg
+        ):
+            scales_for_aspect = self.scales_for_aspect_reg[aspect.uid]
+            try:
+                return scales_for_aspect[scale_pair]
+            except KeyError:
+                pass
                 
-        else:    
-            # If the first search fails, look for  
-            # conversions that are aspect-specific 
-            # (e.g., wavenumber to frequency for photon energy)
-        
-            # Has an aspect has been declared?
-            if( aspect is not None 
-            and aspect.uid in self.scales_for_aspect_reg
-            ):
-                for_aspect = self.scales_for_aspect_reg[aspect.uid]
-                fn = for_aspect.get(scale_pair, None)
-            
-                if fn is not None:
-                    return fn
-            
+        # Aspect-free conversions are possible
+        try:
+            return self.conversion_reg[scale_pair] 
+        except KeyError:
+            pass
+                        
         # This is a failure 
         if aspect is None:
             raise RuntimeError(
