@@ -6,12 +6,7 @@ Legitimate castings are recorded in a :class:`~.casting_register.CastingRegister
 """
 import json
 
-# Terms in JSON strings for numerical factors are converted to numbers using 
-# `eval()`. By importing math, we can include defined constants, like math.pi.
-
-import math
-
-from m_layer import si_constants as si 
+from m_layer.ml_eval import ml_eval 
 
 # ---------------------------------------------------------------------------
 def _to_tuple(lst):
@@ -72,10 +67,11 @@ class CastingRegister(object):
             )            
                                        
         # Parameter values are stored as strings in a dictionary
+        # They may take the form of arithmetic expressions
         parameters_dict = { 
-            k : eval(v) 
+            k : ml_eval(v) 
                 for (k,v) in entry['parameters'].items() 
         }
                 
         # Set the casting function
-        self._table[uid_pair] = eval(entry['function'],parameters_dict)
+        self._table[uid_pair] = ml_eval(entry['function'],parameters_dict)

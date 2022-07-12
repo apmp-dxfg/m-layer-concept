@@ -6,9 +6,7 @@ Legitimate conversions are recorded in a :class:`~.conversion_register.Conversio
 """
 import json
 
-# Numerical terms in JSON strings are converted to numbers using `eval()`. 
-import math
-from m_layer import si_constants as si 
+from m_layer.ml_eval import ml_eval 
 
 # ---------------------------------------------------------------------------
 def _set_conversion_fn(self,entry,_tbl, uid_pair):
@@ -35,8 +33,8 @@ def _set_conversion_fn(self,entry,_tbl, uid_pair):
         )
                               
     # Conversion function parameter values are in a sequence 
-    # they are stored as strings to allow fractions 
-    factors = tuple(  eval(x_i) for x_i in entry['factors'] )
+    # they may take the form of expressions to allow fractions 
+    factors = tuple(  ml_eval(x_i) for x_i in entry['factors'] )
     
     # Set the conversion function
     if (src_type,dst_type) == ('ratio','ratio'):

@@ -177,7 +177,7 @@ class Expression(object):
             )
 
         fn = cxt.casting_fn(self, dst_scale_aspect )
-        
+
         return Expression(
             fn( self._token ),
             dst_scale_aspect
