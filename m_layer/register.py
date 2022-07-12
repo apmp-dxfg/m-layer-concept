@@ -1,6 +1,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 
 import json
+from ast import literal_eval 
 
 # ---------------------------------------------------------------------------
 class Register(object):
@@ -26,7 +27,9 @@ class Register(object):
         """
         # Convert string of sequence from json to tuple
         if isinstance(entry['uid'],str):
-            uid = tuple( eval(entry['uid']) )
+            # literal_eval will only handle Python types,
+            # which makes it a safer choice
+            uid = tuple( literal_eval(entry['uid']) )
         else:
             uid = tuple( entry['uid'] )
         
