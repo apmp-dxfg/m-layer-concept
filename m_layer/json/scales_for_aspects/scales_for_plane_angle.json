@@ -1,0 +1,34 @@
+[    
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect" : [
+            "ml-plane-angle",
+            95173225557230344956477808929590724690
+        ],
+        "src": [
+            "ml-imp-degree-bounded-180", 
+            273805538217618733078298377573965188309
+        ],
+        "dst":[
+            "ml-si-radian-ratio", 
+            273301153578020696303516833405033923738
+        ],
+        "factors": [ "number.pi/180" ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect" : [
+            "ml-plane-angle",
+            95173225557230344956477808929590724690
+        ],
+        "src": [
+            "ml-si-radian-bounded-two-pi", 
+            300556212736422769570885306883285535638
+        ],
+        "dst":[
+            "ml-si-radian-ratio", 
+            273301153578020696303516833405033923738
+        ],
+        "factors": [ "1" ]
+    }
+]
