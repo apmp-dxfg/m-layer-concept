@@ -6,11 +6,10 @@ those records.
 
 """
 import json
-import math
 
-from m_layer import si_constants as si 
+from m_layer.ml_eval import ml_eval 
+
 # from m_layer.conversion_register import _set_conversion_fn
-
 # ---------------------------------------------------------------------------
 def _set_conversion_fn(self,entry,_tbl, uid_pair):
     """
@@ -37,7 +36,7 @@ def _set_conversion_fn(self,entry,_tbl, uid_pair):
                               
     # Conversion function parameter values are in a sequence 
     # they are stored as strings to allow fractions 
-    factors = tuple(  eval(x_i) for x_i in entry['factors'] )
+    factors = tuple(  ml_eval(x_i) for x_i in entry['factors'] )
     
     # Set the conversion function
     if (src_type,dst_type) == ('ratio','ratio'):
@@ -57,7 +56,13 @@ def _set_conversion_fn(self,entry,_tbl, uid_pair):
         # `factors[1]` is the lower bound of the dst scale 
         # `factors[2]` is the range of values in the dst scale
         _tbl[uid_pair] = lambda x: \
-            (factors[0]*x - + factors[1]) % factors[2] + factors[1]
+            (factors[0]*x - factors[1]) % factors[2] + factors[1]
+    elif (
+        (src_type,dst_type) == ('bounded','ratio')
+    ):
+        # This is just removal of the cyclic bounds 
+        # `factors[0]`  is the scale divisions conversion factor 
+        _tbl[uid_pair] = lambda x: factors[0]*x
     else:
         raise RuntimeError(
             "unrecognised case: {}".format((src_type,dst_type))
