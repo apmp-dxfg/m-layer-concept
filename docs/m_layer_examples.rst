@@ -148,7 +148,7 @@ Plane angle is interesting because values are often expressed using bounded cycl
 Scales for plane angle
 ----------------------
 
-Radian is the special name for the SI unit of plane angle (plane angle is a quantity of dimension one in the SI, so the unit one is also allowed). The unit degree may also be used with the SI. Expressions need not place bounds on the value. However, digital systems frequently impose circular or cyclic limits on values.  Either the lower bound is zero and the upper bound corresponds to one full rotation (:math:`2 \pi` radians or :math:`+360` degrees), or the lower bound corresponds to half a full rotation clockwise (:math:`-\pi` radians or :math:`-180` degrees) and the upper bound to half a full rotation counter-clockwise (:math:`+\pi` radians or :math:`+180` degrees). 
+Radian is the special name given to the SI unit of plane angle (plane angle is a quantity of dimension one in the SI, so the unit one is also allowed). The unit degree may also be used with the SI. Expressions need not place bounds on the value. However, digital systems frequently impose circular or cyclic limits on values.  Either the lower bound is zero and the upper bound corresponds to one full rotation (:math:`2 \pi` radians or :math:`+360` degrees), or the lower bound corresponds to half a full rotation clockwise (:math:`-\pi` radians or :math:`-180` degrees) and the upper bound to half a full rotation counter-clockwise (:math:`+\pi` radians or :math:`+180` degrees). 
 
 The M-layer has a particular scale type for these bounded cyclic scales. So, M-layer scales can be defined for the different cases::
 
@@ -156,7 +156,7 @@ The M-layer has a particular scale type for these bounded cyclic scales. So, M-l
     
     >>> radian_ratio = Scale( ('ml-si-radian-ratio', 273301153578020696303516833405033923738) )
     >>> radian_bounded_two_pi = Scale( ('ml-si-radian-bounded-two-pi', 300556212736422769570885306883285535638) )
-    >>> ml_si_radian_bounded_pi = Scale( ('ml-si-radian-bounded-pi', 181367268705518406168243034119604185497) )
+    >>> radian_bounded_pi = Scale( ('ml-si-radian-bounded-pi', 181367268705518406168243034119604185497) )
     
     >>> degree_ratio = Scale( ('ml-imp-degree-ratio', 124567088583703716502057160299542649451) )
     >>> degree_bounded_180 = Scale( ('ml-imp-degree-bounded-180', 273805538217618733078298377573965188309) )
@@ -174,14 +174,20 @@ An angle can be converted between bounded scales::
     Expression(270,degree)
     <BLANKLINE>
     
-An explicit cast is require to changing between bounded and unbounded scales because some loss of information may result. This, in turn, means the expression 
-needs to specify an aspect. 
+and conversion to an unbounded scale is possible too, if the aspect is given ::
 
-    >>> a = expr(-90,degree_bounded_180,plane_angle)
-    >>> display( cast(a,radian_ratio) )
+    >>> b = convert(a,radian_ratio,plane_angle)
+    >>> display( b )
     -1.5707963267948966 rad
     Expression(-1.5707963267948966,radian,plane-angle)
-    <BLANKLINE> 
+    <BLANKLINE>
+    
+However, an explicit cast is require to change from unbounded to bounded scales because some loss of information may result :: 
+
+    >>> display( cast(b,degree_bounded_180) )
+    -90.0 deg
+    Expression(-90.0,degree,plane-angle)
+    <BLANKLINE>
   
 Spectroscopic data
 ==================  
