@@ -18,8 +18,20 @@ from m_layer import math_constants
 # when they are available in the system
 try: 
     import GTC as math
+    
+    # There is nothing in GTC to handle modulo 
+    # arithmetic. This implementation will transfer
+    # the traceability tree to the new value `z`.
+    def modulo(x,y):
+        z = math.value(x) % y 
+        return z + (x - math.value(x))
+        
+    math.modulo = modulo 
+    
 except ImportError:
     import math
+    # Use the built-in 'floored' modulo operation
+    math.modulo = lambda x,y: x % y 
 
 ml_dict = dict(
     __builtins__= {},   # to improve security using eval

@@ -6,7 +6,8 @@ Legitimate conversions are recorded in a :class:`~.conversion_register.Conversio
 """
 import json
 
-from m_layer.ml_eval import ml_eval 
+from m_layer.ml_eval import ml_eval
+from m_layer.ml_eval import math        # For the modulo operation
 
 # ---------------------------------------------------------------------------
 def _set_conversion_fn(self,entry,_tbl, uid_pair):
@@ -35,7 +36,7 @@ def _set_conversion_fn(self,entry,_tbl, uid_pair):
     # Conversion function parameter values are in a sequence 
     # they may take the form of expressions to allow fractions 
     factors = tuple(  ml_eval(x_i) for x_i in entry['factors'] )
-    
+        
     # Set the conversion function
     if (src_type,dst_type) == ('ratio','ratio'):
         _tbl[uid_pair] = lambda x: factors[0]*x 
@@ -52,7 +53,7 @@ def _set_conversion_fn(self,entry,_tbl, uid_pair):
         # `factors[1]` is the lower bound of the dst scale 
         # `factors[2]` is the range of values in the dst scale
         _tbl[uid_pair] = lambda x: \
-            (factors[0]*x - + factors[1]) % factors[2] + factors[1]
+            math.modulo( (factors[0]*x - factors[1]), factors[2] ) + factors[1]
     else:
         raise RuntimeError(
             "unrecognised case: {}".format((src_type,dst_type))

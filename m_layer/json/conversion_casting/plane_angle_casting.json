@@ -21,7 +21,7 @@
                 95173225557230344956477808929590724690
             ]
         ],
-        "function": "lambda x_i: (a * x_i - y_lb) % (y_ub - y_lb) + y_lb",
+        "function": "lambda x_i: math.modulo( (a * x_i - y_lb), (y_ub - y_lb) ) + y_lb",
         "parameters": { 
             "a" : "180.0/number.pi",
             "y_lb" : "-180.0",
