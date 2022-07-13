@@ -22,9 +22,7 @@ The documentation for the latest version of **M-Layer** can be found `here <http
 
 .. 
 
-    <!---
-      The following lines should be used for the development branch 
-    --->
+    The following lines should be used for the development branch, but change the comments for a release
 
 .. |docs| image:: https://readthedocs.org/projects/m-layer-concept/badge/?version=latest
     :target: https://m-layer-concept.readthedocs.io/en/latest/?badge=latest
