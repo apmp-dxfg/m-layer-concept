@@ -18,7 +18,7 @@ from m_layer import math_constants
 # when they are available in the system
 try: 
     import GTC as math
-except ModuleNotFoundError:
+except ImportError:
     import math
 
 ml_dict = dict(

@@ -20,10 +20,11 @@ Documentation
 
 The documentation for the latest version of **M-Layer** can be found `here <https://m-layer-concept.readthedocs.io/en/latest/>`_.  
 
-<!--- is this visible? --->
-<!---
-  The following lines should be used for the development branch 
---->
+.. 
+
+    <!---
+      The following lines should be used for the development branch 
+    --->
 
 .. |docs| image:: https://readthedocs.org/projects/m-layer-concept/badge/?version=latest
     :target: https://m-layer-concept.readthedocs.io/en/latest/?badge=latest
@@ -32,12 +33,13 @@ The documentation for the latest version of **M-Layer** can be found `here <http
 .. |github tests| image:: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml/badge.svg
    :target: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml
 
-<!--- 
+.. .. ..
+
     Use the following when pushed to the main branch
 
-    .. |docs| image:: https://readthedocs.org/projects/m-layer-concept/badge/?version=main
-        :target: https://m-layer-concept.readthedocs.io/en/main/?badge=main
-        :alt: Documentation Status         
-    .. |github tests| image:: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml/badge.svg
-       :target: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml
---->
+        .. |docs| image:: https://readthedocs.org/projects/m-layer-concept/badge/?version=main
+            :target: https://m-layer-concept.readthedocs.io/en/main/?badge=main
+            :alt: Documentation Status  
+            
+        .. |github tests| image:: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml/badge.svg
+           :target: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml
