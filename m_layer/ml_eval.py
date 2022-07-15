@@ -8,38 +8,20 @@ while at the same time loading local modules that contain
 useful data.
 """
 # Terms in JSON strings for numerical factors are converted to numbers using 
-# `eval()`. By importing math, we can include defined constants, like math.pi.
-# Similarly, si_constants defines a number of useful values.
+# `eval()`. By importing math_constants, we can include defined constants, like pi.
+# Similarly, si_constants defines a number of useful values and ml_math defines
+# mathematical operations that can be actioned.
 
 from m_layer import si_constants
 from m_layer import math_constants
-
-# This will import uncertain-number math functions 
-# when they are available in the system
-try: 
-    import GTC as math
-    
-    # There is nothing in GTC to handle modulo 
-    # arithmetic. This implementation will transfer
-    # the traceability tree to the new value `z`.
-    def modulo(x,y):
-        z = math.value(x) % y 
-        return z + (x - math.value(x))
-        
-    math.modulo = modulo 
-    
-except ImportError:
-    import math
-    # Use the built-in 'floored' modulo operation
-    math.modulo = lambda x,y: x % y 
+from m_layer import ml_math 
 
 ml_dict = dict(
     __builtins__= {},   # to improve security using eval
     si = si_constants,
     number = math_constants, 
-    math = math 
+    ml_math = ml_math 
 )
-
 
 def ml_eval(txt,d={}):
     """

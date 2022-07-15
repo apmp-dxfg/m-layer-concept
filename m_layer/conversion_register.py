@@ -7,7 +7,7 @@ Legitimate conversions are recorded in a :class:`~.conversion_register.Conversio
 import json
 
 from m_layer.ml_eval import ml_eval
-from m_layer.ml_eval import math        # For the modulo operation
+from m_layer import ml_math        
 
 # ---------------------------------------------------------------------------
 def _set_conversion_fn(self,entry,_tbl, uid_pair):
@@ -39,21 +39,21 @@ def _set_conversion_fn(self,entry,_tbl, uid_pair):
         
     # Set the conversion function
     if (src_type,dst_type) == ('ratio','ratio'):
-        _tbl[uid_pair] = lambda x: factors[0]*x 
+        _tbl[uid_pair] = lambda x: ml_math.ratio_convert(x,*factors) 
     elif (
         (src_type,dst_type) == ('interval','interval')  
     ):
         # `factors[0]` is the scale divisions conversion factor 
         # `factors[1]` is the offset
-        _tbl[uid_pair] = lambda x: factors[0]*x + factors[1]
+        _tbl[uid_pair] = lambda x: ml_math.interval_convert(x,*factors)
     elif (
         (src_type,dst_type) == ('bounded','bounded')
     ):
         # `factors[0]` is the scale divisions conversion factor 
         # `factors[1]` is the lower bound of the dst scale 
-        # `factors[2]` is the range of values in the dst scale
-        _tbl[uid_pair] = lambda x: \
-            math.modulo( (factors[0]*x - factors[1]), factors[2] ) + factors[1]
+        # `factors[2]` is the upper bound of the dst scale
+        _tbl[uid_pair] = lambda x: ml_math.bounded_convert(x,*factors)             
+        
     else:
         raise RuntimeError(
             "unrecognised case: {}".format((src_type,dst_type))
