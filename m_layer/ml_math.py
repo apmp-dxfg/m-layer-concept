@@ -1,8 +1,12 @@
 """
-The functions defined or provided by this module are used by the M-layer register 
-to express conversions and casting. 
+The functions exported from this module are used during parsing of JSON strings that define mathematical transformations. 
  
 """
+__all__ = (
+    'bounded_convert',
+    'interval_convert',
+    'ratio_convert',
+)
 
 # This will import uncertain-number math functions when they are available in the system
 # otherwise the regular math library is imported

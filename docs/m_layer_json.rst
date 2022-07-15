@@ -188,10 +188,10 @@ Casting entries
 An example of a casting entry is shown below. The following named elements are used by the M-layer currently:
 
     - ``__entry__``: the type of entry (used during parsing)
-    - ``src``:  dentifiers for the initial (source) scale and aspect
-    - ``dst``: identifiers for the final (destination) scale and aspect
-    - ``function``: a string that will be evaluated to define a Python casting function
-    - ``factors``: an object that will be evaluated to define a Python dictionary in which casting function parameters are defined 
+    - ``src``:  dentifiers for the initial (source) scale and aspect.
+    - ``dst``: identifiers for the final (destination) scale and aspect.
+    - ``function``: a string that will be evaluated to define a Python casting function. The function will be parsed in a strictly limited environment that includes arithmetic operations, defined constants (physical and mathematical), and certain transformation functions. 
+    - ``factors``: an object that will be evaluated to define a Python dictionary in which casting function parameters are defined. 
         
 .. code:: json 
 
@@ -221,15 +221,29 @@ An example of a casting entry is shown below. The following named elements are u
         "parameters" : { "c" : "si.h*si.c/si.e/si.nano" }
     }
     
-Python module of defined constants
-----------------------------------
+Python module of defined SI constants
+-------------------------------------
 The functions and coefficients used to convert and cast data are created from strings stored in the JSON entries. 
 The built-in Python function :func:`eval` is used to convert these strings to Python objects.
 
-The following file is imported during this evaluation process to provide numeric constants.
+The following file is imported during the evaluation of JSON strings to provide numeric constant values for the SI.
 
 .. literalinclude:: ../m_layer/si_constants.py
     :language: py
+   
+Python module of defined mathematical constants
+-----------------------------------------------
+The following file is imported during this evaluation process to provide numeric mathematical constants.
+
+.. literalinclude:: ../m_layer/math_constants.py
+    :language: py
+
+Python module of defined transformations
+----------------------------------------
+
+.. automodule:: ml_math
+    :members:
+
 
 Utility script for new UUIDs
 ----------------------------
