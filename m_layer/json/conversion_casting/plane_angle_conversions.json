@@ -33,7 +33,7 @@
             "ml-imp-degree-bounded-180", 
             273805538217618733078298377573965188309
         ],
-        "factors": [ "1", "-180", "360" ]
+        "factors": [ "1", "-180", "180" ]
     },
     {
         "__entry__": "Conversion",
@@ -57,7 +57,7 @@
             "ml-si-radian-bounded-pi", 
             181367268705518406168243034119604185497
         ],
-        "factors": [ "1", "-number.pi", "2*number.pi" ]
+        "factors": [ "1", "-number.pi", "number.pi" ]
     },
     {
         "__entry__": "Conversion",
@@ -117,7 +117,7 @@
             "ml-si-radian-bounded-pi", 
             181367268705518406168243034119604185497
         ],
-        "factors": [ "number.pi/180", "-number.pi", "2*number.pi" ]
+        "factors": [ "number.pi/180", "-number.pi", "number.pi" ]
     },
     {
         "__entry__": "Conversion",
@@ -129,6 +129,6 @@
             "ml-si-radian-bounded-pi", 
             181367268705518406168243034119604185497
         ],
-        "factors": [ "number.pi/180", "-number.pi", "2*number.pi" ]
+        "factors": [ "number.pi/180", "-number.pi", "number.pi" ]
     }
 ]
