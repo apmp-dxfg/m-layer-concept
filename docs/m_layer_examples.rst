@@ -170,8 +170,8 @@ An angle can be converted between bounded scales::
     Expression(-90,degree)
     <BLANKLINE>
     >>> display( convert(a,degree_bounded_360) )
-    270 deg
-    Expression(270,degree)
+    270.0 deg
+    Expression(270.0,degree)
     <BLANKLINE>
     
 and conversion to an unbounded scale is possible too, if the aspect is given ::
