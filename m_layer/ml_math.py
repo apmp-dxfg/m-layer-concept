@@ -43,7 +43,7 @@ def bounded_convert(x,a,y_lb,y_ub):
         Untested assumptions are that ``y_ub - y_lb > 0`` and ``a > 0``
     
     """
-    z = fmod(a*x - y_lb, y_ub - y_lb) 
+    z = math.fmod(a*x - y_lb, y_ub - y_lb) 
     return z + y_ub if z < 0.0 else z + y_lb  
  
 # ---------------------------------------------------------------------------
