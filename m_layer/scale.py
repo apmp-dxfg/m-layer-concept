@@ -1,13 +1,73 @@
 """
-The M-layer extends the traditional notion of a unit by pairing a scale type
-with a unit, or reference. 
 
 """
 from m_layer.context import default_context as cxt
-from m_layer.scale_aspect import ScaleAspect
+from m_layer.aspect import no_aspect
 
-__all__ = ('Scale','to_scale_aspect',)
+__all__ = (
+    'Scale',
+    'ScaleAspect',
+)
 
+# ---------------------------------------------------------------------------
+class ScaleAspect(object):
+
+    """
+    A wrapper around a scale-aspect pair
+    Objects are immutable.
+    """
+
+    __slots__ = ("_scale","_aspect")
+
+    def __init__(self,scale,aspect=no_aspect):
+        self._scale = scale
+        self._aspect = aspect
+
+    @property
+    def scale(self):
+        "The scale"
+        return self._scale 
+        
+    @property 
+    def aspect(self):
+        "The aspect or kind of quantity"
+        return self._aspect
+            
+    # Alias
+    kind_of_quantity = aspect 
+
+    @property 
+    def uid(self):
+        "A pair of M-layer identifiers for scale and aspect"
+        return (self.scale.uid,self.aspect.uid)
+        
+    def __eq__(self,other):
+        "True when the M-layer identifiers of both objects match"
+        return (
+            self.scale == other.scale
+        and self.aspect == other.aspect
+        )
+        
+    def __str__(self):
+        return "({!s}, {!s})".format(self.scale,self.aspect)
+        
+    def __repr__(self):
+        return "ScaleAspect({!r},{!r})".format( self.scale,self.aspect ) 
+         
+    # def to_scale_aspect(self,aspect):
+        # """
+        # This matches a method in :class:`Scale`, which 
+        # creates ``ScaleAspect`` objects. It will have no effect, 
+        # unless there is an attempt to change the aspect.
+
+        # """ 
+        # if self._aspect != aspect:
+            # raise RuntimeError(
+                # "cannot change the aspect of a ScaleAspect"
+            # )
+            
+        # return self
+        
 # ---------------------------------------------------------------------------
 class Scale(object):
 
@@ -51,9 +111,10 @@ class Scale(object):
     def __repr__(self):
         return "Scale({!r})".format( self.uid )
 
-    def to_scale_aspect(self,aspect=None):
-        """Return a :class:`~scale_aspect.ScaleAspect` object 
-        with the same scale and aspect ``aspect``.
+    def to_scale_aspect(self,aspect=no_aspect):
+        """
+        Return a :class:`~scale_aspect.ScaleAspect` object 
+        combining this scale and ``aspect``.
         
         """
         return ScaleAspect(self,aspect) 
