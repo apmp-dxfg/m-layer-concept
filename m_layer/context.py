@@ -143,24 +143,23 @@ class Context(object):
     def locale(self,l):
         self._locale = l 
         
-    def conversion_fn(self,src_scale,dst_scale,aspect=None):
+    def conversion_fn(self,src_expr,dst_scale):
         """
-        Return a function to convert a value expressed 
-        in `src_scale` to an expression in terms of `dst_scale`.
+        Return a function that converts a value expressed 
+        in `src_expr` to one in terms of `dst_scale`.
         
-        The ``aspect`` argument extends the search to
-        aspect-specific conversion definitions.  
+        The aspect of the initial expression does not change.  
         
         Args:
-            src_scale (:class:`~scale.Scale`): the initial scale 
+            src_expr (:class:`~expression.Expression`): the initial expression 
             dst_scale (:class:`~scale.Scale`): the final scale
-            aspect (:class:`~aspect.Aspect`, optional): the aspect for scales
         
         Returns:
             A Python function 
             
         """                
-        scale_pair = (src_scale.uid,dst_scale.uid)
+        scale_pair = (src_expr.scale.uid,dst_scale.uid)
+        aspect = src_expr.aspect
         
         # Note, the register should probably not allow an aspect-free conversion 
         # to be defined when there is already an aspect-specific one defined.
@@ -186,17 +185,17 @@ class Context(object):
             pass
                         
         # This is a failure 
-        if aspect is None:
+        if aspect.uid is None:
             raise RuntimeError(
                 "no conversion from {!r} to {!r}".format(
-                    src_scale,
+                    src_expr.scale,
                     dst_scale
                 )
             )
         else:
             raise RuntimeError(
                 "no conversion from {!r} to {!r} for {!r}".format(
-                    src_scale,
+                    src_expr.scale,
                     dst_scale,
                     aspect
                 )
@@ -204,8 +203,11 @@ class Context(object):
 
     def casting_fn(self,src_exp,dst_scale_aspect):
         """
-        Return a function to cast the value of ``src_exp`` to an
-        expression in ``dst_scale_aspect``.
+        Return a function that transforms the value of ``src_exp`` 
+        to an expression in terms of ``dst_scale_aspect``.
+        
+        If the initial expression does not specify an aspect, the
+        aspect of ``dst_scale_aspect`` is assumed to apply to both.
         
         Args:
             src_exp (:class:`~expression.Expression`): the initial expression
@@ -214,20 +216,42 @@ class Context(object):
         Returns:
             A Python function 
             
-        """        
-        src_pair = src_exp.scale_aspect.uid     # scale-aspect pair
-        dst_pair = dst_scale_aspect.uid         # scale-aspect pair
+        """          
+        dst_pair = dst_scale_aspect.uid
         
-        try:
-            return self.casting_reg[ (src_pair,dst_pair) ]
+        if src_exp.scale_aspect.aspect.uid is None:
+            src_pair = (    
+                src_exp.scale_aspect.scale.uid,
+                dst_scale_aspect.aspect.uid
+            ) 
+        else:
+            src_pair = src_exp.scale_aspect.uid     
+          
+        if src_pair[1] == dst_pair[1]:
+        
+            # Look for aspect-specific conversions too
+            scale_pair = (
+                src_exp.scale_aspect.scale.uid,
+                dst_scale_aspect.scale.uid
+            )
             
+            scales_for_aspect = self.scales_for_aspect_reg[
+                dst_scale_aspect.aspect.uid
+            ]
+            try:
+                return scales_for_aspect[scale_pair]
+            except KeyError:
+                pass
+            
+        try:
+            return self.casting_reg[ (src_pair,dst_pair) ]   
         except KeyError:
             raise RuntimeError(
                 "no cast defined from '{!r}' to '{!r}'".format(
                     src_pair,
                     dst_pair
                 )
-            )            
+            ) from None          
 
 # ---------------------------------------------------------------------------
 # Configure a default context object by reading all JSON files
