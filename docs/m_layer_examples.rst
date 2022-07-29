@@ -18,7 +18,7 @@ Absolute temperature
 
 Firstly, there is the distinction between ratio scales and interval scales. 
 
-M-layer conversion of an expression will not change the aspect, but conversion may change the type of scale.  For example, conversion between Fahrenheit and degree Celsius can be carried out::
+M-layer conversion will not change the aspect, but conversion may change the type of scale.  For example, conversion between Fahrenheit and degree Celsius can be carried out::
 
     >>> from m_layer import *
     
@@ -51,12 +51,12 @@ The M-layer will not allow an expression to be converted without this informatio
     ...
     RuntimeError: no conversion from Scale(('ml-si-celsius-interval', 245795086332095731716589481707012001072)) to Scale(('ml-si-kelvin-ratio', 302952256288207449238881076502466548054))
 
-Information about the aspect can be specified when initially when creating an expression, or injected during later conversion, as shown below. Once specified, conversion operations cannot change the aspect (only casting may change the aspect of an expression). :: 
+Information about the aspect can be specified initially when creating an expression, or injected during later casting, as shown below. Once specified, conversion operations cannot change the aspect (only casting may change the aspect of an expression). :: 
 
     >>> T = Aspect( ('ml-temperature', 316901515895475271730171605211001099255) )
     
-    >>> t_C = t.convert(celsius_interval,T)     # Inject the aspect 'T'
-    >>> t_K = convert(t_C,kelvin)
+    >>> t_C = t.convert(celsius_interval)     
+    >>> t_K = cast(t_C,kelvin,T)    # Inject the aspect 'T'
     >>> display(t_K)
     295.3722222222222 K
     Expression(295.3722222222222,kelvin,temperature)
@@ -65,7 +65,7 @@ Information about the aspect can be specified when initially when creating an ex
 Temperature difference  
 ----------------------
 
-The subtle distinction between temperature and temperature difference is manageable with the M-layer. Firstly, a temperature difference expressed in degrees Celsius is not convertible to temperature in degrees Fahrenheit, because that conversion is not registered as legitimate::
+The subtle distinction between temperature and temperature difference is now manageable. Firstly, a temperature difference expressed in degrees Celsius is not convertible to temperature in degrees Fahrenheit, because that conversion is not registered::
 
     >>> celsius_ratio = Scale( ('ml-si-celsius-ratio', 278784445377172064355281533676474538407) )
 
@@ -86,32 +86,15 @@ On the other hand, degrees Celsius can be converted to kelvin::
     Expression(10,kelvin)
     <BLANKLINE>
     
-It is important to note that these expressions did not define the aspect, which allows the following (probably unintended) conversion to occur::
-
-    >>> display( t_diff_C.convert(kelvin,T) )
-    10 K
-    Expression(10,kelvin,temperature)
-    <BLANKLINE>
-    
-To avoid such ambiguity, explicit use of aspects is recommended. If an aspect had been specified, the conversion above could have raised an exception:: 
-
-    >>> dT = Aspect( ('ml-temperature-difference', 212368324110263031011700652725345220325) )
-
-    >>> t_diff_C = expr(10,celsius_ratio,dT)
-    >>> display(t_diff_C)
-    10 degree C
-    Expression(10,celsius,temperature-difference)
-    <BLANKLINE>
-    >>> display( t_diff_C.convert(kelvin,T) ) # Cannot convert to a different aspect
-    Traceback (most recent call last):
-    ...
-    RuntimeError: incompatible aspects: [Aspect('ml-temperature-difference', 212368324110263031011700652725345220325), Aspect('ml-temperature', 316901515895475271730171605211001099255)]
+However, it is important to note that these expressions did not define the aspect.
     
 Scale-aspect pairs
 ------------------
 
-Pairing scales with aspects provides a convenient way of expressing data. The M-layer class :class:`~scale_aspect.ScaleAspect` encapsulates scale-aspect pairs for this purpose. The following code uses scale-aspect pairs to handle the cases shown above::
+Explicit use of aspects is recommended. Pairing scales with aspects provides a convenient  and safe way of expressing data. The M-layer class :class:`~scale_aspect.ScaleAspect` encapsulates scale-aspect pairs for this purpose. The following code uses scale-aspect pairs to handle the cases shown above::
 
+    >>> dT = dT = Aspect( ('ml-temperature-difference', 212368324110263031011700652725345220325) )
+    
     >>> celsius_dT = ScaleAspect( celsius_ratio, dT )
     >>> celsius_T = ScaleAspect( celsius_interval, T )
     >>> fahrenheit_T = ScaleAspect( fahrenheit_interval, T )
@@ -135,6 +118,7 @@ Pairing scales with aspects provides a convenient way of expressing data. The M-
     Expression(295.3722222222222,kelvin,temperature)
     <BLANKLINE>
 
+    >>> t_diff_C = expr(10,celsius_dT)
     >>> t_diff_C.convert(fahrenheit_T)  # The difference in aspect is detected 
     Traceback (most recent call last):
     ...
@@ -143,7 +127,7 @@ Pairing scales with aspects provides a convenient way of expressing data. The M-
 Plane angle
 ===========
   
-Plane angle is interesting because values are often expressed using bounded cyclic, or circular, values. This means that conversion between expressions of plane angle is quite different from other types of scale.
+Plane angle is interesting because values may be expressed using bounded cyclic, or circular, values. This means that conversion between expressions of angle is quite different from other types of scale.
 
 Scales for plane angle
 ----------------------
@@ -174,15 +158,15 @@ An angle can be converted between bounded scales::
     Expression(270.0,degree)
     <BLANKLINE>
     
-and conversion to an unbounded scale is possible too, if the aspect is given ::
+and casting to an unbounded scale is possible too, but the aspect mus be given ::
 
-    >>> b = convert(a,radian_ratio,plane_angle)
+    >>> b = cast(a,radian_ratio,plane_angle)
     >>> display( b )
     -1.5707963267948966 rad
     Expression(-1.5707963267948966,radian,plane-angle)
     <BLANKLINE>
     
-However, an explicit cast is require to change from unbounded to bounded scales because some loss of information may result :: 
+An explicit cast is required to change from unbounded to bounded scales too, because some loss of information may result :: 
 
     >>> display( cast(b,degree_bounded_180) )
     -90.0 deg
@@ -298,7 +282,7 @@ Here, conversion from the special name becquerel to the generic unit per-second 
 A conversion back to becquerel requires the aspect to be identified::
 
     >>> activity = Aspect( ('ml-activity', 20106649997056189817632954430448298015) )
-    >>> display( convert(y,becquerel,activity) ) 
+    >>> display( cast(y,becquerel,activity) ) 
     96 Bq
     Expression(96,becquerel,activity)
     <BLANKLINE>
