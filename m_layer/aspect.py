@@ -7,6 +7,11 @@ than 'kind of quantity'.
 from m_layer.context import default_context as cxt
 
 # ---------------------------------------------------------------------------
+__all__ = (
+    'Aspect',
+    'no_aspect'
+)
+# ---------------------------------------------------------------------------
 class Aspect(object):
 
     """
@@ -35,14 +40,28 @@ class Aspect(object):
         return self._aspect_uid
         
     def __eq__(self,other):
-        "True when both objects have the same uids"
-        return self.uid[1] == other.uid[1] 
+        """
+        True when both objects have the same uid
+        An aspect with uid ``None`` is never equal 
+        to another aspect.
+        """
+        if self._aspect_uid is not None:
+            return self.uid[1] == other.uid[1] 
+        else:
+            return False
         
     def __str__(self):
-        return str( self._from_json() )
+        if self.uid is None:
+            return ""
+        else:
+            return str( self._from_json() )
         
     def __repr__(self):
         if self.uid is None:
             return ""
         else:
             return "Aspect{!r}".format( self.uid )
+
+# ---------------------------------------------------------------------------
+no_aspect = Aspect(None)    
+
