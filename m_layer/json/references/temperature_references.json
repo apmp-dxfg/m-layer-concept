@@ -19,23 +19,6 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si-kelvin",
-            25703533220788919988679332108037098600
-        ],
-        "locale": {
-            "default": {
-                "name": "kelvin",
-                "symbol": "K"
-            }
-        },
-        "UCUM": {
-            "code": "K",
-            "description": "degree Kelvin"
-        }
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
             "imp-fahrenheit",
             314545844086913572859566825785893557749
         ],

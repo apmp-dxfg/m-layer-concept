@@ -14,7 +14,14 @@
                 "symbol": "\\per\\metre"
             }
         },
-        "unit-system": "SI",
+        "unit-system": {
+            "uid": [
+                "si-system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": [0,-1,0,0,0,0,0],
+            "prefix": 1
+        },
         "UCUM": {
             "code": "/m",
             "description": "1/meter"
@@ -35,7 +42,14 @@
                 "symbol": "\\per\\centimetre"
             }
         },
-        "unit-system": "SI",
+        "unit-system": {
+            "uid": [
+                "si-system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": [0,-1,0,0,0,0,0],
+            "prefix": 1E2
+        },
         "UCUM": {
             "code": "/cm",
             "description": "1/centieter"

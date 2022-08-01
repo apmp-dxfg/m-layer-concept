@@ -2,24 +2,6 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si-metre",
-            61268972265076316018593147152102406832
-        ],
-        "locale": {
-            "default": {
-                "name": "metre",
-                "symbol": "m"
-            }
-        },
-        "unit-system": "SI",
-        "UCUM": {
-            "code": "m",
-            "description": "meter"
-        }
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
             "si-nanometre",
             230327124043985678197012494098272082173
         ],
@@ -29,7 +11,14 @@
                 "symbol": "nm"
             }
         },
-        "unit-system": "SI",
+        "unit-system": {
+            "uid": [
+                "si-system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": [0,1,0,0,0,0,0],
+            "prefix": 1
+        },
         "UCUM": {
             "code": "nm",
             "description": "nanometer"

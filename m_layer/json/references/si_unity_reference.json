@@ -11,7 +11,14 @@
                 "symbol": ""
             }
         },
-        "unit-system": "SI",
+        "unit-system": {
+            "uid": [
+                "si-system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": [0,0,0,0,0,0,0],
+            "prefix": 1
+        },
         "UCUM": {
             "code": "1",
             "description": "unity"

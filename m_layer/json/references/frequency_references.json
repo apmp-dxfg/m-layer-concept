@@ -11,7 +11,14 @@
                 "symbol": "Hz"
             }
         },
-        "unit-system": "SI",
+        "unit-system": {
+            "uid": [
+                "si-system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": [0,0,-1,0,0,0,0],
+            "prefix": 1
+        },
         "UCUM": {
             "code": "Hz",
             "description": "hertz"
@@ -29,7 +36,14 @@
                 "symbol": "THz"
             }
         },
-        "unit-system": "SI",
+        "unit-system": {
+            "uid": [
+                "si-system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": [0,0,-1,0,0,0,0],
+            "prefix": 1E12
+        },
         "UCUM": {
             "code": "THz",
             "description": "terahertz"
@@ -47,7 +61,14 @@
                 "symbol": "1/s"
             }
         },
-        "unit-system": "SI",
+        "unit-system": {
+            "uid": [
+                "si-system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": [0,0,-1,0,0,0,0],
+            "prefix": 1
+        },
         "UCUM": {
             "code": "/s",
             "description": "per second"
