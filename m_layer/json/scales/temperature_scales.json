@@ -2,18 +2,6 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-si-kelvin-ratio", 
-            302952256288207449238881076502466548054
-        ],
-        "reference": [
-            "si-kelvin",
-            25703533220788919988679332108037098600
-        ],
-        "scale_type": "ratio"
-    },
-    {
-        "__entry__": "Scale",
-        "uid": [
             "ml-si-celsius-interval", 
             245795086332095731716589481707012001072
         ],

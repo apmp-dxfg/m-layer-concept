@@ -1,0 +1,87 @@
+[
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml-si-kilogram-ratio",
+            12782167041499057092439851237297548539
+        ],
+        "reference": [
+            "si-kilogram",
+            188151331508313165897603768130808181784
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml-si-metre-ratio",
+            17771593641054934856197983478245767638
+        ],
+        "reference": [
+            "si-metre",
+            61268972265076316018593147152102406832
+        ],
+        "scale_type": "ratio"
+    },    
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml-si-second-ratio",
+            276296348539283398608930897564542275037        
+        ],
+        "reference": [
+            "si-second",
+            110730041758233939215703442037761569190
+        ],
+        "scale_type": "ratio"
+    },    
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml-si-ampere-ratio",
+            257680203120950316968604264670884361610
+        ],
+        "reference": [
+            "si-ampere",
+            264081801568151063132838497538090031099
+        ],
+        "scale_type": "ratio"
+    },    
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml-si-kelvin-ratio",
+            302952256288207449238881076502466548054
+        ],
+        "reference": [
+            "si-kelvin",
+            25703533220788919988679332108037098600
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml-si-mol-ratio",
+            15496259120657933158664487705643275334
+        ],
+        "reference": [
+            "si-mol",
+            96713855510406467826626480289106173630
+        ],
+        "scale_type": "ratio"
+    },
+        {
+        "__entry__": "Scale",
+        "uid": [
+            "ml-si-candela-ratio",
+            13171319201648801065089085279216910048
+        ],
+        "reference": [
+            "si-candela",
+            107700549721211215242458620140782394628
+        ],
+        "scale_type": "ratio"
+    }
+]
+
