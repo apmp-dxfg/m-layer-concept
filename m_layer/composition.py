@@ -25,8 +25,10 @@ class Stack(object):
     def copy(self):
         return Stack( self._obj.copy() )
 
-    def _render(self):
-    
+    def _render_str(self):
+        """
+        
+        """
         exec_stack = []
         
         _N = len(self._obj)
@@ -70,13 +72,13 @@ class Stack(object):
                 else:
                     raise RuntimeError(opn)
         
-        if len(exec_stack) != 1:
-            raise RuntimeError(exec_stack)
-        else:
-            return exec_stack.pop() 
+        assert len(exec_stack) == 1,\
+            "residual stack elements: {!r}".format(exec_stack)
+        
+        return exec_stack.pop() 
         
     def __str__(self):
-        return self._render()
+        return self._render_str()
         
     def __repr__(self):
         return "Stack({!r})".format(self._obj)
@@ -85,7 +87,18 @@ class Stack(object):
         return Stack(self._obj + stack(obj))
         
     def push(self,x):
-        return self._append([x])
+        """
+        Args:
+            x (:class:`Stack` or single object):
+            
+        When a :class:`Stack` is received the contents 
+        are used to extend the current stack. 
+        
+        """
+        if isinstance(x,Stack):
+            return self._append( x._obj )
+        else:
+            return self._append([x])
         
     def rmul(self):       
         return self._append(['rmul'])
@@ -106,5 +119,7 @@ class Stack(object):
 if __name__ == '__main__':
 
     s = Stack().push("l")
-    s = s.push("km").push(100).rmul().div()
+    s2 = Stack().push("km").push(100).rmul()
+    s = s.push(s2).div()
     print(s)
+    print(repr(s))
