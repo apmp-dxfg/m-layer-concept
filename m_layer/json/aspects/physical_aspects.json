@@ -2,38 +2,6 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-mass",
-            321881801928222308627062904049725548287
-        ],
-        "locale": {
-            "default": {
-                "name": "mass",
-                "symbol": "M"
-            }
-        },
-        "metadata": {
-            "url": "none"
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
-            "ml-length",
-            993853592179723568440264076369400241
-        ],
-        "locale": {
-            "default": {
-                "name": "length",
-                "symbol": "L"
-            }
-        },
-        "metadata": {
-            "url": "none"
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
             "ml-torque",
             130931339493516375135609650190501980170
         ],
@@ -169,22 +137,6 @@
             "default": {
                 "name": "photon energy",
                 "symbol": "E"
-            }
-        },
-        "metadata": {
-            "url": "none"
-        }
-    },    
-    {
-        "__entry__": "Aspect",
-        "uid": [
-            "ml-temperature",
-            316901515895475271730171605211001099255
-        ],
-        "locale": {
-            "default": {
-                "name": "temperature",
-                "symbol": "T"
             }
         },
         "metadata": {
