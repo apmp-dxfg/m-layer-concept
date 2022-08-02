@@ -45,7 +45,7 @@ class Aspect(object):
         An aspect with uid ``None`` is never equal 
         to another aspect.
         """
-        if self._aspect_uid is not None:
+        if self._aspect_uid is not None and hasattr(other,'uid'):
             return self.uid[1] == other.uid[1] 
         else:
             return False
