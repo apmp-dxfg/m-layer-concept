@@ -1,6 +1,6 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 from m_layer.context import default_context as cxt
-from m_layer.scale import Scale, ScaleAspect
+from m_layer.scale import Scale, ScaleAspect, ComposedScaleAspect
 from m_layer.aspect import no_aspect
 
 __all__ = (
@@ -17,7 +17,7 @@ __all__ = (
 class Expression(object):
     
     """
-    An ``Expression`` is defined by a token and a scale-aspect. 
+    An ``Expression`` is defined by a token and a scale-aspect pair. 
     """
     
     __slots__ = ("_token","_scale_aspect")
@@ -31,22 +31,31 @@ class Expression(object):
         locale=cxt.locale       
         
         return "{} {}".format( 
-            self._token, 
-            self._scale_aspect.scale._json_scale_to_ref(locale,short) 
+            self.token, 
+            self.scale 
         )
         
     def __repr__(self):
         locale=cxt.locale
         short=False
-        
-        v = "{}".format( self.token )
-        r = "{}".format( self._scale_aspect.scale._json_scale_to_ref(locale,short) )
-        
+                
         if self.aspect is no_aspect:
-            return "Expression({},{})".format(v,r)
+            return "Expression({},{})".format(
+                self.token,
+                self.scale 
+            )
+        elif str(self.scale) == "": 
+            # Special case, not sure how better to do this
+            return "Expression({},1,{})".format(
+                self.token,
+                self.aspect
+            )
         else:
-            a = "{}".format( self.aspect._from_json(locale,short) )
-            return "Expression({},{},{})".format(v,r,a)
+            return "Expression({},{},{})".format(
+                self.token,
+                self.scale,
+                self.aspect
+            )
             
     @property
     def token(self):
@@ -86,16 +95,18 @@ class Expression(object):
         the associated aspect must match the existing expression.   
         
         Args:
-            dst_scale (:class:`~scale_aspect.ScaleAspect` or :class:`~scale.Scale`): the scale-aspect pair for the new expression 
+            dst_scale (:class:`~scale_aspect.ScaleAspect` or 
+            :class:`~scale_aspect.ComposedScaleAspect` or
+            :class:`~scale.Scale`): the scale-aspect pair for the new expression 
         
         Returns:
             :class:`~expression.Expression` 
             
         Raises:
-            RuntimeError: if the aspect of the existing expression is incompatible with ``dst_scale``.
+            RuntimeError: if the existing expression aspect is incompatible with ``dst_scale``.
 
         """     
-        if isinstance(dst_scale,ScaleAspect):
+        if isinstance(dst_scale,ScaleAspect) and isinstance(self.scale_aspect,ScaleAspect):
             # The source and destination aspects must match
             if self.aspect != dst_scale.aspect:          
                 raise RuntimeError(
@@ -104,15 +115,44 @@ class Expression(object):
                     )
                 ) 
             else:
-                dst_scale_aspect = dst_scale 
-        else: 
+                dst_scale_aspect = dst_scale  
+                new_token = cxt.conversion_fn( self, dst_scale_aspect.scale )(self._token)
+
+        elif isinstance(dst_scale,Scale) and isinstance(self.scale_aspect,ScaleAspect): 
             # Create a ScaleAspect object
             dst_scale_aspect = dst_scale.to_scale_aspect( self.aspect ) 
-        
-        fn = cxt.conversion_fn( self, dst_scale_aspect.scale )
-        
+            new_token = cxt.conversion_fn( self, dst_scale_aspect.scale )(self._token)
+            
+        elif ( 
+            isinstance(dst_scale,ComposedScaleAspect) 
+        and isinstance(self.scale_aspect,ComposedScaleAspect)
+        ):
+            src_aspect_stack = self.aspect
+            dst_aspect_stack = dst_scale.aspect
+            
+            a_N = len(src_aspect_stack)
+            
+            assert a_N == len(dst_scale.aspect),\
+                "incompatible aspects: {!}, {!r}".format(
+                    self.aspect, dst_scale.aspect
+                 )
+            
+            # Step through the stacks and obtain a factor for each ScaleAspect pair.
+            # The scale stack may have numerical factors associated with 'rmul', 
+            # if these do not match then they should be consumed in the conversion factor.
+            # Expect 1-to-1 matching between aspect stack contents 
+            # (note, 'rmul' is omitted from aspect stacks).
+            
+            a_ptr = 0
+            while a_ptr < a_N:
+                assert src_aspect_stack[a_ptr] == dst_aspect_stack[a_ptr]
+                a_ptr += 1
+            
+        else:
+            assert False
+          
         return Expression(
-            fn( self._token ),
+            new_token,
             dst_scale_aspect
         )
 
@@ -266,7 +306,7 @@ def expr(v,s,a=no_aspect):
     
     """
     # `s` may be a scale-aspect pair or just a scale 
-    if isinstance(s,ScaleAspect):
+    if isinstance(s,(ScaleAspect,ComposedScaleAspect)):
         return Expression(v,s)
     elif isinstance(s,Scale):
         return Expression(v, s.to_scale_aspect(a) )
