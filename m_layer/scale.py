@@ -1,6 +1,8 @@
 """
 
 """
+import numbers
+
 from m_layer.context import default_context as cxt
 from m_layer.aspect import no_aspect
 from m_layer.composition import Stack
@@ -17,25 +19,24 @@ class ComposedScaleAspect(object):
     For expressions of ScaleAspects
     """
 
-    __slots__ = ("_scale","_aspect")
+    __slots__ = ("_scale_stack","_aspect_stack")
 
     def __init__(self,scale,aspect):
     
-        if isinstance(scale,Stack):
-            self._scale_stack = scale
-        else:
-            assert False
+        assert isinstance(scale,Stack)
+        assert isinstance(aspect,Stack)
+        
+        self._scale_stack = scale
+        self._aspect_stack = aspect
 
-        if isinstance(aspect,Stack):
-            self._aspect_stack = aspect
-        else:
-            assert False
-
+    @property 
+    def composable(self): return True
+ 
     @property
     def scale(self):
         "The scale stack"
         return self._scale_stack 
-        
+ 
     @property 
     def aspect(self):
         "The aspect stack"
@@ -47,61 +48,29 @@ class ComposedScaleAspect(object):
     def __rmul__(self,x):
         # a numerical scale factor on the left 
         assert isinstance(x,numbers.Integral)
-        if isinstance(y,ComposedScaleAspect):
-            return ComposedScaleAspect(
-                self.scale.push(x).rmul(),
-                self.aspect.copy()
-            )
-        elif isinstance(y,ScaleAspect):
-            return ComposedScaleAspect(
-                Stack().push(self.scale).push(x).rmul(),
-                Stack().push(self.aspect)
-            )
-        else:
-            assert False
+        return ComposedScaleAspect(
+            self.scale.push(x).rmul(),
+            self.aspect.copy()
+        )
         
     def __mul__(self,y):
-        if isinstance(y,ComposedScaleAspect):
-            return ComposedScaleAspect(
-                self.scale.push(y.scale).mul(),
-                self.aspect.push(y.aspect).mul()
-            )
-        elif isinstance(y,ScaleAspect):
-            return ComposedScaleAspect(
-                Stack().push(self.scale).push(y.scale).mul(),
-                Stack().push(self.aspect).push(y.aspect).mul()
-            )
-        else:
-            assert False
+        return ComposedScaleAspect(
+            self.scale.push(y.scale).mul(),
+            self.aspect.push(y.aspect).mul()
+        )
 
-    def __div__(self,y):
-        if isinstance(y,ComposedScaleAspect):
-            return ComposedScaleAspect(
-                self.scale.push(y.scale).div(),
-                self.aspect.push(y.aspect).div()
-            )
-        elif isinstance(y,ScaleAspect):
-            return ComposedScaleAspect(
-                Stack().push(self.scale).push(y.scale).div(),
-                Stack().push(self.aspect).push(y.aspect).div()
-            )
-        else:
-            assert False
+    def __truediv__(self,y):
+        return ComposedScaleAspect(
+            self.scale.push(y.scale).div(),
+            self.aspect.push(y.aspect).div()
+        )
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
-        if isinstance(y,ComposedScaleAspect):
-            return ComposedScaleAspect(
-                self.scale.push(y.scale).pow(),
-                self.aspect.push(y.aspect).pow()
-            )
-        elif isinstance(y,ScaleAspect):
-            return ComposedScaleAspect(
-                Stack().push(self.scale).push(y.scale).pow(),
-                Stack().push(self.aspect).push(y.aspect).pow()
-            )
-        else:
-            assert False
+        return ComposedScaleAspect(
+            self.scale.push(y.scale).pow(),
+            self.aspect.push(y.aspect).pow()
+        )
     
     # @property 
     # def uid(self):
@@ -115,11 +84,11 @@ class ComposedScaleAspect(object):
         # and self.aspect == other.aspect
         # )
         
-    # def __str__(self):
-        # return "({!s}, {!s})".format(self.scale,self.aspect)
+    def __str__(self):
+        return "({!s}, {!s})".format( self.scale, self.aspect )
         
-    # def __repr__(self):
-        # return "ScaleAspect({!r},{!r})".format( self.scale,self.aspect ) 
+    def __repr__(self):
+        return "ComposedScaleAspect({!r},{!r})".format( self.scale, self.aspect ) 
         
 # ---------------------------------------------------------------------------
 class ScaleAspect(object):
@@ -153,46 +122,43 @@ class ScaleAspect(object):
         "A pair of M-layer identifiers for scale and aspect"
         return (self.scale.uid,self.aspect.uid)
 
+    @property 
+    def composable(self):
+        return self._scale.scale_type == "ratio"
+        
     # This arithmetic operation interface must match that of ComposedScaleAspect
     def __rmul__(self,x):
         # a numerical scale factor on the left 
         assert isinstance(x,numbers.Integral)
+        assert self.composable
+        
         return ComposedScaleAspect(
             Stack().push(self.scale).push(x).rmul(),
             Stack().push(self.aspect) 
         )
         
     def __mul__(self,y):
-        if isinstance(y,ComposedScaleAspect):
-            return ComposedScaleAspect(
-                Stack().push(self.scale).push(y.scale).mul(),
-                Stack().push(self.aspect).push(y.aspect).mul()
-            )
-        elif isinstance(y,ScaleAspect):
-            return ComposedScaleAspect(
-                Stack().push(self.scale).push(y.scale).mul(),
-                Stack().push(self.aspect).push(y.aspect).mul()
-            )
-        else:
-            assert False
+        assert self.composable
+        assert y.composable
 
-    def __div__(self,y):
+        return ComposedScaleAspect(
+            Stack().push(self.scale).push(y.scale).mul(),
+            Stack().push(self.aspect).push(y.aspect).mul()
+        )
 
-        if isinstance(y,ComposedScaleAspect):
-            return ComposedScaleAspect(
-                Stack().push(self.scale).push(y.scale).div(),
-                Stack().push(self.aspect).push(y.aspect).div()
-            )
-        elif isinstance(y,ScaleAspect):
-            return ComposedScaleAspect(
-                Stack().push(self.scale).push(y.scale).div(),
-                Stack().push(self.aspect).push(y.aspect).div()
-            )
-        else:
-            assert False
+    def __truediv__(self,y):
+        assert self.composable
+        assert y.composable
+
+        return ComposedScaleAspect(
+            Stack().push(self.scale).push(y.scale).div(),
+            Stack().push(self.aspect).push(y.aspect).div()
+        )
  
     def __pow__(self,x):
         assert isinstance(x,numbers.Integral)
+        assert self.composable
+
         return ComposedScaleAspect(
             Stack().push(self.scale).push(x).pow(),
             Stack().push(self.aspect).push(x).pow()
@@ -201,7 +167,8 @@ class ScaleAspect(object):
     def __eq__(self,other):
         "True when the M-layer identifiers of both objects match"
         return (
-            self.scale == other.scale
+            isinstance(other,ScaleAspect)
+        and self.scale == other.scale
         and self.aspect == other.aspect
         )
         
@@ -220,7 +187,7 @@ class Scale(object):
     """
 
     __slots__ = (
-        '_scale_uid',
+        '_scale_uid','_scale_type'
     )
     
     def __init__(self,scale_uid):    
@@ -244,12 +211,22 @@ class Scale(object):
         "The M-layer identifier for this aspect"
         return self._scale_uid
         
+    @property 
+    def scale_type(self):
+        # Note lazy execution
+        try:
+            return self._scale_type
+        except AttributeError:
+            scale_json = self._from_json()
+            self._scale_type = scale_json['scale_type']
+            return self._scale_type
+                
     def __eq__(self,other):
         "True when both objects have the same uids"
-        return self.uid[1] == other.uid[1] 
+        return isinstance(other,Scale) and self.uid[1] == other.uid[1] 
         
     def __str__(self):
-        return str( self._from_json() )
+        return self._json_scale_to_ref(short=True)
         
     def __repr__(self):
         return "Scale({!r})".format( self.uid )
