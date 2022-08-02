@@ -142,7 +142,7 @@ class Context(object):
     @locale.setter
     def locale(self,l):
         self._locale = l 
-        
+  
     def conversion_fn(self,src_expr,dst_scale):
         """
         Return a function that converts a value expressed 
@@ -151,7 +151,8 @@ class Context(object):
         The aspect of the initial expression does not change.  
         
         Args:
-            src_expr (:class:`~expression.Expression`): the initial expression 
+            src_expr (:class:`~expression.Expression` or :class:`~scale.ScaleAspect`):  
+                provides attributes for the scale and aspect 
             dst_scale (:class:`~scale.Scale`): the final scale
         
         Returns:
