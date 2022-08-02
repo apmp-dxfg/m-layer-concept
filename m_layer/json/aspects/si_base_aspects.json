@@ -1,0 +1,114 @@
+[
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml-mass",
+            321881801928222308627062904049725548287
+        ],
+        "locale": {
+            "default": {
+                "name": "mass",
+                "symbol": "M"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml-length",
+            993853592179723568440264076369400241
+        ],
+        "locale": {
+            "default": {
+                "name": "length",
+                "symbol": "L"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml-time",
+            59007067547744628223483093626372886675
+        ],
+        "locale": {
+            "default": {
+                "name": "time",
+                "symbol": "t"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml-electric-current",
+            565481003771161246786159459872474906
+        ],
+        "locale": {
+            "default": {
+                "name": "electric-current",
+                "symbol": "I"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml-thermodynamic-temperature",
+            227327310217856015944698060802418784871
+        ],
+        "locale": {
+            "default": {
+                "name": "thermodynamic-temperature",
+                "symbol": "T"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml-amount-of-substance",
+            184187687006002221991950252819085446201
+        ],
+        "locale": {
+            "default": {
+                "name": "amount-of-substance",
+                "symbol": "n"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml-luminous-intensity",
+            291873474201872590198069097432661576865
+        ],
+        "locale": {
+            "default": {
+                "name": "luminous-intensity",
+                "symbol": "I_v"
+            }
+        },
+        "metadata": {
+            "url": "none"
+        }
+    }
+]

@@ -2,8 +2,8 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect" : [
-            "ml-temperature",
-            316901515895475271730171605211001099255
+            "ml-thermodynamic-temperature",
+            227327310217856015944698060802418784871
         ],
         "src": [
             "ml-si-celsius-interval", 
@@ -18,8 +18,8 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect" : [
-            "ml-temperature",
-            316901515895475271730171605211001099255
+            "ml-thermodynamic-temperature",
+            227327310217856015944698060802418784871
         ],
         "src":[
             "ml-si-kelvin-ratio", 
