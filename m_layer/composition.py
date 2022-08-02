@@ -1,75 +1,110 @@
 """
 """
+stack = list    # Alias
+
 __all__ = (
     'Stack',
 )
-
 
 # ---------------------------------------------------------------------------
 class Stack(object):
 
     """
+    A Stack holds numbers and tokens for simple arithmetic operations.
+    Operations like `mul, `div`, etc., return a new object.
+    
+    This class will hold unit expressions.
     """
     
-    # Contains two lists: one of object references
-    # the other of applied operations
-    
-    def __init__(self,obj):
-        self._obj = [obj]
-        self._opn = []
-  
+    def __init__(self,obj=stack()):  
+        if isinstance(obj,stack):
+            self._obj = obj
+        else:
+            assert False
+              
     def copy(self):
-        return Stack(
-            list( self._obj ),
-            list( self._opn )
-        )
-     
-    def rmul(self,x):       
-        opn = 'rmul'
-        if isinstance(x,Stack):
-            return self._extend(x,opn)
-        else:   
-            return self._append(x,opn)
-        
-    # These operations can be called with a Stack
-    # argument or a single object
-    # When a stack is passed, this object should 
-    # be extended with the stack contents 
-    
-    def _extend(self,stack,opn):
-        rtn = self + stack
-        return Stack(
-            rtn._obj,
-            rtn._opn + [opn]
-        )
+        return Stack( self._obj.copy() )
 
-    def _append(self,obj,opn):
-        return Stack(
-            self._obj + [obj],
-            self._opn + [opn]
-        )
+    def _render(self):
     
-    def mul(self,y):
-        opn = 'mul'
-        if isinstance(y,Stack):
-            return self._extend(y,opn)
-        else:   
-            return self._append(y,opn)
+        exec_stack = []
+        
+        _N = len(self._obj)
+        _base = 0
+        
+        while _base < _N:
+            # Push objects to the execution stack unless they 
+            # are recognised operations
+            if self._obj[_base] not in ('mul','div','rmul','pow'): 
+                exec_stack.append( self._obj[_base] )
+                _base += 1
+                
+            else:
+                opn = self._obj[_base]
+                _base += 1
+                
+                if opn == 'mul':
+                    x = exec_stack.pop()
+                    y = exec_stack.pop()
+                    exec_stack.append( "{!s}.{!s}".format( y,x ) )
+                                    
+                elif opn == 'rmul':
+                    # `x` must be an integer
+                    x = exec_stack.pop()
+                    y = exec_stack.pop()
+                    exec_stack.append( "{:d}.{!s}".format( x,y ) )
+                                    
+                elif opn == 'div':
+                    x = exec_stack.pop()
+                    y = exec_stack.pop()
+                    # Numerator brackets could be added
+                    exec_stack.append( "{!s}/({!s})".format( y,x ) )
+                                    
+                elif opn == 'pow':
+                    # `y` must be an integer
+                    x = exec_stack.pop()
+                    y = exec_stack.pop()
+                    # Brackets around the term `y` could be added
+                    exec_stack.append( "{!s}^{:d}".format( y,x ) )
+                    
+                else:
+                    raise RuntimeError(opn)
+        
+        if len(exec_stack) != 1:
+            raise RuntimeError(exec_stack)
+        else:
+            return exec_stack.pop() 
+        
+    def __str__(self):
+        return self._render()
+        
+    def __repr__(self):
+        return "Stack({!r})".format(self._obj)
+
+    def _append(self,obj):
+        return Stack(self._obj + stack(obj))
+        
+    def push(self,x):
+        return self._append([x])
+        
+    def rmul(self):       
+        return self._append(['rmul'])
+        
+    def mul(self):
+        return self._append(['mul'])
  
-    def div(self,y):
-        opn = 'div'
-        if isinstance(y,Stack):
-            return self._extend(y,opn)
-        else:   
-            return self._append(y,opn)
+    def div(self):
+        return self._append(['div'])
             
-    def pow(self,y):
-        opn = 'pow'
-        if isinstance(y,Stack):
-            return self._extend(y,opn)
-        else:   
-            return self._append(y,opn)
+    def pow(self):
+        return self._append(['pow'])
  
     def __len__(self):
         return len(self._obj)
-        
+  
+# ===========================================================================
+if __name__ == '__main__':
+
+    s = Stack().push("l")
+    s = s.push("km").push(100).rmul().div()
+    print(s)

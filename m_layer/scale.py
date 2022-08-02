@@ -3,6 +3,7 @@
 """
 from m_layer.context import default_context as cxt
 from m_layer.aspect import no_aspect
+from m_layer.composition import Stack
 
 __all__ = (
     'Scale',
@@ -13,7 +14,7 @@ __all__ = (
 class ComposedScaleAspect(object):
 
     """
-    For expressions involving ScaleAspects
+    For expressions of ScaleAspects
     """
 
     __slots__ = ("_scale","_aspect")
@@ -45,32 +46,62 @@ class ComposedScaleAspect(object):
 
     def __rmul__(self,x):
         # a numerical scale factor on the left 
-        assert isinstance(x,numbers.Real)
-        return ComposedScaleAspect(
-            self.scale.rmul(x),
-            self.aspect.copy()
-        )
+        assert isinstance(x,numbers.Integral)
+        if isinstance(y,ComposedScaleAspect):
+            return ComposedScaleAspect(
+                self.scale.push(x).rmul(),
+                self.aspect.copy()
+            )
+        elif isinstance(y,ScaleAspect):
+            return ComposedScaleAspect(
+                Stack().push(self.scale).push(x).rmul(),
+                Stack().push(self.aspect)
+            )
+        else:
+            assert False
         
     def __mul__(self,y):
-        assert isinstance(y,(ComposedScaleAspect,ScaleAspect))
-        return ComposedScaleAspect(
-            self.scale.mul(y),
-            self.aspect.mul(y)
-        )
+        if isinstance(y,ComposedScaleAspect):
+            return ComposedScaleAspect(
+                self.scale.push(y.scale).mul(),
+                self.aspect.push(y.aspect).mul()
+            )
+        elif isinstance(y,ScaleAspect):
+            return ComposedScaleAspect(
+                Stack().push(self.scale).push(y.scale).mul(),
+                Stack().push(self.aspect).push(y.aspect).mul()
+            )
+        else:
+            assert False
 
     def __div__(self,y):
-        assert isinstance(y,(ComposedScaleAspect,ScaleAspect))
-        return ComposedScaleAspect(
-            self.scale.div(y),
-            self.aspect.div(y)
-        )
+        if isinstance(y,ComposedScaleAspect):
+            return ComposedScaleAspect(
+                self.scale.push(y.scale).div(),
+                self.aspect.push(y.aspect).div()
+            )
+        elif isinstance(y,ScaleAspect):
+            return ComposedScaleAspect(
+                Stack().push(self.scale).push(y.scale).div(),
+                Stack().push(self.aspect).push(y.aspect).div()
+            )
+        else:
+            assert False
  
     def __pow__(self,y):
-        assert isinstance(x,numbers.Real)
-        return ComposedScaleAspect(
-            self.scale.pow(y),
-            self.aspect.pow(y)
-        )
+        assert isinstance(y,numbers.Integral)
+        if isinstance(y,ComposedScaleAspect):
+            return ComposedScaleAspect(
+                self.scale.push(y.scale).pow(),
+                self.aspect.push(y.aspect).pow()
+            )
+        elif isinstance(y,ScaleAspect):
+            return ComposedScaleAspect(
+                Stack().push(self.scale).push(y.scale).pow(),
+                Stack().push(self.aspect).push(y.aspect).pow()
+            )
+        else:
+            assert False
     
     # @property 
     # def uid(self):
@@ -125,31 +156,46 @@ class ScaleAspect(object):
     # This arithmetic operation interface must match that of ComposedScaleAspect
     def __rmul__(self,x):
         # a numerical scale factor on the left 
-        assert isinstance(x,numbers.Real)
+        assert isinstance(x,numbers.Integral)
         return ComposedScaleAspect(
-            Stack( self.scale ).rmul(x),
-            Stack( self.aspect )
+            Stack().push(self.scale).push(x).rmul(),
+            Stack().push(self.aspect) 
         )
         
     def __mul__(self,y):
-        assert isinstance(y,(ComposedScaleAspect,ScaleAspect))
-        return ComposedScaleAspect(
-            self.scale.mul(y),
-            self.aspect.mul(y)
-        )
+        if isinstance(y,ComposedScaleAspect):
+            return ComposedScaleAspect(
+                Stack().push(self.scale).push(y.scale).mul(),
+                Stack().push(self.aspect).push(y.aspect).mul()
+            )
+        elif isinstance(y,ScaleAspect):
+            return ComposedScaleAspect(
+                Stack().push(self.scale).push(y.scale).mul(),
+                Stack().push(self.aspect).push(y.aspect).mul()
+            )
+        else:
+            assert False
 
     def __div__(self,y):
-        assert isinstance(y,(ComposedScaleAspect,ScaleAspect))
-        return ComposedScaleAspect(
-            self.scale.div(y),
-            self.aspect.div(y)
-        )
+
+        if isinstance(y,ComposedScaleAspect):
+            return ComposedScaleAspect(
+                Stack().push(self.scale).push(y.scale).div(),
+                Stack().push(self.aspect).push(y.aspect).div()
+            )
+        elif isinstance(y,ScaleAspect):
+            return ComposedScaleAspect(
+                Stack().push(self.scale).push(y.scale).div(),
+                Stack().push(self.aspect).push(y.aspect).div()
+            )
+        else:
+            assert False
  
     def __pow__(self,x):
-        assert isinstance(x,numbers.Real)
+        assert isinstance(x,numbers.Integral)
         return ComposedScaleAspect(
-            self.scale.pow(x),
-            self.aspect.pow(x)
+            Stack().push(self.scale).push(x).pow(),
+            Stack().push(self.aspect).push(x).pow()
         )
         
     def __eq__(self,other):
