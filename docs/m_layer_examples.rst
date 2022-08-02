@@ -33,12 +33,12 @@ M-layer conversion will not change the aspect, but conversion may change the typ
     >>> t = expr(72,fahrenheit_interval)
     >>> display(t)
     72 degree F
-    Expression(72,fahrenheit)
+    Expression(72,degree F)
     <BLANKLINE>
     >>> t_C = t.convert(celsius_interval)
     >>> display(t_C)
     22.22222222222222 degree C
-    Expression(22.22222222222222,celsius)
+    Expression(22.22222222222222,degree C)
     <BLANKLINE>
 
 Conversion to a different type of scale must take account of the aspect of the initial expression.
@@ -53,13 +53,13 @@ The M-layer will not allow an expression to be converted without this informatio
 
 Information about the aspect can be specified initially when creating an expression, or injected during later casting, as shown below. Once specified, conversion operations cannot change the aspect (only casting may change the aspect of an expression). :: 
 
-    >>> T = Aspect( ('ml-temperature', 316901515895475271730171605211001099255) )
+    >>> T = Aspect( ("ml-thermodynamic-temperature", 227327310217856015944698060802418784871) )         
     
     >>> t_C = t.convert(celsius_interval)     
     >>> t_K = cast(t_C,kelvin,T)    # Inject the aspect 'T'
     >>> display(t_K)
     295.3722222222222 K
-    Expression(295.3722222222222,kelvin,temperature)
+    Expression(295.3722222222222,K,thermodynamic-temperature)
     <BLANKLINE>
     
 Temperature difference  
@@ -72,7 +72,7 @@ The subtle distinction between temperature and temperature difference is now man
     >>> t_diff_C = expr(10,celsius_ratio)
     >>> display(t_diff_C)
     10 degree C
-    Expression(10,celsius)
+    Expression(10,degree C)
     <BLANKLINE>
     >>> t_diff_C.convert(fahrenheit_interval)
     Traceback (most recent call last):
@@ -83,7 +83,7 @@ On the other hand, degrees Celsius can be converted to kelvin::
 
     >>> display( t_diff_C.convert(kelvin) )
     10 K
-    Expression(10,kelvin)
+    Expression(10,K)
     <BLANKLINE>
     
 However, it is important to note that these expressions did not define the aspect.
@@ -104,25 +104,25 @@ Explicit use of aspects is recommended. Pairing scales with aspects provides a c
     >>> t = expr(72,fahrenheit_T)
     >>> display(t)
     72 degree F
-    Expression(72,fahrenheit,temperature)
+    Expression(72,degree F,thermodynamic-temperature)
     <BLANKLINE>
     >>> t_C = t.convert(celsius_T)
     >>> display(t_C)
     22.22222222222222 degree C
-    Expression(22.22222222222222,celsius,temperature)
+    Expression(22.22222222222222,degree C,thermodynamic-temperature)
     <BLANKLINE>
 
     >>> t_K = convert(t_C,kelvin_T)
     >>> display(t_K)
     295.3722222222222 K
-    Expression(295.3722222222222,kelvin,temperature)
+    Expression(295.3722222222222,K,thermodynamic-temperature)
     <BLANKLINE>
 
     >>> t_diff_C = expr(10,celsius_dT)
     >>> t_diff_C.convert(fahrenheit_T)  # The difference in aspect is detected 
     Traceback (most recent call last):
     ...
-    RuntimeError: incompatible aspects: [Aspect('ml-temperature-difference', 212368324110263031011700652725345220325), Aspect('ml-temperature', 316901515895475271730171605211001099255)]
+    RuntimeError: incompatible aspects: [Aspect('ml-temperature-difference', 212368324110263031011700652725345220325), Aspect('ml-thermodynamic-temperature', 227327310217856015944698060802418784871)]
   
 Plane angle
 ===========
@@ -151,11 +151,11 @@ An angle can be converted between bounded scales::
     >>> a = expr(-90,degree_bounded_180)
     >>> display(a)
     -90 deg
-    Expression(-90,degree)
+    Expression(-90,deg)
     <BLANKLINE>
     >>> display( convert(a,degree_bounded_360) )
     270.0 deg
-    Expression(270.0,degree)
+    Expression(270.0,deg)
     <BLANKLINE>
     
 and casting to an unbounded scale is possible too, but the aspect mus be given ::
@@ -163,14 +163,14 @@ and casting to an unbounded scale is possible too, but the aspect mus be given :
     >>> b = cast(a,radian_ratio,plane_angle)
     >>> display( b )
     -1.5707963267948966 rad
-    Expression(-1.5707963267948966,radian,plane-angle)
+    Expression(-1.5707963267948966,rad,plane-angle)
     <BLANKLINE>
     
 An explicit cast is required to change from unbounded to bounded scales too, because some loss of information may result :: 
 
     >>> display( cast(b,degree_bounded_180) )
     -90.0 deg
-    Expression(-90.0,degree,plane-angle)
+    Expression(-90.0,deg,plane-angle)
     <BLANKLINE>
   
 Spectroscopic data
@@ -197,22 +197,22 @@ The data may then be converted safely::
     >>> x = expr(1,electronvolt,photon_energy)
     >>> display(x)
     1 eV
-    Expression(1,electronvolt,photon energy)
+    Expression(1,eV,photon energy)
     <BLANKLINE>
     >>> display( x.convert(terahertz) ) 
     241.79892420849183 THz
-    Expression(241.79892420849183,terahertz,photon energy)
+    Expression(241.79892420849183,THz,photon energy)
     <BLANKLINE>
     >>> display( x.convert(per_centimetre) )
     8065.543937349211 1/cm
-    Expression(8065.543937349211,per centimetre,photon energy)
+    Expression(8065.543937349211,1/cm,photon energy)
     <BLANKLINE>
 
 The wavelength is inversely related to energy (:math:`\lambda = h\,c / E`), so the M-layer handles this as a cast, rather than a conversion::
 
     >>> display(x.cast(nanometre)) 
     1239.8419843320025 nm
-    Expression(1239.8419843320025,nanometre,photon energy)
+    Expression(1239.8419843320025,nm,photon energy)
     <BLANKLINE>
     
 Response data
@@ -233,12 +233,12 @@ This situation is handled in the M-layer by declaring a different aspect for eac
     >>> x = expr(0.95,transmittance)
     >>> display(x)
     0.95
-    Expression(0.95,one,transmittance)
+    Expression(0.95,1,transmittance)
     <BLANKLINE>
     >>> y = expr(0.1,reflectance)
     >>> display(y)
     0.1
-    Expression(0.1,one,reflectance)
+    Expression(0.1,1,reflectance)
     <BLANKLINE>
     
 These expressions are distinct. Their scales are the same (both one), but the aspects are different::
@@ -264,12 +264,12 @@ The M-layer can manage this asymmetry. ::
     >>> x = expr(96,becquerel)
     >>> display(x)
     96 Bq
-    Expression(96,becquerel)
+    Expression(96,Bq)
     <BLANKLINE>
     >>> y = convert(x,per_second)
     >>> display( y )
     96 1/s
-    Expression(96,per-second)
+    Expression(96,1/s)
     <BLANKLINE>
 
 Here, conversion from the special name becquerel to the generic unit per-second is permitted. However, conversion in the opposite sense is not::
@@ -284,7 +284,7 @@ A conversion back to becquerel requires the aspect to be identified::
     >>> activity = Aspect( ('ml-activity', 20106649997056189817632954430448298015) )
     >>> display( cast(y,becquerel,activity) ) 
     96 Bq
-    Expression(96,becquerel,activity)
+    Expression(96,Bq,activity)
     <BLANKLINE>
 
 Similarly, if the aspect is declared initially the following lines show that a round-trip from hertz to per-second and back to hertz is permitted for frequency, while an attempt to go from hertz to becquerel via per-second is blocked::
@@ -294,16 +294,16 @@ Similarly, if the aspect is declared initially the following lines show that a r
     >>> x = expr(110,hertz,frequency)
     >>> display(x)
     110 Hz
-    Expression(110,hertz,frequency)
+    Expression(110,Hz,frequency)
     <BLANKLINE>    
     >>> y = convert(x,per_second)
     >>> display(y)
     110 1/s
-    Expression(110,per-second,frequency)
+    Expression(110,1/s,frequency)
     <BLANKLINE>
     >>> display( convert(y,hertz) )
     110 Hz
-    Expression(110,hertz,frequency)
+    Expression(110,Hz,frequency)
     <BLANKLINE>
     >>> convert(y,becquerel)    # Illegitimate conversion is detected
     Traceback (most recent call last):
