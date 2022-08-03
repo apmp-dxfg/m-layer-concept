@@ -1,4 +1,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+import numbers
+import math 
+
 from m_layer.context import default_context as cxt
 from m_layer.scale import Scale, ScaleAspect, ComposedScaleAspect
 from m_layer.aspect import no_aspect
@@ -130,6 +133,9 @@ class Expression(object):
             src_aspect_stack = self.aspect
             dst_aspect_stack = dst_scale.aspect
             
+            src_scale_stack = self.scale
+            dst_scale_stack = dst_scale.scale
+            
             a_N = len(src_aspect_stack)
             
             assert a_N == len(dst_scale.aspect),\
@@ -137,20 +143,122 @@ class Expression(object):
                     self.aspect, dst_scale.aspect
                  )
             
+            assert s_N == len(dst_scale.scale),\
+                "incompatible scales: {!}, {!r}".format(
+                    self.scale, dst_scale.scale
+                 )
+           
             # Step through the stacks and obtain a factor for each ScaleAspect pair.
             # The scale stack may have numerical factors associated with 'rmul', 
             # if these do not match then they should be consumed in the conversion factor.
             # Expect 1-to-1 matching between aspect stack contents 
             # (note, 'rmul' is omitted from aspect stacks).
             
+            stack = []
             a_ptr = 0
-            while a_ptr < a_N:
-                assert src_aspect_stack[a_ptr] == dst_aspect_stack[a_ptr]
-                a_ptr += 1
+            s_ptr = 0
+            d_ptr = 0
             
-        else:
-            assert False
-          
+            while a_ptr < a_N:
+            
+                if isinstance(src_scale_stack[s_ptr],Scale):
+                    assert isinstance(dst_scale_stack[d_ptr],Scale)                
+                
+                    src_s = src_scale_stack[s_ptr]
+                    s_ptr += 1
+                    dst_s = dst_scale_stack[d_ptr]
+                    d_ptr += 1              
+                    
+                    # A scale must correspond to an aspect
+                    src_a = src_aspect_stack[a_ptr]
+                    a_ptr += 1
+                    assert src_a == dst_aspect_stack[a_ptr]
+                
+                    stack.append( cxt.conversion_fn( src_s, dst_s )(1.0) )
+                    
+                    continue
+                    
+                elif src_scale_stack[s_ptr] == 'mul':
+                    assert src_s == dst_scale_stack[d_ptr],\
+                        "{}, {}".format(src_s, dst_scale_stack[d_ptr])
+                        
+                    src_s = src_scale_stack[s_ptr]
+                    s_ptr += 1
+                    dst_s = dst_scale_stack[d_ptr]
+                    d_ptr += 1              
+                    
+                    print(src_s)
+                    x,y = stack.pop(),stack.pop()
+                    stack.append(x*y)
+
+                    # The aspect stack should have a 'mul' operation too
+                    a_ptr += 1
+                    
+                    continue
+
+                elif src_scale_stack[s_ptr] == 'div':
+                    assert src_s == dst_scale_stack[d_ptr],\
+                        "{}, {}".format(src_s, dst_scale_stack[d_ptr])
+                        
+                    src_s = src_scale_stack[s_ptr]
+                    s_ptr += 1
+                    dst_s = dst_scale_stack[d_ptr]
+                    d_ptr += 1              
+                    
+                    print(src_s)
+                    x,y = stack.pop(),stack.pop()
+                    stack.append(y/x)
+
+                    # The aspect stack should have a 'div' operation too
+                    a_ptr += 1
+                    
+                    continue
+
+                elif src_scale_stack[s_ptr] == 'pow':
+                    assert src_s == dst_scale_stack[d_ptr],\
+                        "{}, {}".format(src_s, dst_scale_stack[d_ptr])
+                        
+                    src_s = src_scale_stack[s_ptr]
+                    s_ptr += 1
+                    dst_s = dst_scale_stack[d_ptr]
+                    d_ptr += 1              
+                    
+                    print(src_s)
+                    x,y = stack.pop(),stack.pop()
+                    stack.append(y**x)
+                    
+                    # The aspect stack should have a number and a 'pow' operation
+                    a_ptr += 2
+                    
+                    continue
+                  
+                # The next steps work independently because a `numb 'rmul'`
+                # operation may occur on just one of the two stacks 
+                if isinstance(src_scale_stack[s_ptr],numbers.Integral):  
+                    # cases are processed independently
+                    stack.append( src_scale_stack[s_ptr] )
+                    s_ptr += 1
+                    print("src value",src_scale_stack[s_ptr])
+                    
+                    # Deal with 'rmul' case immediately
+                    if src_scale_stack[s_ptr] == 'rmul':
+                        s_ptr += 1
+                        # do nothing else
+                     
+                if isinstance(dst_scale_stack[d_ptr],numbers.Integral): 
+                    stack.append( dst_scale_stack[d_ptr] )
+                    d_ptr += 1
+                    print("dst value",dst_scale_stack[d_ptr])
+ 
+                    # Deal with 'rmul' case immediately
+                    if dst_scale_stack[d_ptr] == 'rmul':
+                        d_ptr += 1
+                        # require the inverse 
+                        x = stack.pop()
+                        stack.append( 1.0/x )
+            
+            new_token = math.fprod(stack)*self._token
+            
         return Expression(
             new_token,
             dst_scale_aspect
