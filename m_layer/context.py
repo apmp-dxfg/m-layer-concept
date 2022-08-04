@@ -143,24 +143,24 @@ class Context(object):
     def locale(self,l):
         self._locale = l 
   
-    def conversion_fn(self,src_expr,dst_scale):
+    # def conversion_fn(self,src_expr,dst_scale):
+    def conversion_fn(self,src_scale_uid,src_aspect_uid,dst_scale_uid):
         """
         Return a function that converts a value expressed 
-        in `src_expr` to one in terms of `dst_scale`.
+        in the `src` scale and aspect to one in the `dst` scale.
         
-        The aspect of the initial expression does not change.  
+        The aspect does not change.  
         
         Args:
-            src_expr (:class:`~expression.Expression` or :class:`~scale.ScaleAspect`):  
-                provides attributes for the scale and aspect 
-            dst_scale (:class:`~scale.Scale`): the final scale
+            src_scale_uid (unique m-layer identifier): initial scale   
+            src_aspect_uid (unique m-layer identifier): initial aspect
+            dst_scale_uid (unique m-layer identifier): final scale
         
         Returns:
             A Python function 
             
         """                
-        scale_pair = (src_expr.scale.uid,dst_scale.uid)
-        aspect = src_expr.aspect
+        scale_pair = (src_scale_uid,dst_scale_uid)
         
         # Note, the register should probably not allow an aspect-free conversion 
         # to be defined when there is already an aspect-specific one defined.
@@ -170,10 +170,10 @@ class Context(object):
         
         # Has an aspect argument been given that restricts conversions?
         # Look first in the aspect-specific conversion table
-        if( aspect is not None 
-        and aspect.uid in self.scales_for_aspect_reg
+        if( src_aspect_uid is not None 
+        and src_aspect_uid in self.scales_for_aspect_reg
         ):
-            scales_for_aspect = self.scales_for_aspect_reg[aspect.uid]
+            scales_for_aspect = self.scales_for_aspect_reg[src_aspect_uid]
             try:
                 return scales_for_aspect[scale_pair]
             except KeyError:
@@ -186,61 +186,57 @@ class Context(object):
             pass
                         
         # This is a failure 
-        if aspect.uid is None:
+        if src_aspect_uid is None:
             raise RuntimeError(
-                "no conversion from {!r} to {!r}".format(
-                    src_expr.scale,
-                    dst_scale
+                "no conversion from Scale({!r}) to Scale({!r})".format(
+                    src_scale_uid,
+                    dst_scale_uid
                 )
             )
         else:
             raise RuntimeError(
-                "no conversion from {!r} to {!r} for {!r}".format(
-                    src_expr.scale,
-                    dst_scale,
-                    aspect
+                "no conversion from Scale({!r}) to Scale({!r}) for Aspect{!r}".format(
+                    src_scale_uid,
+                    dst_scale_uid,
+                    src_aspect_uid
                 )
             )
 
-    def casting_fn(self,src_exp,dst_scale_aspect):
+    def casting_fn(
+        self,
+        src_scale_uid, src_aspect_uid,
+        dst_scale_uid, dst_aspect_uid
+    ):
         """
-        Return a function that transforms the value of ``src_exp`` 
-        to an expression in terms of ``dst_scale_aspect``.
+        Return a function that transforms the initial expression 
+        to an expression in terms of a different scale and aspect.
         
-        If the initial expression does not specify an aspect, the
-        aspect of ``dst_scale_aspect`` is assumed to apply to both.
+        If the initial expression does not specify an aspect,
+        ``dst_aspect_uid`` is assumed to apply to both.
         
         Args:
-            src_exp (:class:`~expression.Expression`): the initial expression
-            dst_scale_aspect (:class:`scale_aspect.ScaleAspect`): the scale-aspect pair for the final expression
+            src_scale_uid (unique m-layer identifier): initial scale   
+            src_aspect_uid (unique m-layer identifier): initial aspect
+            dst_scale_uid (unique m-layer identifier): final scale
+            dst_aspect_uid (unique m-layer identifier): final aspect
             
         Returns:
             A Python function 
             
-        """          
-        dst_pair = dst_scale_aspect.uid
+        """ 
+        dst_pair = dst_scale_uid, dst_aspect_uid
         
-        if src_exp.scale_aspect.aspect.uid is None:
-            src_pair = (    
-                src_exp.scale_aspect.scale.uid,
-                dst_scale_aspect.aspect.uid
-            ) 
+        if src_aspect_uid is None:
+            src_pair = src_scale_uid, dst_aspect_uid 
         else:
-            src_pair = src_exp.scale_aspect.uid     
+            src_pair = src_scale_uid, src_aspect_uid    
           
         if src_pair[1] == dst_pair[1]:
         
-            # Look for aspect-specific conversions too
-            scale_pair = (
-                src_exp.scale_aspect.scale.uid,
-                dst_scale_aspect.scale.uid
-            )
-            
-            scales_for_aspect = self.scales_for_aspect_reg[
-                dst_scale_aspect.aspect.uid
-            ]
+            # Look for aspect-specific conversions first
+            scales_for_aspect = self.scales_for_aspect_reg[ dst_aspect_uid ]
             try:
-                return scales_for_aspect[scale_pair]
+                return scales_for_aspect[ (src_scale_uid, dst_scale_uid) ]
             except KeyError:
                 pass
             
