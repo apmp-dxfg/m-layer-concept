@@ -76,6 +76,12 @@ class Stack(object):
             "residual stack elements: {!r}".format(exec_stack)
         
         return exec_stack.pop() 
+
+    def __len__(self):
+        return len(self._obj)
+        
+    def __getitem__(self,i):
+        return self._obj[i]
         
     def __str__(self):
         return self._render_str()
@@ -112,8 +118,6 @@ class Stack(object):
     def pow(self):
         return self._append(['pow'])
  
-    def __len__(self):
-        return len(self._obj)
   
 # ===========================================================================
 if __name__ == '__main__':
