@@ -23,4 +23,22 @@
             "code": "nm",
             "description": "nanometer"
         }
-    }]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "foot",
+            86662124155742117525125549059860475926
+        ],
+        "locale": {
+            "default": {
+                "name": "foot",
+                "symbol": "ft"
+            }
+        },
+        "UCUM": {
+            "code": "[ft_i]",
+            "description": "foot"
+        }
+    }
+]
