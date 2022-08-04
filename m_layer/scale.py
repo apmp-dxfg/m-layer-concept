@@ -4,7 +4,7 @@
 import numbers
 
 from m_layer.context import default_context as cxt
-from m_layer.aspect import no_aspect
+from m_layer.aspect import Aspect, no_aspect
 from m_layer.composition import Stack
 
 __all__ = (
@@ -19,7 +19,7 @@ class ComposedScaleAspect(object):
     For expressions of ScaleAspects
     """
 
-    __slots__ = ("_scale_stack","_aspect_stack")
+    __slots__ = ("_scale_stack","_aspect_stack","_uid")
 
     def __init__(self,scale,aspect):
     
@@ -72,18 +72,46 @@ class ComposedScaleAspect(object):
             self.aspect.push(y.aspect).pow()
         )
     
-    # @property 
-    # def uid(self):
-        # "A pair of M-layer identifiers for scale and aspect"
-        # return (self.scale.uid,self.aspect.uid)
+    # There is no `uid` in the central register for composed objects.
+    # However, a `uid` is needed for records.
+    # One possibility is to provide uid expressions in RPN.
+    # Such a stack is easy to operate on to produce other forms
+    # and allows numeric pre-factors, like 100.km.
+    # An alternative would be a dict-like mapping between 
+    # objects and exponents, but this cannot handle pre-factors.
+    # Perhaps these can be combined: initially reduce to 
+    # a 'normal' form and then express that in RPN
+    # (with pre-factors bound to their scale, like (100.km)^2). 
+    
+    @property
+    def uid(self):
+        """
+        A pair of RPN sequences containing Scale and Aspect uids, 
+        arithmetic operations 'mul', 'rmul', 'div', 'pow', and integers.
         
-    # def __eq__(self,other):
-        # "True when the M-layer identifiers of both objects match"
-        # return (
-            # self.scale == other.scale
-        # and self.aspect == other.aspect
-        # )
-        
+        """
+        try:
+            return self._uid
+        except AttributeError:
+            # Construct a uid from the scale and attribute stacks
+            scale = tuple(
+                o.uid if isinstance(o,Scale) else o
+                    for o in self.scale
+            )
+                    
+            aspect = tuple(
+                o.uid if isinstance(o,Aspect) else o
+                    for o in self.aspect
+            )
+                    
+            self._uid = scale, aspect
+            
+            return self._uid
+            
+    # Equality (`==` method) could be based on the equivalence of expressions
+    # without simplification (indifferent to ordering of terms).
+    # Explicit function names like `commensurate` might be better. 
+            
     def __str__(self):
         return "({!s}, {!s})".format( self.scale, self.aspect )
         
@@ -126,7 +154,7 @@ class ScaleAspect(object):
     def composable(self):
         return self._scale.scale_type == "ratio"
         
-    # This arithmetic operation interface must match that of ComposedScaleAspect
+    # These arithmetic operations must match operations in ComposedScaleAspect
     def __rmul__(self,x):
         # a numerical scale factor on the left 
         assert isinstance(x,numbers.Integral)
