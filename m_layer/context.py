@@ -261,9 +261,10 @@ default_context = Context()
 for p_i in (
         r'json/references', 
         r'json/scales',
-        r'json/conversion_casting',
+        r'json/conversion',
+        r'json/casting',
         r'json/aspects',
-        r'json/scales_for_aspects'
+        r'json/scales_for'
     ):
     path = os.path.join( 
         os.path.dirname(__file__), 
