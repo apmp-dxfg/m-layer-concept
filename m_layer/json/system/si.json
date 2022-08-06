@@ -1,11 +1,11 @@
 [
     {
         "__entry__": "Unit-System",
-        "name": "SI",
         "uid": [
             "si-system",
             88156805987886421108624908988601219537
         ],
+        "name": "SI",
         "basis": [
             [
                 "si-kilogram",
