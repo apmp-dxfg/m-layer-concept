@@ -11,7 +11,7 @@
                 "symbol": "Hz"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537
@@ -36,7 +36,7 @@
                 "symbol": "THz"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537
@@ -61,7 +61,7 @@
                 "symbol": "1/s"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537

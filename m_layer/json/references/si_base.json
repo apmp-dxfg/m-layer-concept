@@ -11,7 +11,7 @@
                 "symbol": "kg"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537
@@ -36,7 +36,7 @@
                 "symbol": "m"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537
@@ -61,7 +61,7 @@
                 "symbol": "s"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537
@@ -86,7 +86,7 @@
                 "symbol": "A"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537
@@ -111,7 +111,7 @@
                 "symbol": "K"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537
@@ -136,7 +136,7 @@
                 "symbol": "mol"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537
@@ -161,7 +161,7 @@
                 "symbol": "cd"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537

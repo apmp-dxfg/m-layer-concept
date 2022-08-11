@@ -14,7 +14,7 @@
                 "symbol": "\\per\\metre"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537
@@ -42,7 +42,7 @@
                 "symbol": "\\per\\centimetre"
             }
         },
-        "unit-system": {
+        "system": {
             "uid": [
                 "si-system",
                 88156805987886421108624908988601219537
