@@ -11,9 +11,8 @@ class Stack(object):
 
     """
     A Stack holds numbers and tokens for simple arithmetic operations.
-    Operations like `mul, `div`, etc., return a new object.
+    Operations like `mul, `div`, etc., return a new Stack object.
     
-    This class will hold unit expressions.
     """
     
     def __init__(self,obj=stack()):  
