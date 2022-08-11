@@ -1,6 +1,7 @@
 """
-The Context is an interface between external M-layer registers 
-and the local Python session where the M-layer is being used.
+The Context is a local Python interface with external M-layer registers 
+and the local session where the M-layer is being used; 
+it provides a Python API tot he M-layer.
 
 """
 import json 
@@ -44,7 +45,8 @@ class Context(object):
             aspect_reg = None,
             conversion_reg = None,
             casting_reg = None,
-            scales_for_aspect_reg = None
+            scales_for_aspect_reg = None,
+            system_reg = None
             
         ):
         self.locale = locale 
@@ -80,7 +82,11 @@ class Context(object):
                 scales_for_aspect_register.ScalesForAspectRegister(self)
         else:
             self.scales_for_aspect_reg = scales_for_aspect_reg
-
+                
+        if system_reg is None:
+            self.system_reg = register.Register(self)
+        else:
+            self.system_reg = reference_reg
 
     def _load_entity(self,entity):
         entity_type = entity['__entry__']
@@ -96,6 +102,8 @@ class Context(object):
             self.casting_reg.set(entity)
         elif entity_type == "ScalesForAspect":
             self.scales_for_aspect_reg.set(entity)
+        elif entity_type == "UnitSystem":
+            self.system_reg.set(entity)
         else:
             raise RuntimeError(
                "unknown type: {}".format(entity_type)
@@ -264,7 +272,8 @@ for p_i in (
         r'json/conversion',
         r'json/casting',
         r'json/aspects',
-        r'json/scales_for'
+        r'json/scales_for',
+        r'json/systems'
     ):
     path = os.path.join( 
         os.path.dirname(__file__), 
