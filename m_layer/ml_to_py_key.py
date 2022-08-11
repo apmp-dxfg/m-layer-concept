@@ -33,7 +33,8 @@ import os.path
 
 fmt = dict( 
     aspects=r"{} = Aspect( ('{}', {}) )",
-    scales=r"{} = Scale( ('{}', {}) )"
+    scales=r"{} = Scale( ('{}', {}) )",
+    systems=r"{} = System( ('{}', {}) ) "
 )
 
 if __name__ == '__main__':
@@ -63,3 +64,23 @@ if __name__ == '__main__':
                 print(str_exp)
                 
             print()
+            
+    # And now systems
+    sa = 'systems' 
+    file_path = os.path.join( root_dir,sa,'*.json' )
+    # print(file_path,'\n')
+    
+    for f_json in glob.glob( file_path ):
+        print(f_json)
+        with open(f_json,'r') as f:
+            data = json.load(f)        
+        
+        for d_i in data:
+            
+            d = d_i['uid']
+            new_name = d[0].replace('-','_')
+            str_exp = fmt[sa].format(new_name,d[0],d[1])
+        
+            print(str_exp)
+            
+        print()
