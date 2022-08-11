@@ -10,9 +10,6 @@
                 "name": "amount-of-H_2",
                 "symbol": "H_2"
             }
-        },
-        "metadata": {
-            "url": ""
         }
     },
     {
@@ -26,9 +23,6 @@
                 "name": "amount-of-Na_2SO_4",
                 "symbol": "H_2"
             }
-        },
-        "metadata": {
-            "url": ""
         }
     }
 ]

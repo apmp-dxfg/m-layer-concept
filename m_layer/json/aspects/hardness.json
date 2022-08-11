@@ -10,9 +10,6 @@
                 "name": "Vickers",
                 "symbol": "?"
             }
-        },
-        "metadata": {
-            "url": ""
         }
     },
     {
@@ -26,8 +23,6 @@
                 "name": "mohs",
                 "symbol": "mohs"
             }
-        },
-        "metadata": {
-            "url": ""
         }
-    }]
+    }
+]

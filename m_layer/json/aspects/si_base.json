@@ -10,9 +10,6 @@
                 "name": "mass",
                 "symbol": "M"
             }
-        },
-        "metadata": {
-            "url": ""
         }
     },
     {
@@ -26,9 +23,6 @@
                 "name": "length",
                 "symbol": "L"
             }
-        },
-        "metadata": {
-            "url": ""
         }
     },
     {
@@ -42,9 +36,6 @@
                 "name": "time",
                 "symbol": "t"
             }
-        },
-        "metadata": {
-            "url": ""
         }
     },
     {
@@ -58,9 +49,6 @@
                 "name": "electric-current",
                 "symbol": "I"
             }
-        },
-        "metadata": {
-            "url": ""
         }
     },
     {
@@ -74,9 +62,6 @@
                 "name": "thermodynamic-temperature",
                 "symbol": "T"
             }
-        },
-        "metadata": {
-            "url": ""
         }
     },
     {
@@ -90,9 +75,6 @@
                 "name": "amount-of-substance",
                 "symbol": "n"
             }
-        },
-        "metadata": {
-            "url": ""
         }
     },
     {
@@ -106,9 +88,6 @@
                 "name": "luminous-intensity",
                 "symbol": "I_v"
             }
-        },
-        "metadata": {
-            "url": ""
         }
     }
 ]
