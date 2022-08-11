@@ -92,8 +92,31 @@ class TestInit(unittest.TestCase):
             self.assertFalse( s_i in aspects, msg = "{}, {}".format(s_i,scales[s_i]) )
             self.assertFalse( s_i in references, msg = "{}, {}".format(s_i,scales[s_i]) )
 
-        # conversion and casting can be cross checked
-        type_dir = os.path.join(json_files,'conversion_casting')
+        # conversion can be cross checked
+        type_dir = os.path.join(json_files,'conversion')
+        self.assertTrue(os.path.isdir(type_dir))
+        files = os.path.join(type_dir,r'*.json')
+        # print(files)
+        for f_json in glob.glob( files ):
+            # print(f_json)
+            with open(f_json,'r') as f:
+                data = json.load(f)  
+                # Expect a list of dicts 
+                for i in data:
+                            
+                    if i['__entry__'] == 'Conversion':
+                        s = i['src']
+                        self.assertTrue( str(s[1]) in scales, msg=s )
+                        s = i['dst']
+                        self.assertTrue( str(s[1]) in scales, msg=s )
+
+                    else:
+                        msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
+                        self.fail(msg)
+
+
+        # aspect-scales can be cross checked
+        type_dir = os.path.join(json_files,'scales_for')
         self.assertTrue(os.path.isdir(type_dir))
         files = os.path.join(type_dir,r'*.json')
         # print(files)
@@ -106,18 +129,31 @@ class TestInit(unittest.TestCase):
                     if i['__entry__'] == 'ScalesForAspect':
                         a = i['aspect']
                         self.assertTrue( str(a[1]) in aspects )
-                        
-                        s_lst = i['scales']
-                        for s in s_lst:
-                            msg = "{} in {}".format(s[0],f_json)
-                            self.assertTrue( str(s[1]) in scales, msg=msg )
-                            
-                    elif i['__entry__'] == 'Conversion':
+                                                    
                         s = i['src']
-                        self.assertTrue( str(s[1]) in scales, msg=s )
-                        s = i['dst']
-                        self.assertTrue( str(s[1]) in scales, msg=s )
-                    elif i['__entry__'] == 'Cast':
+                        msg = "{} in {}".format(s[0],f_json)
+                        self.assertTrue( str(s[1]) in scales, msg=msg )
+
+                        d = i['dst']
+                        msg = "{} in {}".format(d[0],f_json)
+                        self.assertTrue( str(d[1]) in scales, msg=msg )
+
+                    else:
+                        msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
+                        self.fail(msg)
+
+        # casting can be cross checked
+        type_dir = os.path.join(json_files,'casting')
+        self.assertTrue(os.path.isdir(type_dir))
+        files = os.path.join(type_dir,r'*.json')
+        # print(files)
+        for f_json in glob.glob( files ):
+            # print(f_json)
+            with open(f_json,'r') as f:
+                data = json.load(f)  
+                # Expect a list of dicts 
+                for i in data:
+                    if i['__entry__'] == 'Cast':
                         # aspects follow scales in the JSON files 
                         x = i['src']
                         self.assertTrue( str(x[0][1]) in scales, msg=x )
@@ -158,7 +194,7 @@ class TestInit(unittest.TestCase):
         
     def test_names(self):
         """
-        In a particular aspect/scale/reference directory defined my `ml_type`,
+        In a particular aspect/scale/reference directory defined by `ml_type`,
         run through all the entries and make sure that each name is indeed different 
         from all the others.
         
@@ -205,8 +241,29 @@ class TestInit(unittest.TestCase):
             self.assertFalse( s_i in aspects, msg = "{}, {}".format(s_i,scales[s_i]) )
             self.assertFalse( s_i in references, msg = "{}, {}".format(s_i,scales[s_i]) )
 
-        # conversion and casting can be cross checked
-        type_dir = os.path.join(json_files,'conversion_casting')
+        # conversion can be cross checked
+        type_dir = os.path.join(json_files,'conversion')
+        self.assertTrue(os.path.isdir(type_dir))
+        files = os.path.join(type_dir,r'*.json')
+        # print(files)
+        for f_json in glob.glob( files ):
+            # print(f_json)
+            with open(f_json,'r') as f:
+                data = json.load(f)  
+                # Expect a list of dicts 
+                for i in data:
+                            
+                    if i['__entry__'] == 'Conversion':
+                        s = i['src']
+                        self.assertTrue( str(s[0]) in scales, msg=s )
+                        s = i['dst']
+                        self.assertTrue( str(s[0]) in scales, msg=s )
+                    else:
+                        msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
+                        self.fail(msg)        
+
+        # aspect-scales can be cross checked
+        type_dir = os.path.join(json_files,'scales_for')
         self.assertTrue(os.path.isdir(type_dir))
         files = os.path.join(type_dir,r'*.json')
         # print(files)
@@ -220,17 +277,30 @@ class TestInit(unittest.TestCase):
                         a = i['aspect']
                         self.assertTrue( str(a[0]) in aspects )
                         
-                        s_lst = i['scales']
-                        for s in s_lst:
-                            msg = "{} in {}".format(s[0],f_json)
-                            self.assertTrue( str(s[0]) in scales, msg=msg )
-                            
-                    elif i['__entry__'] == 'Conversion':
                         s = i['src']
-                        self.assertTrue( str(s[0]) in scales, msg=s )
-                        s = i['dst']
-                        self.assertTrue( str(s[0]) in scales, msg=s )
-                    elif i['__entry__'] == 'Cast':
+                        msg = "{} in {}".format(s[0],f_json)
+                        self.assertTrue( str(s[0]) in scales, msg=msg )
+
+                        d = i['dst']
+                        msg = "{} in {}".format(d[0],f_json)
+                        self.assertTrue( str(d[0]) in scales, msg=msg )
+                            
+                    else:
+                        msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
+                        self.fail(msg)  
+                        
+        # casting can be cross checked
+        type_dir = os.path.join(json_files,'casting')
+        self.assertTrue(os.path.isdir(type_dir))
+        files = os.path.join(type_dir,r'*.json')
+        # print(files)
+        for f_json in glob.glob( files ):
+            # print(f_json)
+            with open(f_json,'r') as f:
+                data = json.load(f)  
+                # Expect a list of dicts 
+                for i in data:
+                    if i['__entry__'] == 'Cast':
                         # aspects follow scales in the JSON files 
                         x = i['src']
                         self.assertTrue( str(x[0][0]) in scales, msg=x )
@@ -241,7 +311,8 @@ class TestInit(unittest.TestCase):
                         self.assertTrue( str(x[1][0]) in aspects, msg=x )
                     else:
                         msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
-                        self.fail(msg)        
+                        self.fail(msg)  
+                        
 #============================================================================
 if __name__ == '__main__':
     unittest.main()
