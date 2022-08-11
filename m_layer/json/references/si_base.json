@@ -127,12 +127,12 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si-mol",
+            "si-mole",
             96713855510406467826626480289106173630
         ],
         "locale": {
             "default": {
-                "name": "mol",
+                "name": "mole",
                 "symbol": "mol"
             }
         },
@@ -146,7 +146,7 @@
         },        
         "UCUM": {
             "code": "mol",
-            "description": "mol"
+            "description": "mole"
         }
     },
     {
