@@ -35,12 +35,14 @@ def ws_label(ws,labels):
 def add_uid(file,ws,uid,row,col):
 
     if tuple(uid) in UID:
-        raise RuntimeError(f"{uid} is assigned")
+        raise RuntimeError("{} is assigned".format(uid)
       
     col_letter = get_column_letter(col)
-    addr = f"{col_letter}{row}"
+    addr = "{}{}".format(col_letter,row)
     
-    UID[tuple(uid)] = f"'{root}\\xl\\[{file}.xlsx]{ws.title}'!{addr}"
+    UID[tuple(uid)] = "'{}\\xl\\[{}.xlsx]{}'!{}".format(
+        root,file,ws.title,addr
+    )
     
     ws[addr] = str(uid)
  
@@ -51,7 +53,7 @@ def add_string(ws,s,row,col):
 # --------------------------------------------------------------------------- 
 def add_uid_reference(ws,uid,row,col):
     ref = UID[ tuple(uid) ]
-    ws.cell(row=row,column=col,value=f"={ref}")
+    ws.cell(row=row,column=col,value="={}".format(ref))
     
 # ---------------------------------------------------------------------------
 workbooks = dict() 
@@ -408,7 +410,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = f"{name}"
+        ws.title = str(name)
         ws_label(ws,labels)
 
         try:        
@@ -432,8 +434,8 @@ if __name__ == '__main__':
     # 
     root = os.path.abspath( os.path.dirname(__file__) )
     for name_i in workbooks:
-        destination = os.path.join( f"{root}", "xl" )
-        document_name = f'{name_i}.xlsx'
+        destination = os.path.join( root, "xl" )
+        document_name = '{}.xlsx'.format(name_i)
         filename = os.path.join(destination, document_name)
         workbooks[name_i].save(filename=filename)
     
