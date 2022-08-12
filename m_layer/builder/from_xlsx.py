@@ -34,7 +34,7 @@ def xl_path(filename):
     return os.path.abspath( 
         os.path.join(
             xl_root,
-            f'{filename}.xlsx'
+            '{}.xlsx'.format(filename)
         ) 
     )
            
@@ -84,7 +84,7 @@ def dump_to_json(directory,filename,lst):
     dir = os.path.abspath(
         os.path.join(   
             json_root,
-            f'{directory}'
+            directory
         )
     )
     if not os.path.isdir(dir):
@@ -93,7 +93,7 @@ def dump_to_json(directory,filename,lst):
     path = os.path.abspath(
         os.path.join( 
             dir,
-            f'{filename}.json'
+            '{}.json'.format(filename)
         )
     ) 
     

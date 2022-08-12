@@ -108,7 +108,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = f'{name}'       
+        ws.title = str(name)       
         ws_label(ws,labels)
 
         try:        
@@ -157,7 +157,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = f'{name}'       
+        ws.title = str(name)       
         ws_label(ws,labels)
 
         try:        
@@ -211,7 +211,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = f'{name}'       
+        ws.title = str(name)       
         ws_label(ws,labels)
 
         try:        
@@ -270,7 +270,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = f'{name}'       
+        ws.title = str(name)       
         ws_label(ws,labels)
 
         try:        
@@ -317,7 +317,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = f'{name}'        
+        ws.title = str(name)        
         ws_label(ws,labels)
 
         try:        
@@ -363,7 +363,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = f'{name}'        
+        ws.title = str(name)        
         ws_label(ws,labels)
 
         try:        
