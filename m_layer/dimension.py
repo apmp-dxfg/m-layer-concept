@@ -34,7 +34,7 @@ class Dimension(object):
         return (
             isinstance(other,Dimension)
         and
-            self.system = other.system
+            self.system == other.system
         and 
             self.dim == other.dim
         )
