@@ -6,6 +6,7 @@ import numbers
 from m_layer.context import default_context as cxt
 from m_layer.aspect import Aspect, no_aspect
 from m_layer.composition import Stack
+from m_layer.system import System
 
 __all__ = (
     'Scale',
@@ -215,7 +216,7 @@ class Scale(object):
     """
 
     __slots__ = (
-        '_scale_uid','_scale_type'
+        '_scale_uid','_scale_type', '_system'
     )
     
     def __init__(self,scale_uid):    
@@ -241,13 +242,30 @@ class Scale(object):
         
     @property 
     def scale_type(self):
-        # Note lazy execution
+        # Lazy execution
         try:
             return self._scale_type
         except AttributeError:
             scale_json = self._from_json()
             self._scale_type = scale_json['scale_type']
             return self._scale_type
+
+    @property 
+    def system(self):
+        # Lazy execution
+        try:
+            return self._system
+        except AttributeError:
+            # Look at the reference 
+            # to see if a system is identified 
+            scale_json = self._from_json()
+            ref_json = cxt.reference_reg[ tuple(scale_json['reference']) ] 
+            if 'system' in ref_json:
+                self._system = System( tuple(ref_json['system']['uid']) )
+            else:
+                self._system = None
+                
+            return self._system
                 
     def __eq__(self,other):
         "True when both objects have the same uids"
