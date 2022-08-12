@@ -62,11 +62,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-si-mol-ratio",
+            "ml-si-mole-ratio",
             15496259120657933158664487705643275334
         ],
         "reference": [
-            "si-mol",
+            "si-mole",
             96713855510406467826626480289106173630
         ],
         "scale_type": "ratio"
