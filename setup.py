@@ -97,6 +97,7 @@ tests_require = [
     'pytest>=4.4',  # >=4.4 to support the "-p conftest" option
     'pytest-cov',
     'sybil',
+    'openpyxl',
 ]
 
 testing = {'test', 'tests', 'pytest'}.intersection(sys.argv)
