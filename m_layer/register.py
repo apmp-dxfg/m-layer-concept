@@ -27,8 +27,7 @@ class Register(object):
         """
         # Convert string of sequence from json to tuple
         if isinstance(entry['uid'],str):
-            # literal_eval will only handle Python types,
-            # which makes it a safer choice
+            # literal_eval will safely handle Python types
             uid = tuple( literal_eval(entry['uid']) )
         else:
             uid = tuple( entry['uid'] )
@@ -40,18 +39,4 @@ class Register(object):
         else:
             self._objects[uid] = entry 
                           
-    # def dumps_entry(self,uid): 
-         # """
-         # """
-         # return json.dumps( self._objects[uid] )
-     
-    # def dumps(self,choice=None):
-        # """
-        # """
-        # if choice is None:
-            # choice = self._objects.keys()
-            
-        # return json.dumps( [ 
-            # self.dumps_entry(uid) for uid in choice
-        # ] )
                 
