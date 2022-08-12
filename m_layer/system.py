@@ -45,6 +45,16 @@ class System(object):
     def __repr__(self):
         return "System( {!s} )".format(self.uid)
    
+    def __str__(self):
+        return "{}".format(self.name)
+   
+    def __eq__(self,other):
+        return (
+            isinstance(other,System)
+        and
+            self.uid == other.uid
+        )
+        
 # ===========================================================================
 if __name__ == '__main__':
 
