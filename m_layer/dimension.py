@@ -53,7 +53,7 @@ class Dimension(object):
  
     def __mul__(self,rhs):
         assert self.system == rhs.system,\
-            f"different systems: {self.system}, {rhs.system}"
+            "different systems: '{}', '{}'".format(self.system, rhs.system)
             
         return Dimension(
             self.system,
@@ -62,7 +62,7 @@ class Dimension(object):
     
     def __truediv__(self,rhs):
         assert self.system == rhs.system,\
-            f"different systems: {self.system}, {rhs.system}"
+            "different systems: '{}', '{}'".format(self.system, rhs.system)
             
         return Dimension(
             self.system,
