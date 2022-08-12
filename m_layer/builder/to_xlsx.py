@@ -35,7 +35,7 @@ def ws_label(ws,labels):
 def add_uid(file,ws,uid,row,col):
 
     if tuple(uid) in UID:
-        raise RuntimeError("{} is assigned".format(uid)
+        raise RuntimeError( "{} is assigned".format(uid) )
       
     col_letter = get_column_letter(col)
     addr = "{}{}".format(col_letter,row)

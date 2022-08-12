@@ -70,7 +70,7 @@ def put_uid(file,ws,r_value,i,col):
         if r_value[1] is None:
             col_letter = get_column_letter(col)
             addr = "{}{}".format(col_letter,i)
-            print("incomplete uid: [{}.xlsx]{}!{}".format(file,ws.title,addr)
+            print( "incomplete uid: [{}.xlsx]{}!{}".format(file,ws.title,addr) )
             assert False
         else:
             return literal_eval( r_value )            
