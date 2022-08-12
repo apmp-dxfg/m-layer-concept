@@ -1,12 +1,17 @@
 """
-A reference (unit) that belongs to a unit system has a dimensional signature 
-that can be represented as a sequence of exponents referred to a 
+A reference (unit) that belongs to a coherent unit system has a dimensional  
+signature which can be represented as a sequence of exponents referred to a 
 corresponding sequence of base units. 
 
 Multiplication and division of quantities expressed in such units 
-is accompanied by addition ()respectively subtraction) of the 
-corresponding dimensional exponents, with raising to an ingeger power
+may be accompanied by addition (respectively subtraction) of the 
+corresponding dimensional exponents, with raising to an integer power
 understood as repeated multiplication or division. 
+
+Coherent units systems also have (incoherent) units that are multiples or 
+submultiples of coherent units. So, the combination of a dimensional 
+vector and a prefix is enough to identify a unit expressed as a product
+of powers of system base units.
 
 """
 import numbers
@@ -14,13 +19,14 @@ import numbers
 class Dimension(object):
 
     __slots__ = (
-        '_system', '_dim'
+        '_system', '_dim', '_prefix'
     )
     
-    def __init__(self,system,dim):
+    def __init__(self,system,dim,prefix=1):
     
         self._system = system 
         self._dim = tuple( dim )
+        self._prefix = prefix
         
     @property 
     def system(self):
@@ -30,7 +36,23 @@ class Dimension(object):
     def dim(self):
         return self._dim
         
+    @property 
+    def prefix(self):
+        return self._prefix
+
     def __eq__(self,other):
+        return (
+            self.commensurate(other)
+        and
+            self.prefix == other.prefix
+        )
+ 
+    def commensurate(self,other):
+        """
+        ``True`` when ``self`` and ``other`` share the 
+        same system and dimension.
+        
+        """
         return (
             isinstance(other,Dimension)
         and
@@ -38,7 +60,7 @@ class Dimension(object):
         and 
             self.dim == other.dim
         )
-        
+      
     def __repr__(self):
         return "Dimension( {!s}{!s} )".format(
             self.system,
@@ -57,7 +79,8 @@ class Dimension(object):
             
         return Dimension(
             self.system,
-            tuple( i + j for (i,j) in zip(self.dim,rhs.dim) )
+            tuple( i + j for (i,j) in zip(self.dim,rhs.dim) ),
+            self.prefix * other.prefix
         )
     
     def __truediv__(self,rhs):
@@ -66,7 +89,8 @@ class Dimension(object):
             
         return Dimension(
             self.system,
-            tuple( i - j for (i,j) in zip(self.dim,rhs.dim) )
+            tuple( i - j for (i,j) in zip(self.dim,rhs.dim) ),
+            self.prefix / other.prefix
         )
     
     def __pow__(self,n):
@@ -76,7 +100,8 @@ class Dimension(object):
             )
         return Dimension(
             self.system,
-            tuple( n*i for i in self.dim )
+            tuple( n*i for i in self.dim ),
+            self.prefix**n
         )
     
 # ===========================================================================

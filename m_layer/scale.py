@@ -217,7 +217,7 @@ class Scale(object):
     """
 
     __slots__ = (
-        '_scale_uid','_scale_type', '_system', '_dimensions'
+        '_scale_uid','_scale_type', '_dimensions'
     )
     
     def __init__(self,scale_uid):    
@@ -250,37 +250,28 @@ class Scale(object):
             self._scale_type = scale_json['scale_type']
             return self._scale_type
 
-    @property 
-    def system(self):
-        try:
-            return self._system
-        except AttributeError:
-            # Look at the reference 
-            # to see if a system is identified 
-            scale_json = self._from_json()
-            ref_json = cxt.reference_reg[ tuple(scale_json['reference']) ] 
-            if 'system' in ref_json:
-                self._system = System( tuple(ref_json['system']['uid']) )
-            else:
-                self._system = None
-                
-            return self._system
- 
+     
     @property 
     def dimension(self):
+        """
+        Return a :class:`~dimension.Dimension` when a scale is associated  
+        with a reference in a coherent system of units, like the SI.
+        Otherwise return ``None``.
+        
+        """
         try:
             return self._dimension
         except AttributeError:
-            system = self.system
-            if system is None: 
-                self._dimension = None
-            else:
-                scale_json = self._from_json()
-                ref_json = cxt.reference_reg[ tuple(scale_json['reference']) ] 
+            scale_json = self._from_json()
+            ref_json = cxt.reference_reg[ tuple(scale_json['reference']) ] 
+            if 'system' in ref_json:
                 self._dimensions = Dimension( 
-                    system,
-                    tuple( ref_json['system']['dimensions'])
+                    System( tuple(ref_json['system']['uid']) ),
+                    tuple( ref_json['system']['dimensions']),
+                    float( ref_json['system']['prefix'] )
                 )
+            else:
+                self._dimensions = None
                 
             return self._dimensions 
             
@@ -296,7 +287,7 @@ class Scale(object):
 
     def to_scale_aspect(self,aspect=no_aspect):
         """
-        Return a :class:`~scale_aspect.ScaleAspect` object 
+        Return a :class:`~scale_aspect.ScaleAspect` 
         combining this scale and ``aspect``.
         
         """
