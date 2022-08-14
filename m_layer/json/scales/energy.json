@@ -2,11 +2,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-si-joule-ratio",
+            "ml_si_joule_ratio",
             165050666678496469850612022016789737781
         ],
         "reference": [
-            "si-joule",
+            "si_joule",
             100917883444018504706749879854610536252
         ],
         "scale_type": "ratio"
@@ -14,7 +14,7 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-electronvolt-ratio",
+            "ml_electronvolt_ratio",
             121864523473489992307630707008460819401
         ],
         "reference": [

@@ -2,11 +2,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-si-celsius-interval", 
+            "ml_si_celsius_interval", 
             245795086332095731716589481707012001072
         ],
         "reference": [
-            "si-celsius",
+            "si_celsius",
             318617443485372744730332268230803752214
         ],
         "scale_type": "interval"
@@ -14,11 +14,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-si-celsius-ratio", 
+            "ml_si_celsius_ratio", 
             278784445377172064355281533676474538407
         ],
         "reference": [
-            "si-celsius",
+            "si_celsius",
             318617443485372744730332268230803752214
         ],
         "scale_type": "ratio"
@@ -26,11 +26,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-imp-fahrenheit-interval", 
+            "ml_imp_fahrenheit_interval", 
             22817745368296240233220712518826840767
         ],
         "reference": [
-            "imp-fahrenheit",
+            "imp_fahrenheit",
             314545844086913572859566825785893557749
         ],
         "scale_type": "interval"
@@ -38,11 +38,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-imp-fahrenheit-ratio", 
+            "ml_imp_fahrenheit_ratio", 
             101981007467621768906734129174569080512
         ],
         "reference": [
-            "imp-fahrenheit",
+            "imp_fahrenheit",
             314545844086913572859566825785893557749
         ],
         "scale_type": "ratio"

@@ -2,15 +2,15 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect" : [
-            "ml-photon-energy",
+            "ml_photon_energy",
             291306321925738991196807372973812640971
         ],
         "src": [
-            "ml-si-terahertz-ratio",
+            "ml_si_terahertz_ratio",
             271382954339420591832277422907953823861
         ],
         "dst":[
-            "ml-si-per-centimetre-ratio",
+            "ml_si_per_centimetre_ratio",
             333995508470114516586033303775415043902
         ],
         "factors": [ "si.tera/si.c*si.centi" ]
@@ -18,15 +18,15 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect" : [
-            "ml-photon-energy",
+            "ml_photon_energy",
             291306321925738991196807372973812640971
         ],
         "src":[
-            "ml-si-per-centimetre-ratio",
+            "ml_si_per_centimetre_ratio",
             333995508470114516586033303775415043902
         ],
         "dst": [
-            "ml-si-terahertz-ratio",
+            "ml_si_terahertz_ratio",
             271382954339420591832277422907953823861
         ],
         "factors": [ "si.hecto*si.c/si.tera" ]
@@ -34,15 +34,15 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect" : [
-            "ml-photon-energy",
+            "ml_photon_energy",
             291306321925738991196807372973812640971
         ],
         "src":[
-            "ml-electronvolt-ratio",
+            "ml_electronvolt_ratio",
             121864523473489992307630707008460819401
         ],
         "dst": [
-            "ml-si-terahertz-ratio",
+            "ml_si_terahertz_ratio",
             271382954339420591832277422907953823861
         ],
         "factors": [ "si.e/si.h/si.tera" ]
@@ -50,15 +50,15 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect" : [
-            "ml-photon-energy",
+            "ml_photon_energy",
             291306321925738991196807372973812640971
         ],
         "src":[
-            "ml-electronvolt-ratio",
+            "ml_electronvolt_ratio",
             121864523473489992307630707008460819401
         ],
         "dst": [
-            "ml-si-per-centimetre-ratio",
+            "ml_si_per_centimetre_ratio",
             333995508470114516586033303775415043902
         ],
         "factors": [ "si.e/si.h/si.c/si.hecto" ]

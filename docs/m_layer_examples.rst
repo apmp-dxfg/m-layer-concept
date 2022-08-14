@@ -27,8 +27,8 @@ M-layer conversion will not change the aspect, but conversion may change the typ
     ...    print(repr(xp)) # Representation format
     ...    print()
     
-    >>> celsius_interval = Scale( ('ml-si-celsius-interval', 245795086332095731716589481707012001072) )
-    >>> fahrenheit_interval = Scale( ('ml-imp-fahrenheit-interval', 22817745368296240233220712518826840767) )
+    >>> celsius_interval = Scale( ('ml_si_celsius_interval', 245795086332095731716589481707012001072) )
+    >>> fahrenheit_interval = Scale( ('ml_imp_fahrenheit_interval', 22817745368296240233220712518826840767) )
     
     >>> t = expr(72,fahrenheit_interval)
     >>> display(t)
@@ -44,22 +44,22 @@ M-layer conversion will not change the aspect, but conversion may change the typ
 Conversion to a different type of scale must take account of the aspect of the initial expression.
 The M-layer will not allow an expression to be converted without this information. For example, ::
 
-    >>> kelvin = Scale( ('ml-si-kelvin-ratio', 302952256288207449238881076502466548054) )
+    >>> kelvin = Scale( ('ml_si_kelvin_ratio', 302952256288207449238881076502466548054) )
 
     >>> t_K = convert(t_C,kelvin)
     Traceback (most recent call last):
     ...
-    RuntimeError: no conversion from Scale(('ml-si-celsius-interval', 245795086332095731716589481707012001072)) to Scale(('ml-si-kelvin-ratio', 302952256288207449238881076502466548054))
+    RuntimeError: no conversion from Scale(('ml_si_celsius_interval', 245795086332095731716589481707012001072)) to Scale(('ml_si_kelvin_ratio', 302952256288207449238881076502466548054))
 
 Information about the aspect can be specified initially when creating an expression, or injected during later casting, as shown below. Once specified, conversion operations cannot change the aspect (only casting may change the aspect of an expression). :: 
 
-    >>> T = Aspect( ("ml-thermodynamic-temperature", 227327310217856015944698060802418784871) )         
+    >>> T = Aspect( ("ml_thermodynamic_temperature", 227327310217856015944698060802418784871) )         
     
     >>> t_C = t.convert(celsius_interval)     
     >>> t_K = cast(t_C,kelvin,T)    # Inject the aspect 'T'
     >>> display(t_K)
     295.3722222222222 K
-    Expression(295.3722222222222,K,thermodynamic-temperature)
+    Expression(295.3722222222222,K,thermodynamic temperature)
     <BLANKLINE>
     
 Temperature difference  
@@ -67,7 +67,7 @@ Temperature difference
 
 The subtle distinction between temperature and temperature difference is now manageable. Firstly, a temperature difference expressed in degrees Celsius is not convertible to temperature in degrees Fahrenheit, because that conversion is not registered::
 
-    >>> celsius_ratio = Scale( ('ml-si-celsius-ratio', 278784445377172064355281533676474538407) )
+    >>> celsius_ratio = Scale( ('ml_si_celsius_ratio', 278784445377172064355281533676474538407) )
 
     >>> t_diff_C = expr(10,celsius_ratio)
     >>> display(t_diff_C)
@@ -77,7 +77,7 @@ The subtle distinction between temperature and temperature difference is now man
     >>> t_diff_C.convert(fahrenheit_interval)
     Traceback (most recent call last):
     ...
-    RuntimeError: no conversion from Scale(('ml-si-celsius-ratio', 278784445377172064355281533676474538407)) to Scale(('ml-imp-fahrenheit-interval', 22817745368296240233220712518826840767))
+    RuntimeError: no conversion from Scale(('ml_si_celsius_ratio', 278784445377172064355281533676474538407)) to Scale(('ml_imp_fahrenheit_interval', 22817745368296240233220712518826840767))
 
 On the other hand, degrees Celsius can be converted to kelvin::
 
@@ -93,7 +93,7 @@ Scale-aspect pairs
 
 Explicit use of aspects is recommended. Pairing scales with aspects provides a convenient  and safe way of expressing data. The M-layer class :class:`~scale_aspect.ScaleAspect` encapsulates scale-aspect pairs for this purpose. The following code uses scale-aspect pairs to handle the cases shown above::
 
-    >>> dT = dT = Aspect( ('ml-temperature-difference', 212368324110263031011700652725345220325) )
+    >>> dT = dT = Aspect( ('ml_temperature_difference', 212368324110263031011700652725345220325) )
     
     >>> celsius_dT = ScaleAspect( celsius_ratio, dT )
     >>> celsius_T = ScaleAspect( celsius_interval, T )
@@ -104,25 +104,25 @@ Explicit use of aspects is recommended. Pairing scales with aspects provides a c
     >>> t = expr(72,fahrenheit_T)
     >>> display(t)
     72 degree F
-    Expression(72,degree F,thermodynamic-temperature)
+    Expression(72,degree F,thermodynamic temperature)
     <BLANKLINE>
     >>> t_C = t.convert(celsius_T)
     >>> display(t_C)
     22.22222222222222 degree C
-    Expression(22.22222222222222,degree C,thermodynamic-temperature)
+    Expression(22.22222222222222,degree C,thermodynamic temperature)
     <BLANKLINE>
 
     >>> t_K = convert(t_C,kelvin_T)
     >>> display(t_K)
     295.3722222222222 K
-    Expression(295.3722222222222,K,thermodynamic-temperature)
+    Expression(295.3722222222222,K,thermodynamic temperature)
     <BLANKLINE>
 
     >>> t_diff_C = expr(10,celsius_dT)
     >>> t_diff_C.convert(fahrenheit_T)  # The difference in aspect is detected 
     Traceback (most recent call last):
     ...
-    RuntimeError: incompatible aspects: [Aspect('ml-temperature-difference', 212368324110263031011700652725345220325), Aspect('ml-thermodynamic-temperature', 227327310217856015944698060802418784871)]
+    RuntimeError: incompatible aspects: [Aspect('ml_temperature_difference', 212368324110263031011700652725345220325), Aspect('ml_thermodynamic_temperature', 227327310217856015944698060802418784871)]
   
 Plane angle
 ===========
@@ -136,15 +136,15 @@ Radian is the special name given to the SI unit of plane angle (plane angle is a
 
 The M-layer has a particular scale type for these bounded cyclic scales. So, M-layer scales can be defined for the different cases::
 
-    >>> plane_angle = Aspect( ('ml-plane-angle', 95173225557230344956477808929590724690) )
+    >>> plane_angle = Aspect( ('ml_plane_angle', 95173225557230344956477808929590724690) )
     
-    >>> radian_ratio = Scale( ('ml-si-radian-ratio', 273301153578020696303516833405033923738) )
-    >>> radian_bounded_two_pi = Scale( ('ml-si-radian-bounded-two-pi', 300556212736422769570885306883285535638) )
-    >>> radian_bounded_pi = Scale( ('ml-si-radian-bounded-pi', 181367268705518406168243034119604185497) )
+    >>> radian_ratio = Scale( ('ml_si_radian_ratio', 273301153578020696303516833405033923738) )
+    >>> radian_bounded_two_pi = Scale( ('ml_si_radian_bounded_two_pi', 300556212736422769570885306883285535638) )
+    >>> radian_bounded_pi = Scale( ('ml_si_radian_bounded_pi', 181367268705518406168243034119604185497) )
     
-    >>> degree_ratio = Scale( ('ml-imp-degree-ratio', 124567088583703716502057160299542649451) )
-    >>> degree_bounded_180 = Scale( ('ml-imp-degree-bounded-180', 273805538217618733078298377573965188309) )
-    >>> degree_bounded_360 = Scale( ('ml-imp-degree-bounded-360', 125066222841962802760576607996391537405) )
+    >>> degree_ratio = Scale( ('ml_imp_degree_ratio', 124567088583703716502057160299542649451) )
+    >>> degree_bounded_180 = Scale( ('ml_imp_degree_bounded_180', 273805538217618733078298377573965188309) )
+    >>> degree_bounded_360 = Scale( ('ml_imp_degree_bounded_360', 125066222841962802760576607996391537405) )
     
 An angle can be converted between bounded scales::
 
@@ -184,13 +184,13 @@ Photon energy
 
 Abscissa data can be expressed without ambiguity by specifying the aspect as photon energy::
 
-    >>> photon_energy = Aspect( ('ml-photon-energy', 291306321925738991196807372973812640971) )
-    >>> energy = Aspect( ('ml-energy', 12139911566084412692636353460656684046) ) 
+    >>> photon_energy = Aspect( ('ml_photon_energy', 291306321925738991196807372973812640971) )
+    >>> energy = Aspect( ('ml_energy', 12139911566084412692636353460656684046) ) 
     
-    >>> electronvolt = Scale( ('ml-electronvolt-ratio', 121864523473489992307630707008460819401) )
-    >>> terahertz = Scale( ('ml-si-terahertz-ratio', 271382954339420591832277422907953823861) )
-    >>> per_centimetre = Scale( ('ml-si-per-centimetre-ratio', 333995508470114516586033303775415043902) )
-    >>> nanometre = Scale( ('ml-si-nanometre-ratio', 257091757625055920788370123828667027186) )
+    >>> electronvolt = Scale( ('ml_electronvolt_ratio', 121864523473489992307630707008460819401) )
+    >>> terahertz = Scale( ('ml_si_terahertz_ratio', 271382954339420591832277422907953823861) )
+    >>> per_centimetre = Scale( ('ml_si_per_centimetre_ratio', 333995508470114516586033303775415043902) )
+    >>> nanometre = Scale( ('ml_si_nanometre_ratio', 257091757625055920788370123828667027186) )
     
 The data may then be converted safely::
 
@@ -223,12 +223,12 @@ Often response data will be a ratio of the same kind of quantity, such as a refl
 This situation is handled in the M-layer by declaring a different aspect for each type of ratio. These can be combined with the unit one in scale-aspect pairs::
 
     >>> transmittance = ScaleAspect(
-    ...     Scale( ('ml-si-one', 200437119122738863945813053269398165973) ),
-    ...     Aspect( ('ml-transmittance', 106338157389217634821305827494648287004) )
+    ...     Scale( ('ml_si_one', 200437119122738863945813053269398165973) ),
+    ...     Aspect( ('ml_transmittance', 106338157389217634821305827494648287004) )
     ... )
     >>> reflectance = ScaleAspect(
-    ...     Scale( ('ml-si-one', 200437119122738863945813053269398165973) ),
-    ...     Aspect( ('ml-reflectance', 77619173328682587252206794509402414758) )
+    ...     Scale( ('ml_si_one', 200437119122738863945813053269398165973) ),
+    ...     Aspect( ('ml_reflectance', 77619173328682587252206794509402414758) )
     ... )
     >>> x = expr(0.95,transmittance)
     >>> display(x)
@@ -258,8 +258,8 @@ A simple example is provided by the special unit names hertz and becquerel used 
 
 The M-layer can manage this asymmetry. ::
 
-    >>> per_second = Scale( ('ml-si-per-second-ratio', 323506565708733284157918472061580302494) )
-    >>> becquerel = Scale( ('ml-si-becquerel-ratio', 327022986202149438703681911339752143822) )
+    >>> per_second = Scale( ('ml_si_per_second_ratio', 323506565708733284157918472061580302494) )
+    >>> becquerel = Scale( ('ml_si_becquerel_ratio', 327022986202149438703681911339752143822) )
     
     >>> x = expr(96,becquerel)
     >>> display(x)
@@ -277,11 +277,11 @@ Here, conversion from the special name becquerel to the generic unit per-second 
     >>> convert(y,becquerel)    # The aspect is unspecified
     Traceback (most recent call last):
     ...
-    RuntimeError: no conversion from Scale(('ml-si-per-second-ratio', 323506565708733284157918472061580302494)) to Scale(('ml-si-becquerel-ratio', 327022986202149438703681911339752143822))
+    RuntimeError: no conversion from Scale(('ml_si_per_second_ratio', 323506565708733284157918472061580302494)) to Scale(('ml_si_becquerel_ratio', 327022986202149438703681911339752143822))
 
 A conversion back to becquerel requires the aspect to be identified::
 
-    >>> activity = Aspect( ('ml-activity', 20106649997056189817632954430448298015) )
+    >>> activity = Aspect( ('ml_activity', 20106649997056189817632954430448298015) )
     >>> display( cast(y,becquerel,activity) ) 
     96 Bq
     Expression(96,Bq,activity)
@@ -289,8 +289,8 @@ A conversion back to becquerel requires the aspect to be identified::
 
 Similarly, if the aspect is declared initially the following lines show that a round-trip from hertz to per-second and back to hertz is permitted for frequency, while an attempt to go from hertz to becquerel via per-second is blocked::
 
-    >>> frequency = Aspect( ('ml-frequency', 153247472008167864427404739264717558529) )
-    >>> hertz = Scale( ('ml-si-hertz-ratio', 307647520921278207356294979342476646905) )
+    >>> frequency = Aspect( ('ml_frequency', 153247472008167864427404739264717558529) )
+    >>> hertz = Scale( ('ml_si_hertz_ratio', 307647520921278207356294979342476646905) )
     >>> x = expr(110,hertz,frequency)
     >>> display(x)
     110 Hz
@@ -308,4 +308,4 @@ Similarly, if the aspect is declared initially the following lines show that a r
     >>> convert(y,becquerel)    # Illegitimate conversion is detected
     Traceback (most recent call last):
     ...
-    RuntimeError: no conversion from Scale(('ml-si-per-second-ratio', 323506565708733284157918472061580302494)) to Scale(('ml-si-becquerel-ratio', 327022986202149438703681911339752143822)) for Aspect('ml-frequency', 153247472008167864427404739264717558529)    
+    RuntimeError: no conversion from Scale(('ml_si_per_second_ratio', 323506565708733284157918472061580302494)) to Scale(('ml_si_becquerel_ratio', 327022986202149438703681911339752143822)) for Aspect('ml_frequency', 153247472008167864427404739264717558529)    

@@ -2,26 +2,26 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-amount-of-H_2",
+            "ml_amount<H2>",
             22874499152608371964181019881919989519
         ],
         "locale": {
             "default": {
-                "name": "amount-of-H_2",
-                "symbol": "H_2"
+                "name": "amount_<H2>",
+                "symbol": "H2"
             }
         }
     },
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-amount-of-Na_2SO_4",
+            "ml_amount<Na2SO4>",
             4303594025179229828240367600027145012
         ],
         "locale": {
             "default": {
-                "name": "amount-of-Na_2SO_4",
-                "symbol": "H_2"
+                "name": "amount<Na2SO4>",
+                "symbol": "Na2SO4"
             }
         }
     }

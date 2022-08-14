@@ -2,7 +2,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-mass",
+            "ml_mass",
             321881801928222308627062904049725548287
         ],
         "locale": {
@@ -15,7 +15,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-length",
+            "ml_length",
             993853592179723568440264076369400241
         ],
         "locale": {
@@ -28,7 +28,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-time",
+            "ml_time",
             59007067547744628223483093626372886675
         ],
         "locale": {
@@ -41,12 +41,12 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-electric-current",
+            "ml_electric_current",
             565481003771161246786159459872474906
         ],
         "locale": {
             "default": {
-                "name": "electric-current",
+                "name": "electric_current",
                 "symbol": "I"
             }
         }
@@ -54,12 +54,12 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-thermodynamic-temperature",
+            "ml_thermodynamic_temperature",
             227327310217856015944698060802418784871
         ],
         "locale": {
             "default": {
-                "name": "thermodynamic-temperature",
+                "name": "thermodynamic temperature",
                 "symbol": "T"
             }
         }
@@ -67,12 +67,12 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-amount-of-substance",
+            "ml_amount_of_substance",
             184187687006002221991950252819085446201
         ],
         "locale": {
             "default": {
-                "name": "amount-of-substance",
+                "name": "amount of substance",
                 "symbol": "n"
             }
         }
@@ -80,12 +80,12 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-luminous-intensity",
+            "ml_luminous_intensity",
             291873474201872590198069097432661576865
         ],
         "locale": {
             "default": {
-                "name": "luminous-intensity",
+                "name": "luminous intensity",
                 "symbol": "I_v"
             }
         }

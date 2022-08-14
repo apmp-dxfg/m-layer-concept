@@ -2,15 +2,15 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect" : [
-            "ml-activity",
+            "ml_activity",
             20106649997056189817632954430448298015
         ],
         "src": [
-            "ml-si-per-second-ratio",
+            "ml_si_per_second_ratio",
             323506565708733284157918472061580302494
         ],
         "dst":[
-            "ml-si-becquerel-ratio",
+            "ml_si_becquerel_ratio",
             327022986202149438703681911339752143822
         ],
         "factors": [ "1" ]

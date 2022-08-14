@@ -2,11 +2,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml-si-celsius-interval", 
+            "ml_si_celsius_interval", 
             245795086332095731716589481707012001072
         ],
         "dst":[
-            "ml-imp-fahrenheit-interval", 
+            "ml_imp_fahrenheit_interval", 
             22817745368296240233220712518826840767
         ],
         "factors": [ "9/5", "32" ]
@@ -14,11 +14,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml-imp-fahrenheit-interval", 
+            "ml_imp_fahrenheit_interval", 
             22817745368296240233220712518826840767
         ],
         "dst": [
-            "ml-si-celsius-interval", 
+            "ml_si_celsius_interval", 
             245795086332095731716589481707012001072
         ],
         "factors": [ "5/9", "-32*5/9" ]
@@ -26,11 +26,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml-si-kelvin-ratio", 
+            "ml_si_kelvin_ratio", 
             302952256288207449238881076502466548054
         ],
         "dst": [
-            "ml-si-celsius-ratio", 
+            "ml_si_celsius_ratio", 
             278784445377172064355281533676474538407
         ],
         "factors": [ "1" ]
@@ -38,11 +38,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml-si-celsius-ratio", 
+            "ml_si_celsius_ratio", 
             278784445377172064355281533676474538407
         ],
         "dst": [
-            "ml-si-kelvin-ratio", 
+            "ml_si_kelvin_ratio", 
             302952256288207449238881076502466548054
         ],
         "factors": [ "1" ]
@@ -50,11 +50,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml-si-celsius-ratio", 
+            "ml_si_celsius_ratio", 
             278784445377172064355281533676474538407
         ],
         "dst": [
-            "ml-imp-fahrenheit-ratio", 
+            "ml_imp_fahrenheit_ratio", 
             101981007467621768906734129174569080512
         ],
         "factors": [ "9/5" ]
@@ -62,11 +62,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml-imp-fahrenheit-ratio", 
+            "ml_imp_fahrenheit_ratio", 
             101981007467621768906734129174569080512
         ],
         "dst": [
-            "ml-si-celsius-ratio", 
+            "ml_si_celsius_ratio", 
             278784445377172064355281533676474538407
         ],
         "factors": [ "5/9" ]

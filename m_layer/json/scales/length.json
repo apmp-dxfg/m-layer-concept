@@ -2,11 +2,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-si-nanometre-ratio",
+            "ml_si_nanometre_ratio",
             257091757625055920788370123828667027186
         ],
         "reference": [
-            "si-nanometre",
+            "si_nanometre",
             230327124043985678197012494098272082173
         ],
         "scale_type": "ratio"
@@ -14,7 +14,7 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-foot-ratio",
+            "ml_foot_ratio",
             150280610960339969789551668292960104920
         ],
         "reference": [

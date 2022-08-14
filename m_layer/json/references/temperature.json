@@ -2,7 +2,7 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si-celsius",
+            "si_celsius",
             318617443485372744730332268230803752214
         ],
         "locale": {
@@ -19,7 +19,7 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "imp-fahrenheit",
+            "imp_fahrenheit",
             314545844086913572859566825785893557749
         ],
         "locale": {

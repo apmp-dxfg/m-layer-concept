@@ -2,11 +2,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml-si-becquerel-ratio",
+            "ml_si_becquerel_ratio",
             327022986202149438703681911339752143822
         ],
         "dst":[
-            "ml-si-per-second-ratio",
+            "ml_si_per_second_ratio",
             323506565708733284157918472061580302494
         ],
         "factors": [ "1" ]

@@ -2,11 +2,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-imp-degree-ratio", 
+            "ml_imp_degree_ratio", 
             124567088583703716502057160299542649451
         ],
         "reference": [
-            "imp-degree",
+            "imp_degree",
             277818260541443964889383928855946049570
         ],
         "scale_type": "ratio"
@@ -14,11 +14,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-si-radian-ratio", 
+            "ml_si_radian_ratio", 
             273301153578020696303516833405033923738
         ],
         "reference": [
-            "si-radian",
+            "si_radian",
             311561499536022904630229742672799278060
         ],
         "scale_type": "ratio"
@@ -26,11 +26,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-si-radian-bounded-pi", 
+            "ml_si_radian_bounded_pi", 
             181367268705518406168243034119604185497
         ],
         "reference": [
-            "si-radian",
+            "si_radian",
             311561499536022904630229742672799278060
         ],
         "scale_type": "bounded"
@@ -38,11 +38,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-si-radian-bounded-two-pi", 
+            "ml_si_radian_bounded_two_pi", 
             300556212736422769570885306883285535638
         ],
         "reference": [
-            "si-radian",
+            "si_radian",
             311561499536022904630229742672799278060
         ],
         "scale_type": "bounded"
@@ -50,11 +50,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-imp-degree-bounded-360", 
+            "ml_imp_degree_bounded_360", 
             125066222841962802760576607996391537405
         ],
         "reference": [
-            "imp-degree",
+            "imp_degree",
             277818260541443964889383928855946049570
         ],
         "scale_type": "bounded"
@@ -62,11 +62,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-imp-degree-bounded-180", 
+            "ml_imp_degree_bounded_180", 
             273805538217618733078298377573965188309
         ],
         "reference": [
-            "imp-degree",
+            "imp_degree",
             277818260541443964889383928855946049570
         ],
         "scale_type": "bounded"

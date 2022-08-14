@@ -2,7 +2,7 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si-hertz",
+            "si_hertz",
             198610898083606115768120013170738979781
         ],
         "locale": {
@@ -13,7 +13,7 @@
         },
         "system": {
             "uid": [
-                "si-system",
+                "si_system",
                 88156805987886421108624908988601219537
             ],
             "dimensions": [0,0,-1,0,0,0,0],
@@ -27,7 +27,7 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si-terahertz",
+            "si_terahertz",
             310850909458796788849032855422762414462
         ],
         "locale": {
@@ -38,7 +38,7 @@
         },
         "system": {
             "uid": [
-                "si-system",
+                "si_system",
                 88156805987886421108624908988601219537
             ],
             "dimensions": [0,0,-1,0,0,0,0],
@@ -52,18 +52,18 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si-per-second",
+            "si_per_second",
             116741812607130898126240371497946537198
         ],
         "locale": {
             "default": {
-                "name": "per-second",
+                "name": "per second",
                 "symbol": "1/s"
             }
         },
         "system": {
             "uid": [
-                "si-system",
+                "si_system",
                 88156805987886421108624908988601219537
             ],
             "dimensions": [0,0,-1,0,0,0,0],

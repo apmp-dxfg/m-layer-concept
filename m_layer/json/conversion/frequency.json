@@ -2,11 +2,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml-si-hertz-ratio",
+            "ml_si_hertz_ratio",
             307647520921278207356294979342476646905
         ],
         "dst":[
-            "ml-si-per-second-ratio",
+            "ml_si_per_second_ratio",
             323506565708733284157918472061580302494
         ],
         "factors": [ "1" ]

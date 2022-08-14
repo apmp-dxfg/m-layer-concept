@@ -2,7 +2,7 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si-radian",
+            "si_radian",
             311561499536022904630229742672799278060
         ],
         "locale": {
@@ -13,7 +13,7 @@
         },
         "system": {
             "uid": [
-                "si-system",
+                "si_system",
                 88156805987886421108624908988601219537
             ],
             "dimensions": [0,0,0,0,0,0,0],
@@ -27,7 +27,7 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "imp-degree",
+            "imp_degree",
             277818260541443964889383928855946049570
         ],
         "locale": {

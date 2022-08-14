@@ -2,15 +2,15 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect" : [
-            "ml-thermodynamic-temperature",
+            "ml_thermodynamic_temperature",
             227327310217856015944698060802418784871
         ],
         "src": [
-            "ml-si-celsius-interval", 
+            "ml_si_celsius_interval", 
             245795086332095731716589481707012001072
         ],
         "dst":[
-            "ml-si-kelvin-ratio", 
+            "ml_si_kelvin_ratio", 
             302952256288207449238881076502466548054
         ],
         "factors": [ "1", "273.15" ]
@@ -18,15 +18,15 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect" : [
-            "ml-thermodynamic-temperature",
+            "ml_thermodynamic_temperature",
             227327310217856015944698060802418784871
         ],
         "src":[
-            "ml-si-kelvin-ratio", 
+            "ml_si_kelvin_ratio", 
             302952256288207449238881076502466548054
         ],
         "dst": [
-            "ml-si-celsius-interval", 
+            "ml_si_celsius_interval", 
             245795086332095731716589481707012001072
         ],
         "factors": [ "1", "-273.15" ]

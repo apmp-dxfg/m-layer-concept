@@ -2,11 +2,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml-foot-ratio",
+            "ml_foot_ratio",
             150280610960339969789551668292960104920
         ],
         "dst":[
-            "ml-si-metre-ratio",
+            "ml_si_metre_ratio",
             17771593641054934856197983478245767638
         ],
         "factors": [ "0.3048" ]
@@ -14,11 +14,11 @@
     {
         "__entry__": "Conversion",
         "src":[
-            "ml-si-metre-ratio",
+            "ml_si_metre_ratio",
             17771593641054934856197983478245767638
         ],
         "dst": [
-            "ml-foot-ratio",
+            "ml_foot_ratio",
             150280610960339969789551668292960104920
         ],
         "factors": [ "3.28084" ]

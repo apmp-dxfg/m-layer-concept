@@ -2,11 +2,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-imp-pound-ratio", 
+            "ml_imp_pound_ratio", 
             188380796861507506602975683857494523991
         ],
         "reference": [
-            "imp-pound",
+            "imp_pound",
             306364418201329042803003449530898574908
         ],
         "scale_type": "ratio"

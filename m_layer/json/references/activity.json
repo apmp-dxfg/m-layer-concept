@@ -2,7 +2,7 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si-becquerel",
+            "si_becquerel",
             242810001130839645194060996978894233380
         ],
         "locale": {
@@ -13,7 +13,7 @@
         },
         "system": {
             "uid": [
-                "si-system",
+                "si_system",
                 88156805987886421108624908988601219537
             ],
             "dimensions": [0,0,-1,0,0,0,0],

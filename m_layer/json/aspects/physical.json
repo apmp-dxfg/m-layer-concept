@@ -2,7 +2,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-torque",
+            "ml_torque",
             130931339493516375135609650190501980170
         ],
         "locale": {
@@ -15,7 +15,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-work",
+            "ml_work",
             253161982591064007446238888026090562042
         ],
         "locale": {
@@ -28,7 +28,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-frequency",
+            "ml_frequency",
             153247472008167864427404739264717558529
         ],
         "locale": {
@@ -41,7 +41,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-activity",
+            "ml_activity",
             20106649997056189817632954430448298015
         ],
         "locale": {
@@ -54,7 +54,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-wavenumber",
+            "ml_wavenumber",
             144971063540877887430756064314490007964
         ],
         "locale": {
@@ -67,7 +67,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-wavelength",
+            "ml_wavelength",
             286560112267714281146712032556984229473
         ],
         "locale": {
@@ -80,7 +80,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-period",
+            "ml_period",
             86706581527829787194017804485248983592
         ],
         "locale": {
@@ -93,7 +93,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-energy",
+            "ml_energy",
             12139911566084412692636353460656684046
         ],
         "locale": {
@@ -106,7 +106,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-photon-energy",
+            "ml_photon_energy",
             291306321925738991196807372973812640971
         ],
         "locale": {
@@ -119,7 +119,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-ITS-90",
+            "ml_ITS90",
             333567868916523888067500483865254994090
         ],
         "locale": {
@@ -131,12 +131,12 @@
     },    {
         "__entry__": "Aspect",
         "uid": [
-            "ml-temperature-difference",
+            "ml_temperature_difference",
             212368324110263031011700652725345220325
         ],
         "locale": {
             "default": {
-                "name": "temperature-difference",
+                "name": "temperature_difference",
                 "symbol": "dT"
             }
         }
@@ -144,7 +144,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-plane-angle",
+            "ml_plane_angle",
             95173225557230344956477808929590724690
         ],
         "locale": {
@@ -157,7 +157,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-transmittance",
+            "ml_transmittance",
             106338157389217634821305827494648287004
         ],
         "locale": {
@@ -173,7 +173,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-absorbance",
+            "ml_absorbance",
             86383731859836773954686958763955022575
         ],
         "locale": {
@@ -189,7 +189,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-optical-density",
+            "ml_optical_density",
             246281658431686855826084788549817949261
         ],
         "locale": {
@@ -205,7 +205,7 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-reflectance",
+            "ml_reflectance",
             77619173328682587252206794509402414758
         ],
         "locale": {

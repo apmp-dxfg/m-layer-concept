@@ -3,21 +3,21 @@
         "__entry__": "Cast",
         "src": [
             [
-                "ml-si-joule-ratio",
+                "ml_si_joule_ratio",
                 165050666678496469850612022016789737781
             ],
             [
-                "ml-energy",
+                "ml_energy",
                 12139911566084412692636353460656684046
             ]
         ],
         "dst":[
             [
-                "ml-si-joule-ratio",
+                "ml_si_joule_ratio",
                 165050666678496469850612022016789737781
             ],
             [
-                "ml-photon-energy",
+                "ml_photon_energy",
                 291306321925738991196807372973812640971
             ]
         ],
@@ -28,21 +28,21 @@
         "__entry__": "Cast",
         "src": [
             [
-                "ml-si-joule-ratio",
+                "ml_si_joule_ratio",
                 165050666678496469850612022016789737781
             ],
             [
-                "ml-photon-energy",
+                "ml_photon_energy",
                 291306321925738991196807372973812640971
             ]
         ],
         "dst": [
             [
-                "ml-si-joule-ratio",
+                "ml_si_joule_ratio",
                 165050666678496469850612022016789737781
             ],
             [
-                "ml-energy",
+                "ml_energy",
                 12139911566084412692636353460656684046
             ]
         ],
@@ -53,21 +53,21 @@
         "__entry__": "Cast",
         "src": [
             [
-                "ml-electronvolt-ratio",
+                "ml_electronvolt_ratio",
                 121864523473489992307630707008460819401
             ],
             [
-                "ml-photon-energy",
+                "ml_photon_energy",
                 291306321925738991196807372973812640971
             ]
         ],
         "dst":[
             [
-                "ml-si-nanometre-ratio",
+                "ml_si_nanometre_ratio",
                 257091757625055920788370123828667027186
             ],
             [
-                "ml-photon-energy",
+                "ml_photon_energy",
                 291306321925738991196807372973812640971
             ]
         ],
@@ -78,21 +78,21 @@
         "__entry__": "Cast",
         "src": [
             [
-                "ml-electronvolt-ratio",
+                "ml_electronvolt_ratio",
                 121864523473489992307630707008460819401
             ],
             [
-                "ml-photon-energy",
+                "ml_photon_energy",
                 291306321925738991196807372973812640971
             ]
         ],
         "dst":[
             [
-                "ml-si-joule-ratio",
+                "ml_si_joule_ratio",
                 165050666678496469850612022016789737781
             ],
             [
-                "ml-energy",
+                "ml_energy",
                 12139911566084412692636353460656684046
             ]
         ],

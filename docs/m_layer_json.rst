@@ -70,7 +70,7 @@ An example of an aspect entry is shown below. The following named elements are u
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-reflectance",
+            "ml_reflectance",
             77619173328682587252206794509402414758
         ],
         "locale": {
@@ -95,11 +95,11 @@ An example of a scale entry is shown below. The JSON object has the following na
     {
         "__entry__": "Scale",
         "uid": [
-            "ml-reflectance-ratio",
+            "ml_reflectance_ratio",
             231644681522224058023728516454961855496
         ],
         "reference": [
-            "si-one",
+            "si_one",
             86027072402622903744975433595176472531
         ],
         "scale_type": "ratio"
@@ -118,7 +118,7 @@ An example of a reference entry is shown below. The following named elements are
     {
         "__entry__": "Reference",
         "uid": [
-            "si-one",
+            "si_one",
             86027072402622903744975433595176472531
         ],
         "locale": {
@@ -143,11 +143,11 @@ An example of a conversion entry is shown below. The following named elements ar
     {
         "__entry__": "Conversion",
         "src": [
-            "ml-si-kilogram-ratio",
+            "ml_si_kilogram_ratio",
             12782167041499057092439851237297548539
         ],
         "dst":[
-            "ml-imp-pound-ratio", 
+            "ml_imp_pound_ratio", 
             188380796861507506602975683857494523991
         ],
         "factors": [ "2.2046" ]
@@ -169,15 +169,15 @@ An example of an aspect-specific conversion entry is shown below. The following 
     {
         "__entry__": "ScalesForAspect",
         "aspect" : [
-            "ml-photon-energy",
+            "ml_photon_energy",
             291306321925738991196807372973812640971
         ],
         "src": [
-            "ml-si-terahertz-ratio",
+            "ml_si_terahertz_ratio",
             271382954339420591832277422907953823861
         ],
         "dst":[
-            "ml-si-per-centimetre-ratio",
+            "ml_si_per_centimetre_ratio",
             333995508470114516586033303775415043902
         ],
         "factors": [ "si.tera/si.c*si.centi" ]
@@ -199,21 +199,21 @@ An example of a casting entry is shown below. The following named elements are u
         "__entry__": "Cast",
         "src": [
             [
-                "ml-electronvolt-ratio",
+                "ml_electronvolt_ratio",
                 121864523473489992307630707008460819401
             ],
                         [
-                "ml-photon-energy",
+                "ml_photon_energy",
                 291306321925738991196807372973812640971
             ]
         ],
         "dst":[
             [
-                "ml-si-nanometre-ratio",
+                "ml_si_nanometre_ratio",
                 257091757625055920788370123828667027186
             ],
                         [
-                "ml-photon-energy",
+                "ml_photon_energy",
                 291306321925738991196807372973812640971
             ]
         ],
