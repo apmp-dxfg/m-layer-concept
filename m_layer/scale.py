@@ -217,7 +217,7 @@ class Scale(object):
     """
 
     __slots__ = (
-        '_scale_uid','_scale_type', '_dimensions'
+        '_scale_uid','_scale_type', '_dimension'
     )
     
     def __init__(self,scale_uid):    
@@ -265,15 +265,15 @@ class Scale(object):
             scale_json = self._from_json()
             ref_json = cxt.reference_reg[ tuple(scale_json['reference']) ] 
             if 'system' in ref_json:
-                self._dimensions = Dimension( 
+                self._dimension = Dimension( 
                     System( tuple(ref_json['system']['uid']) ),
                     tuple( ref_json['system']['dimensions']),
                     float( ref_json['system']['prefix'] )
                 )
             else:
-                self._dimensions = None
+                self._dimension = None
                 
-            return self._dimensions 
+            return self._dimension 
             
     def __eq__(self,other):
         "True when both objects have the same uids"
