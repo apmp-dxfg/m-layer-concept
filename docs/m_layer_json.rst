@@ -247,9 +247,3 @@ Python module of defined transformations
 
 .. automodule:: ml_math
     :members:
-
-
-Utility script for new UUIDs
-----------------------------
-   
-.. automodule:: new_uuid

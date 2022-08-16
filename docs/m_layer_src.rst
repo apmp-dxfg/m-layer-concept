@@ -17,6 +17,11 @@ Context
 .. autodata:: context.default_context
     :annotation: = the Context object used during a Python session
     
+Register
+--------
+
+.. automodule:: register
+    :members:
     
 Conversion register
 -------------------
@@ -44,22 +49,24 @@ Scale
     :members:
     :special-members: __eq__
 
-
-
 Aspect
 ------
-
 .. automodule:: aspect
     :noindex:
     :members:
     :special-members: __eq__
+        
+Composition
+-----------
+.. automodule:: composition
+    :members: 
+    :special-members: __eq__
     
-   
 Dimension
 ---------
 .. automodule:: dimension
     :members: 
-    :special-members: __eq__, __mul__, __truediv__,__pow__
+    :special-members: __eq__
     
 JSON register entries
 ---------------------

@@ -44,11 +44,7 @@ Classes
     :members: uid, scale, aspect
     :special-members: __eq__
    
-  
-Utility functions
------------------
+.. autoclass:: scale.ComposedScaleAspect
+    :members: uid, scale, aspect
    
-.. automodule:: ml_to_py_key
-
-
    

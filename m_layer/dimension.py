@@ -18,6 +18,10 @@ import numbers
 
 class Dimension(object):
 
+    """
+    Dimension(system,dim,prefix=1)
+    """
+    
     __slots__ = (
         '_system', '_dim', '_prefix'
     )
@@ -49,8 +53,8 @@ class Dimension(object):
  
     def commensurate(self,other):
         """
-        ``True`` when ``self`` and ``other`` share the 
-        same system and dimension.
+        Return ``True`` when this object and ``other`` have the 
+        same system and dimensions.
         
         """
         return (
