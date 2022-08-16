@@ -1,8 +1,7 @@
 """
-A special category of conversions can be declared where the scales involved are 
-not considered equivalent unless a specified aspect is involved. The 
+Conversions can be declared for specific aspects. The 
 :class:`~scales_for_aspect_register.ScalesForAspectRegister` is used to hold 
-those records.
+these records.
 
 """
 import json
@@ -73,7 +72,7 @@ class ScalesForAspectRegister(object):
 
     """
     A ``ScalesForAspectRegister`` maps an aspect to a mapping 
-    of scale pairs that index conversion functions. 
+    of scale pairs, which, in turn, index conversion functions. 
     """
     
     def __init__(self,context):

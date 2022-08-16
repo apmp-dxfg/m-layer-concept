@@ -1,5 +1,5 @@
 """
-Casting can change the scale and aspect of an expression. 
+Casting can change the type of scale and aspect of an expression. 
 
 Legitimate castings are recorded in a :class:`~.casting_register.CastingRegister`, which is an attribute of the :class:`~context.Context` object.
 
@@ -22,8 +22,7 @@ class CastingRegister(object):
     
     """
     A ``CastingRegister`` maps scale-aspect pairs 
-    to a function that will convert tokens between expressions
-    in different scale-aspects. 
+    to a function that will convert tokens. 
     """
     
     def __init__(self,context):

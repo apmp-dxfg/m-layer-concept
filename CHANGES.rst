@@ -13,8 +13,7 @@ Version 0.2.0 (2022-07-08)
     * An API has been better established
     * A unit test suite is included
     * Continuous integration on github runs the unit tests and doctests 
-    * Documentation has been extended and includes examples 
-        of use and details about the current API
+    * Documentation has been extended and includes examples of use and details about the current API
     * Building the Read The Docs documentation is automated on github
 
 Version 0.1.0 (2022-04-11)

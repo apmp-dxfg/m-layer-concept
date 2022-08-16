@@ -3,7 +3,7 @@
 =============================
 M-layer JSON register entries
 =============================
-For the purposes of this proof of concept project, the M-layer registry 
+For this concept project, the M-layer registry 
 of scales, aspects, conversions, etc., is implemented in JSON.
 
 
@@ -20,13 +20,17 @@ with the following substructure::
         |
         +---> aspects/
         |
-        +---> conversion_casting/
+        +---> conversion/
+        |
+        +---> casting/
         |
         +---> references/
         |
         +---> scales/
         |
-        +---> scales_for_aspects/
+        +---> scales_for/
+        |
+        +---> systems/
 
 All JSON files (with file extension '.json') in these 
 directories are automatically read when the m_layer 
@@ -47,11 +51,11 @@ Names are formed according to the following formats, where '[some_text]' is inte
 
     Aspect:
     
-        ml-[aspect_name]
+        ml_[aspect_name]
         
     Scale:
     
-        ml-[reference_name]-[scale_type]
+        ml_[reference_name]_[scale_type]
         
     Reference:
     

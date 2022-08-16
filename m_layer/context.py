@@ -1,8 +1,6 @@
 """
-The Context is a local Python interface with external M-layer registers 
-and the local session where the M-layer is being used; 
-it provides a Python API tot he M-layer.
-
+The Context provides a local interface to external M-layer registers.
+The Context is not intended to be used directly in applications.
 """
 import json 
 import glob
@@ -32,8 +30,7 @@ def uid_as_str(uid,short=True):
 class Context(object):
     
     """
-    A `Context` object contains M-layer records for aspects, scales, 
-    conversions, casting, and conventional references. 
+    A `Context` object contains M-layer records. 
     """
     
     def __init__(

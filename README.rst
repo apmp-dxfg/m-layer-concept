@@ -22,7 +22,7 @@ The documentation for the **M-Layer** can be found `here <https://m-layer-concep
 
 
 .. |docs| image:: https://readthedocs.org/projects/m-layer-concept/badge/?version=develop
-    :target: https://m-layer-concept.readthedocs.io/en/latest/?badge=develop
+    :target: https://m-layer-concept.readthedocs.io/en/develop/?badge=develop
     :alt: Documentation Status
       
 .. |github tests| image:: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml/badge.svg
@@ -37,5 +37,3 @@ The documentation for the **M-Layer** can be found `here <https://m-layer-concep
         :target: https://m-layer-concept.readthedocs.io/en/main/?badge=main
         :alt: Documentation Status  
         
-    .. |github tests| image:: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml/badge.svg
-       :target: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml

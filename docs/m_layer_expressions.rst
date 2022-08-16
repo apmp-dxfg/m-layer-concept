@@ -26,7 +26,7 @@ These components allow the M-layer to represent a much wider range of measuremen
 Tokens
 ------
 
-A token corresponds to the numeric value in a traditional expression. In most cases, a token will be numeric but some measurement data use symbols rather than numbers to denote a result (e.g., a sequence of letters and numbers used to catalogue library books), so the M-layer accommodates this possibility.
+A token corresponds to the numeric value in a traditional expression. A token will usually be numeric, but some measurement data adopt symbols other than numbers to denote a result, so the M-layer accommodates this possibility.
 
 .. _concept_m_expressions_scales:
 
@@ -34,9 +34,9 @@ Scales
 ------
   
 
-Traditional units do not convey information about the (numeric, or other) structure of results. So, the M-layer defines entities called scales that combine a unit, or other reference, with information about the structure of data. This information is used to manage expression changes (conversion or casting). 
+Traditional units do not convey information about the structure of data. However, the M-layer entities called scales associate a unit (or other reference) with information about the structure of data. This is used to manage changes of expression (conversion or casting) and is helpful in distinguishing between closely related expressions. For example, a ratio scale associated with unit degree Celsius is distinct from an interval scale associated with the same unit (the former would be appropriate for expression of a temperature difference whereas the latter would be used to express absolute temperature). 
 
-There are 5 scale types in the M-layer. Each has an associated conversion transformation that generates a different scale of the same type (an invariance transform). For example, multiplying values on a ratio scale by a positive real number produces another ratio scale.
+There are 5 scale types in the M-layer. Each can be associated with a characteristic form of transformation that will generate a different scale of the same type (an invariance transform). For example, multiplying values on a ratio scale by a positive real number produces another ratio scale.
 
 .. list-table:: Scale types and invariance transforms. Note, the operator 'mod' divides the left argument by the right and returns the remainder with the same sign as the right argument.
    :width: 75%
@@ -55,12 +55,10 @@ There are 5 scale types in the M-layer. Each has an associated conversion transf
      - any monotonic increasing function of :math:`x`
    * - nominal
      - any 1-to1 substitution for :math:`x`
-  
-M-layer scales associate a unit, or some other reference, with a scale type. This is helpful in distinguishing between closely related expressions. For example, a ratio scale associated with unit degree Celsius is distinct from an interval scale associated with the same unit (the former would be appropriate for expression of a temperature difference whereas the latter would be used to express absolute temperature). 
 
 Aspects
 -------
 
-Unit systems like the SI do not make explicit reference to quantity in expressions. Nevertheless, the kind of quantity can usually be inferred from contextual information. This poses a problem for digital systems, because the kind of quantity cannot be obtained in a systematic way. The M-layer uses a component, called aspect, to represent the kind of quantity in an expression. 
+Unit systems like the SI do not make explicit reference to quantity. They take for granted that the kind of quantity can usually be inferred from contextual information. This poses a problem for digital systems, which need to operate in a systematic way. The M-layer uses the aspect component to represent the kind of quantity in an expression. The aspect is used to discern legitimate conversion and casting operations for expressions.
 
-Aspect represents the nature of what is being measured and is interpreted more broadly than just a kind of quantity. Aspects may include things that are not considered physical quantities (like mass or length), such as the intelligence scores of a group of students, or the hardness of a material. The aspect is used to discern legitimate conversion and casting operations for expressions.  
+Aspect is interpreted more broadly than kind of quantity, because aspects may include things that are not considered physical quantities (such as the intelligence of students, or the hardness of a material). 

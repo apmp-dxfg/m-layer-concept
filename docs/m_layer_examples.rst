@@ -10,7 +10,7 @@ Examples
 Temperature
 ===========
 
-There are several interesting examples of difficulties with unambiguous expressions of measured data provided by temperature.
+Several interesting examples of difficulties with unambiguous expressions of measured data are provided by temperature.
 
 
 Absolute temperature
@@ -18,7 +18,7 @@ Absolute temperature
 
 Firstly, there is the distinction between ratio scales and interval scales. 
 
-M-layer conversion will not change the aspect, but conversion may change the type of scale.  For example, conversion between Fahrenheit and degree Celsius can be carried out::
+M-layer conversion may occur between different scales of the same type without the need to specify the aspect.  For example, conversion is defined between Fahrenheit and degree Celsius without specifying temperature. ::
 
     >>> from m_layer import *
     
@@ -41,7 +41,7 @@ M-layer conversion will not change the aspect, but conversion may change the typ
     Expression(22.22222222222222,degree C)
     <BLANKLINE>
 
-Conversion to a different type of scale must take account of the aspect of the initial expression.
+However, conversion to a different type of scale must specify the aspect.
 The M-layer will not allow an expression to be converted without this information. For example, ::
 
     >>> kelvin = Scale( ('ml_si_kelvin_ratio', 302952256288207449238881076502466548054) )
@@ -51,7 +51,7 @@ The M-layer will not allow an expression to be converted without this informatio
     ...
     RuntimeError: no conversion from Scale(('ml_si_celsius_interval', 245795086332095731716589481707012001072)) to Scale(('ml_si_kelvin_ratio', 302952256288207449238881076502466548054))
 
-Information about the aspect can be specified initially when creating an expression, or injected during later casting, as shown below. Once specified, conversion operations cannot change the aspect (only casting may change the aspect of an expression). :: 
+Information about the aspect can be specified initially when creating an expression, or injected during later casting, as shown below. Once specified, conversion operations cannot change the aspect. :: 
 
     >>> T = Aspect( ("ml_thermodynamic_temperature", 227327310217856015944698060802418784871) )         
     
@@ -65,7 +65,7 @@ Information about the aspect can be specified initially when creating an express
 Temperature difference  
 ----------------------
 
-The subtle distinction between temperature and temperature difference is now manageable. Firstly, a temperature difference expressed in degrees Celsius is not convertible to temperature in degrees Fahrenheit, because that conversion is not registered::
+The distinction between temperature and temperature difference is now more manageable. Firstly, an expression in degrees Celsius may not be converted to degrees Fahrenheit, because the type of scale is different::
 
     >>> celsius_ratio = Scale( ('ml_si_celsius_ratio', 278784445377172064355281533676474538407) )
 
@@ -79,19 +79,18 @@ The subtle distinction between temperature and temperature difference is now man
     ...
     RuntimeError: no conversion from Scale(('ml_si_celsius_ratio', 278784445377172064355281533676474538407)) to Scale(('ml_imp_fahrenheit_interval', 22817745368296240233220712518826840767))
 
-On the other hand, degrees Celsius can be converted to kelvin::
+However, degrees Celsius can be converted to kelvin (the scales are of the same type)::
 
     >>> display( t_diff_C.convert(kelvin) )
     10 K
     Expression(10,K)
     <BLANKLINE>
     
-However, it is important to note that these expressions did not define the aspect.
     
 Scale-aspect pairs
 ------------------
 
-Explicit use of aspects is recommended. Pairing scales with aspects provides a convenient  and safe way of expressing data. The M-layer class :class:`~scale_aspect.ScaleAspect` encapsulates scale-aspect pairs for this purpose. The following code uses scale-aspect pairs to handle the cases shown above::
+Pairing scales with aspects provides a convenient and safe way of expressing data. So, explicit use of aspects is recommended.  The M-layer class :class:`~scale_aspect.ScaleAspect` encapsulates scale-aspect pairs for this purpose. The following code uses scale-aspect pairs to handle the cases shown above::
 
     >>> dT = dT = Aspect( ('ml_temperature_difference', 212368324110263031011700652725345220325) )
     
@@ -127,14 +126,14 @@ Explicit use of aspects is recommended. Pairing scales with aspects provides a c
 Plane angle
 ===========
   
-Plane angle is interesting because values may be expressed using bounded cyclic, or circular, values. This means that conversion between expressions of angle is quite different from other types of scale.
+Plane angle values may be expressed using bounded cyclic, or circular, values. This means that conversion between expressions of angle is quite different from other types of scale.
 
 Scales for plane angle
 ----------------------
 
-Radian is the special name given to the SI unit of plane angle (plane angle is a quantity of dimension one in the SI, so the unit one is also allowed). The unit degree may also be used with the SI. Expressions need not place bounds on the value. However, digital systems frequently impose circular or cyclic limits on values.  Either the lower bound is zero and the upper bound corresponds to one full rotation (:math:`2 \pi` radians or :math:`+360` degrees), or the lower bound corresponds to half a full rotation clockwise (:math:`-\pi` radians or :math:`-180` degrees) and the upper bound to half a full rotation counter-clockwise (:math:`+\pi` radians or :math:`+180` degrees). 
+Radian is the special name given to the SI unit of plane angle (plane angle is a quantity of dimension one in the SI, so the unit one is also allowed). The unit degree may also be used with the SI. Expressions involving plane angle need not place bounds on the value. However, digital systems frequently do impose circular or cyclic limits.  In that case, either the lower bound is zero and the upper bound corresponds to one full rotation (:math:`2 \pi` radians or :math:`+360` degrees), or the lower bound corresponds to half a full rotation clockwise (:math:`-\pi` radians or :math:`-180` degrees) and the upper bound to half a full rotation counter-clockwise (:math:`+\pi` radians or :math:`+180` degrees). 
 
-The M-layer has a particular scale type for these bounded cyclic scales. So, M-layer scales can be defined for the different cases::
+The M-layer uses a particular scale type to represent these bounded cyclic ranges. M-layer scales can be defined for the different cases::
 
     >>> plane_angle = Aspect( ('ml_plane_angle', 95173225557230344956477808929590724690) )
     
@@ -158,7 +157,7 @@ An angle can be converted between bounded scales::
     Expression(270.0,deg)
     <BLANKLINE>
     
-and casting to an unbounded scale is possible too, but the aspect mus be given ::
+and casting to an unbounded scale is possible too, but the aspect must be given ::
 
     >>> b = cast(a,radian_ratio,plane_angle)
     >>> display( b )
@@ -166,7 +165,7 @@ and casting to an unbounded scale is possible too, but the aspect mus be given :
     Expression(-1.5707963267948966,rad,plane-angle)
     <BLANKLINE>
     
-An explicit cast is required to change from unbounded to bounded scales too, because some loss of information may result :: 
+An explicit cast is required to change from unbounded to bounded scales, because some loss of information may result :: 
 
     >>> display( cast(b,degree_bounded_180) )
     -90.0 deg
@@ -175,14 +174,14 @@ An explicit cast is required to change from unbounded to bounded scales too, bec
   
 Spectroscopic data
 ==================  
-There are many different kinds of optical spectroscopy, but often data can be thought of in the same way: as the response of a sample to stimulus at a specific energy (photon energy). The energy of incident photons is typically presented along the abscissa (x-axis) and the response along the ordinate (y-axis).
+There are many different kinds of optical spectroscopy, but often data can be thought of as the response of a sample to stimulus at a specific energy (photon energy). The energy is typically presented along the abscissa (x-axis) and the response along the ordinate (y-axis).
 
-Energy data may be expressed in different units, such as electronvolts (:math:`\text{eV}`),  nanometres (:math:`\text{nm}`), wavenumber (:math:`\text{cm}^{-1}`) and terahertz (:math:`\text{THz}`). These units would normally be associated with different aspects (energy, length, inverse length, and frequency, respectively). However, the simple relationships between these quantities for photons makes them a convenient choice for spectroscopists (:math:`E = h\, \nu`, :math:`E = h\, c \, \tilde{\nu}`, etc., where :math:`E` is photon energy, :math:`h` is Planck's constant, :math:`c` is the speed of light, :math:`\nu` is frequency, and :math:`\tilde{\nu}` is wavenumber). 
+However, energy data may be expressed in different units, such as electronvolts (:math:`\text{eV}`),  nanometres (:math:`\text{nm}`), wavenumber (:math:`\text{cm}^{-1}`) and terahertz (:math:`\text{THz}`). These units would normally be associated with quite different quantities (energy, length, inverse length, and frequency, respectively). However, the relationships between these quantities for photons makes them a convenient choice for spectroscopists (:math:`E = h\, \nu`, :math:`E = h\, c \, \tilde{\nu}`, etc., where :math:`E` is photon energy, :math:`h` is Planck's constant, :math:`c` is the speed of light, :math:`\nu` is frequency, and :math:`\tilde{\nu}` is wavenumber). 
 
 Photon energy
 -------------
 
-Abscissa data can be expressed without ambiguity by specifying the aspect as photon energy::
+Abscissa data can be expressed without ambiguity by specifying photon energy as the aspect ::
 
     >>> photon_energy = Aspect( ('ml_photon_energy', 291306321925738991196807372973812640971) )
     >>> energy = Aspect( ('ml_energy', 12139911566084412692636353460656684046) ) 
@@ -208,7 +207,7 @@ The data may then be converted safely::
     Expression(8065.543937349211,1/cm,photon energy)
     <BLANKLINE>
 
-The wavelength is inversely related to energy (:math:`\lambda = h\,c / E`), so the M-layer handles this as a cast, rather than a conversion::
+The wavelength is inversely related to energy (:math:`\lambda = h\,c / E`), so the M-layer must handle this as a cast, rather than a conversion::
 
     >>> display(x.cast(nanometre)) 
     1239.8419843320025 nm
@@ -218,9 +217,9 @@ The wavelength is inversely related to energy (:math:`\lambda = h\,c / E`), so t
 Response data
 -------------
 
-Often response data will be a ratio of the same kind of quantity, such as a reflectance (ratio of reflected to incident flux) or transmittance (ratio of transmitted to incident flux). Such ratios are dimensionless ('dimension one') and would be expressed in terms of the SI unit one. It would not be possible to distinguish between them on the basis of unit alone.
+Often the response data will be in the form of a ratio of the same kind of quantity, such as a reflectance (ratio of reflected to incident flux) or transmittance (ratio of transmitted to incident flux). Such ratios are dimensionless ('dimension one'), so it would not be possible to distinguish between them on the basis of unit alone.
 
-This situation is handled in the M-layer by declaring a different aspect for each type of ratio. These can be combined with the unit one in scale-aspect pairs::
+This situation is handled in the M-layer by declaring the type of ratio as an aspect. These aspects can be combined with the unit one in scale-aspect pairs::
 
     >>> transmittance = ScaleAspect(
     ...     Scale( ('ml_si_one', 200437119122738863945813053269398165973) ),
@@ -252,9 +251,9 @@ These expressions are distinct. Their scales are the same (both one), but the as
     
 Special unit names
 ==================
-The SI defines special names for some units. However, unit names expressed in terms of SI base units remain valid alternatives. This can lead to ambiguity.
+The SI defines special names for some units. However, compound unit names, expressed in terms of SI base units, remain valid alternatives. This can lead to ambiguity.
 
-A simple example is provided by the special unit names hertz and becquerel used for frequency and (radio) activity, respectively. Regardless of whether measurement data is expressed in hertz or becquerel it can legitimately be converted to :math:`s^{-1}`. However, once in :math:`s^{-1}` it is not clear which of the two special unit names would apply. 
+A simple example is provided by the special unit names hertz and becquerel used for frequency and (radio) activity, respectively. Regardless of whether measurement data is expressed in hertz or becquerel it can legitimately be converted to :math:`s^{-1}`. However, once expressed in :math:`s^{-1}` it is not clear which of the two special unit names would apply. 
 
 The M-layer can manage this asymmetry. ::
 
@@ -279,7 +278,7 @@ Here, conversion from the special name becquerel to the generic unit per-second 
     ...
     RuntimeError: no conversion from Scale(('ml_si_per_second_ratio', 323506565708733284157918472061580302494)) to Scale(('ml_si_becquerel_ratio', 327022986202149438703681911339752143822))
 
-A conversion back to becquerel requires the aspect to be identified::
+The conversion back to becquerel requires the aspect to be specified::
 
     >>> activity = Aspect( ('ml_activity', 20106649997056189817632954430448298015) )
     >>> display( cast(y,becquerel,activity) ) 
@@ -287,7 +286,7 @@ A conversion back to becquerel requires the aspect to be identified::
     Expression(96,Bq,activity)
     <BLANKLINE>
 
-Similarly, if the aspect is declared initially the following lines show that a round-trip from hertz to per-second and back to hertz is permitted for frequency, while an attempt to go from hertz to becquerel via per-second is blocked::
+Similarly, if the aspect is declared as frequency initially, the following lines show that a round-trip from hertz to per-second and back to hertz is permitted, while an attempt to convert from hertz to becquerel via per-second is blocked::
 
     >>> frequency = Aspect( ('ml_frequency', 153247472008167864427404739264717558529) )
     >>> hertz = Scale( ('ml_si_hertz_ratio', 307647520921278207356294979342476646905) )
