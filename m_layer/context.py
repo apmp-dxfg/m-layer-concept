@@ -157,9 +157,9 @@ class Context(object):
         The aspect does not change.  
         
         Args:
-            src_scale_uid (unique m-layer identifier): initial scale   
-            src_aspect_uid (unique m-layer identifier): initial aspect
-            dst_scale_uid (unique m-layer identifier): final scale
+            src_scale_uid: initial scale   
+            src_aspect_uid: initial aspect
+            dst_scale_uid: final scale
         
         Returns:
             A Python function 
@@ -220,10 +220,10 @@ class Context(object):
         ``dst_aspect_uid`` is assumed to apply to both.
         
         Args:
-            src_scale_uid (unique m-layer identifier): initial scale   
-            src_aspect_uid (unique m-layer identifier): initial aspect
-            dst_scale_uid (unique m-layer identifier): final scale
-            dst_aspect_uid (unique m-layer identifier): final aspect
+            src_scale_uid: initial scale   
+            src_aspect_uid: initial aspect
+            dst_scale_uid: final scale
+            dst_aspect_uid: final aspect
             
         Returns:
             A Python function 

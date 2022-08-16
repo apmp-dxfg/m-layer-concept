@@ -90,7 +90,7 @@ However, degrees Celsius can be converted to kelvin (the scales are of the same 
 Scale-aspect pairs
 ------------------
 
-Pairing scales with aspects provides a convenient and safe way of expressing data. So, explicit use of aspects is recommended.  The M-layer class :class:`~scale_aspect.ScaleAspect` encapsulates scale-aspect pairs for this purpose. The following code uses scale-aspect pairs to handle the cases shown above::
+Pairing scales with aspects provides a convenient and safe way of expressing data. So, explicit use of aspects is recommended.  The M-layer class :class:`~scale.ScaleAspect` encapsulates scale-aspect pairs for this purpose. The following code uses scale-aspect pairs to handle the cases shown above::
 
     >>> dT = dT = Aspect( ('ml_temperature_difference', 212368324110263031011700652725345220325) )
     

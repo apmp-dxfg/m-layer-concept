@@ -40,10 +40,11 @@ Classes
     :members: uid
     :special-members: __eq__
     
-.. autoclass:: scale_aspect.ScaleAspect
+.. autoclass:: scale.ScaleAspect
     :members: uid, scale, aspect
     :special-members: __eq__
    
+  
 Utility functions
 -----------------
    

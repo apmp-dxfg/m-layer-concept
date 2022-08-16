@@ -287,7 +287,7 @@ class Scale(object):
 
     def to_scale_aspect(self,aspect=no_aspect):
         """
-        Return a :class:`~scale_aspect.ScaleAspect` 
+        Return a :class:`~scale.ScaleAspect` 
         combining this scale and ``aspect``.
         
         """

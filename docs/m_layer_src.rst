@@ -44,6 +44,8 @@ Scale
     :members:
     :special-members: __eq__
 
+
+
 Aspect
 ------
 
@@ -51,14 +53,13 @@ Aspect
     :noindex:
     :members:
     :special-members: __eq__
-
-Scale-Aspect
-------------
-
-.. automodule:: scale_aspect
-    :noindex:
-    :members:
-    :special-members: __eq__
+    
+   
+Dimension
+---------
+.. automodule:: dimension
+    :members: 
+    :special-members: __eq__, __mul__, __truediv__,__pow__
     
 JSON register entries
 ---------------------
