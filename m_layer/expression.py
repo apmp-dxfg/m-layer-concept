@@ -100,7 +100,7 @@ class Expression(object):
         Args:
             dst_scale (:class:`~scale.ScaleAspect` or 
             :class:`~scale.ComposedScaleAspect` or
-            :class:`~scale.Scale`): the scale-aspect pair for the new expression 
+            :class:`~scale.Scale`) 
         
         Returns:
             :class:`~expression.Expression` 
@@ -140,9 +140,21 @@ class Expression(object):
             isinstance(dst_scale,ComposedScaleAspect) 
         and isinstance(self.scale_aspect,ComposedScaleAspect)
         ):
+            # Conversion of one expression to another.
+            # The expressions must match up, so that 
+            # pairs of source-destination scales can 
+            # be found in the register. 
+            # In this way, the conversion factors are 
+            # combined to get the final factor.
+                        
             # Note: the Context knows nothing about composed 
             # ScaleAspects. I take the view that the Context 
             # deals only with registered objects.
+            
+            # TODO: This routine requires the unit expressions 
+            # to have the same form (e.g., x**2 is not the same as x*x).
+            # An improvement would be to first reduce the expressions to 
+            # products of powers and then evaluate the conversion factor.
             
             stack = []
             s_scale_it = iter(self.scale)
@@ -165,6 +177,7 @@ class Expression(object):
                         assert src_a == dst_a,\
                             "{!r} != {!r}".format(src_a,dst_a)
                     
+                        # Evaluates the conversion factor
                         stack.append( 
                             cxt.conversion_fn( 
                                 src_s.uid,src_a.uid,dst_s.uid 
