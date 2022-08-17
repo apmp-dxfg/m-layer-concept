@@ -66,35 +66,49 @@ class Dimension(object):
         )
       
     def __repr__(self):
-        return "Dimension( {!s}{!s} )".format(
+        return "Dimension( {!s},{!s},{!s} )".format(
             self.system,
-            self.dim
+            self.dim,
+            self.prefix
         )
  
     def __str__(self):
-        return "{!s}{!s}".format(
+        return "{!s}{!s}{!s}".format(
             self.system,
-            self.dim
+            self.dim,
+            self.prefix
         )
  
+    def __rmul__(self,x):
+        # a numerical scale factor 
+        assert isinstance(x,numbers.Integral)
+        return Dimension(
+            self.system,
+            self.dim,
+            self.prefix * x
+        )
+        
     def __mul__(self,rhs):
+            
         assert self.system == rhs.system,\
             "different systems: '{}', '{}'".format(self.system, rhs.system)
             
         return Dimension(
             self.system,
             tuple( i + j for (i,j) in zip(self.dim,rhs.dim) ),
-            self.prefix * other.prefix
+            self.prefix * rhs.prefix
         )
+            
     
     def __truediv__(self,rhs):
+    
         assert self.system == rhs.system,\
             "different systems: '{}', '{}'".format(self.system, rhs.system)
             
         return Dimension(
             self.system,
             tuple( i - j for (i,j) in zip(self.dim,rhs.dim) ),
-            self.prefix / other.prefix
+            self.prefix / rhs.prefix
         )
     
     def __pow__(self,n):
