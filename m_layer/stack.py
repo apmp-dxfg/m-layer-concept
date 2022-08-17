@@ -1,10 +1,12 @@
 """
 """
-stack = list    # Alias
 
 __all__ = (
     'Stack',
 )
+
+# ---------------------------------------------------------------------------
+stack = list    # Alias
 
 # ---------------------------------------------------------------------------
 class Stack(object):
@@ -25,56 +27,43 @@ class Stack(object):
         return Stack( self._obj.copy() )
 
     def _render_str(self):
-        """
+
+        stk = []
         
-        """
-        exec_stack = []
+        for o_i in self._obj:
         
-        _N = len(self._obj)
-        _base = 0
-        
-        while _base < _N:
-            # Push objects to the execution stack unless they 
-            # are recognised operations
-            if self._obj[_base] not in ('mul','div','rmul','pow'): 
-                exec_stack.append( self._obj[_base] )
-                _base += 1
+            # Stack objects unless they are recognised operations
+            if o_i not in ('mul','div','rmul','pow'):
+                stk.append( o_i )
                 
             else:
-                opn = self._obj[_base]
-                _base += 1
-                
-                if opn == 'mul':
-                    x = exec_stack.pop()
-                    y = exec_stack.pop()
-                    exec_stack.append( "{!s}.{!s}".format( y,x ) )
+                if o_i == 'mul':
+                    x,y = stk.pop(), stk.pop()
+                    stk.append( "{!s}.{!s}".format( y,x ) )
                                     
-                elif opn == 'rmul':
+                elif o_i == 'rmul':
                     # `x` must be an integer
-                    x = exec_stack.pop()
-                    y = exec_stack.pop()
-                    exec_stack.append( "{:d}.{!s}".format( x,y ) )
+                    x,y = stk.pop(), stk.pop()
+                    stk.append( "{:d}.{!s}".format( x,y ) )
                                     
-                elif opn == 'div':
-                    x = exec_stack.pop()
-                    y = exec_stack.pop()
+                elif o_i == 'div':
+                    x,y = stk.pop(), stk.pop()
                     # Numerator brackets could be added
-                    exec_stack.append( "{!s}/({!s})".format( y,x ) )
+                    stk.append( "{!s}/({!s})".format( y,x ) )
                                     
-                elif opn == 'pow':
-                    # `y` must be an integer
-                    x = exec_stack.pop()
-                    y = exec_stack.pop()
+                elif o_i == 'pow':
+                    # `x` must be an integer
+                    x,y = stk.pop(), stk.pop()
                     # Brackets around the term `y` could be added
-                    exec_stack.append( "{!s}^{:d}".format( y,x ) )
+                    stk.append( "{!s}^{:d}".format( y,x ) )
                     
                 else:
                     raise RuntimeError(opn)
         
-        assert len(exec_stack) == 1,\
-            "residual stack elements: {!r}".format(exec_stack)
+        assert len(stk) == 1,\
+            "residual stack elements: {!r}".format(stk)
         
-        return exec_stack.pop() 
+        return stk.pop() 
 
     def __len__(self):
         return len(self._obj)
@@ -102,6 +91,8 @@ class Stack(object):
         """
         if isinstance(x,Stack):
             return self._append( x._obj )
+        elif hasattr(x,'stack'):
+            return self._append( x.stack._obj )
         else:
             return self._append([x])
         
