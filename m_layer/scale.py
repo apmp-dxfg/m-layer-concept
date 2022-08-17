@@ -5,7 +5,7 @@ import numbers
 
 from m_layer.context import default_context as cxt
 from m_layer.aspect import Aspect, no_aspect
-from m_layer.composition import Stack
+from m_layer.stack import Stack
 from m_layer.system import System
 from m_layer.dimension import Dimension
 
@@ -21,12 +21,12 @@ class ComposedScaleAspect(object):
     For expressions of ScaleAspects
     """
 
-    __slots__ = ("_scale_stack","_aspect_stack","_uid")
+    __slots__ = ("_scale_stack","_aspect_stack","_uid","_dimension")
 
     def __init__(self,scale,aspect):
     
         assert isinstance(scale,Stack)
-        assert isinstance(aspect,Stack)
+        assert isinstance(aspect,Stack), repr(aspect)
         
         self._scale_stack = scale
         self._aspect_stack = aspect
@@ -36,12 +36,10 @@ class ComposedScaleAspect(object):
  
     @property
     def scale(self):
-        "The scale stack"
         return self._scale_stack 
  
     @property 
     def aspect(self):
-        "The aspect stack"
         return self._aspect_stack
             
     # Alias
@@ -113,7 +111,7 @@ class ComposedScaleAspect(object):
     # Equality (`==` method) could be based on the equivalence of expressions
     # without simplification (indifferent to ordering of terms).
     # Explicit function names like `commensurate` might be better. 
-            
+      
     def __str__(self):
         return "({!s}, {!s})".format( self.scale, self.aspect )
         
@@ -136,12 +134,10 @@ class ScaleAspect(object):
 
     @property
     def scale(self):
-        "The scale"
         return self._scale 
         
     @property 
     def aspect(self):
-        "The aspect or kind of quantity"
         return self._aspect
             
     # Alias
@@ -154,7 +150,7 @@ class ScaleAspect(object):
 
     @property 
     def composable(self):
-        return self._scale.scale_type == "ratio"
+        return self.scale.composable
         
     # These arithmetic operations must match operations in ComposedScaleAspect
     def __rmul__(self,x):
@@ -185,13 +181,13 @@ class ScaleAspect(object):
             Stack().push(self.aspect).push(y.aspect).div()
         )
  
-    def __pow__(self,x):
-        assert isinstance(x,numbers.Integral)
+    def __pow__(self,y):
+        assert isinstance(y,numbers.Integral)
         assert self.composable
 
         return ComposedScaleAspect(
-            Stack().push(self.scale).push(x).pow(),
-            Stack().push(self.aspect).push(x).pow()
+            Stack().push(self.scale).push(y).pow(),
+            Stack().push(self.aspect).push(y).pow()
         )
         
     def __eq__(self,other):
@@ -207,7 +203,109 @@ class ScaleAspect(object):
         
     def __repr__(self):
         return "ScaleAspect({!r},{!r})".format( self.scale,self.aspect ) 
-                 
+  
+# ---------------------------------------------------------------------------
+class ComposedScale(object):
+ 
+    __slots__ = (
+        '_uid', '_scale_stack', '_dimension'
+    )
+ 
+    def __init__(self,scale_stack):
+
+        assert isinstance(scale_stack,Stack)
+        self._scale_stack = scale_stack
+
+    @property 
+    def uid(self):
+        try:
+            return self._uid
+        except AttributeError:
+            assert False
+        
+    @property
+    def dimension(self):
+        try:
+            return self._dimension
+        except AttributeError:
+            # 
+            stack = []
+            ptr_it = iter(self.scale)
+            ptr = next(ptr_it)
+            
+            while True:
+                try: 
+                    if isinstance(ptr,Scale):
+                        stack.append(ptr.dimension)
+                        ptr = next(ptr_it)
+                        
+                    elif ptr == 'mul':
+                        x,y = stack.pop(),stack.pop()
+                        stack.append( y*x ) 
+                        ptr = next(ptr_it)
+                        
+                    elif ptr == 'div':
+                        x,y = stack.pop(),stack.pop()
+                        stack.append( y/x ) 
+                        ptr = next(ptr_it)
+                        
+                    elif ptr == 'pow':
+                        x,y = stack.pop(),stack.pop()
+                        stack.append( y**x ) 
+                        ptr = next(ptr_it)
+
+                    if isinstance(ptr,numbers.Integral):  
+                        stack.append( ptr )
+                        ptr = next(ptr_it)
+                        
+                        # Deal with 'rmul' case immediately
+                        # Otherwise the number is an exponent 
+                        if ptr == 'rmul':
+                            x,y = stack.pop(),stack.pop()
+                            stack.append( x*y )
+                            ptr = next(ptr_it)
+                     
+                except StopIteration:
+                    break
+                
+            assert len(stack) == 1
+            self._dimension = stack.pop()
+            return self._dimension
+            
+    @property
+    def scale(self):
+        return self._scale_stack 
+ 
+    @property 
+    def scale_type(self):
+        return "ratio"
+  
+    @property 
+    def composable(self):
+        return True
+ 
+    def __mul__(self,y):
+        return ComposedScale(
+            self.scale.push(y.scale).mul()
+        )
+
+    def __truediv__(self,y):
+        return ComposedScale(
+            self.scale.push(y.scale).div()
+        )
+ 
+    def __pow__(self,y):
+        assert isinstance(y,numbers.Integral)
+        return ComposedScale(
+            self.scale.push(y).pow()
+        )
+
+    def __str__(self):
+        return "{!s}".format( self.scale )
+        
+    def __repr__(self):
+        return "ComposedScale({!r})".format( self.scale )  
+        
 # ---------------------------------------------------------------------------
 class Scale(object):
 
@@ -235,6 +333,10 @@ class Scale(object):
         if locale is None: locale = cxt.locale 
             
         return ref_uid['locale'][locale][locale_key]
+        
+    @property 
+    def composable(self):
+        return self.scale_type == "ratio"
         
     @property 
     def uid(self):
