@@ -6,11 +6,11 @@ Usage:
 
 .. code:: text
 
-    C:\m_layer>python new_uuid.py
+    C:\\m_layer> python new_uuid.py
     87456781262672120497206789902336639091
     
-"""
 
+"""
 import uuid 
 
 if __name__ == '__main__':
