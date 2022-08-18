@@ -157,10 +157,10 @@ class Expression(object):
             # products of powers and then evaluate the conversion factor.
             
             stack = []
-            s_scale_it = iter(self.scale)
-            d_scale_it = iter(dst_scale.scale)
-            s_aspect_it = iter(self.aspect)
-            d_aspect_it = iter(dst_scale.aspect)
+            s_scale_it = iter(self.scale.stack)
+            d_scale_it = iter(dst_scale.scale.stack)
+            s_aspect_it = iter(self.aspect.stack)
+            d_aspect_it = iter(dst_scale.aspect.stack)
 
             src_s = next(s_scale_it)
             dst_s = next(d_scale_it)
