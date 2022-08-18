@@ -1,13 +1,135 @@
 """
 """
+import numbers 
+from collections import ChainMap
 
+# ---------------------------------------------------------------------------
 __all__ = (
     'Stack',
+    'ProductOfPowers',
+    'normal_form',
 )
 
 # ---------------------------------------------------------------------------
-stack = list    # Alias
+class ProductOfPowers(object):
 
+    """
+    :calss:`ProductOfPowers` objects represent an expression of products of powers of objects, and numerical a prefactor.  
+    
+    The token ``factors`` attribute is a mapping of objects to powers 
+    The ``prefactor`` attribute is a floating point number. 
+    """
+    
+    __slots__ = ('prefactor','factors')
+    
+    def __init__(self,factors,prefactor=1):
+        self.prefactor = prefactor
+        self.factors = factors
+ 
+    def __str__(self):
+        return "{!s}:{!s}".format(self.prefactor,self.factors)
+        
+    def __repr__(self):
+        return "{0}({1.factors!s},prefactor={1.prefactor})".format(
+            self.__class__,
+            self
+        )
+        
+    def __eq__(self,other):
+        return (
+            isinstance(other,self.__class__)
+        and
+            self.factors == other.factors
+        and
+            self.prefactor == other.prefactor
+        )
+ 
+    def __mul__(self,rhs):
+        return self.__class__(
+            { 
+                i: self.factors.get(i,0) + rhs.factors.get(i,0)
+                    for i in ChainMap(self.factors,rhs.factors) 
+            },
+            self.prefactor*rhs.prefactor
+        )  
+        
+    def __rmul__(self,lhs):
+        assert isinstance(lhs,numbers.Integral), repr(lhs)
+        return self.__class__(
+            self.factors,
+            lhs*self.prefactor
+        )    
+    
+    def __truediv__(self,rhs):
+        return self.__class__(
+            { 
+                i: self.factors.get(i,0) - rhs.factors.get(i,0)
+                    for i in ChainMap(self.factors,rhs.factors) 
+            },
+            self.prefactor/rhs.prefactor
+        )    
+    
+    def __pow__(self,x):
+        assert isinstance(x,numbers.Integral), repr(x)
+        return self.__class__(
+            { 
+                i: x*v for i,v in self.factors.items() 
+            },
+            self.prefactor**x
+        )    
+    
+# ---------------------------------------------------------------------------
+def normal_form(rpn):
+    """
+    Return an :class:`Token` representing the RPN expression as
+    a product of powers of terms, and including a scaling prefactor. 
+    
+    Args:
+        rpn (:class:`Stack`)
+        
+    Returns:
+        :class:`Token`
+        
+    """
+    assert isinstance(rpn,Stack), repr(rpn)
+        
+    stk = []    
+    for o_i in rpn._obj:
+
+        if o_i not in ('mul','div','rmul','pow'):   
+            if isinstance(o_i, numbers.Integral):
+                stk.append( o_i )
+            else:
+                stk.append( 
+                    Token({o_i:1}) 
+                )
+        else:
+            if o_i == 'mul':
+                x,y = stk.pop(), stk.pop()
+                stk.append( y * x )
+                                
+            elif o_i == 'rmul':               
+                x,y = stk.pop(), stk.pop()
+                stk.append( x * y )
+                                
+            elif o_i == 'div':
+                x,y = stk.pop(), stk.pop()
+                stk.append( y / x )
+                                
+            elif o_i == 'pow':
+                x,y = stk.pop(), stk.pop()
+                stk.append( y**x )
+                
+            else:
+                raise RuntimeError(opn)
+        
+    assert len(stk) == 1,\
+        "residual stack elements: {!r}".format(stk)
+    
+    # We may want to impose a strict order on keys 
+    
+    return stk.pop() 
+        
 # ---------------------------------------------------------------------------
 class Stack(object):
 
@@ -17,8 +139,8 @@ class Stack(object):
     
     """
     
-    def __init__(self,obj=stack()):  
-        if isinstance(obj,stack):
+    def __init__(self,obj=list()):  
+        if isinstance(obj,list):
             self._obj = obj
         else:
             assert False
@@ -78,21 +200,24 @@ class Stack(object):
         return "Stack({!r})".format(self._obj)
 
     def _append(self,obj):
-        return Stack(self._obj + stack(obj))
+        return Stack(self._obj + list(obj))
         
     def push(self,x):
         """
         Args:
-            x (:class:`Stack` or single object):
+            x (:class:`Stack` or single object)
             
-        When a :class:`Stack` is received the contents 
+        When ``x`` is a :class:`Stack` the contents 
         are used to extend the current stack. 
         
         """
-        if isinstance(x,Stack):
+        
+        if hasattr(x,'stack'):
+            return self._append( x.stack._obj )     
+            
+        elif isinstance(x,Stack):
             return self._append( x._obj )
-        elif hasattr(x,'stack'):
-            return self._append( x.stack._obj )
+        
         else:
             return self._append([x])
         
@@ -117,3 +242,4 @@ if __name__ == '__main__':
     s = s.push(s2).div()
     print(s)
     print(repr(s))
+    print( repr(normal_form(s)) )
