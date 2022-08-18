@@ -66,18 +66,24 @@ class Dimension(object):
         )
       
     def __repr__(self):
-        return "Dimension( {!s},{!s},{!s} )".format(
+        return "Dimension( {!s}, {!s}, prefix={!s} )".format(
             self.system,
             self.dim,
             self.prefix
         )
  
     def __str__(self):
-        return "{!s}{!s}{!s}".format(
-            self.system,
-            self.dim,
-            self.prefix
-        )
+        if self.prefix == 1:
+            return "{!s}{!s}".format(
+                self.system,
+                self.dim
+            )
+        else:
+            return "{!s}*{!s}{!s}".format(
+                self.prefix,
+                self.system,
+                self.dim
+            )
  
     def __rmul__(self,x):
         # a numerical scale factor 
