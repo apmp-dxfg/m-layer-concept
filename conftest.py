@@ -20,8 +20,8 @@ def add_m_layer(doctest_namespace):
             continue
         doctest_namespace[key] = val
         
-    if sys.version_info.major > 2:
-        doctest_namespace['xrange'] = range
+    # if sys.version_info.major > 2:
+        # doctest_namespace['xrange'] = range
 
 pytest_collect_file = Sybil(
     parsers=[
