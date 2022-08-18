@@ -1,7 +1,7 @@
 """
-The M-layer introduces the notion of a kind of quantity as an explicit component 
-in the expression of measured data. The term 'aspect' broader in meaning
-than 'kind of quantity'. 
+The M-layer includes the notion of kind of quantity as a component 
+called *aspect* in expressions of measured data. 
+The term 'aspect' is broader in meaning than 'kind of quantity'. 
 
 """
 import numbers
@@ -14,21 +14,22 @@ __all__ = (
     'Aspect',
     'no_aspect'
 )
+
 # ---------------------------------------------------------------------------
 class ComposedAspect(object):
 
     __slots__ = (
-        '_aspect_stack', '_uid'
+        '_stack', '_uid'
     )
 
     def __init__(self,aspect_stack):
     
         assert isinstance(aspect_stack,Stack)      
-        self._aspect_stack = aspect_stack
+        self._stack = aspect_stack
 
     @property 
-    def aspect(self):
-        return self._aspect_stack
+    def stack(self):
+        return self._stack
   
     @property
     def uid(self):
@@ -42,31 +43,31 @@ class ComposedAspect(object):
         except AttributeError:
             self._uid = tuple(
                 o.uid if isinstance(o,Aspect) else o
-                    for o in self.aspect
+                    for o in self.stack
             )            
             return self._uid
   
     def __mul__(self,y):
         return ComposedAspect(
-            self.aspect.push(y.aspect).mul()
+            self.stack.push(y).mul()
         )
 
     def __truediv__(self,y):
         return ComposedAspect(
-            self.aspect.push(y.aspect).div()
+            self.stack.push(y).div()
         )
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
         return ComposedAspect(
-            self.aspect.push(y).pow()
+            self.stack.push(y).pow()
         )
 
     def __str__(self):
-        return "{!s}".format( self.aspect )
+        return "{!s}".format( self.stack )
         
     def __repr__(self):
-        return "ComposedAspect({!r})".format( self.aspect ) 
+        return "ComposedAspect({!r})".format( self.stack ) 
         
 
 # ---------------------------------------------------------------------------
@@ -93,13 +94,12 @@ class Aspect(object):
         return aspect_json['locale'][locale][locale_key]
 
     @property 
-    def aspect(self):
-        return self 
-        
-    @property 
     def uid(self):
         "The M-layer identifier for this aspect"
         return self._aspect_uid
+        
+    def __hash__(self):
+        return id(self)
         
     def __eq__(self,other):
         """
@@ -114,18 +114,18 @@ class Aspect(object):
 
     def __mul__(self,y):
         return ComposedAspect(
-            Stack().push(self.aspect).push(y.aspect).mul()
+            Stack().push(self).push(y).mul()
         )
 
     def __truediv__(self,y):
         return ComposedAspect(
-            Stack().push(self.aspect).push(y.aspect).div()
+            Stack().push(self).push(y).div()
         )
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
         return ComposedAspect(
-            Stack().push(self.aspect).push(y).pow()
+            Stack().push(self).push(y).pow()
         )
         
     def __str__(self):
@@ -150,4 +150,5 @@ if __name__ == '__main__':
     L = Aspect( ('ml_length', 993853592179723568440264076369400241) )
     T = Aspect( ('ml_time', 59007067547744628223483093626372886675) )
     
-    print(M**2*L/T)
+    print(M*L/T)
+    
