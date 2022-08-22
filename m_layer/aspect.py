@@ -67,7 +67,7 @@ class ComposedAspect(object):
         return "{!s}".format( self.stack )
         
     def __repr__(self):
-        return "ComposedAspect({!r})".format( self.stack ) 
+        return "{!s}({!r})".format( self.__class__,self.stack ) 
         
 
 # ---------------------------------------------------------------------------
