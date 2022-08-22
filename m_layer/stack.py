@@ -1,6 +1,7 @@
 """
 """
 import numbers 
+
 from collections import ChainMap
 
 # ---------------------------------------------------------------------------
@@ -14,7 +15,7 @@ __all__ = (
 class ProductOfPowers(object):
 
     """
-    :calss:`ProductOfPowers` objects represent an expression of products of powers of objects, and numerical a prefactor.  
+    :class:`ProductOfPowers` objects represent an expression of products of powers of objects, and numerical a prefactor.  
     
     The token ``factors`` attribute is a mapping of objects to powers 
     The ``prefactor`` attribute is a floating point number. 
@@ -30,15 +31,17 @@ class ProductOfPowers(object):
         return "{!s}:{!s}".format(self.prefactor,self.factors)
         
     def __repr__(self):
-        return "{0}({1.factors!s},prefactor={1.prefactor})".format(
-            self.__class__,
-            self
+        return "ProductOfPowers({!s},prefactor={!s})".format(
+            self.factors,
+            self.prefactor
         )
         
     def __eq__(self,other):
         return (
             isinstance(other,self.__class__)
         and
+            # Mappings are equal if they have the same 
+            # key-value pairs regardless of ordering
             self.factors == other.factors
         and
             self.prefactor == other.prefactor
@@ -81,14 +84,14 @@ class ProductOfPowers(object):
 # ---------------------------------------------------------------------------
 def normal_form(rpn):
     """
-    Return an :class:`Token` representing the RPN expression as
+    Return an :class:`ProductOfPowers` representing the RPN expression as
     a product of powers of terms, and including a scaling prefactor. 
     
     Args:
         rpn (:class:`Stack`)
         
     Returns:
-        :class:`Token`
+        :class:`ProductOfPowers`
         
     """
     assert isinstance(rpn,Stack), repr(rpn)
@@ -101,7 +104,7 @@ def normal_form(rpn):
                 stk.append( o_i )
             else:
                 stk.append( 
-                    Token({o_i:1}) 
+                    ProductOfPowers({o_i:1}) 
                 )
         else:
             if o_i == 'mul':
@@ -125,8 +128,6 @@ def normal_form(rpn):
         
     assert len(stk) == 1,\
         "residual stack elements: {!r}".format(stk)
-    
-    # We may want to impose a strict order on keys 
     
     return stk.pop() 
         
