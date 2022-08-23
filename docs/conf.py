@@ -51,7 +51,7 @@ extensions = [
     'sphinx.ext.todo',
 ]
 
-# # autodoc options
+# autodoc options
 # if sphinx.version_info < (1, 8):
     # # 'alphabetical', 'bysource', 'groupwise'
     # autodoc_member_order = 'bysource'
@@ -63,7 +63,8 @@ extensions = [
         # 'members': None,
         # 'inherited-members': None,
         # 'member-order': 'bysource',
-    # }
+    # }   
+autodoc_preserve_defaults = True
 
 # Napoleon settings
 napoleon_google_docstring = True

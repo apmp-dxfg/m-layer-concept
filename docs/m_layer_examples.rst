@@ -242,10 +242,6 @@ This situation is handled in the M-layer by declaring the type of ratio as an as
     
 These expressions are distinct. Their scales are the same (both one), but the aspects are different::
     
-    >>> x.scale == y.scale
-    True
-    >>> x.aspect == y.aspect 
-    False
     >>> x.scale_aspect == y.scale_aspect 
     False
     

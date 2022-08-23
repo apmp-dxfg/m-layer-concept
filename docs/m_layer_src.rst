@@ -13,10 +13,7 @@ Context
 .. automodule:: context
     :members:
     :special-members: __init__
-    
-.. autodata:: context.default_context
-    :annotation: = the Context object used during a Python session
-    
+        
 Register
 --------
 
@@ -45,23 +42,15 @@ Scale
 -----
 
 .. automodule:: scale
-    :noindex:
     :members:
     :special-members: __eq__
 
 Aspect
 ------
 .. automodule:: aspect
-    :noindex:
     :members:
     :special-members: __eq__
-        
-Composition
------------
-.. automodule:: composition
-    :members: 
-    :special-members: __eq__
-    
+   
 Dimension
 ---------
 .. automodule:: dimension
