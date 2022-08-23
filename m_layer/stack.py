@@ -15,7 +15,8 @@ __all__ = (
 class ProductOfPowers(object):
 
     """
-    :class:`ProductOfPowers` objects represent an expression of products of powers of objects, and numerical a prefactor.  
+    :class:`ProductOfPowers` objects represent an expression of products of 
+    powers of objects, and numerical a prefactor.  
     
     The token ``factors`` attribute is a mapping of objects to powers 
     The ``prefactor`` attribute is a floating point number. 
