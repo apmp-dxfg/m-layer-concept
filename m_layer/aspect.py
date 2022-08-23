@@ -7,16 +7,21 @@ The term 'aspect' is broader in meaning than 'kind of quantity'.
 import numbers
 
 from m_layer.context import default_context as cxt
-from m_layer.stack import Stack
+from m_layer.stack import Stack, normal_form
 
 # ---------------------------------------------------------------------------
 __all__ = (
     'Aspect',
+    'ComposedAspect',
     'no_aspect'
 )
 
 # ---------------------------------------------------------------------------
 class ComposedAspect(object):
+
+    """
+    A :class:`ComposedAspect` holds an :class:`Aspect` expression
+    """
 
     __slots__ = (
         '_stack', '_uid'
@@ -34,17 +39,19 @@ class ComposedAspect(object):
     @property
     def uid(self):
         """
-        A pair of RPN sequences containing Scale and Aspect uids, 
-        arithmetic operations 'mul', 'rmul', 'div', 'pow', and integers.
+        
         
         """
         try:
             return self._uid
         except AttributeError:
-            self._uid = tuple(
-                o.uid if isinstance(o,Aspect) else o
-                    for o in self.stack
-            )            
+            # Reduce to a product of powers
+            pops = normal_form(self.stack)
+            self._uid = dict({
+                i.uid : v 
+                    for i,v in pops.factors.items()
+            })
+                                                   
             return self._uid
   
     def __mul__(self,y):
@@ -142,6 +149,7 @@ class Aspect(object):
 
 # ---------------------------------------------------------------------------
 no_aspect = Aspect(None)    
+"""An object representing no assigned aspect"""
 
 # ===========================================================================
 if __name__ == '__main__':
@@ -150,5 +158,5 @@ if __name__ == '__main__':
     L = Aspect( ('ml_length', 993853592179723568440264076369400241) )
     T = Aspect( ('ml_time', 59007067547744628223483093626372886675) )
     
-    print(M*L/T)
+    print( (M*L/T).uid )
     
