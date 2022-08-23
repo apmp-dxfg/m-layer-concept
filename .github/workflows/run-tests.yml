@@ -18,7 +18,6 @@ jobs:
         os: [windows, ubuntu, macos]
         architecture: [x64]
         include:
-            architecture: x86
           - python-version: "3.7"
             os: windows
             architecture: x86
