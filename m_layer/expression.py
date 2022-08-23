@@ -5,14 +5,13 @@ import math
 from m_layer.context import default_context as cxt
 from m_layer.scale import Scale, ScaleAspect, ComposedScaleAspect
 from m_layer.aspect import no_aspect
+from m_layer.stack import normal_form
 
 __all__ = (
     'expr', 
     'token', 'value',
     'convert', 
     'cast',
-    'aspect', 'kind_of_quantity',
-    'scale',
     'scale_aspect',
 )
 
@@ -21,69 +20,71 @@ class Expression(object):
     
     """
     An ``Expression`` is defined by a token and a scale-aspect pair. 
+    The scale-aspect may be a composition of several scale-aspect pairs.
     """
     
     __slots__ = ("_token","_scale_aspect")
     
-    def __init__(self,token,scale_aspect):
+    def __init__(self,token,mdata):
         self._token = token 
-        self._scale_aspect = scale_aspect
+        
+        if isinstance(mdata,(ScaleAspect,ComposedScaleAspect)):
+            self._scale_aspect = mdata
+        else:
+            assert False, repr(mdata)
       
     def __str__(self):
-        short=True
-        locale=cxt.locale       
-        
-        return "{} {}".format( 
-            self.token, 
-            self.scale 
-        )
-        
-    def __repr__(self):
-        locale=cxt.locale
-        short=False
-                
-        if self.aspect is no_aspect:
-            return "Expression({},{})".format(
-                self.token,
-                self.scale 
-            )
-        elif str(self.scale) == "": 
-            # Special case, not sure how better to do this
-            return "Expression({},1,{})".format(
-                self.token,
-                self.aspect
+        # TODO: something sensible when scale_aspect is ComposedScaleAspect 
+        if isinstance(self._scale_aspect,ScaleAspect):
+            return "{} {}".format( 
+                self.token, 
+                self.scale_aspect.scale 
             )
         else:
-            return "Expression({},{},{})".format(
-                self.token,
-                self.scale,
-                self.aspect
+            return "{} {}".format( 
+                self.token, 
+                self.scale_aspect 
+            )
+        
+    def __repr__(self):
+        # TODO: something sensible when scale_aspect is ComposedScaleAspect 
+        if isinstance(self._scale_aspect,ScaleAspect):
+            if self.scale_aspect.aspect is no_aspect:
+                return "Expression({},{})".format(
+                    self.token,
+                    self.scale_aspect.scale 
+                    )
+            elif str(self.scale_aspect.scale) == "": 
+                # Special case, not sure how better to do this
+                return "Expression({},1,{})".format(
+                    self.token,
+                    self.scale_aspect.aspect
+                )
+            else:
+                return "Expression({},{},{})".format(
+                    self.token,
+                    self.scale_aspect.scale,
+                    self.scale_aspect.aspect
+                )                
+        else:
+            return "Expression({},{})".format( 
+                self.token, 
+                self.scale_aspect 
             )
             
+    # In future it may be sensible to define a subclass of Expression 
+    # for (the majority of) cases where the tokens are real numbers 
     @property
     def token(self):
         "The token or value of the Expression"
         return self._token
 
     # Alias
-    # In future it may be sensible to define a subclass of Expression 
-    # for (the majority of) cases where the tokens are real numbers 
     value = token 
- 
-    @property 
-    def scale(self):
-        "The Scale of the Expression"
-        return self._scale_aspect.scale 
- 
-    @property 
-    def aspect(self):
-        "The Aspect of the Expression"
-        return self._scale_aspect.aspect 
-        
-    # Alias
-    # See also the comment for ``value`` above     
-    kind_of_quantity = aspect 
- 
+  
+    # Note `_scale_aspect` may be a ComposedScaleAspect, so 
+    # there is no reason to provide access to individual `aspect`
+    # and `scale` properties.
     @property 
     def scale_aspect(self):
         "The ScaleAspect of the Expression"
@@ -98,8 +99,8 @@ class Expression(object):
         the associated aspect must match the existing expression.   
         
         Args:
-            dst_scale (:class:`~scale.ScaleAspect` or 
-            :class:`~scale.ComposedScaleAspect` or
+            dst_scale (:class:`~scale.ComposedScaleAspect` or
+            :class:`~scale.ScaleAspect` or 
             :class:`~scale.Scale`) 
         
         Returns:
@@ -114,16 +115,18 @@ class Expression(object):
         and isinstance(self.scale_aspect,ScaleAspect)
         ):
             # The source and destination aspects must match
-            if self.aspect != dst_scale.aspect:          
+            if self.scale_aspect.aspect != dst_scale.aspect:          
                 raise RuntimeError(
                     "incompatible aspects: {!r}".format( 
-                        [self.aspect, dst_scale.aspect] 
+                        [self.scale_aspect.aspect, dst_scale.aspect] 
                     )
                 ) 
             else:
                 dst_scale_aspect = dst_scale  
                 new_token = cxt.conversion_fn( 
-                    self.scale.uid,self.aspect.uid,dst_scale_aspect.scale.uid 
+                    self.scale_aspect.scale.uid,
+                    self.scale_aspect.aspect.uid,
+                    dst_scale_aspect.scale.uid 
                 )(self._token)
 
         elif (
@@ -131,9 +134,11 @@ class Expression(object):
         and isinstance(self.scale_aspect,ScaleAspect)
         ): 
             # Create a ScaleAspect object
-            dst_scale_aspect = dst_scale.to_scale_aspect( self.aspect ) 
+            dst_scale_aspect = dst_scale.to_scale_aspect( self.scale_aspect.aspect ) 
             new_token = cxt.conversion_fn( 
-                self.scale.uid,self.aspect.uid,dst_scale_aspect.scale.uid 
+                self.scale_aspect.scale.uid,
+                self.scale_aspect.aspect.uid,
+                dst_scale_aspect.scale.uid 
             )(self._token)
             
         elif ( 
@@ -141,136 +146,44 @@ class Expression(object):
         and isinstance(self.scale_aspect,ComposedScaleAspect)
         ):
             # Conversion of one expression to another.
-            # The expressions must match up, so that 
-            # pairs of source-destination scales can 
-            # be found in the register. 
-            # In this way, the conversion factors are 
-            # combined to get the final factor.
+            # The expressions must be arithmetically equivalent,  
+            # so that pairs of source-destination scale-aspects  
+            # can be found in the register. 
                         
-            # Note: the Context knows nothing about composed 
-            # ScaleAspects. I take the view that the Context 
+            # Note: I take the view that the Context 
             # deals only with registered objects.
+            # The Context knows nothing about composed 
+            # ScaleAspects. 
             
-            # TODO: This routine requires the unit expressions 
-            # to have the same form (e.g., x**2 is not the same as x*x).
-            # An improvement would be to first reduce the expressions to 
-            # products of powers and then evaluate the conversion factor.
+            # Step 1: convert to products of powers
+            src_pops = normal_form(self.scale_aspect.stack)
+            dst_pops = normal_form(dst_scale.stack)
             
-            stack = []
-            s_scale_it = iter(self.scale.stack)
-            d_scale_it = iter(dst_scale.scale.stack)
-            s_aspect_it = iter(self.aspect.stack)
-            d_aspect_it = iter(dst_scale.aspect.stack)
-
-            src_s = next(s_scale_it)
-            dst_s = next(d_scale_it)
-            src_a = next(s_aspect_it)
-            dst_a = next(d_aspect_it)
+            # Step 2: take into account any stand-alone numerical factors
+            conversion_factor = src_pops.prefactor/dst_pops.prefactor
             
-            while True:
-                try:
-                
-                    if isinstance(src_s,Scale):                        
-                        assert isinstance(dst_s,Scale)                
-                    
-                        # A scale must correspond to an aspect
-                        assert src_a == dst_a,\
-                            "{!r} != {!r}".format(src_a,dst_a)
-                    
-                        # Evaluates the conversion factor
-                        stack.append( 
-                            cxt.conversion_fn( 
-                                src_s.uid,src_a.uid,dst_s.uid 
-                            )(1.0) 
-                        )
-                        
-                        src_s = next(s_scale_it)
-                        dst_s = next(d_scale_it)
-                        src_a = next(s_aspect_it)
-                        dst_a = next(d_aspect_it)
-
-                        continue
-                        
-                    elif src_s == 'mul':                        
-                        assert src_s == dst_s,\
-                            "{!r}, {!r}".format(src_s, dst_s)
-                            
-                        x,y = stack.pop(),stack.pop()
-                        stack.append(x*y)
-
-                        # The aspect stack should have a 'mul' operation too
-                        src_s = next(s_scale_it)
-                        dst_s = next(d_scale_it)
-                        src_a = next(s_aspect_it)
-                        dst_a = next(d_aspect_it)
-
-                        continue
-
-                    elif src_s == 'div':
-                        
-                        assert src_s == dst_s,\
-                            "{}, {}".format(src_s, dst_s)
-                            
-                        x,y = stack.pop(),stack.pop()
-                        stack.append(y/x)
-
-                        # The aspect stack should have a 'div' operation too
-                        src_s = next(s_scale_it)
-                        dst_s = next(d_scale_it)
-                        src_a = next(s_aspect_it)
-                        dst_a = next(d_aspect_it)
-                       
-                        continue
-
-                    elif src_s == 'pow':
-                        
-                        assert src_s == dst_s,\
-                            "{}, {}".format(src_s, dst_s)
-                            
-                        x,y = stack.pop(),stack.pop()
-                        stack.append(y**x)
-                        
-                        src_s = next(s_scale_it)
-                        dst_s = next(d_scale_it)
-
-                        # The aspect stack should have a number and a 'pow' operation
-                        src_a = next(s_aspect_it)
-                        dst_a = next(d_aspect_it)
-                        src_a = next(s_aspect_it)
-                        dst_a = next(d_aspect_it)
-                        
-                        continue
-                      
-                    # The next steps work independently because a `numb 'rmul'`
-                    # operation may occur on just one of the two stacks 
-                    if isinstance(src_s,numbers.Integral):  
-                        # cases are processed independently
-                        stack.append( src_s )
-                        src_s = next(s_scale_it)
-                        
-                        # Deal with 'rmul' case immediately
-                        if src_s == 'rmul':
-                            src_s = next(s_scale_it)
-                            # do nothing else
-                         
-                    if isinstance(dst_s,numbers.Integral): 
-                        stack.append( dst_s )
-                        dst_s = next(d_scale_it)
-     
-                        # Deal with 'rmul' case immediately
-                        if dst_s == 'rmul':
-                            # require the inverse 
-                            x = stack.pop()
-                            stack.append( 1.0/x )
-                            
-                            dst_s = next(d_scale_it)
-                            
-                except StopIteration:
-                    break
-                    
-            new_token = math.prod(stack)*self._token
-            dst_scale_aspect = dst_scale
+            # Step 3: step through the scale-aspect terms,
+            # obtaining a conversion factor for each
+            src_factors = src_pops.factors
+            dst_factors = dst_pops.factors
+            for src_i,dst_i in zip(src_factors.keys(),dst_factors.keys()):
             
+                # Each term also has an exponent
+                src_exp = src_factors[src_i]
+                assert src_exp == dst_factors[dst_i],\
+                    "{} != {}".format(src_exp,dst_factors[dst_i])
+
+                src_s_uid,src_a_uid = src_i.uid
+                dst_s_uid = dst_i.uid[0]
+
+                c = cxt.conversion_fn( 
+                        src_s_uid,src_a_uid,dst_s_uid                     
+                )(1.0) 
+                conversion_factor *= c**src_exp
+            
+            new_token = conversion_factor*self._token
+            dst_scale_aspect = dst_scale                
+          
         return Expression(
             new_token,
             dst_scale_aspect
@@ -336,8 +249,8 @@ class Expression(object):
         
         # self.aspect may be `no_aspect` at this point.
         fn = cxt.casting_fn(
-            self.scale.uid,
-            self.aspect.uid,
+            self.scale_aspect.scale.uid,
+            self.scale_aspect.aspect.uid,
             dst_scale_aspect.scale.uid,
             dst_scale_aspect.aspect.uid 
         )
@@ -400,18 +313,16 @@ def cast(xp,dst,aspect=no_aspect):
     """
     return xp.cast(dst,aspect)
     
-def aspect(xp):
-    "Return the aspect or kind of quantity of an expression"
-    return xp.aspect 
-    
-kind_of_quantity = aspect
-    
-def scale(xp):
-    "Return the scale of an expression"
-    return xp.scale 
-
+# ---------------------------------------------------------------------------
 def scale_aspect(xp):
-    "Return the scale-aspect of an :class:`~expression.Expression`"
+    """
+    Args:
+        xp: class:`~expression.Expression`
+        
+    Returns:
+        a :class:`ScaleAspect` or a :class:`ComposedScaleAspect`
+        
+    """
     return xp.scale_aspect 
   
 # ---------------------------------------------------------------------------
