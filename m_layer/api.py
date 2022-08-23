@@ -8,8 +8,6 @@ from m_layer.expression import (
     token, value,
     convert, 
     cast,
-    aspect, kind_of_quantity,
-    scale,
 )
 
 __all__ = (
@@ -17,8 +15,6 @@ __all__ = (
     'token', 'value',
     'convert', 
     'cast',
-    'aspect', 'kind_of_quantity',
-    'scale',
     'Aspect', 
     'Scale',
     'ScaleAspect',
