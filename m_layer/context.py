@@ -262,6 +262,7 @@ class Context(object):
 import os.path
 
 default_context = Context()
+"""The Context object used during a Python session"""
 
 for p_i in (
         r'json/references', 
