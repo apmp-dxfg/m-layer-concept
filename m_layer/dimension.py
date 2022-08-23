@@ -1,17 +1,17 @@
 """
-A reference (unit) that belongs to a coherent unit system has a dimensional  
-signature which can be represented as a sequence of exponents referred to a 
+A reference (unit) belonging to a coherent unit system has a dimensional  
+signature that can be represented as a sequence of exponents referred to a 
 corresponding sequence of base units. 
 
-Multiplication and division of quantities expressed in such units 
+Multiplication and division of such units 
 may be accompanied by addition (respectively subtraction) of the 
 corresponding dimensional exponents, with raising to an integer power
 understood as repeated multiplication or division. 
 
-Coherent units systems also have (incoherent) units that are multiples or 
-submultiples of coherent units. So, the combination of a dimensional 
-vector and a prefix is enough to identify a unit expressed as a product
-of powers of system base units.
+Coherent unit systems also have (incoherent) units that are multiples or 
+submultiples of coherent units. So, given a system, the combination of a  
+dimensional vector and a prefix is enough to identify a unit expressed as a 
+product of powers of system base units.
 
 """
 import numbers
@@ -34,6 +34,7 @@ class Dimension(object):
         
     @property 
     def system(self):
+        "The unit system"
         return self._system
 
     @property 
@@ -44,6 +45,9 @@ class Dimension(object):
     def prefix(self):
         return self._prefix
 
+    def __hash__(self):
+        return id(self)
+        
     def __eq__(self,other):
         return (
             self.commensurate(other)
@@ -53,8 +57,9 @@ class Dimension(object):
  
     def commensurate(self,other):
         """
-        Return ``True`` when this object and ``other`` have the 
-        same system and dimensions.
+        ``True`` when this object and ``other`` 
+        belong to the same system and have the 
+        same dimensional exponents.
         
         """
         return (
