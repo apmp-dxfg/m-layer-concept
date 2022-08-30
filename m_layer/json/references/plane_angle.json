@@ -2,31 +2,6 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_radian",
-            311561499536022904630229742672799278060
-        ],
-        "locale": {
-            "default": {
-                "name": "radian",
-                "symbol": "rad"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": [0,0,0,0,0,0,0],
-            "prefix": 1
-        },
-        "UCUM": {
-            "code": "rad",
-            "description": "radian"
-        }
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
             "imp_degree",
             277818260541443964889383928855946049570
         ],

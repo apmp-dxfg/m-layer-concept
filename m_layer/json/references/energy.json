@@ -2,31 +2,6 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_joule",
-            100917883444018504706749879854610536252
-        ],
-        "locale": {
-            "default": {
-                "name": "joule",
-                "symbol": "J"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": [1,2,-2,0,0,0,0],
-            "prefix": 1
-        },
-        "UCUM": {
-            "code": "J",
-            "description": "joule"
-        }
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
             "electronvolt",
             182363982750140887436275027803151015498
         ],

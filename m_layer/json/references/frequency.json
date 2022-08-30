@@ -2,31 +2,6 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_hertz",
-            198610898083606115768120013170738979781
-        ],
-        "locale": {
-            "default": {
-                "name": "hertz",
-                "symbol": "Hz"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": [0,0,-1,0,0,0,0],
-            "prefix": 1
-        },
-        "UCUM": {
-            "code": "Hz",
-            "description": "hertz"
-        }
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
             "si_terahertz",
             310850909458796788849032855422762414462
         ],

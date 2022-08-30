@@ -1,0 +1,102 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_radian",
+            311561499536022904630229742672799278060
+        ],
+        "locale": {
+            "default": {
+                "name": "radian",
+                "symbol": "rad"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": [0,0,0,0,0,0,0],
+            "prefix": 1
+        },
+        "UCUM": {
+            "code": "rad",
+            "description": "radian"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_hertz",
+            198610898083606115768120013170738979781
+        ],
+        "locale": {
+            "default": {
+                "name": "hertz",
+                "symbol": "Hz"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": [0,0,-1,0,0,0,0],
+            "prefix": 1
+        },
+        "UCUM": {
+            "code": "Hz",
+            "description": "hertz"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_joule",
+            100917883444018504706749879854610536252
+        ],
+        "locale": {
+            "default": {
+                "name": "joule",
+                "symbol": "J"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": [1,2,-2,0,0,0,0],
+            "prefix": 1
+        },
+        "UCUM": {
+            "code": "J",
+            "description": "joule"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_becquerel",
+            242810001130839645194060996978894233380
+        ],
+        "locale": {
+            "default": {
+                "name": "becquerel",
+                "symbol": "Bq"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": [0,0,-1,0,0,0,0],
+            "prefix": 1
+        },
+        "UCUM": {
+            "code": "Bq",
+            "description": "becquerel"
+        }
+    },
+]
