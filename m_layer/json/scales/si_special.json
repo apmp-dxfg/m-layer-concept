@@ -1,0 +1,50 @@
+[
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_radian_ratio", 
+            273301153578020696303516833405033923738
+        ],
+        "reference": [
+            "si_radian",
+            311561499536022904630229742672799278060
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_hertz_ratio",
+            307647520921278207356294979342476646905
+        ],
+        "reference": [
+            "si_hertz",
+            198610898083606115768120013170738979781
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_joule_ratio",
+            165050666678496469850612022016789737781
+        ],
+        "reference": [
+            "si_joule",
+            100917883444018504706749879854610536252
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_becquerel_ratio",
+            327022986202149438703681911339752143822
+        ],
+        "reference": [
+            "si_becquerel",
+            242810001130839645194060996978894233380
+        ],
+        "scale_type": "ratio"
+    }
+]

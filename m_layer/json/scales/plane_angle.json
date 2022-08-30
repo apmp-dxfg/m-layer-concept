@@ -14,18 +14,6 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_radian_ratio", 
-            273301153578020696303516833405033923738
-        ],
-        "reference": [
-            "si_radian",
-            311561499536022904630229742672799278060
-        ],
-        "scale_type": "ratio"
-    },
-    {
-        "__entry__": "Scale",
-        "uid": [
             "ml_si_radian_bounded_pi", 
             181367268705518406168243034119604185497
         ],
