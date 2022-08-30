@@ -2,11 +2,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_per_second_ratio",
+            "ml_si_s-1_ratio",
             323506565708733284157918472061580302494
         ],
         "reference": [
-            "si_per_second",
+            "si_s-1",
             116741812607130898126240371497946537198
         ],
         "scale_type": "ratio"

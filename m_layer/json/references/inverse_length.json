@@ -2,7 +2,7 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_per_metre",
+            "si_m-1,
             276726793797424878828710191985121127007
         ],
         "locale": {
@@ -30,7 +30,7 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_per_centimetre",
+            "si_cm-1",
             78709620630780303268211656738112203703
         ],
         "locale": {

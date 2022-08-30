@@ -2,7 +2,7 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_terahertz",
+            "si_THz",
             310850909458796788849032855422762414462
         ],
         "locale": {
@@ -27,7 +27,7 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_per_second",
+            "si_s-1",
             116741812607130898126240371497946537198
         ],
         "locale": {
