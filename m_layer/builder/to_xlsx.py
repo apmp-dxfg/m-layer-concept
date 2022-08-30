@@ -131,7 +131,7 @@ if __name__ == '__main__':
     # ---------------------------------------------------------------------------
     # Process systems 
     # 
-    directory = "system"
+    directory = "systems"
     # obj = {
         # '__entry__' : 'UnitSystem',        
         # 'uid' : [], 
@@ -433,9 +433,9 @@ if __name__ == '__main__':
     # Save workbooks together 
     # 
     root = os.path.abspath( os.path.dirname(__file__) )
-    for name_i in workbooks:
+    for name_i in workbooks:        
         destination = os.path.join( root, "xl" )
         document_name = '{}.xlsx'.format(name_i)
-        filename = os.path.join(destination, document_name)
+        filename = os.path.join(destination, document_name)        
         workbooks[name_i].save(filename=filename)
     

@@ -164,7 +164,7 @@ if __name__ == '__main__':
         # 'basis' : []
     # }
     
-    directory = "system"
+    directory = "systems"
     def to_system(ws,r,i):
 
         uid = get_uid(directory,ws,r[0].value,i,0+1)
