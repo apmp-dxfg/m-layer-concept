@@ -15,45 +15,6 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml_work",
-            253161982591064007446238888026090562042
-        ],
-        "locale": {
-            "default": {
-                "name": "work",
-                "symbol": "W"
-            }
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
-            "ml_frequency",
-            153247472008167864427404739264717558529
-        ],
-        "locale": {
-            "default": {
-                "name": "frequency",
-                "symbol": "f"
-            }
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
-            "ml_activity",
-            20106649997056189817632954430448298015
-        ],
-        "locale": {
-            "default": {
-                "name": "activity",
-                "symbol": "A"
-            }
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
             "ml_wavenumber",
             144971063540877887430756064314490007964
         ],
@@ -93,19 +54,6 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml_energy",
-            12139911566084412692636353460656684046
-        ],
-        "locale": {
-            "default": {
-                "name": "energy",
-                "symbol": "E"
-            }
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
             "ml_photon_energy",
             291306321925738991196807372973812640971
         ],
@@ -138,19 +86,6 @@
             "default": {
                 "name": "temperature_difference",
                 "symbol": "dT"
-            }
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
-            "ml_plane_angle",
-            95173225557230344956477808929590724690
-        ],
-        "locale": {
-            "default": {
-                "name": "plane-angle",
-                "symbol": "ang"
             }
         }
     },
