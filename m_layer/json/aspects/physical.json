@@ -76,7 +76,8 @@
                 "symbol": "T_90"
             }
         }
-    },    {
+    },
+    {
         "__entry__": "Aspect",
         "uid": [
             "ml_temperature_difference",
@@ -136,7 +137,7 @@
         "metadata": {
             "url": "https://en.wikipedia.org/wiki/Absorbance"
         }
-    },    
+    },
     {
         "__entry__": "Aspect",
         "uid": [

@@ -1,34 +1,40 @@
-[    
+[
     {
         "__entry__": "ScalesForAspect",
-        "aspect" : [
+        "aspect": [
             "ml_thermodynamic_temperature",
             227327310217856015944698060802418784871
         ],
         "src": [
-            "ml_si_celsius_interval", 
+            "ml_si_celsius_interval",
             245795086332095731716589481707012001072
         ],
-        "dst":[
-            "ml_si_kelvin_ratio", 
+        "dst": [
+            "ml_si_kelvin_ratio",
             302952256288207449238881076502466548054
         ],
-        "factors": [ "1", "273.15" ]
+        "factors": [
+            "1",
+            "273.15"
+        ]
     },
     {
         "__entry__": "ScalesForAspect",
-        "aspect" : [
+        "aspect": [
             "ml_thermodynamic_temperature",
             227327310217856015944698060802418784871
         ],
-        "src":[
-            "ml_si_kelvin_ratio", 
+        "src": [
+            "ml_si_kelvin_ratio",
             302952256288207449238881076502466548054
         ],
         "dst": [
-            "ml_si_celsius_interval", 
+            "ml_si_celsius_interval",
             245795086332095731716589481707012001072
         ],
-        "factors": [ "1", "-273.15" ]
+        "factors": [
+            "1",
+            "-273.15"
+        ]
     }
 ]

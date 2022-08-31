@@ -2,7 +2,7 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_celsius_interval", 
+            "ml_si_celsius_interval",
             245795086332095731716589481707012001072
         ],
         "reference": [
@@ -14,7 +14,7 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_celsius_ratio", 
+            "ml_si_celsius_ratio",
             278784445377172064355281533676474538407
         ],
         "reference": [
@@ -26,7 +26,7 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_imp_fahrenheit_interval", 
+            "ml_imp_fahrenheit_interval",
             22817745368296240233220712518826840767
         ],
         "reference": [
@@ -38,7 +38,7 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_imp_fahrenheit_ratio", 
+            "ml_imp_fahrenheit_ratio",
             101981007467621768906734129174569080512
         ],
         "reference": [
@@ -48,4 +48,3 @@
         "scale_type": "ratio"
     }
 ]
-    

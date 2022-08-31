@@ -9,9 +9,6 @@
             "default": {
                 "name": "per metre",
                 "symbol": "1/m"
-            },
-            "latex": {
-                "symbol": "\\per\\metre"
             }
         },
         "system": {
@@ -19,8 +16,8 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": [0,-1,0,0,0,0,0],
-            "prefix": 1
+            "dimensions": "[0, -1, 0, 0, 0, 0, 0]",
+            "prefix": "1"
         },
         "UCUM": {
             "code": "/m",
@@ -37,9 +34,6 @@
             "default": {
                 "name": "per centimetre",
                 "symbol": "1/cm"
-            },
-            "latex": {
-                "symbol": "\\per\\centimetre"
             }
         },
         "system": {
@@ -47,11 +41,12 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": [0,-1,0,0,0,0,0],
-            "prefix": 1E2
+            "dimensions": "[0, -1, 0, 0, 0, 0, 0]",
+            "prefix": "100.0"
         },
         "UCUM": {
             "code": "/cm",
             "description": "1/centieter"
         }
-    }]
+    }
+]

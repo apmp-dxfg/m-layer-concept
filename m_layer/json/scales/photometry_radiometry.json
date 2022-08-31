@@ -14,7 +14,7 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_transmittance_ratio", 
+            "ml_transmittance_ratio",
             230956687661085864018320632402706271588
         ],
         "reference": [
@@ -26,7 +26,7 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_absorbance_ratio", 
+            "ml_absorbance_ratio",
             201921699186292116923276028634282863251
         ],
         "reference": [

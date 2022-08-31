@@ -63,5 +63,96 @@
                 "symbol": "W"
             }
         }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electrical_potential_difference",
+            151870621188872364765656837703584479789
+        ],
+        "locale": {
+            "default": {
+                "name": "electrical_potential",
+                "symbol": "\\varphi"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_capacitance",
+            71389154219991690162524670607701811066
+        ],
+        "locale": {
+            "default": {
+                "name": "capacitance",
+                "symbol": "C"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electric_resistance",
+            141553794019147199113539464577413472895
+        ],
+        "locale": {
+            "default": {
+                "name": "electric_resistance",
+                "symbol": "R"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electric_conductance",
+            224210057072391752979458820351296865124
+        ],
+        "locale": {
+            "default": {
+                "name": "conductance",
+                "symbol": "G"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_magnetic_flux",
+            97836911963092249225625369850619247693
+        ],
+        "locale": {
+            "default": {
+                "name": "magnetic_flux",
+                "symbol": "\\Phi"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_magnetic_flux_density",
+            320713564384309809808399402840043679990
+        ],
+        "locale": {
+            "default": {
+                "name": "magnetic_flux_density",
+                "symbol": "B"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_inductance",
+            49195475508913177401314491185040782855
+        ],
+        "locale": {
+            "default": {
+                "name": "inductance",
+                "symbol": "L "
+            }
+        }
     }
 ]

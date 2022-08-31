@@ -1,134 +1,174 @@
-[ 
+[
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_radian_ratio", 
+            "ml_si_radian_ratio",
             273301153578020696303516833405033923738
         ],
-        "dst":[
-            "ml_imp_degree_ratio", 
+        "dst": [
+            "ml_imp_degree_ratio",
             124567088583703716502057160299542649451
         ],
-        "factors": [ "180/number.pi" ]
+        "factors": [
+            "180/number.pi"
+        ]
     },
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_imp_degree_ratio", 
+            "ml_imp_degree_ratio",
             124567088583703716502057160299542649451
         ],
         "dst": [
-            "ml_si_radian_ratio", 
+            "ml_si_radian_ratio",
             273301153578020696303516833405033923738
         ],
-        "factors": [ "number.pi/180" ]
+        "factors": [
+            "number.pi/180"
+        ]
     },
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_imp_degree_bounded_360", 
+            "ml_imp_degree_bounded_360",
             125066222841962802760576607996391537405
         ],
         "dst": [
-            "ml_imp_degree_bounded_180", 
+            "ml_imp_degree_bounded_180",
             273805538217618733078298377573965188309
         ],
-        "factors": [ "1", "-180", "180" ]
+        "factors": [
+            "1",
+            "-180",
+            "180"
+        ]
     },
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_imp_degree_bounded_180", 
-            273805538217618733078298377573965188309
-        ],
-        "dst": [
-            "ml_imp_degree_bounded_360", 
-            125066222841962802760576607996391537405
-        ],
-        "factors": [ "1", "0", "360" ]
-    },
-    {
-        "__entry__": "Conversion",
-        "src": [
-            "ml_si_radian_bounded_two_pi", 
-            300556212736422769570885306883285535638
-        ],
-        "dst": [
-            "ml_si_radian_bounded_pi", 
-            181367268705518406168243034119604185497
-        ],
-        "factors": [ "1", "-number.pi", "number.pi" ]
-    },
-    {
-        "__entry__": "Conversion",
-        "src": [
-            "ml_si_radian_bounded_pi", 
-            181367268705518406168243034119604185497
-        ],
-        "dst": [
-            "ml_si_radian_bounded_two_pi", 
-            300556212736422769570885306883285535638
-        ],
-        "factors": [ "1", "0", "2*number.pi" ]
-    },
-    {
-        "__entry__": "Conversion",
-        "src": [
-            "ml_si_radian_bounded_two_pi", 
-            300556212736422769570885306883285535638
-        ],
-        "dst": [
-            "ml_imp_degree_bounded_360", 
-            125066222841962802760576607996391537405
-        ],
-        "factors": [ "180/number.pi", "0", "360" ]
-    },
-    {
-        "__entry__": "Conversion",
-        "src": [
-            "ml_imp_degree_bounded_360", 
-            125066222841962802760576607996391537405
-        ],
-        "dst": [
-            "ml_si_radian_bounded_two_pi", 
-            300556212736422769570885306883285535638
-        ],
-        "factors": [ "number.pi/180", "0", "2*number.pi" ]
-    },
-    {
-        "__entry__": "Conversion",
-        "src": [
-            "ml_imp_degree_bounded_180", 
+            "ml_imp_degree_bounded_180",
             273805538217618733078298377573965188309
         ],
         "dst": [
-            "ml_si_radian_bounded_two_pi", 
+            "ml_imp_degree_bounded_360",
+            125066222841962802760576607996391537405
+        ],
+        "factors": [
+            "1",
+            "0",
+            "360"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_radian_bounded_two_pi",
             300556212736422769570885306883285535638
         ],
-        "factors": [ "number.pi/180", "0", "2*number.pi" ]
-    },
-    {
-        "__entry__": "Conversion",
-        "src": [
-            "ml_imp_degree_bounded_180", 
-            273805538217618733078298377573965188309
-        ],
         "dst": [
-            "ml_si_radian_bounded_pi", 
+            "ml_si_radian_bounded_pi",
             181367268705518406168243034119604185497
         ],
-        "factors": [ "number.pi/180", "-number.pi", "number.pi" ]
+        "factors": [
+            "1",
+            "-number.pi",
+            "number.pi"
+        ]
     },
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_imp_degree_bounded_360", 
+            "ml_si_radian_bounded_pi",
+            181367268705518406168243034119604185497
+        ],
+        "dst": [
+            "ml_si_radian_bounded_two_pi",
+            300556212736422769570885306883285535638
+        ],
+        "factors": [
+            "1",
+            "0",
+            "2*number.pi"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_radian_bounded_two_pi",
+            300556212736422769570885306883285535638
+        ],
+        "dst": [
+            "ml_imp_degree_bounded_360",
+            125066222841962802760576607996391537405
+        ],
+        "factors": [
+            "180/number.pi",
+            "0",
+            "360"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_imp_degree_bounded_360",
             125066222841962802760576607996391537405
         ],
         "dst": [
-            "ml_si_radian_bounded_pi", 
+            "ml_si_radian_bounded_two_pi",
+            300556212736422769570885306883285535638
+        ],
+        "factors": [
+            "number.pi/180",
+            "0",
+            "2*number.pi"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_imp_degree_bounded_180",
+            273805538217618733078298377573965188309
+        ],
+        "dst": [
+            "ml_si_radian_bounded_two_pi",
+            300556212736422769570885306883285535638
+        ],
+        "factors": [
+            "number.pi/180",
+            "0",
+            "2*number.pi"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_imp_degree_bounded_180",
+            273805538217618733078298377573965188309
+        ],
+        "dst": [
+            "ml_si_radian_bounded_pi",
             181367268705518406168243034119604185497
         ],
-        "factors": [ "number.pi/180", "-number.pi", "number.pi" ]
+        "factors": [
+            "number.pi/180",
+            "-number.pi",
+            "number.pi"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_imp_degree_bounded_360",
+            125066222841962802760576607996391537405
+        ],
+        "dst": [
+            "ml_si_radian_bounded_pi",
+            181367268705518406168243034119604185497
+        ],
+        "factors": [
+            "number.pi/180",
+            "-number.pi",
+            "number.pi"
+        ]
     }
 ]

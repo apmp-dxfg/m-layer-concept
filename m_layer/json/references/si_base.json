@@ -16,8 +16,8 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": [1,0,0,0,0,0,0],
-            "prefix": 1
+            "dimensions": "[1, 0, 0, 0, 0, 0, 0]",
+            "prefix": "1"
         },
         "UCUM": {
             "code": "kg",
@@ -41,8 +41,8 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": [0,1,0,0,0,0,0],
-            "prefix": 1
+            "dimensions": "[0, 1, 0, 0, 0, 0, 0]",
+            "prefix": "1"
         },
         "UCUM": {
             "code": "m",
@@ -66,8 +66,8 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": [0,0,1,0,0,0,0],
-            "prefix": 1
+            "dimensions": "[0, 0, 1, 0, 0, 0, 0]",
+            "prefix": "1"
         },
         "UCUM": {
             "code": "s",
@@ -91,9 +91,9 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": [0,0,0,1,0,0,0],
-            "prefix": 1
-        }, 
+            "dimensions": "[0, 0, 0, 1, 0, 0, 0]",
+            "prefix": "1"
+        },
         "UCUM": {
             "code": "A",
             "description": "ampere"
@@ -116,8 +116,8 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": [0,0,0,0,1,0,0],
-            "prefix": 1
+            "dimensions": "[0, 0, 0, 0, 1, 0, 0]",
+            "prefix": "1"
         },
         "UCUM": {
             "code": "K",
@@ -141,9 +141,9 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": [0,0,0,0,0,1,0],
-            "prefix": 1
-        },        
+            "dimensions": "[0, 0, 0, 0, 0, 1, 0]",
+            "prefix": "1"
+        },
         "UCUM": {
             "code": "mol",
             "description": "mole"
@@ -166,9 +166,9 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": [0,0,0,0,0,0,1],
-            "prefix": 1
-        }, 
+            "dimensions": "[0, 0, 0, 0, 0, 0, 1]",
+            "prefix": "1"
+        },
         "UCUM": {
             "code": "cd",
             "description": "candela"

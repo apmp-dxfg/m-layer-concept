@@ -1,7 +1,7 @@
-[    
+[
     {
         "__entry__": "ScalesForAspect",
-        "aspect" : [
+        "aspect": [
             "ml_photon_energy",
             291306321925738991196807372973812640971
         ],
@@ -9,19 +9,21 @@
             "ml_si_THz_ratio",
             271382954339420591832277422907953823861
         ],
-        "dst":[
+        "dst": [
             "ml_si_cm-1_ratio",
             333995508470114516586033303775415043902
         ],
-        "factors": [ "si.tera/si.c*si.centi" ]
+        "factors": [
+            "si.tera/si.c*si.centi"
+        ]
     },
     {
         "__entry__": "ScalesForAspect",
-        "aspect" : [
+        "aspect": [
             "ml_photon_energy",
             291306321925738991196807372973812640971
         ],
-        "src":[
+        "src": [
             "ml_si_cm-1_ratio",
             333995508470114516586033303775415043902
         ],
@@ -29,15 +31,17 @@
             "ml_si_THz_ratio",
             271382954339420591832277422907953823861
         ],
-        "factors": [ "si.hecto*si.c/si.tera" ]
+        "factors": [
+            "si.hecto*si.c/si.tera"
+        ]
     },
     {
         "__entry__": "ScalesForAspect",
-        "aspect" : [
+        "aspect": [
             "ml_photon_energy",
             291306321925738991196807372973812640971
         ],
-        "src":[
+        "src": [
             "ml_electronvolt_ratio",
             121864523473489992307630707008460819401
         ],
@@ -45,15 +49,17 @@
             "ml_si_THz_ratio",
             271382954339420591832277422907953823861
         ],
-        "factors": [ "si.e/si.h/si.tera" ]
+        "factors": [
+            "si.e/si.h/si.tera"
+        ]
     },
     {
         "__entry__": "ScalesForAspect",
-        "aspect" : [
+        "aspect": [
             "ml_photon_energy",
             291306321925738991196807372973812640971
         ],
-        "src":[
+        "src": [
             "ml_electronvolt_ratio",
             121864523473489992307630707008460819401
         ],
@@ -61,7 +67,8 @@
             "ml_si_cm-1_ratio",
             333995508470114516586033303775415043902
         ],
-        "factors": [ "si.e/si.h/si.c/si.hecto" ]
+        "factors": [
+            "si.e/si.h/si.c/si.hecto"
+        ]
     }
-
 ]
