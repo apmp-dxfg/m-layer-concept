@@ -187,9 +187,9 @@ Abscissa data can be expressed without ambiguity by specifying photon energy as 
     >>> energy = Aspect( ('ml_energy', 12139911566084412692636353460656684046) ) 
     
     >>> electronvolt = Scale( ('ml_electronvolt_ratio', 121864523473489992307630707008460819401) )
-    >>> terahertz = Scale( ('ml_si_terahertz_ratio', 271382954339420591832277422907953823861) )
-    >>> per_centimetre = Scale( ('ml_si_per_centimetre_ratio', 333995508470114516586033303775415043902) )
-    >>> nanometre = Scale( ('ml_si_nanometre_ratio', 257091757625055920788370123828667027186) )
+    >>> terahertz = Scale( ('ml_si_THz_ratio', 271382954339420591832277422907953823861) )
+    >>> per_centimetre = Scale( ('ml_si_cm-1_ratio', 333995508470114516586033303775415043902) )
+    >>> nanometre = Scale( ('ml_si_nm_ratio', 257091757625055920788370123828667027186) )
     
 The data may then be converted safely::
 
@@ -253,7 +253,7 @@ A simple example is provided by the special unit names hertz and becquerel used 
 
 The M-layer can manage this asymmetry. ::
 
-    >>> per_second = Scale( ('ml_si_per_second_ratio', 323506565708733284157918472061580302494) )
+    >>> per_second = Scale( ('ml_si_s-1_ratio', 323506565708733284157918472061580302494) )
     >>> becquerel = Scale( ('ml_si_becquerel_ratio', 327022986202149438703681911339752143822) )
     
     >>> x = expr(96,becquerel)
@@ -272,7 +272,7 @@ Here, conversion from the special name becquerel to the generic unit per-second 
     >>> convert(y,becquerel)    # The aspect is unspecified
     Traceback (most recent call last):
     ...
-    RuntimeError: no conversion from Scale(('ml_si_per_second_ratio', 323506565708733284157918472061580302494)) to Scale(('ml_si_becquerel_ratio', 327022986202149438703681911339752143822))
+    RuntimeError: no conversion from Scale(('ml_si_s-1_ratio', 323506565708733284157918472061580302494)) to Scale(('ml_si_becquerel_ratio', 327022986202149438703681911339752143822))
 
 The conversion back to becquerel requires the aspect to be specified::
 
@@ -303,4 +303,4 @@ Similarly, if the aspect is declared as frequency initially, the following lines
     >>> convert(y,becquerel)    # Illegitimate conversion is detected
     Traceback (most recent call last):
     ...
-    RuntimeError: no conversion from Scale(('ml_si_per_second_ratio', 323506565708733284157918472061580302494)) to Scale(('ml_si_becquerel_ratio', 327022986202149438703681911339752143822)) for Aspect('ml_frequency', 153247472008167864427404739264717558529)    
+    RuntimeError: no conversion from Scale(('ml_si_s-1_ratio', 323506565708733284157918472061580302494)) to Scale(('ml_si_becquerel_ratio', 327022986202149438703681911339752143822)) for Aspect('ml_frequency', 153247472008167864427404739264717558529)    
