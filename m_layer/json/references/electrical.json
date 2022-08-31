@@ -1,0 +1,177 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_volt",
+            329937729914753562634885805595267532595
+        ],
+        "locale": {
+            "default": {
+                "name": "volt",
+                "symbol": "V"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
+            "prefix": "1"
+        },
+        "UCUM": {
+            "code": "V",
+            "description": "volt"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_farad",
+            326980191860455759475006183606607318398
+        ],
+        "locale": {
+            "default": {
+                "name": "farad",
+                "symbol": "F"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[-1, -2, 4, 2, 0, 0, 0]",
+            "prefix": "1"
+        },
+        "UCUM": {
+            "code": "F",
+            "description": "farad"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_ohm",
+            301106267988465836015458636243981467619
+        ],
+        "locale": {
+            "default": {
+                "name": "ohm",
+                "symbol": "ohm"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -2, 0, 0, 0]",
+            "prefix": "1"
+        },
+        "UCUM": {
+            "code": "Ohm",
+            "description": "ohm"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_siemens",
+            141362926343587532391331354060487382910
+        ],
+        "locale": {
+            "default": {
+                "name": "siemens",
+                "symbol": "S"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[-1, -2, 3, 2, 0, 0, 0]",
+            "prefix": "1"
+        },
+        "UCUM": {
+            "code": "S",
+            "description": "siemens"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_weber",
+            3389824025561912595583897462196041346
+        ],
+        "locale": {
+            "default": {
+                "name": "weber",
+                "symbol": "Wb"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -2, -2, 0, 0, 0]",
+            "prefix": "1"
+        },
+        "UCUM": {
+            "code": "Wb",
+            "description": "weber"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_tesla",
+            15906806309243323560382538299228898627
+        ],
+        "locale": {
+            "default": {
+                "name": "tesla",
+                "symbol": "T"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 0, -2, -1, 0, 0, 0]",
+            "prefix": "1"
+        },
+        "UCUM": {
+            "code": "T",
+            "description": "tesla"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_henry",
+            11327962629869551145083263853955388968
+        ],
+        "locale": {
+            "default": {
+                "name": "henry",
+                "symbol": "H"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -2, -2, 0, 0, 0]",
+            "prefix": "1"
+        },
+        "UCUM": {
+            "code": "H",
+            "description": "henry"
+        }
+    }
+]
