@@ -5,7 +5,7 @@ import numbers
 
 from m_layer.context import default_context as cxt
 from m_layer.aspect import Aspect, ComposedAspect, no_aspect
-from m_layer.stack import Stack, normal_form, ProductOfPowers
+from m_layer.stack import Stack, product_of_powers
 from m_layer.system import System
 from m_layer.dimension import Dimension
 
@@ -63,16 +63,10 @@ class ComposedScaleAspect(object):
         try:
             return self._dimension
         except AttributeError:
-
-            pops = normal_form(self.stack)
-            self._dimension = ProductOfPowers(
-                {
-                    i.scale.dimension : v 
-                        for i,v in pops.factors.items()
-                },
-                prefactor=pops.prefactor
+            self._dimension = product_of_powers(
+                self.stack,
+                lambda i: i.scale.dimension 
             )
-                                                   
             return self._dimension
 
     @property
@@ -85,16 +79,10 @@ class ComposedScaleAspect(object):
         try:
             return self._uid
         except AttributeError:
-            # Reduce to a product of powers
-            pops = normal_form(self.stack)
-            self._uid = ProductOfPowers(
-                {
-                    i.uid : v 
-                        for i,v in pops.factors.items()
-                },
-                prefactor=pops.prefactor
-            )
-                                                   
+            self._uid = product_of_powers(
+                self.stack,
+                lambda i: i.uid 
+            )                                                   
             return self._uid
             
     # Equality (`==` method) could be based on the equivalence of expressions
@@ -219,23 +207,21 @@ class ComposedScale(object):
         try:
             return self._uid
         except AttributeError:
-            assert False
+            self._uid = product_of_powers(
+                self.stack,
+                lambda i: i.uid 
+            )
+            return self._uid
         
     @property
     def dimension(self):
         try:
             return self._dimension
         except AttributeError:
-
-            pops = normal_form(self.stack)
-            self._dimension = ProductOfPowers(
-                {
-                    i.dimension : v 
-                        for i,v in pops.factors.items()
-                },
-                prefactor=pops.prefactor
+            self._dimension = product_of_powers(
+                self.stack,
+                lambda i: i.scale.dimension 
             )
-                                                   
             return self._dimension
             
     @property
@@ -278,7 +264,56 @@ class ComposedScale(object):
         
     def __repr__(self):
         return "ComposedScale({!r})".format( self.stack )  
+  
+    def to_composed_scale_aspect(self,composed_scale_aspect):
+        """
+        Return a :class:`~scale.ComposedScaleAspect` 
+        by copying the aspects in ``composed_scale_aspect``.
         
+        Args:
+            composed_scale_aspect (:class:`~scale.ComposedScaleAspect`)
+        
+        .. warning:
+        
+            This function will fail if the encoded expression is 
+            not in exactly the same form as the expression in ``composed_scale_aspect``.
+            
+            For example, reversing the order of terms in a 
+            multiplication will lead to failure.            
+            
+        """
+        # This seems risky. Unless we really need to do this,
+        # it should probably be removed.
+        
+        sa_stack = composed_scale_aspect.stack 
+        assert len(sa_stack) == len(self.stack)
+        
+        stk = []
+        for i,o_i in enumerate(sa_stack):
+            if o_i not in ('mul','div','rmul','pow'):
+            
+                # At this point the ability to 
+                # convert later can be checked:
+                # if src scale and aspect don't convert 
+                # to the dst scale, then something is wrong.
+                
+                src_scale_uid, src_aspect_uid = sa_stack[i].uid       
+                dst_scale_uid = self.stack[i].uid 
+                cxt.convertible(
+                    src_scale_uid, src_aspect_uid,                   
+                    dst_scale_uid
+                )    
+                
+                stk.append( 
+                    self.stack[i].to_scale_aspect( 
+                        sa_stack[i].aspect 
+                    ) 
+                )
+            else:
+                stk.append( o_i )                
+                           
+        return ComposedScaleAspect( Stack(stk) )
+  
 # ---------------------------------------------------------------------------
 class Scale(object):
 
@@ -402,13 +437,13 @@ class Scale(object):
 # ===========================================================================
 if __name__ == '__main__':
 
-    M = Scale( ('ml_si_kilogram_ratio', 12782167041499057092439851237297548539) )
-    L = Scale( ('ml_si_metre_ratio', 17771593641054934856197983478245767638) )
-    T = Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) )
-
-    # M = Scale( ('ml_imp_pound_ratio', 188380796861507506602975683857494523991) )
-    # L = Scale( ('ml_foot_ratio', 150280610960339969789551668292960104920) )
+    # M = Scale( ('ml_si_kilogram_ratio', 12782167041499057092439851237297548539) )
+    # L = Scale( ('ml_si_metre_ratio', 17771593641054934856197983478245767638) )
     # T = Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) )
+
+    M = Scale( ('ml_imp_pound_ratio', 188380796861507506602975683857494523991) )
+    L = Scale( ('ml_foot_ratio', 150280610960339969789551668292960104920) )
+    T = Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) )
     
-    print((100*M*L/T).dimension) 
+    print((100*M*L/T).uid) 
    

@@ -3,7 +3,7 @@ import numbers
 import math 
 
 from m_layer.context import default_context as cxt
-from m_layer.scale import Scale, ScaleAspect, ComposedScaleAspect
+from m_layer.scale import Scale, ComposedScale, ScaleAspect, ComposedScaleAspect
 from m_layer.aspect import no_aspect
 from m_layer.stack import normal_form
 
@@ -101,6 +101,7 @@ class Expression(object):
         Args:
             dst_scale (:class:`~scale.ComposedScaleAspect` or
             :class:`~scale.ScaleAspect` or 
+            :class:`~scale.ComposedScale`
             :class:`~scale.Scale`) 
         
         Returns:
@@ -133,7 +134,7 @@ class Expression(object):
             isinstance(dst_scale,Scale) 
         and isinstance(self.scale_aspect,ScaleAspect)
         ): 
-            # Create a ScaleAspect object
+            # Create a ScaleAspect object to return with the initial aspect 
             dst_scale_aspect = dst_scale.to_scale_aspect( self.scale_aspect.aspect ) 
             new_token = cxt.conversion_fn( 
                 self.scale_aspect.scale.uid,
@@ -142,7 +143,7 @@ class Expression(object):
             )(self._token)
             
         elif ( 
-            isinstance(dst_scale,ComposedScaleAspect) 
+            isinstance(dst_scale,(ComposedScale,ComposedScaleAspect) ) 
         and isinstance(self.scale_aspect,ComposedScaleAspect)
         ):
             # Conversion of one expression to another.
@@ -154,10 +155,18 @@ class Expression(object):
             # deals only with registered objects.
             # The Context knows nothing about composed 
             # ScaleAspects. 
-            
+
             # Step 1: convert to products of powers
             src_pops = normal_form(self.scale_aspect.stack)
-            dst_pops = normal_form(dst_scale.stack)
+            if isinstance(dst_scale,ComposedScale):
+                dst_scale_aspect = dst_scale.to_composed_scale_aspect( 
+                    self.scale_aspect
+                ) 
+                dst_pops = normal_form(dst_scale_aspect.stack)
+            
+            else:    
+                dst_scale_aspect = dst_scale                
+                dst_pops = normal_form(dst_scale.stack)
             
             # Step 2: take into account any stand-alone numerical factors
             conversion_factor = src_pops.prefactor/dst_pops.prefactor
@@ -174,7 +183,11 @@ class Expression(object):
                     "{} != {}".format(src_exp,dst_factors[dst_i])
 
                 src_s_uid,src_a_uid = src_i.uid
-                dst_s_uid = dst_i.uid[0]
+                dst_s_uid, dst_a_uid = dst_i.uid
+                
+                # Aspects must match
+                assert src_a_uid == dst_a_uid,\
+                    "{!r} != {!r}".format(src_a_uid,dst_a_uid)
 
                 c = cxt.conversion_fn( 
                         src_s_uid,src_a_uid,dst_s_uid                     
@@ -182,7 +195,6 @@ class Expression(object):
                 conversion_factor *= c**src_exp
             
             new_token = conversion_factor*self._token
-            dst_scale_aspect = dst_scale                
           
         return Expression(
             new_token,

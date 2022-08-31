@@ -148,7 +148,43 @@ class Context(object):
     def locale(self,l):
         self._locale = l 
   
-    # def conversion_fn(self,src_expr,dst_scale):
+    def convertible(self,src_scale_uid,src_aspect_uid,dst_scale_uid):
+        """
+        Return ``True`` if there is a registered conversion from the  
+        source scale and aspect to the destination scale. 
+        Raise RuntimeError otherwise.
+        
+        """
+        if src_scale_uid == dst_scale_uid:
+            return True
+            
+        scale_pair = (src_scale_uid,dst_scale_uid)
+        
+        if( src_aspect_uid is not None 
+        and src_aspect_uid in self.scales_for_aspect_reg
+        ):
+            if scale_pair in self.scales_for_aspect_reg[src_aspect_uid]:
+                return True
+                
+        # Aspect-free conversions are possible
+        if scale_pair in self.conversion_reg: return True
+                        
+        # This is a failure 
+        if src_aspect_uid is None:
+            msg = "no conversion from Scale({!r}) to Scale({!r})".format(
+                    src_scale_uid,
+                    dst_scale_uid
+                )
+        else:
+            msg = "no conversion from Scale({!r}) to Scale({!r}) for Aspect{!r}".format(
+                    src_scale_uid,
+                    dst_scale_uid,
+                    src_aspect_uid
+                )
+         
+        raise RuntimeError(msg)
+         
+        
     def conversion_fn(self,src_scale_uid,src_aspect_uid,dst_scale_uid):
         """
         Return a function that converts a value expressed 
@@ -164,7 +200,11 @@ class Context(object):
         Returns:
             A Python function 
             
-        """                
+        """  
+        if src_scale_uid == dst_scale_uid:
+            # Trivial case where no conversion is required
+            return lambda x: x
+            
         scale_pair = (src_scale_uid,dst_scale_uid)
         
         # Note, the register should probably not allow an aspect-free conversion 

@@ -9,8 +9,23 @@ __all__ = (
     'Stack',
     'ProductOfPowers',
     'normal_form',
+    'product_of_powers'
 )
-
+# ---------------------------------------------------------------------------
+def product_of_powers(stack,getter):
+    
+    """
+    """
+    pops = normal_form(stack)
+    return ProductOfPowers(
+        {
+            getter(i) : v 
+                for i,v in pops.factors.items()
+        },
+        prefactor=pops.prefactor
+    )
+                                                   
+    
 # ---------------------------------------------------------------------------
 class ProductOfPowers(object):
 
@@ -18,7 +33,7 @@ class ProductOfPowers(object):
     :class:`ProductOfPowers` objects represent an expression of products of 
     powers of objects, and numerical a prefactor.  
     
-    The token ``factors`` attribute is a mapping of objects to powers 
+    The ``factors`` attribute is a mapping of objects to powers 
     The ``prefactor`` attribute is a floating point number. 
     """
     
