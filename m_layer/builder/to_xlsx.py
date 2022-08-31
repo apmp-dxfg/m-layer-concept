@@ -23,7 +23,6 @@ from openpyxl.utils.cell import get_column_letter
 # --------------------------------------------------------------------------- 
 root = os.path.abspath( os.path.dirname(__file__) )
 
-# json_root = os.path.join( root, r'../json' )
 json_root = os.path.join( root, r'json' )
 xl_root = os.path.join( root, 'xl' )
 

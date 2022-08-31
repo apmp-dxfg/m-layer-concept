@@ -1,12 +1,23 @@
 """
-Create a set of JSON files from a set of XLSX files 
-for the M-layer register.
+Create a set of JSON files from a set of XLSX files for the M-layer register.
 
-Note, all the XLSX files should have been opened in Excel 
-and then resaved. This resolves cell references.
+The process may require several iterations.
 
-If any of the XLSX cell uid entries lack UUID attributes, 
-these are inserted before writing the JSON file.
+    * Copy the JSON folder under the builder directory.
+
+    * Run `to_xlsx.py` to create a set of XLSX files that reflect the current state of the JSON files.
+
+    * Open all of the XLSX files at the same time and allow them to update content. Then save them again.
+
+    * Introduce new rows and/or sheets to the various workbooks to define objects or transformations. 
+    
+    When introducing new objects that need UUIDs, enter the word None in place of the UUID. This script will automatically generate the missing UUIDs.
+    
+    When setting up conversions, or other parts of the register, that refer to unique objects, use Excel cell references (type '=' in the cell and then click on the target cell).
+
+    NOTE: It is not possible to use cell references until the UUIDs have been assigned. So, new objects with UUIDS should be created by running this script. Followed by `to_xlsx.py` to create an updated set of XLSX files. 
+    
+    * When finished, copy the JSON folder, under the builder directory, to replace the JSON folder under the m_layer directory.  
 
 """
 import json 
