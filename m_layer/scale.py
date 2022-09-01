@@ -2,6 +2,7 @@
 
 """
 import numbers
+import json 
 
 from m_layer.context import default_context as cxt
 from m_layer.aspect import Aspect, ComposedAspect, no_aspect
@@ -15,6 +16,14 @@ __all__ = (
     'ScaleAspect',
     'ComposedScaleAspect'
 )
+# ---------------------------------------------------------------------------
+def to_str(o):
+    "JSON objects can't have tuple keys"
+    if isinstance(o,tuple):
+        return "[{0[0]!r}, {0[1]}]".format(o)
+    else:
+        return o
+                    
 
 # ---------------------------------------------------------------------------
 class ComposedScaleAspect(object):
@@ -68,6 +77,19 @@ class ComposedScaleAspect(object):
                 lambda i: i.scale.dimension 
             )
             return self._dimension
+
+    @property
+    def json(self):
+        uid = self.uid 
+        obj = dict(
+            __type__ = "ComposedScaleAspect",
+            prefactor = uid.prefactor,
+            factors = {
+                to_str(k) : v 
+                    for k,v in uid.factors.items()
+            }
+        )
+        return json.dumps(obj)
 
     @property
     def uid(self):
@@ -127,6 +149,15 @@ class ScaleAspect(object):
         "A pair of M-layer identifiers for scale and aspect"
         return (self.scale.uid,self.aspect.uid)
 
+    @property
+    def json(self):
+        obj = dict(
+            __type__ = "ScaleAspect",
+            scale = to_str( self.scale.uid ),
+            aspect = to_str( self.aspect.uid ) 
+        )
+        return json.dumps(obj)
+        
     @property 
     def composable(self):
         return self.scale.composable
@@ -201,6 +232,28 @@ class ComposedScale(object):
 
         assert isinstance(scale_stack,Stack)
         self._stack = scale_stack
+
+    @property
+    def json(self):
+        uid = self.uid 
+        obj = dict(
+            __type__ = "ComposedScale",
+            prefactor = uid.prefactor,
+            factors = {
+                to_str(k) : v 
+                    for k,v in uid.factors.items()
+            }
+        )
+        return json.dumps(obj)
+
+    @property
+    def json(self):
+        obj = dict(
+            __type__ = "ScaleAspect",
+            scale = to_str( self.scale.uid ),
+            aspect = to_str( self.aspect.uid )
+        )
+        return json.dumps(obj)
 
     @property 
     def uid(self):
@@ -341,6 +394,14 @@ class Scale(object):
             
         return ref_uid['locale'][locale][locale_key]
         
+    @property
+    def json(self):
+        obj = dict(
+            __type__ = "Scale",
+            scale = to_str( self.uid ) 
+        )
+        return json.dumps(obj)
+
     @property 
     def composable(self):
         return self.scale_type == "ratio"
@@ -445,5 +506,6 @@ if __name__ == '__main__':
     L = Scale( ('ml_foot_ratio', 150280610960339969789551668292960104920) )
     T = Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) )
     
-    print((100*M*L/T).uid) 
+    print( (100*M*L/T).json ) 
+    print( T.json )
    

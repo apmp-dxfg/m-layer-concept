@@ -1,6 +1,7 @@
 """
 """
 import numbers 
+import json 
 
 from collections import ChainMap
 
@@ -25,7 +26,6 @@ def product_of_powers(stack,getter):
         prefactor=pops.prefactor
     )
                                                    
-    
 # ---------------------------------------------------------------------------
 class ProductOfPowers(object):
 
@@ -44,13 +44,28 @@ class ProductOfPowers(object):
         self.factors = factors
  
     def __str__(self):
-        return "{!s}:{!s}".format(self.prefactor,self.factors)
+        return "{!s}:{!s}".format(
+            self.prefactor,
+            self.factors
+        )
         
     def __repr__(self):
         return "ProductOfPowers({!s},prefactor={!s})".format(
             self.factors,
             self.prefactor
         )
+ 
+    @property
+    def json(self):
+        obj = dict(
+            __type__ = "ProductOfPowers",
+            prefactor = self.prefactor,
+            factors = {
+                str(k) : v 
+                    for k,v in self.factors.items()
+            }
+        )
+        return json.dumps(obj)
         
     def __eq__(self,other):
         return (
@@ -259,4 +274,4 @@ if __name__ == '__main__':
     s = s.push(s2).div()
     print(s)
     print(repr(s))
-    print( repr(normal_form(s)) )
+    print( ( product_of_powers(s,lambda x:x) ).json ) 
