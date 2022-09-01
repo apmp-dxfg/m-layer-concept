@@ -111,10 +111,9 @@ class Aspect(object):
     def __eq__(self,other):
         """
         True when both objects have the same uid
-        An aspect with uid ``None`` is never equal 
-        to another aspect.
+
         """
-        if self._aspect_uid is not None and hasattr(other,'uid'):
+        if self._aspect_uid != no_aspect.uid and hasattr(other,'uid'):
             return self.uid[1] == other.uid[1] 
         else:
             return False
@@ -136,19 +135,22 @@ class Aspect(object):
         )
         
     def __str__(self):
-        if self.uid is None:
+        if self.uid == no_aspect.uid:
             return ""
         else:
             return str( self._from_json() )
         
     def __repr__(self):
-        if self.uid is None:
+        if self.uid == no_aspect.uid:
             return ""
         else:
             return "Aspect{!r}".format( self.uid )
 
 # ---------------------------------------------------------------------------
-no_aspect = Aspect(None)    
+no_aspect = Aspect((
+    "ml_no_aspect",
+    295504637700214937127120941173285352815
+))    
 """An object representing no assigned aspect"""
 
 # ===========================================================================

@@ -256,9 +256,6 @@ class Context(object):
         Return a function that transforms the initial expression 
         to an expression in terms of a different scale and aspect.
         
-        If the initial expression does not specify an aspect,
-        ``dst_aspect_uid`` is assumed to apply to both.
-        
         Args:
             src_scale_uid: initial scale   
             src_aspect_uid: initial aspect
@@ -270,11 +267,7 @@ class Context(object):
             
         """ 
         dst_pair = dst_scale_uid, dst_aspect_uid
-        
-        if src_aspect_uid is None:
-            src_pair = src_scale_uid, dst_aspect_uid 
-        else:
-            src_pair = src_scale_uid, src_aspect_uid    
+        src_pair = src_scale_uid, src_aspect_uid    
           
         if src_pair[1] == dst_pair[1]:
         
