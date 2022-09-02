@@ -201,6 +201,10 @@ class Context(object):
             A Python function 
             
         """  
+        # TODO:
+        # May want to strip off additional tuple element
+        # Probably best done by client
+        
         if src_scale_uid == dst_scale_uid:
             # Trivial case where no conversion is required
             return lambda x: x
@@ -266,6 +270,10 @@ class Context(object):
             A Python function 
             
         """ 
+        # TODO:
+        # May want to strip off additional tuple element
+        # Probably best done by client
+        
         dst_pair = dst_scale_uid, dst_aspect_uid
         src_pair = src_scale_uid, src_aspect_uid    
           
