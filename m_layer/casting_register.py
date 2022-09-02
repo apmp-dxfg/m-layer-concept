@@ -11,7 +11,8 @@ from m_layer.ml_eval import ml_eval
 # ---------------------------------------------------------------------------
 def _to_tuple(lst):
     """
-    Convert nested lists to nested tuples
+    Convert nested lists to nested tuples recursively 
+    
     """
     return tuple(
         _to_tuple(i) if isinstance(i, list) else i for i in lst
