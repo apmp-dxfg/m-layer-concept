@@ -113,10 +113,7 @@ class Aspect(object):
         True when both objects have the same uid
 
         """
-        if self._aspect_uid != no_aspect.uid and hasattr(other,'uid'):
-            return self.uid[1] == other.uid[1] 
-        else:
-            return False
+        return isinstance(other,Aspect) and self.uid == other.uid 
 
     def __mul__(self,y):
         return ComposedAspect(
