@@ -103,7 +103,7 @@ class ComposedScaleAspect(object):
         except AttributeError:
             self._uid = product_of_powers(
                 self.stack,
-                lambda i: i.uid 
+                UIDGetter() 
             )                                                   
             return self._uid
             
@@ -143,6 +143,15 @@ class ScaleAspect(object):
             
     # Alias
     kind_of_quantity = aspect 
+
+    @property
+    def json(self):
+        obj = dict(
+            __type__ = "ScaleAspect",
+            scale = to_str( self.scale.uid ),
+            aspect = to_str( self.aspect.uid )
+        )
+        return json.dumps(obj)
 
     @property 
     def uid(self):
@@ -216,7 +225,23 @@ class ScaleAspect(object):
         return "ScaleAspect({!r},{!r})".format( 
             self.scale,self.aspect
         ) 
-  
+ 
+# ---------------------------------------------------------------------------
+class UIDGetter(object):
+
+    __slots__ = ('uid_count',)
+    
+    def __init__(self):
+        self.uid_count = dict()
+        
+    def __call__(self,i,duplicate=False):
+        if duplicate:
+            self.uid_count[i] = self.uid_count.setdefault(i,0)+1
+            # A third integer index 
+            return tuple( i.uid + (self.uid_count[i],) )
+        else:
+            return i.uid
+        
 # ---------------------------------------------------------------------------
 class ComposedScale(object):
  
@@ -246,15 +271,6 @@ class ComposedScale(object):
         )
         return json.dumps(obj)
 
-    @property
-    def json(self):
-        obj = dict(
-            __type__ = "ScaleAspect",
-            scale = to_str( self.scale.uid ),
-            aspect = to_str( self.aspect.uid )
-        )
-        return json.dumps(obj)
-
     @property 
     def uid(self):
         try:
@@ -262,7 +278,7 @@ class ComposedScale(object):
         except AttributeError:
             self._uid = product_of_powers(
                 self.stack,
-                lambda i: i.uid 
+                UIDGetter() 
             )
             return self._uid
         
@@ -273,7 +289,7 @@ class ComposedScale(object):
         except AttributeError:
             self._dimension = product_of_powers(
                 self.stack,
-                lambda i: i.scale.dimension 
+                lambda i: i.dimension 
             )
             return self._dimension
             
@@ -449,7 +465,7 @@ class Scale(object):
             
     def __eq__(self,other):
         "True when both objects have the same uids"
-        return isinstance(other,Scale) and self.uid[1] == other.uid[1] 
+        return isinstance(other,Scale) and self.uid == other.uid 
  
     def __hash__(self):
         return id(self)
@@ -505,7 +521,9 @@ if __name__ == '__main__':
     M = Scale( ('ml_imp_pound_ratio', 188380796861507506602975683857494523991) )
     L = Scale( ('ml_foot_ratio', 150280610960339969789551668292960104920) )
     T = Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) )
+    T2 = Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) )
     
-    print( (100*M*L/T).json ) 
-    print( T.json )
+    # print( (100*M*L/T).json ) 
+    # print(T is T2)
+    print( (T2/T).dimension )
    
