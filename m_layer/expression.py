@@ -124,6 +124,7 @@ class Expression(object):
                 ) 
             else:
                 dst_scale_aspect = dst_scale  
+                # TODO: normalise uid to a 2-tuple 
                 new_token = cxt.conversion_fn( 
                     self.scale_aspect.scale.uid,
                     self.scale_aspect.aspect.uid,
@@ -136,6 +137,8 @@ class Expression(object):
         ): 
             # Create a ScaleAspect object to return with the initial aspect 
             dst_scale_aspect = dst_scale.to_scale_aspect( self.scale_aspect.aspect ) 
+            
+            # TODO: normalise uid to a 2-tuple 
             new_token = cxt.conversion_fn( 
                 self.scale_aspect.scale.uid,
                 self.scale_aspect.aspect.uid,
@@ -186,9 +189,11 @@ class Expression(object):
                 dst_s_uid, dst_a_uid = dst_i.uid
                 
                 # Aspects must match
+                # TODO: normalise uid to a 2-tuple 
                 assert src_a_uid == dst_a_uid,\
                     "{!r} != {!r}".format(src_a_uid,dst_a_uid)
 
+                # TODO: normalise uid to a 2-tuple 
                 c = cxt.conversion_fn( 
                         src_s_uid,src_a_uid,dst_s_uid                     
                 )(1.0) 
@@ -260,6 +265,7 @@ class Expression(object):
                 )          
         
         # self.aspect may be `no_aspect` at this point.
+        # TODO: normalise uid to a 2-tuple 
         fn = cxt.casting_fn(
             self.scale_aspect.scale.uid,
             self.scale_aspect.aspect.uid,
