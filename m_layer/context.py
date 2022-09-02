@@ -269,7 +269,7 @@ class Context(object):
         dst_pair = dst_scale_uid, dst_aspect_uid
         src_pair = src_scale_uid, src_aspect_uid    
           
-        if src_pair[1] == dst_pair[1]:
+        if src_aspect_uid == dst_aspect_uid:
         
             # Look for aspect-specific conversions first
             scales_for_aspect = self.scales_for_aspect_reg[ dst_aspect_uid ]
@@ -279,7 +279,7 @@ class Context(object):
                 pass
             
         try:
-            return self.casting_reg[ (src_pair,dst_pair) ]   
+            return self.casting_reg[ src_pair,dst_pair ]   
         except KeyError:
             raise RuntimeError(
                 "no cast defined from '{!r}' to '{!r}'".format(
