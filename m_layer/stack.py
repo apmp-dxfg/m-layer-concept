@@ -13,16 +13,38 @@ __all__ = (
     'product_of_powers'
 )
 # ---------------------------------------------------------------------------
-def product_of_powers(stack,getter):
-    
+def product_of_powers(stack,getter):  
     """
     """
     pops = normal_form(stack)
+    # Note `i` here is a Python object and so different 
+    # instances of the same object are distinct.
+    # `getter()` may remove this distinction (e.g., by applying uid).
+    # When that happens the existing entry key would be overwritten.
+    
+    # TODO: The following could be changed to provide an argument to 
+    # `getter()` that would modify the key to obtain a distinct
+    # dictionary key, and `getter()` could maintain state
+    # information about the keys it has produced.
+    # For example, `getter(i,duplicate=True)` might return 
+    # a distinct key for `i`.
+    # This feature would allow the PoPs format to encode such 
+    # things as V/V. However, an extended interpretation of 
+    # the uid format is required. 
+    # One possibility is to add a third element containing an integer.
+    # This third component will need to be removed when accessing the
+    # M-layer register.
+    
+    factors = {}
+    for i,v in pops.factors.items():
+        k = getter(i)    
+        if k in factors:
+            factors[ getter(i,duplicate=True) ] = v
+        else:
+            factors[k] = v
+            
     return ProductOfPowers(
-        {
-            getter(i) : v 
-                for i,v in pops.factors.items()
-        },
+        factors,
         prefactor=pops.prefactor
     )
                                                    
@@ -30,12 +52,29 @@ def product_of_powers(stack,getter):
 class ProductOfPowers(object):
 
     """
-    :class:`ProductOfPowers` objects represent an expression of products of 
-    powers of objects, and numerical a prefactor.  
+    :class:`ProductOfPowers` represents an expression of products of 
+    powers of objects, and includes a numerical a prefactor.  
     
     The ``factors`` attribute is a mapping of objects to powers 
     The ``prefactor`` attribute is a floating point number. 
+    
+    This can be used as a dimensional vector, where the factor keys
+    refer to base objects.
+    
     """
+    # Note that the powers-of-products form is not sensitive to the 
+    # order of multiplication and division in the initial expression;
+    # in this way it allows arithmetically equivalent forms to be seen 
+    # as equal. However, sometimes there is embedded in the original
+    # expression. For instance, [litres per 100 kilometres] could 
+    # become {'litres':1,'kilometres':-1,'prefactor':0.01}, in which
+    # the numerical factor of 1/100 is retained but not as might be expected. 
+
+    # Also, something like [10 litres per 100 kilometres] would combine
+    # the two factors, giving {'litres':1,'kilometres':-1,'prefactor':0.1}.
+    
+    # Note the rmul factors may apply to combinations of objects, not 
+    # just single objects, so a more complete representation is complicated. 
     
     __slots__ = ('prefactor','factors')
     
@@ -55,17 +94,17 @@ class ProductOfPowers(object):
             self.prefactor
         )
  
-    @property
-    def json(self):
-        obj = dict(
-            __type__ = "ProductOfPowers",
-            prefactor = self.prefactor,
-            factors = {
-                str(k) : v 
-                    for k,v in self.factors.items()
-            }
-        )
-        return json.dumps(obj)
+    # @property
+    # def json(self):
+        # obj = dict(
+            # __type__ = "ProductOfPowers",
+            # prefactor = self.prefactor,
+            # factors = {
+                # str(k) : v 
+                    # for k,v in self.factors.items()
+            # }
+        # )
+        # return json.dumps(obj)
         
     def __eq__(self,other):
         return (
