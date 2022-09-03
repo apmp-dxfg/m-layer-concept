@@ -43,7 +43,7 @@ class System(object):
         return self._basis 
         
     def __repr__(self):
-        return "System( {!s} )".format(self.uid)
+        return "System( {} )".format(self.uid)
    
     def __str__(self):
         return "{}".format(self.name)
@@ -54,11 +54,15 @@ class System(object):
         and
             self.uid == other.uid
         )
+   
+    def __hash__(self):
+        return hash(self._uid)
         
 # ===========================================================================
 if __name__ == '__main__':
 
-    si = System( ('si-system', 88156805987886421108624908988601219537) )
+    si = System( ('si_system', 88156805987886421108624908988601219537) )
+    print(repr(si))
     print(si.basis.kg)
     print(si.basis[0:3])
    
