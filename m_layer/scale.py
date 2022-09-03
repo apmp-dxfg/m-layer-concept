@@ -4,12 +4,16 @@
 import numbers
 import json 
 
+from ast import literal_eval
+
 from m_layer.context import default_context as cxt
 from m_layer.aspect import Aspect, ComposedAspect, no_aspect
-from m_layer.stack import Stack, product_of_powers
+from m_layer.stack import Stack
 from m_layer.system import System
-from m_layer.dimension import Dimension
+from m_layer.dimension import Dimension, ComposedDimension
+from m_layer.uid import UID, ComposedUID 
 
+# ---------------------------------------------------------------------------
 __all__ = (
     'Scale',
     'ComposedScale',
@@ -72,22 +76,21 @@ class ComposedScaleAspect(object):
         try:
             return self._dimension
         except AttributeError:
-            self._dimension = product_of_powers(
-                self.stack,
-                lambda i: i.scale.dimension 
-            )
+            self._dimension = ComposedDimension(self.stack)
             return self._dimension
 
     @property
     def json(self):
         uid = self.uid 
+        factors = {
+            str(k) : list(v) 
+                for k,v in uid.factors.items()
+        }
+
         obj = dict(
             __type__ = "ComposedScaleAspect",
             prefactor = uid.prefactor,
-            factors = {
-                to_str(k) : v 
-                    for k,v in uid.factors.items()
-            }
+            factors = factors
         )
         return json.dumps(obj)
 
@@ -97,14 +100,10 @@ class ComposedScaleAspect(object):
         A product of powers for Scale-Aspect uid pairs.
         
         """
-        # There is no `uid` in the central register for composed objects.
         try:
             return self._uid
         except AttributeError:
-            self._uid = product_of_powers(
-                self.stack,
-                UIDGetter() 
-            )                                                   
+            self._uid = ComposedUID(self.stack)
             return self._uid
             
     # Equality (`==` method) could be based on the equivalence of expressions
@@ -124,7 +123,7 @@ class ScaleAspect(object):
     A wrapper around a scale and aspect pair.
     """
 
-    __slots__ = ("_scale","_aspect")
+    __slots__ = ("_scale","_aspect","_dimension")
 
     def __init__(self,scale,aspect=no_aspect):
         assert isinstance(scale,Scale)
@@ -145,6 +144,16 @@ class ScaleAspect(object):
     kind_of_quantity = aspect 
 
     @property
+    def dimension(self):
+        try:
+            return self._dimension
+        except AttributeError:
+            # If there are no defined dimensions a RuntimeError  
+            # is raised here. Allow it to propagate.
+            self._dimension = self.scale.dimension
+            return self._dimension
+
+    @property
     def json(self):
         obj = dict(
             __type__ = "ScaleAspect",
@@ -158,15 +167,6 @@ class ScaleAspect(object):
         "A pair of M-layer identifiers for scale and aspect"
         return (self.scale.uid,self.aspect.uid)
 
-    @property
-    def json(self):
-        obj = dict(
-            __type__ = "ScaleAspect",
-            scale = to_str( self.scale.uid ),
-            aspect = to_str( self.aspect.uid ) 
-        )
-        return json.dumps(obj)
-        
     @property 
     def composable(self):
         return self.scale.composable
@@ -225,23 +225,7 @@ class ScaleAspect(object):
         return "ScaleAspect({!r},{!r})".format( 
             self.scale,self.aspect
         ) 
- 
-# ---------------------------------------------------------------------------
-class UIDGetter(object):
-
-    __slots__ = ('uid_count',)
-    
-    def __init__(self):
-        self.uid_count = dict()
-        
-    def __call__(self,i,duplicate=False):
-        if duplicate:
-            self.uid_count[i] = self.uid_count.setdefault(i,0)+1
-            # A third integer index 
-            return tuple( i.uid + (self.uid_count[i],) )
-        else:
-            return i.uid
-        
+         
 # ---------------------------------------------------------------------------
 class ComposedScale(object):
  
@@ -257,42 +241,38 @@ class ComposedScale(object):
 
         assert isinstance(scale_stack,Stack)
         self._stack = scale_stack
-
-    @property
-    def json(self):
-        uid = self.uid 
-        obj = dict(
-            __type__ = "ComposedScale",
-            prefactor = uid.prefactor,
-            factors = {
-                to_str(k) : v 
-                    for k,v in uid.factors.items()
-            }
-        )
-        return json.dumps(obj)
-
+           
     @property 
     def uid(self):
         try:
             return self._uid
         except AttributeError:
-            self._uid = product_of_powers(
-                self.stack,
-                UIDGetter() 
-            )
+            self._uid = ComposedUID(self.stack)
             return self._uid
         
+    @property
+    def json(self):
+        uid = self.uid 
+        factors = {
+            str(k) : list(v) 
+                for k,v in uid.factors.items()
+        }
+
+        obj = dict(
+            __type__ = "ComposedScale",
+            factors = factors,
+            prefactor = uid.prefactor
+        )
+        return json.dumps(obj)
+
     @property
     def dimension(self):
         try:
             return self._dimension
         except AttributeError:
-            self._dimension = product_of_powers(
-                self.stack,
-                lambda i: i.dimension 
-            )
+            self._dimension = ComposedDimension(self.stack)
             return self._dimension
-            
+ 
     @property
     def stack(self):
         return self._stack 
@@ -395,7 +375,7 @@ class Scale(object):
     )
     
     def __init__(self,scale_uid):    
-        self._scale_uid = scale_uid
+        self._scale_uid = (scale_uid)
 
     def _from_json(self):
         return cxt.scale_reg[self._scale_uid] 
@@ -414,7 +394,7 @@ class Scale(object):
     def json(self):
         obj = dict(
             __type__ = "Scale",
-            scale = to_str( self.uid ) 
+            uid = str( self._scale_uid.uid ) 
         )
         return json.dumps(obj)
 
@@ -424,7 +404,6 @@ class Scale(object):
         
     @property 
     def uid(self):
-        "The M-layer identifier for this aspect"
         return self._scale_uid
         
     @property 
@@ -448,13 +427,17 @@ class Scale(object):
             return self._dimension
             
         except AttributeError:
+            to_dim_tuple = lambda x: tuple( literal_eval(x) )
+
             scale_json = self._from_json()
             ref_json = cxt.reference_reg[ tuple(scale_json['reference']) ] 
-            
+
             if 'system' in ref_json:
+                # TODO:
+                # This should not deal with M-layer formats
                 self._dimension = Dimension( 
                     System( tuple(ref_json['system']['uid']) ),
-                    tuple( ref_json['system']['dimensions']),
+                    to_dim_tuple( ref_json['system']['dimensions'] ),
                     float( ref_json['system']['prefix'] )
                 )
                 return self._dimension 
@@ -501,7 +484,7 @@ class Scale(object):
         return self._json_scale_to_ref(short=True)
         
     def __repr__(self):
-        return "Scale({!r})".format( self.uid )
+        return "Scale({})".format( self.uid )
 
     def to_scale_aspect(self,aspect=no_aspect):
         """
@@ -525,5 +508,5 @@ if __name__ == '__main__':
     
     # print( (100*M*L/T).json ) 
     # print(T is T2)
-    print( (T2/T).dimension )
+    print( (T2/T).json )
    
