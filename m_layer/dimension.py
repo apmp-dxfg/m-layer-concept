@@ -15,7 +15,91 @@ product of powers of system base units.
 
 """
 import numbers
+import json
+from collections import defaultdict
 
+from m_layer.stack import normal_form
+
+# ---------------------------------------------------------------------------
+class ComposedDimension(object):
+
+    __slots__ = ('prefactor','factors')
+
+    def __init__(self,stack):
+        pops = normal_form(stack)
+
+        # The keys in pop.factors are Python objects.
+        # Some may be distinct objects with the same M-layer UID.
+        # In that case, each object occurs only once.    
+        # The ComposedDimension representation uses the dimension as key 
+        # and a frozenset of exponents as value. 
+        
+        setter = lambda factors,i,v: factors[ i.dimension ].add(v)
+        
+        factors = defaultdict(set)
+        for k,v in pops.factors.items():
+            setter(factors,k,v)
+
+        self.prefactor = pops.prefactor
+        
+        self.factors = {
+            k : frozenset(v) 
+                for k,v in factors.items()
+        }
+
+    def __eq__(self,other):
+        return (
+            isinstance(other,self.__class__)
+        and
+            # Mappings are equal if they have the same 
+            # key-value pairs regardless of ordering
+            # The frozenset values compare equal 
+            # by membership, not ordering of elements.
+            self.factors == other.factors
+        and
+            self.prefactor == other.prefactor
+        )
+
+    def __hash__(self):
+        return hash( 
+            tuple( self.factors.items() )
+        +   ( self.prefactor, )
+        )
+ 
+    def __str__(self):
+        factors = ", ".join(
+            "{} : {}".format(k,list(v) )
+                for k,v in self.factors.items()
+        )
+        return "{{ factors = {{ {} }}, prefactor = {} }}".format(
+            factors,
+            self.prefactor
+        )
+
+    def __repr__(self):
+        factors = ", ".join(
+            "{} : {}".format(k,list(v) )
+                for k,v in self.factors.items()
+        )
+        return "ComposedDimension({{ {} }},prefactor={})".format(
+            factors,
+            self.prefactor
+        )
+        
+    @property
+    def json(self):
+        factors = ", ".join(
+            "{} : {}".format(k,list(v) )
+                for k,v in self.factors.items()
+        )
+        obj = dict(
+            __type__ = "ComposedDimension",
+            factors = factors,
+            prefactor = self.prefactor
+        )
+        return json.dumps(obj)
+        
+# ---------------------------------------------------------------------------
 class Dimension(object):
 
     """
@@ -29,7 +113,7 @@ class Dimension(object):
     def __init__(self,system,dim,prefix=1):
     
         self._system = system 
-        self._dim = tuple( dim )
+        self._dim = tuple(dim)
         self._prefix = prefix
         
     @property 
@@ -46,7 +130,11 @@ class Dimension(object):
         return self._prefix
 
     def __hash__(self):
-        return id(self)
+        return hash( (
+            self._system, 
+            self._dim, 
+            self._prefix
+        ) )
         
     def __eq__(self,other):
         return (
@@ -71,7 +159,7 @@ class Dimension(object):
         )
       
     def __repr__(self):
-        return "Dimension( {!s}, {!s}, prefix={!s} )".format(
+        return "Dimension( {}, {}, prefix={} )".format(
             self.system,
             self.dim,
             self.prefix
@@ -79,12 +167,12 @@ class Dimension(object):
  
     def __str__(self):
         if self.prefix == 1:
-            return "{!s}{!s}".format(
+            return "{}{}".format(
                 self.system,
                 self.dim
             )
         else:
-            return "{!s}*{!s}{!s}".format(
+            return "{}*{}{}".format(
                 self.prefix,
                 self.system,
                 self.dim
@@ -139,7 +227,7 @@ if __name__ == '__main__':
     from m_layer import *
     from m_layer.system import System 
     
-    si = System( ('si-system', 88156805987886421108624908988601219537) )
+    si = System( ('si_system', 88156805987886421108624908988601219537) )
     d1 = Dimension(si,[1,2,3])
     d2 = Dimension(si,[1,-1,0])
-    print(d1**4.7)
+    print(d1)
