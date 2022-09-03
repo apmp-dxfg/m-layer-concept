@@ -5,9 +5,11 @@ The term 'aspect' is broader in meaning than 'kind of quantity'.
 
 """
 import numbers
+import json
 
 from m_layer.context import default_context as cxt
-from m_layer.stack import Stack, normal_form
+from m_layer.stack import Stack
+from m_layer.uid import UID, ComposedUID
 
 # ---------------------------------------------------------------------------
 __all__ = (
@@ -39,21 +41,28 @@ class ComposedAspect(object):
     @property
     def uid(self):
         """
-        
-        
+            
         """
         try:
             return self._uid
         except AttributeError:
-            # Reduce to a product of powers
-            pops = normal_form(self.stack)
-            self._uid = dict({
-                i.uid : v 
-                    for i,v in pops.factors.items()
-            })
-                                                   
+            self._uid = ComposedUID(self.stack)
             return self._uid
   
+    @property
+    def json(self):
+        uid = self.uid 
+        factors = {
+            str(k) : list(v) 
+                for k,v in uid.factors.items()
+        }
+
+        obj = dict(
+            __type__ = "ComposedAspect",
+            factors = factors
+        )
+        return json.dumps(obj)
+
     def __mul__(self,y):
         return ComposedAspect(
             self.stack.push(y).mul()
@@ -131,6 +140,14 @@ class Aspect(object):
             Stack().push(self).push(y).pow()
         )
         
+    @property
+    def json(self):
+        obj = dict(
+            __type__ = "Aspect",
+            uid = str( self.uid ) 
+        )
+        return json.dumps(obj)
+
     def __str__(self):
         if self.uid == no_aspect.uid:
             return ""
@@ -157,5 +174,5 @@ if __name__ == '__main__':
     L = Aspect( ('ml_length', 993853592179723568440264076369400241) )
     T = Aspect( ('ml_time', 59007067547744628223483093626372886675) )
     
-    print( (M*L/T).uid )
+    print( (M*L/T).json )
     
