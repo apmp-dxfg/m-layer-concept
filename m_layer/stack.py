@@ -4,49 +4,55 @@ import numbers
 import json 
 
 from collections import ChainMap
+from collections import defaultdict
 
 # ---------------------------------------------------------------------------
 __all__ = (
     'Stack',
     'ProductOfPowers',
     'normal_form',
-    'product_of_powers'
+    # 'product_of_powers'
 )
-# ---------------------------------------------------------------------------
-def product_of_powers(stack,getter):  
-    """
-    """
-    pops = normal_form(stack)
-    # Note `i` here is a Python object and so different 
-    # instances of the same object are distinct.
-    # `getter()` may remove this distinction (e.g., by applying uid).
-    # When that happens the existing entry key would be overwritten.
+# # ---------------------------------------------------------------------------
+# def product_of_powers(stack,setter):  
+    # """
+    # Return a :class:`ProductOfPowers` where the factors 
+    # have set by the function ``setter`` 
+    # applied to the stacked objects.
     
-    # TODO: The following could be changed to provide an argument to 
-    # `getter()` that would modify the key to obtain a distinct
-    # dictionary key, and `getter()` could maintain state
-    # information about the keys it has produced.
-    # For example, `getter(i,duplicate=True)` might return 
-    # a distinct key for `i`.
-    # This feature would allow the PoPs format to encode such 
-    # things as V/V. However, an extended interpretation of 
-    # the uid format is required. 
-    # One possibility is to add a third element containing an integer.
-    # This third component will need to be removed when accessing the
-    # M-layer register.
+    # """
+    # pops = normal_form(stack)
+    # # Note `i` here is a Python object and so different 
+    # # instances of the same object are distinct.
+    # # `getter()` may remove this distinction (e.g., by applying uid).
+    # # When that happens the existing entry key would be overwritten.
     
-    factors = {}
-    for i,v in pops.factors.items():
-        k = getter(i)    
-        if k in factors:
-            factors[ getter(i,duplicate=True) ] = v
-        else:
-            factors[k] = v
+    # # TODO: The following could be changed to provide an argument to 
+    # # `getter()` that would modify the key to obtain a distinct
+    # # dictionary key, and `getter()` could maintain state
+    # # information about the keys it has produced.
+    # # For example, `getter(i,duplicate=True)` might return 
+    # # a distinct key for `i`.
+    # # This feature would allow the PoPs format to encode such 
+    # # things as V/V. However, an extended interpretation of 
+    # # the uid format is required. 
+    # # One possibility is to add a third element containing an integer.
+    # # This third component will need to be removed when accessing the
+    # # M-layer register.
+    
+    # factors = {}
+    # for i,v in pops.factors.items():
+        # k = getter(i)    
+        # if k in factors:
+            # setter(factors,i)
+            # factors[ getter(i,duplicate=True) ] = v
+        # else:
+            # factors[k] = v
             
-    return ProductOfPowers(
-        factors,
-        prefactor=pops.prefactor
-    )
+    # return ProductOfPowers(
+        # factors,
+        # prefactor=pops.prefactor
+    # )
                                                    
 # ---------------------------------------------------------------------------
 class ProductOfPowers(object):
@@ -55,7 +61,7 @@ class ProductOfPowers(object):
     :class:`ProductOfPowers` represents an expression of products of 
     powers of objects, and includes a numerical a prefactor.  
     
-    The ``factors`` attribute is a mapping of objects to powers 
+    The ``factors`` attribute is a mapping of Python objects to powers 
     The ``prefactor`` attribute is a floating point number. 
     
     This can be used as a dimensional vector, where the factor keys
@@ -154,8 +160,8 @@ class ProductOfPowers(object):
 # ---------------------------------------------------------------------------
 def normal_form(rpn):
     """
-    Return an :class:`ProductOfPowers` representing the RPN expression as
-    a product of powers of terms, and including a scaling prefactor. 
+    Return a :class:`ProductOfPowers` for the RPN expression as
+    a product of powers of objects, and including a scaling prefactor. 
     
     Args:
         rpn (:class:`Stack`)
