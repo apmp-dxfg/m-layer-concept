@@ -17,6 +17,7 @@ product of powers of system base units.
 import numbers
 import json
 from collections import defaultdict
+from fractions import Fraction
 
 from m_layer.stack import normal_form
 
@@ -61,10 +62,10 @@ class ComposedDimension(object):
         )
 
     def __hash__(self):
-        return hash( 
-            tuple( self.factors.items() )
-        +   ( self.prefactor, )
-        )
+        return hash( (
+            self.factors.items(),
+            Fraction( *self.prefactor )
+        ) )
  
     def __str__(self):
         factors = ", ".join(
@@ -73,7 +74,7 @@ class ComposedDimension(object):
         )
         return "{{ factors = {{ {} }}, prefactor = {} }}".format(
             factors,
-            self.prefactor
+            Fraction( *self.prefactor )
         )
 
     def __repr__(self):
@@ -110,7 +111,7 @@ class Dimension(object):
         '_system', '_dim', '_prefix'
     )
     
-    def __init__(self,system,dim,prefix=1):
+    def __init__(self,system,dim,prefix=[1,1]):
     
         self._system = system 
         self._dim = tuple(dim)
@@ -133,7 +134,8 @@ class Dimension(object):
         return hash( (
             self._system, 
             self._dim, 
-            self._prefix
+            # Fraction(1,10) <=> Fraction(10,100), etc.
+            Fraction( *self._prefix )   
         ) )
         
     def __eq__(self,other):
@@ -173,7 +175,7 @@ class Dimension(object):
             )
         else:
             return "{}*{}{}".format(
-                self.prefix,
+                Fraction( *self.prefix ),
                 self.system,
                 self.dim
             )
@@ -184,7 +186,7 @@ class Dimension(object):
         return Dimension(
             self.system,
             self.dim,
-            self.prefix * x
+            (x*self.prefix[0], self.prefix[1])
         )
         
     def __mul__(self,rhs):
@@ -195,7 +197,7 @@ class Dimension(object):
         return Dimension(
             self.system,
             tuple( i + j for (i,j) in zip(self.dim,rhs.dim) ),
-            self.prefix * rhs.prefix
+            (self.prefix[0]*rhs.prefix[0], self.prefix[1]*rhs.prefix[1])
         )
             
     
@@ -207,7 +209,7 @@ class Dimension(object):
         return Dimension(
             self.system,
             tuple( i - j for (i,j) in zip(self.dim,rhs.dim) ),
-            self.prefix / rhs.prefix
+            (self.prefix[0]*rhs.prefix[1], self.prefix[1]*rhs.prefix[0])
         )
     
     def __pow__(self,n):
@@ -218,7 +220,7 @@ class Dimension(object):
         return Dimension(
             self.system,
             tuple( n*i for i in self.dim ),
-            self.prefix**n
+            (self.prefix[0]**n, self.prefix[1]**n)
         )
     
 # ===========================================================================
@@ -228,6 +230,6 @@ if __name__ == '__main__':
     from m_layer.system import System 
     
     si = System( ('si_system', 88156805987886421108624908988601219537) )
-    d1 = Dimension(si,[1,2,3])
+    d1 = Dimension(si,[1,2,3],prefix=[100,10])
     d2 = Dimension(si,[1,-1,0])
     print(d1)
