@@ -331,8 +331,7 @@ class ComposedScale(object):
             multiplication will lead to failure.            
             
         """
-        # This seems risky. Unless we really need to do this,
-        # it should probably be removed.
+        # This seems risky. 
         
         sa_stack = composed_scale_aspect.stack 
         assert len(sa_stack) == len(self.stack)
@@ -427,18 +426,25 @@ class Scale(object):
             return self._dimension
             
         except AttributeError:
+            # TODO:
+            # This should not deal with M-layer formats
             to_dim_tuple = lambda x: tuple( literal_eval(x) )
-
+            
+            # The JSON prefix is a pair of string-formatted
+            # integers for the numerator and denominator
+            to_prefix_tuple = lambda x: tuple( 
+                int( literal_eval(i) ) 
+                    for i in literal_eval(x) 
+            )
+            
             scale_json = self._from_json()
             ref_json = cxt.reference_reg[ tuple(scale_json['reference']) ] 
 
             if 'system' in ref_json:
-                # TODO:
-                # This should not deal with M-layer formats
                 self._dimension = Dimension( 
                     System( tuple(ref_json['system']['uid']) ),
                     to_dim_tuple( ref_json['system']['dimensions'] ),
-                    float( ref_json['system']['prefix'] )
+                    to_prefix_tuple( ref_json['system']['prefix'] )
                 )
                 return self._dimension 
                 
