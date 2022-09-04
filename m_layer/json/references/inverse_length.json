@@ -42,11 +42,11 @@
                 88156805987886421108624908988601219537
             ],
             "dimensions": "[0, -1, 0, 0, 0, 0, 0]",
-            "prefix": "100.0"
+            "prefix": "100"
         },
         "UCUM": {
             "code": "/cm",
-            "description": "1/centieter"
+            "description": "1/centimeter"
         }
     }
 ]
