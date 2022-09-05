@@ -11,8 +11,7 @@ from m_layer import casting_register
 from m_layer import scales_for_aspect_register
 
 __all__ = (
-    'Context',
-    'default_context',
+    'Context', 'default_context'
 )
 
 # ---------------------------------------------------------------------------
@@ -46,6 +45,8 @@ class Context(object):
             system_reg = None
             
         ):
+        
+        
         self.locale = locale 
         self.value_fmt = value_fmt
         
@@ -86,7 +87,10 @@ class Context(object):
             self.system_reg = reference_reg
 
     def _load_entity(self,entity):
+        # Handle one JSON object
+        
         entity_type = entity['__entry__']
+        
         if entity_type == "Reference":
             self.reference_reg.set(entity)
         elif entity_type == "Aspect":
@@ -107,17 +111,17 @@ class Context(object):
             )
         
     def _loader(self,data):
-        # A single entity will be presented as a dict
-        # A json array is a list.
+        # A JSON object is a dict
+        # A JSON array of objects is a list.
         if isinstance(data,list):
             for l_i in data:
                 self._load_entity(l_i)
         else:       
             self._load_entity(data)
             
-    def loads(self,json_str,**kwargs):
-        data = json.loads(json_str,**kwargs)
-        self._loader(data)
+    # def loads(self,json_str,**kwargs):
+        # data = json.loads(json_str,**kwargs)
+        # self._loader(data)
             
     def load_json(self,file_path,**kwargs):
         with open(file_path,'r') as f:
@@ -135,7 +139,7 @@ class Context(object):
         """
         for f_json in glob.glob( path ):
             try:
-                default_context.load_json( f_json, **kwargs )
+                self.load_json( f_json, **kwargs )
             except json.decoder.JSONDecodeError as e:
                 # Report errors but do not stop execution
                 print("json.decoder.JSONDecodeError",e, 'in:',f_json)
@@ -160,17 +164,23 @@ class Context(object):
             
         scale_pair = (src_scale_uid,dst_scale_uid)
         
-        if( src_aspect_uid is not None 
-        and src_aspect_uid in self.scales_for_aspect_reg
+        if( 
+            # TODO: ``None`` is replaced by ``no_aspect``
+            # but perhaps this is unnecessary now: there
+            # is always an aspect.
+            src_aspect_uid != self.no_aspect
+        and 
+            src_aspect_uid in self.scales_for_aspect_reg
         ):
             if scale_pair in self.scales_for_aspect_reg[src_aspect_uid]:
                 return True
                 
-        # Aspect-free conversions are possible
+        # Default aspect conversions are possible
         if scale_pair in self.conversion_reg: return True
                         
-        # This is a failure 
-        if src_aspect_uid is None:
+        # This is a failure
+        # TODO: ``None`` is replaced by ``no_aspect``        
+        if src_aspect_uid == self.no_aspect:
             msg = "no conversion from Scale({!r}) to Scale({!r})".format(
                     src_scale_uid,
                     dst_scale_uid
@@ -219,7 +229,9 @@ class Context(object):
         
         # Has an aspect argument been given that restricts conversions?
         # Look first in the aspect-specific conversion table
-        if( src_aspect_uid is not None 
+
+        # TODO: ``None`` is replaced by ``no_aspect``        
+        if( src_aspect_uid != self.no_aspect 
         and src_aspect_uid in self.scales_for_aspect_reg
         ):
             scales_for_aspect = self.scales_for_aspect_reg[src_aspect_uid]
@@ -235,16 +247,17 @@ class Context(object):
             pass
                         
         # This is a failure 
-        if src_aspect_uid is None:
+        # TODO: ``None`` is replaced by ``no_aspect``        
+        if src_aspect_uid == self.no_aspect.uid:
             raise RuntimeError(
-                "no conversion from Scale({!r}) to Scale({!r})".format(
+                "no conversion from Scale( {!s} ) to Scale( {!s} )".format(
                     src_scale_uid,
                     dst_scale_uid
                 )
             )
         else:
             raise RuntimeError(
-                "no conversion from Scale({!r}) to Scale({!r}) for Aspect{!r}".format(
+                "no conversion from Scale( {!s} ) to Scale( {!s} ) for Aspect( {!s} )".format(
                     src_scale_uid,
                     dst_scale_uid,
                     src_aspect_uid
