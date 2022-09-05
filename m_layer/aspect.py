@@ -7,7 +7,7 @@ The term 'aspect' is broader in meaning than 'kind of quantity'.
 import numbers
 import json
 
-from m_layer.context import default_context as cxt
+from m_layer.context import default_context
 from m_layer.stack import Stack
 from m_layer.uid import UID, ComposedUID
 
@@ -99,13 +99,13 @@ class Aspect(object):
     )
     
     def __init__(self,aspect_uid):    
-        self._aspect_uid = aspect_uid
+        self._aspect_uid = UID(aspect_uid)
 
     def _from_json(self,locale=None,short=False):
-        aspect_json = cxt.aspect_reg[self._aspect_uid] 
+        aspect_json = default_context.aspect_reg[self._aspect_uid] 
 
         locale_key = 'symbol' if short else 'name'
-        if locale is None: locale = cxt.locale 
+        if locale is None: locale = default_context.locale 
             
         return aspect_json['locale'][locale][locale_key]
 
@@ -152,13 +152,13 @@ class Aspect(object):
         if self.uid == no_aspect.uid:
             return ""
         else:
-            return str( self._from_json() )
+            return self._from_json()
         
     def __repr__(self):
         if self.uid == no_aspect.uid:
             return ""
         else:
-            return "Aspect{!r}".format( self.uid )
+            return "Aspect( {!s} )".format( self.uid )
 
 # ---------------------------------------------------------------------------
 no_aspect = Aspect((
