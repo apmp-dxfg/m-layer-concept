@@ -8,6 +8,7 @@ from ast import literal_eval
 
 from m_layer.context import default_context as cxt
 from m_layer.aspect import Aspect, ComposedAspect, no_aspect
+from m_layer.reference import Reference
 from m_layer.stack import Stack
 from m_layer.system import System
 from m_layer.dimension import Dimension, ComposedDimension
@@ -86,7 +87,6 @@ class ComposedScaleAspect(object):
             str(k) : list(v) 
                 for k,v in uid.factors.items()
         }
-
         obj = dict(
             __type__ = "ComposedScaleAspect",
             prefactor = uid.prefactor,
@@ -370,24 +370,15 @@ class Scale(object):
     """
 
     __slots__ = (
-        '_scale_uid','_scale_type', '_dimension'
+        '_scale_uid','_scale_type', '_reference'
     )
     
     def __init__(self,scale_uid):    
-        self._scale_uid = (scale_uid)
-
-    def _from_json(self):
-        return cxt.scale_reg[self._scale_uid] 
-
-    def _json_scale_to_ref(self,locale=None,short=False):
-    
-        scale_json = self._from_json()
-        ref_uid = cxt.reference_reg[ tuple(scale_json['reference']) ] 
-
-        locale_key = 'symbol' if short else 'name'
-        if locale is None: locale = cxt.locale 
-            
-        return ref_uid['locale'][locale][locale_key]
+        self._scale_uid = UID(scale_uid)
+        self._scale_type = cxt.scale_reg[self._scale_uid]['scale_type']
+        self._reference = Reference(
+            cxt.scale_reg[self._scale_uid]['reference']
+        ) 
         
     @property
     def json(self):
@@ -407,12 +398,7 @@ class Scale(object):
         
     @property 
     def scale_type(self):
-        try:
-            return self._scale_type
-        except AttributeError:
-            scale_json = self._from_json()
-            self._scale_type = scale_json['scale_type']
-            return self._scale_type
+        return self._scale_type
      
     @property 
     def dimension(self):
@@ -422,35 +408,7 @@ class Scale(object):
         Otherwise return ``None``.
         
         """
-        try:
-            return self._dimension
-            
-        except AttributeError:
-            # TODO:
-            # This should not deal with M-layer formats
-            to_dim_tuple = lambda x: tuple( literal_eval(x) )
-            
-            # The JSON prefix is a pair of string-formatted
-            # integers for the numerator and denominator
-            to_prefix_tuple = lambda x: tuple( 
-                int( literal_eval(i) ) 
-                    for i in literal_eval(x) 
-            )
-            
-            scale_json = self._from_json()
-            ref_json = cxt.reference_reg[ tuple(scale_json['reference']) ] 
-
-            if 'system' in ref_json:
-                self._dimension = Dimension( 
-                    System( tuple(ref_json['system']['uid']) ),
-                    to_dim_tuple( ref_json['system']['dimensions'] ),
-                    to_prefix_tuple( ref_json['system']['prefix'] )
-                )
-                return self._dimension 
-                
-            else:
-                raise RuntimeError("No dimension for {!r}".format(self))
-                
+        return self._reference.dimension
             
     def __eq__(self,other):
         "True when both objects have the same uids"
@@ -487,10 +445,11 @@ class Scale(object):
         )    
         
     def __str__(self):
-        return self._json_scale_to_ref(short=True)
+        return "{}".format(self._reference)
+        # return self._json_scale_to_ref(short=True)
         
     def __repr__(self):
-        return "Scale({})".format( self.uid )
+        return "Scale( {!s} )".format( self.uid )
 
     def to_scale_aspect(self,aspect=no_aspect):
         """
