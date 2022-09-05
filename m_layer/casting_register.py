@@ -4,19 +4,8 @@ Casting can change the type of scale and aspect of an expression.
 Legitimate castings are recorded in a :class:`~.casting_register.CastingRegister`, which is an attribute of the :class:`~context.Context` object.
 
 """
-import json
-
 from m_layer.ml_eval import ml_eval   
-
-# ---------------------------------------------------------------------------
-def _to_tuple(lst):
-    """
-    Convert nested lists to nested tuples recursively 
-    
-    """
-    return tuple(
-        _to_tuple(i) if isinstance(i, list) else i for i in lst
-    )
+from m_layer.uid import UID
     
 # ---------------------------------------------------------------------------
 class CastingRegister(object):
@@ -56,6 +45,14 @@ class CastingRegister(object):
             entry: the M-layer record for a casting
         
         """
+        # The JSON format is an array containing a 
+        # pair of uids (also arrays).
+        # _to_tuple = lambda l: tuple(
+            # _to_tuple(i) if isinstance(i, list) else i 
+                # for i in l
+        # )
+        _to_tuple = lambda lst: tuple( UID(i) for i in lst )
+        
         uid_src = _to_tuple( entry['src'] )        
         uid_dst = _to_tuple( entry['dst'] )
             

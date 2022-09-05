@@ -4,60 +4,10 @@ Conversion changes the scale of an expression but leaves the type of scale and a
 Legitimate conversions are recorded in a :class:`~.conversion_register.ConversionRegister`, which is an attribute of the :class:`~context.Context` object.
 
 """
-import json
-
 from m_layer.ml_eval import ml_eval
+
 from m_layer import ml_math        
-
-# ---------------------------------------------------------------------------
-def _set_conversion_fn(self,entry,_tbl, uid_pair):
-    """
-    Utility function to take one JSON entry for conversion between scales 
-    and enter it into a mapping, indexed by the pair of ML scale uids
-    
-    """
-
-    if uid_pair in _tbl:
-        raise RuntimeError(
-            "existing conversion entry: {}".format(uid_pair)
-        )
-        
-    # The M-Layer reference identifies the type of scale
-    _scales = self._context.scale_reg
-    src_type = _scales[ uid_pair[0] ]['scale_type']
-    dst_type = _scales[ uid_pair[1] ]['scale_type']
-
-    if src_type != dst_type:
-        raise RuntimeError(
-            "scale types must be the same: {} and {}".format(
-            src_type,dst_type)
-        )
-                              
-    # Conversion function parameter values are in a sequence 
-    # they may take the form of expressions to allow fractions 
-    factors = tuple(  ml_eval(x_i) for x_i in entry['factors'] )
-        
-    # Set the conversion function
-    if (src_type,dst_type) == ('ratio','ratio'):
-        _tbl[uid_pair] = lambda x: ml_math.ratio_convert(x,*factors) 
-    elif (
-        (src_type,dst_type) == ('interval','interval')  
-    ):
-        # `factors[0]` is the scale divisions conversion factor 
-        # `factors[1]` is the offset
-        _tbl[uid_pair] = lambda x: ml_math.interval_convert(x,*factors)
-    elif (
-        (src_type,dst_type) == ('bounded','bounded')
-    ):
-        # `factors[0]` is the scale divisions conversion factor 
-        # `factors[1]` is the lower bound of the dst scale 
-        # `factors[2]` is the upper bound of the dst scale
-        _tbl[uid_pair] = lambda x: ml_math.bounded_convert(x,*factors)             
-        
-    else:
-        raise RuntimeError(
-            "unrecognised case: {}".format((src_type,dst_type))
-        )
+from m_layer.uid import UID
  
 # ---------------------------------------------------------------------------
 class ConversionRegister(object):
@@ -102,11 +52,59 @@ class ConversionRegister(object):
             entry: the M-layer record for a conversion
         
         """
-        uid_ml_ref_src = tuple( entry['src'] )        
-        uid_ml_ref_dst = tuple( entry['dst'] )
+        uid_ml_ref_src = UID( entry['src'] )        
+        uid_ml_ref_dst = UID( entry['dst'] )
             
         uid_pair = (uid_ml_ref_src,uid_ml_ref_dst)
         
-        _set_conversion_fn(self,entry,self._table,uid_pair)
+        self._set_conversion_fn(entry,self._table,uid_pair)
 
+    # ---------------------------------------------------------------------------
+    def _set_conversion_fn(self,entry,_tbl, uid_pair):
+        """
+        Utility function to take one JSON entry for conversion between scales 
+        and enter it into a mapping, indexed by the pair of ML scale uids
+        
+        """
+
+        if uid_pair in _tbl:
+            raise RuntimeError(
+                "existing conversion entry: {}".format(uid_pair)
+            )
             
+        # The M-Layer reference identifies the type of scale
+        _scales = self._context.scale_reg
+        src_type = _scales[ uid_pair[0] ]['scale_type']
+        dst_type = _scales[ uid_pair[1] ]['scale_type']
+
+        if src_type != dst_type:
+            raise RuntimeError(
+                "scale types must be the same: {} and {}".format(
+                src_type,dst_type)
+            )
+                                  
+        # Conversion function parameter values are in a sequence 
+        # they may take the form of expressions to allow fractions 
+        factors = tuple(  ml_eval(x_i) for x_i in entry['factors'] )
+            
+        # Set the conversion function
+        if (src_type,dst_type) == ('ratio','ratio'):
+            _tbl[uid_pair] = lambda x: ml_math.ratio_convert(x,*factors) 
+        elif (
+            (src_type,dst_type) == ('interval','interval')  
+        ):
+            # `factors[0]` is the scale divisions conversion factor 
+            # `factors[1]` is the offset
+            _tbl[uid_pair] = lambda x: ml_math.interval_convert(x,*factors)
+        elif (
+            (src_type,dst_type) == ('bounded','bounded')
+        ):
+            # `factors[0]` is the scale divisions conversion factor 
+            # `factors[1]` is the lower bound of the dst scale 
+            # `factors[2]` is the upper bound of the dst scale
+            _tbl[uid_pair] = lambda x: ml_math.bounded_convert(x,*factors)             
+            
+        else:
+            raise RuntimeError(
+                "unrecognised case: {}".format((src_type,dst_type))
+            )            
