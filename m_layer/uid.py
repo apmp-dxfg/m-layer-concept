@@ -60,15 +60,19 @@ class UID(object):
     def json(self):
         obj = dict(
             __type__ = "UID",
-            uid = str( self ) 
+            uid = str( list(
+                self.name,
+                self.uuid
+            ) ) 
         )
         return json.dumps(obj)
         
     def __str__(self):
-        return "[{!r}, {}]".format(
+        return "({!r}, {})".format(
             self.name,
             self.uuid
         )
+        
     def __repr__(self):
         return "UID({!r}, {})".format(
             self.name,
@@ -116,10 +120,10 @@ class ComposedUID(object):
         )
 
     def __hash__(self):
-        return hash( 
-            tuple( self.factors.items() )
-        +   ( self.prefactor, )
-        )
+        return hash( (
+            tuple( self.factors.items() ),
+            self.prefactor
+        ) )
  
     def __str__(self):
         factors = ", ".join(
