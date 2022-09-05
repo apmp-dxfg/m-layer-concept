@@ -211,7 +211,7 @@ if __name__ == '__main__':
         # 'unit-system' : dict(
             # uid = [],
             # dimensions = [],
-            # prefix = ''
+            # prefix = []
         # ),
         # "UCUM" : dict(
             # code = "",
@@ -236,11 +236,12 @@ if __name__ == '__main__':
         )
 
         # A unit system may not be provided
+        print("r[3]", repr(r[3].value))
         if r[3].value is not None:
             obj['system'] = dict(
                 uid = put_uid(directory,ws,r[3].value,i,3+1),
                 dimensions = str( literal_eval( r[4].value ) ),
-                prefix = str( r[5].value )
+                prefix = str( literal_eval( r[5].value ) )
             )
            
         # Code in UCUM may not exist

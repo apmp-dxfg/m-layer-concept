@@ -184,7 +184,7 @@ if __name__ == '__main__':
         # 'system' : dict(
             # uid = [],
             # dimensions = [],
-            # prefix = 1
+            # prefix = []
         # ),
         # "UCUM" : dict(
             # code = "",
