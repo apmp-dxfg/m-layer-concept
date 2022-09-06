@@ -16,7 +16,10 @@ product of powers of system base units.
 """
 import numbers
 import json
+
 from collections import defaultdict
+from collections import abc
+
 from fractions import Fraction
 
 from m_layer.stack import normal_form
@@ -27,6 +30,7 @@ class ComposedDimension(object):
     __slots__ = ('prefactor','factors')
 
     def __init__(self,stack):
+    
         pops = normal_form(stack)
 
         # The keys in pop.factors are Python objects.
@@ -64,7 +68,7 @@ class ComposedDimension(object):
     def __hash__(self):
         return hash( (
             self.factors.items(),
-            Fraction( *self.prefactor )
+            self.prefactor
         ) )
  
     def __str__(self):
@@ -72,20 +76,30 @@ class ComposedDimension(object):
             "{} : {}".format(k,list(v) )
                 for k,v in self.factors.items()
         )
-        return "{{ factors = {{ {} }}, prefactor = {} }}".format(
-            factors,
-            Fraction( *self.prefactor )
-        )
-
+        if self.prefactor == 1:
+            return "{{ factors = {{ {} }} }}".format(
+                factors
+            )
+        else:
+            return "{{ factors = {{ {} }}, prefactor = {} }}".format(
+                factors,
+                self.c
+            )
+        
     def __repr__(self):
         factors = ", ".join(
             "{} : {}".format(k,list(v) )
                 for k,v in self.factors.items()
         )
-        return "ComposedDimension({{ {} }},prefactor={})".format(
-            factors,
-            self.prefactor
-        )
+        if self.prefactor == 1:
+            return "ComposedDimension({{ {} }})".format(
+                factors,
+            )
+        else:
+            return "ComposedDimension({{ {} }},prefactor={})".format(
+                factors,
+                self.prefactor
+            )
         
     @property
     def json(self):
@@ -111,11 +125,12 @@ class Dimension(object):
         '_system', '_dim', '_prefix'
     )
     
-    def __init__(self,system,dim,prefix=[1,1]):
+    def __init__(self,system,dim,prefix=1):
     
         self._system = system 
         self._dim = tuple(dim)
-        self._prefix = prefix
+        self._prefix = Fraction( *prefix ) if isinstance(
+            prefix,abc.Iterable) else Fraction( prefix )
         
     @property 
     def system(self):
@@ -135,7 +150,7 @@ class Dimension(object):
             self._system, 
             self._dim, 
             # Fraction(1,10) <=> Fraction(10,100), etc.
-            Fraction( *self._prefix )   
+            self._prefix   
         ) )
         
     def __eq__(self,other):
@@ -161,11 +176,17 @@ class Dimension(object):
         )
       
     def __repr__(self):
-        return "Dimension( {}, {}, prefix={} )".format(
-            self.system,
-            self.dim,
-            self.prefix
-        )
+        if self.prefix == 1:
+            return "Dimension( {}, {} )".format(
+                self.system,
+                self.dim
+            )
+        else:
+            return "Dimension( {}, {}, prefix={} )".format(
+                self.system,
+                self.dim,
+                self.prefix
+            )
  
     def __str__(self):
         if self.prefix == 1:
@@ -175,7 +196,7 @@ class Dimension(object):
             )
         else:
             return "{}*{}{}".format(
-                Fraction( *self.prefix ),
+                self.prefix,
                 self.system,
                 self.dim
             )
@@ -197,7 +218,7 @@ class Dimension(object):
         return Dimension(
             self.system,
             tuple( i + j for (i,j) in zip(self.dim,rhs.dim) ),
-            (self.prefix[0]*rhs.prefix[0], self.prefix[1]*rhs.prefix[1])
+            self.prefix*rhs.prefix
         )
             
     
@@ -209,7 +230,7 @@ class Dimension(object):
         return Dimension(
             self.system,
             tuple( i - j for (i,j) in zip(self.dim,rhs.dim) ),
-            (self.prefix[0]*rhs.prefix[1], self.prefix[1]*rhs.prefix[0])
+            self.prefix/rhs.prefix
         )
     
     def __pow__(self,n):
@@ -220,7 +241,7 @@ class Dimension(object):
         return Dimension(
             self.system,
             tuple( n*i for i in self.dim ),
-            (self.prefix[0]**n, self.prefix[1]**n)
+            self.prefix**n
         )
     
 # ===========================================================================
