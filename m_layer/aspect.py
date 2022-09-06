@@ -22,7 +22,7 @@ __all__ = (
 class ComposedAspect(object):
 
     """
-    A :class:`ComposedAspect` holds an :class:`Aspect` expression
+    A ComposedAspect holds an Aspect expression
     """
 
     __slots__ = (
@@ -83,7 +83,7 @@ class ComposedAspect(object):
         return "{!s}".format( self.stack )
         
     def __repr__(self):
-        return "{!s}({!r})".format( self.__class__,self.stack ) 
+        return "ComposedAspect({!r})".format( self.stack ) 
         
 
 # ---------------------------------------------------------------------------
