@@ -3,9 +3,19 @@ from ast import literal_eval
 from m_layer.context import default_context as cxt
 from m_layer.uid import UID
 from m_layer.system import System
+from m_layer.dimension import Dimension
 
+__all__ = (
+    'Reference',
+)
 # ---------------------------------------------------------------------------
 class Reference(object):
+
+    """
+    A Reference encapsulates access to an M-layer entry about a
+    measurement unit or other type of reference.  
+
+    """
 
     slots = ( 'uid', '_json_entry', '_dimension'  )
     
@@ -37,8 +47,7 @@ class Reference(object):
             # The JSON prefix is a pair of string-formatted
             # integers for the numerator and denominator
             to_prefix_tuple = lambda x: tuple( 
-                int( literal_eval(i) ) 
-                    for i in literal_eval(x) 
+                int( literal_eval(i) ) for i in x 
             )
 
             _json = self._json_entry
