@@ -1,58 +1,17 @@
 """
 """
-import numbers 
-import json 
+import numbers
+from fractions import Fraction 
 
 from collections import ChainMap
-from collections import defaultdict
+from collections import abc
 
 # ---------------------------------------------------------------------------
 __all__ = (
     'Stack',
     'ProductOfPowers',
     'normal_form',
-    # 'product_of_powers'
 )
-# # ---------------------------------------------------------------------------
-# def product_of_powers(stack,setter):  
-    # """
-    # Return a :class:`ProductOfPowers` where the factors 
-    # have set by the function ``setter`` 
-    # applied to the stacked objects.
-    
-    # """
-    # pops = normal_form(stack)
-    # # Note `i` here is a Python object and so different 
-    # # instances of the same object are distinct.
-    # # `getter()` may remove this distinction (e.g., by applying uid).
-    # # When that happens the existing entry key would be overwritten.
-    
-    # # TODO: The following could be changed to provide an argument to 
-    # # `getter()` that would modify the key to obtain a distinct
-    # # dictionary key, and `getter()` could maintain state
-    # # information about the keys it has produced.
-    # # For example, `getter(i,duplicate=True)` might return 
-    # # a distinct key for `i`.
-    # # This feature would allow the PoPs format to encode such 
-    # # things as V/V. However, an extended interpretation of 
-    # # the uid format is required. 
-    # # One possibility is to add a third element containing an integer.
-    # # This third component will need to be removed when accessing the
-    # # M-layer register.
-    
-    # factors = {}
-    # for i,v in pops.factors.items():
-        # k = getter(i)    
-        # if k in factors:
-            # setter(factors,i)
-            # factors[ getter(i,duplicate=True) ] = v
-        # else:
-            # factors[k] = v
-            
-    # return ProductOfPowers(
-        # factors,
-        # prefactor=pops.prefactor
-    # )
                                                    
 # ---------------------------------------------------------------------------
 class ProductOfPowers(object):
@@ -68,9 +27,9 @@ class ProductOfPowers(object):
     refer to base objects.
     
     """
-    # Note that the powers-of-products form is not sensitive to the 
+    # Note that the powers-of-products form is insensitive to the 
     # order of multiplication and division in the initial expression;
-    # in this way it allows arithmetically equivalent forms to be seen 
+    # it allows arithmetically equivalent forms to be seen 
     # as equal. However, sometimes there is embedded in the original
     # expression. For instance, [litres per 100 kilometres] could 
     # become {'litres':1,'kilometres':-1,'prefactor':0.01}, in which
@@ -85,33 +44,34 @@ class ProductOfPowers(object):
     __slots__ = ('prefactor','factors')
     
     def __init__(self,factors,prefactor=1):
-        self.prefactor = prefactor
+        # Hoping that the Fraction class will handle integer factors
+        # in the numerator and denominator without approximation
+        # Arithmetic operations on the class will result in float 
+        # when the operation cannot be exactly represented as a fraction.
+        self.prefactor = Fraction( *prefactor ) if isinstance(
+            prefactor,abc.Iterable) else Fraction( prefactor )
         self.factors = factors
  
     def __str__(self):
-        return "{!s}:{!s}".format(
-            self.prefactor,
-            self.factors
-        )
+        if self.prefactor == 1:
+            return "{!s}".format(self.prefactor)
+        else:
+            return "{!s}:{!s}".format(
+                self.prefactor,
+                self.factors
+            )
         
     def __repr__(self):
-        return "ProductOfPowers({!s},prefactor={!s})".format(
-            self.factors,
-            self.prefactor
-        )
- 
-    # @property
-    # def json(self):
-        # obj = dict(
-            # __type__ = "ProductOfPowers",
-            # prefactor = self.prefactor,
-            # factors = {
-                # str(k) : v 
-                    # for k,v in self.factors.items()
-            # }
-        # )
-        # return json.dumps(obj)
-        
+        if self.prefactor == 1:
+            return "ProductOfPowers({!s})".format(
+                self.factors
+            )
+        else:
+            return "ProductOfPowers({!s},prefactor={!s})".format(
+                self.factors,
+                self.prefactor
+            )
+         
     def __eq__(self,other):
         return (
             isinstance(other,self.__class__)
@@ -319,4 +279,4 @@ if __name__ == '__main__':
     s = s.push(s2).div()
     print(s)
     print(repr(s))
-    print( ( product_of_powers(s,lambda x:x) ).json ) 
+    print( ( normal_form(s) ) ) 
