@@ -49,7 +49,7 @@ The M-layer will not allow an expression to be converted without this informatio
     >>> t_K = convert(t_C,kelvin)
     Traceback (most recent call last):
     ...
-    RuntimeError: no conversion from Scale(('ml_si_celsius_interval', 245795086332095731716589481707012001072)) to Scale(('ml_si_kelvin_ratio', 302952256288207449238881076502466548054)) for Aspect('ml_no_aspect', 295504637700214937127120941173285352815)
+    RuntimeError: no conversion from Scale( ('ml_si_celsius_interval', 245795086332095731716589481707012001072) ) to Scale( ('ml_si_kelvin_ratio', 302952256288207449238881076502466548054) )
 
 Information about the aspect can be specified initially when creating an expression, or injected during later casting, as shown below. Once specified, conversion operations cannot change the aspect. :: 
 
@@ -77,7 +77,7 @@ The distinction between temperature and temperature difference is now more manag
     >>> t_diff_C.convert(fahrenheit_interval)
     Traceback (most recent call last):
     ...
-    RuntimeError: no conversion from Scale(('ml_si_celsius_ratio', 278784445377172064355281533676474538407)) to Scale(('ml_imp_fahrenheit_interval', 22817745368296240233220712518826840767))  for Aspect('ml_no_aspect', 295504637700214937127120941173285352815)
+    RuntimeError: no conversion from Scale( ('ml_si_celsius_ratio', 278784445377172064355281533676474538407) ) to Scale( ('ml_imp_fahrenheit_interval', 22817745368296240233220712518826840767) )
 
 However, degrees Celsius can be converted to kelvin (the scales are of the same type)::
 
@@ -121,7 +121,7 @@ Pairing scales with aspects provides a convenient and safe way of expressing dat
     >>> t_diff_C.convert(fahrenheit_T)  # The difference in aspect is detected 
     Traceback (most recent call last):
     ...
-    RuntimeError: incompatible aspects: [Aspect('ml_temperature_difference', 212368324110263031011700652725345220325), Aspect('ml_thermodynamic_temperature', 227327310217856015944698060802418784871)]
+    RuntimeError: incompatible aspects: [Aspect( ('ml_temperature_difference', 212368324110263031011700652725345220325) ), Aspect( ('ml_thermodynamic_temperature', 227327310217856015944698060802418784871) )]
   
 Plane angle
 ===========
@@ -272,7 +272,7 @@ Here, conversion from the special name becquerel to the generic unit per-second 
     >>> convert(y,becquerel)    # The aspect is unspecified
     Traceback (most recent call last):
     ...
-    RuntimeError: no conversion from Scale(('ml_si_s-1_ratio', 323506565708733284157918472061580302494)) to Scale(('ml_si_becquerel_ratio', 327022986202149438703681911339752143822)) for Aspect('ml_no_aspect', 295504637700214937127120941173285352815)
+    RuntimeError: no conversion from Scale( ('ml_si_s-1_ratio', 323506565708733284157918472061580302494) ) to Scale( ('ml_si_becquerel_ratio', 327022986202149438703681911339752143822) )
 
 The conversion back to becquerel requires the aspect to be specified::
 
@@ -303,4 +303,4 @@ Similarly, if the aspect is declared as frequency initially, the following lines
     >>> convert(y,becquerel)    # Illegitimate conversion is detected
     Traceback (most recent call last):
     ...
-    RuntimeError: no conversion from Scale(('ml_si_s-1_ratio', 323506565708733284157918472061580302494)) to Scale(('ml_si_becquerel_ratio', 327022986202149438703681911339752143822)) for Aspect('ml_frequency', 153247472008167864427404739264717558529)    
+    RuntimeError: no conversion from Scale( ('ml_si_s-1_ratio', 323506565708733284157918472061580302494) ) to Scale( ('ml_si_becquerel_ratio', 327022986202149438703681911339752143822) ) for Aspect( ('ml_frequency', 153247472008167864427404739264717558529) )    

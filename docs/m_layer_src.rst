@@ -45,6 +45,14 @@ Scale
     :members:
     :special-members: __eq__
 
+Reference
+---------
+
+.. automodule:: reference
+    :members:
+    :special-members: __eq__
+
+
 Aspect
 ------
 .. automodule:: aspect
