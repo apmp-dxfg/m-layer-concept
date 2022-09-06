@@ -5,6 +5,7 @@ base units (M-layer references).
 from collections import namedtuple 
 
 from m_layer.context import default_context as cxt
+from m_layer.uid import UID 
 
 # ---------------------------------------------------------------------------
 class System(object):
@@ -17,11 +18,12 @@ class System(object):
 
     def __init__(self,uid):
     
-        self._uid = uid        
+        self._uid = uid = UID( uid )  
+        
         self._name = cxt.system_reg[uid]['name']
         
         # The basis is a sequence of M-layer reference uids
-        basis = [ tuple(s_i) for s_i in cxt.system_reg[uid]['basis'] ] 
+        basis = [ UID( tuple(s_i) ) for s_i in cxt.system_reg[uid]['basis'] ] 
         names = [ cxt.reference_reg[ uid_i ]['locale']['default']['symbol'] 
             for uid_i in basis
         ]
