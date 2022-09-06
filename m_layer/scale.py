@@ -5,11 +5,12 @@ import numbers
 import json 
 
 from ast import literal_eval
+from fractions import Fraction 
 
 from m_layer.context import default_context as cxt
 from m_layer.aspect import Aspect, ComposedAspect, no_aspect
 from m_layer.reference import Reference
-from m_layer.stack import Stack
+from m_layer.stack import Stack, normal_form
 from m_layer.system import System
 from m_layer.dimension import Dimension, ComposedDimension
 from m_layer.uid import UID, ComposedUID 
@@ -19,7 +20,8 @@ __all__ = (
     'Scale',
     'ComposedScale',
     'ScaleAspect',
-    'ComposedScaleAspect'
+    'ComposedScaleAspect',
+    'as_scales_and_aspects'
 )
 # ---------------------------------------------------------------------------
 def to_str(o):
@@ -28,8 +30,34 @@ def to_str(o):
         return "[{0[0]!r}, {0[1]}]".format(o)
     else:
         return o
-                    
-
+        
+# ---------------------------------------------------------------------------
+def as_scales_and_aspects(composed_scale_aspect):
+    """
+    Return a :class:`ComposedScale`-:class:`~aspect.ComposedAspect` pair 
+    
+    Args:
+        `composed_scale_aspect` (:class:`ComposedScaleAspect`):
+    
+    """
+    assert isinstance(
+        composed_scale_aspect,ComposedScaleAspect
+    ), repr(composed_scale_aspect)
+        
+    scale_stk = Stack([
+        o_i.scale if isinstance(o_i,ScaleAspect) else o_i
+            for o_i in composed_scale_aspect._stack
+    ])
+    aspect_stk = Stack([
+        o_i.aspect if isinstance(o_i,ScaleAspect) else o_i
+            for o_i in composed_scale_aspect._stack
+    ])
+                
+    return ( 
+        ComposedScale( scale_stk ), 
+        ComposedAspect( aspect_stk ) 
+    )
+    
 # ---------------------------------------------------------------------------
 class ComposedScaleAspect(object):
 
@@ -253,16 +281,29 @@ class ComposedScale(object):
     @property
     def json(self):
         uid = self.uid 
+        
         factors = {
             str(k) : list(v) 
                 for k,v in uid.factors.items()
         }
+        
+        if uid.prefactor != 1:
+            if isinstance(uid.prefactor,Fraction):
+                prefactor = list( uid.prefactor.as_integer_ratio() )
+            else:
+                prefactor = [ str(prefactor), "1" ]
 
-        obj = dict(
-            __type__ = "ComposedScale",
-            factors = factors,
-            prefactor = uid.prefactor
-        )
+            obj = dict(
+                __type__ = "ComposedScale",
+                factors = factors,
+                prefactor = prefactor
+            )
+        else:
+            obj = dict(
+                __type__ = "ComposedScale",
+                factors = factors
+            )
+        
         return json.dumps(obj)
 
     @property
