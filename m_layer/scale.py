@@ -21,43 +21,8 @@ __all__ = (
     'ComposedScale',
     'ScaleAspect',
     'ComposedScaleAspect',
-    'as_scales_and_aspects'
 )
-# ---------------------------------------------------------------------------
-def to_str(o):
-    "JSON objects can't have tuple keys"
-    if isinstance(o,tuple):
-        return "[{0[0]!r}, {0[1]}]".format(o)
-    else:
-        return o
-        
-# ---------------------------------------------------------------------------
-def as_scales_and_aspects(composed_scale_aspect):
-    """
-    Return a :class:`ComposedScale`-:class:`~aspect.ComposedAspect` pair 
-    
-    Args:
-        `composed_scale_aspect` (:class:`ComposedScaleAspect`):
-    
-    """
-    assert isinstance(
-        composed_scale_aspect,ComposedScaleAspect
-    ), repr(composed_scale_aspect)
-        
-    scale_stk = Stack([
-        o_i.scale if isinstance(o_i,ScaleAspect) else o_i
-            for o_i in composed_scale_aspect._stack
-    ])
-    aspect_stk = Stack([
-        o_i.aspect if isinstance(o_i,ScaleAspect) else o_i
-            for o_i in composed_scale_aspect._stack
-    ])
-                
-    return ( 
-        ComposedScale( scale_stk ), 
-        ComposedAspect( aspect_stk ) 
-    )
-    
+
 # ---------------------------------------------------------------------------
 class ComposedScaleAspect(object):
 
@@ -109,20 +74,6 @@ class ComposedScaleAspect(object):
             return self._dimension
 
     @property
-    def json(self):
-        uid = self.uid 
-        factors = {
-            str(k) : list(v) 
-                for k,v in uid.factors.items()
-        }
-        obj = dict(
-            __type__ = "ComposedScaleAspect",
-            prefactor = uid.prefactor,
-            factors = factors
-        )
-        return json.dumps(obj)
-
-    @property
     def uid(self):
         """
         A product of powers for Scale-Aspect uid pairs.
@@ -137,7 +88,29 @@ class ComposedScaleAspect(object):
     # Equality (`==` method) could be based on the equivalence of expressions
     # without simplification (indifferent to ordering of terms).
     # Explicit function names like `commensurate` might be better. 
-      
+
+    def composed_scales_and_aspects(self):
+        """
+        Return a :class:`ComposedScale`-:class:`~aspect.ComposedAspect` pair 
+        
+        Args:
+            `composed_scale_aspect` (:class:`ComposedScaleAspect`):
+        
+        """
+        scale_stk = Stack([
+            o_i.scale if isinstance(o_i,ScaleAspect) else o_i
+                for o_i in self._stack
+        ])
+        aspect_stk = Stack([
+            o_i.aspect if isinstance(o_i,ScaleAspect) else o_i
+                for o_i in self._stack
+        ])
+                    
+        return ( 
+            ComposedScale( scale_stk ), 
+            ComposedAspect( aspect_stk ) 
+        )
+              
     def __str__(self):
         return "({!s})".format( self.stack )
         
@@ -180,15 +153,6 @@ class ScaleAspect(object):
             # is raised here. Allow it to propagate.
             self._dimension = self.scale.dimension
             return self._dimension
-
-    @property
-    def json(self):
-        obj = dict(
-            __type__ = "ScaleAspect",
-            scale = to_str( self.scale.uid ),
-            aspect = to_str( self.aspect.uid )
-        )
-        return json.dumps(obj)
 
     @property 
     def uid(self):
@@ -247,7 +211,7 @@ class ScaleAspect(object):
         return id(self)
         
     def __str__(self):
-        return "({!s}, {!s})".format(self.scale,self.aspect)
+        return "({}, {})".format(self.scale,self.aspect)
         
     def __repr__(self):
         return "ScaleAspect({!r},{!r})".format( 
@@ -277,34 +241,6 @@ class ComposedScale(object):
         except AttributeError:
             self._uid = ComposedUID(self.stack)
             return self._uid
-        
-    @property
-    def json(self):
-        uid = self.uid 
-        
-        factors = {
-            str(k) : list(v) 
-                for k,v in uid.factors.items()
-        }
-        
-        if uid.prefactor != 1:
-            if isinstance(uid.prefactor,Fraction):
-                prefactor = list( uid.prefactor.as_integer_ratio() )
-            else:
-                prefactor = [ str(prefactor), "1" ]
-
-            obj = dict(
-                __type__ = "ComposedScale",
-                factors = factors,
-                prefactor = prefactor
-            )
-        else:
-            obj = dict(
-                __type__ = "ComposedScale",
-                factors = factors
-            )
-        
-        return json.dumps(obj)
 
     @property
     def dimension(self):
@@ -350,7 +286,7 @@ class ComposedScale(object):
         )
 
     def __str__(self):
-        return "{!s}".format( self.stack )
+        return "{}".format( self.stack )
         
     def __repr__(self):
         return "ComposedScale({!r})".format( self.stack )  
@@ -421,14 +357,6 @@ class Scale(object):
             cxt.scale_reg[self._scale_uid]['reference']
         ) 
         
-    @property
-    def json(self):
-        obj = dict(
-            __type__ = "Scale",
-            uid = str( self._scale_uid.uid ) 
-        )
-        return json.dumps(obj)
-
     @property 
     def composable(self):
         return self.scale_type == "ratio"
@@ -486,8 +414,7 @@ class Scale(object):
         )    
         
     def __str__(self):
-        return "{}".format(self._reference)
-        # return self._json_scale_to_ref(short=True)
+        return str(self._reference)
         
     def __repr__(self):
         return "Scale( {!s} )".format( self.uid )
