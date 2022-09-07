@@ -5,7 +5,6 @@ The term 'aspect' is broader in meaning than 'kind of quantity'.
 
 """
 import numbers
-import json
 
 from m_layer.context import default_context
 from m_layer.stack import Stack
@@ -49,20 +48,6 @@ class ComposedAspect(object):
             self._uid = ComposedUID(self.stack)
             return self._uid
   
-    @property
-    def json(self):
-        uid = self.uid 
-        factors = {
-            str(k) : list(v) 
-                for k,v in uid.factors.items()
-        }
-
-        obj = dict(
-            __type__ = "ComposedAspect",
-            factors = factors
-        )
-        return json.dumps(obj)
-
     def __mul__(self,y):
         return ComposedAspect(
             self.stack.push(y).mul()
@@ -83,8 +68,7 @@ class ComposedAspect(object):
         return "{!s}".format( self.stack )
         
     def __repr__(self):
-        return "ComposedAspect({!r})".format( self.stack ) 
-        
+        return "ComposedAspect({!r})".format( self.stack )       
 
 # ---------------------------------------------------------------------------
 class Aspect(object):
@@ -98,7 +82,7 @@ class Aspect(object):
         '_aspect_uid',
     )
     
-    def __init__(self,aspect_uid):    
+    def __init__(self,aspect_uid):  
         self._aspect_uid = UID(aspect_uid)
 
     def _from_json(self,locale=None,short=False):
@@ -140,14 +124,6 @@ class Aspect(object):
             Stack().push(self).push(y).pow()
         )
         
-    @property
-    def json(self):
-        obj = dict(
-            __type__ = "Aspect",
-            uid = str( self.uid ) 
-        )
-        return json.dumps(obj)
-
     def __str__(self):
         if self.uid == no_aspect.uid:
             return ""
@@ -174,5 +150,5 @@ if __name__ == '__main__':
     L = Aspect( ('ml_length', 993853592179723568440264076369400241) )
     T = Aspect( ('ml_time', 59007067547744628223483093626372886675) )
     
-    print( (M*L/T).json )
+    print( (M*L/T).uid.json() )
     
