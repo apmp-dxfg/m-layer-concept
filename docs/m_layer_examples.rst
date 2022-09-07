@@ -121,7 +121,7 @@ Pairing scales with aspects provides a convenient and safe way of expressing dat
     >>> t_diff_C.convert(fahrenheit_T)  # The difference in aspect is detected 
     Traceback (most recent call last):
     ...
-    RuntimeError: incompatible aspects: [Aspect( ['ml_temperature_difference', 212368324110263031011700652725345220325] ), Aspect( ['ml_thermodynamic_temperature', 227327310217856015944698060802418784871] )]
+    RuntimeError: incompatible aspects: Aspect( ['ml_temperature_difference', 212368324110263031011700652725345220325] ) and Aspect( ['ml_thermodynamic_temperature', 227327310217856015944698060802418784871] )
   
 Plane angle
 ===========
