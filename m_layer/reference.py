@@ -34,7 +34,9 @@ class Reference(object):
         return "Reference({})".format(self.uid)
     
     def __str__(self):    
-        return self._json_entry['locale']['default']['symbol'] 
+        return "{}".format(
+            self._json_entry['locale']['default']['symbol'] 
+        )
         
     @property
     def dimension(self):
