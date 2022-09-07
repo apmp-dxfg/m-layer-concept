@@ -15,11 +15,9 @@ product of powers of system base units.
 
 """
 import numbers
-import json
 
 from collections import defaultdict
 from collections import abc
-
 from fractions import Fraction
 
 from m_layer.stack import normal_form
@@ -100,19 +98,18 @@ class ComposedDimension(object):
                 factors,
                 self.prefactor
             )
-        
+ 
     @property
-    def json(self):
-        factors = ", ".join(
-            "{} : {}".format(k,list(v) )
-                for k,v in self.factors.items()
-        )
-        obj = dict(
-            __type__ = "ComposedDimension",
-            factors = factors,
-            prefactor = self.prefactor
-        )
-        return json.dumps(obj)
+    def simplify(self):
+        """
+        Return the dimensional combination of the exponentiated factors
+        
+        """
+        x = 1
+        for k,v in self.factors.items():
+            x *= k**sum(v)
+            
+        return x
         
 # ---------------------------------------------------------------------------
 class Dimension(object):
@@ -207,7 +204,7 @@ class Dimension(object):
         return Dimension(
             self.system,
             self.dim,
-            (x*self.prefix[0], self.prefix[1])
+            self.prefix
         )
         
     def __mul__(self,rhs):
