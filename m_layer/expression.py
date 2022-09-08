@@ -93,7 +93,7 @@ class Expression(object):
  
     # ---------------------------------------------------------------------------
     def convert(self,dst_scale):
-        """Return a new M-layer expression in the scale ``dst_scale``
+        """Return a new expression in terms of the scale ``dst_scale``
         
         If ``dst_scale`` is a :class:`~scale.ScaleAspect`,
         the associated aspect must match the existing expression.   
@@ -110,7 +110,7 @@ class Expression(object):
         Raises:
             RuntimeError: if the existing expression aspect is incompatible with ``dst_scale``.
 
-        """     
+        """
         if (
             isinstance(dst_scale,ScaleAspect) 
         and isinstance(self.scale_aspect,ScaleAspect)
@@ -118,14 +118,16 @@ class Expression(object):
             # The source and destination aspects must match
             if self.scale_aspect.aspect != dst_scale.aspect:          
                 raise RuntimeError(
-                    "incompatible aspects: {!r}".format( 
-                        [self.scale_aspect.aspect, dst_scale.aspect] 
+                    "incompatible aspects: {!r} and {!r}".format( 
+                        self.scale_aspect.aspect, 
+                        dst_scale.aspect 
                     )
-                ) 
+                )
+                
             else:
-                dst_scale_aspect = dst_scale  
-                # TODO: normalise uid to a 2-tuple 
-                new_token = cxt.conversion_fn( 
+                dst_scale_aspect = dst_scale 
+                
+                new_token = cxt.conversion_from_scale_aspect( 
                     self.scale_aspect.scale.uid,
                     self.scale_aspect.aspect.uid,
                     dst_scale_aspect.scale.uid 
@@ -135,11 +137,14 @@ class Expression(object):
             isinstance(dst_scale,Scale) 
         and isinstance(self.scale_aspect,ScaleAspect)
         ): 
-            # Create a ScaleAspect object to return with the initial aspect 
-            dst_scale_aspect = dst_scale.to_scale_aspect( self.scale_aspect.aspect ) 
+            # The source aspect will be applied to the result.
+            # Create a ScaleAspect return object with the initial aspect 
+            # Again, the aspect can be `no_aspect`.
+            dst_scale_aspect = dst_scale.to_scale_aspect( 
+                self.scale_aspect.aspect 
+            ) 
             
-            # TODO: normalise uid to a 2-tuple 
-            new_token = cxt.conversion_fn( 
+            new_token = cxt.conversion_from_scale_aspect( 
                 self.scale_aspect.scale.uid,
                 self.scale_aspect.aspect.uid,
                 dst_scale_aspect.scale.uid 
@@ -149,7 +154,7 @@ class Expression(object):
             isinstance(dst_scale,(ComposedScale,ComposedScaleAspect) ) 
         and isinstance(self.scale_aspect,ComposedScaleAspect)
         ):
-            # Conversion of one expression to another.
+            # Conversion from one composed expression to another.
             # The expressions must be arithmetically equivalent,  
             # so that pairs of source-destination scale-aspects  
             # can be found in the register. 
@@ -161,15 +166,17 @@ class Expression(object):
 
             # Step 1: convert to products of powers
             src_pops = normal_form(self.scale_aspect.stack)
+            
             if isinstance(dst_scale,ComposedScale):
-                dst_scale_aspect = dst_scale.to_composed_scale_aspect( 
+                # Copy the various src aspects to a new ComposedScaleAspect.
+                dst_scale_aspect = dst_scale.composed_scale_aspect( 
                     self.scale_aspect
                 ) 
                 dst_pops = normal_form(dst_scale_aspect.stack)
             
             else:    
                 dst_scale_aspect = dst_scale                
-                dst_pops = normal_form(dst_scale.stack)
+                dst_pops = normal_form(dst_scale_aspect.stack)
             
             # Step 2: take into account any stand-alone numerical factors
             conversion_factor = src_pops.prefactor/dst_pops.prefactor
@@ -189,12 +196,10 @@ class Expression(object):
                 dst_s_uid, dst_a_uid = dst_i.uid
                 
                 # Aspects must match
-                # TODO: normalise uid to a 2-tuple 
                 assert src_a_uid == dst_a_uid,\
                     "{!r} != {!r}".format(src_a_uid,dst_a_uid)
 
-                # TODO: normalise uid to a 2-tuple 
-                c = cxt.conversion_fn( 
+                c = cxt.conversion_from_scale_aspect( 
                         src_s_uid,src_a_uid,dst_s_uid                     
                 )(1.0) 
                 conversion_factor *= c**src_exp
@@ -209,64 +214,77 @@ class Expression(object):
     # ---------------------------------------------------------------------------
     def cast(self,dst,aspect=no_aspect):
         """Return a new M-layer expression 
-            
-        If ``dst`` does not define an aspect, the value of ``aspect``  
-        is attributed to the final scale-aspect.
         
-        If the initial expression does not specify an aspect, the
-        aspect of ``dst_scale_aspect`` is assumed to apply to both.
-
-        If neither ``dst`` or ``aspect`` specifies an aspect,
-        the existing expression aspect is attributed to the 
-        final scale-aspect.
-        
+        The aspect of the resulting expression is determined as follows:
+        i) the aspect specified in ``dst``, or, 
+        ii) the aspect specified in ``aspect``, or,
+        iii) the aspect of the initial expression 
+                
         Args:            
             dst(:class:`~scale.ScaleAspect` or :class:`~scale.Scale`): 
                 the scale or scale-aspect pair for the new expression. 
-            aspect: may specify an aspect for the new expression if ``dst``
-                only specifies the scale 
+                
+            aspect(:class:`~aspect.Aspect`): is used
+            if ``dst`` is a :class:`~scale.Scale`. When an aspect
+            is specified, it will be attributed to 
+            the result, otherwise the expression aspect is carried over.  
 
         Returns:
             an  M-layer :class:`~expression.Expression` 
-
+            
         Raises:
             RuntimeError 
             
         """
-        if isinstance(dst,Scale):
+        # TODO: Other casting operations
+        # 
+        # i) ComposedScale to ScaleAspect or Scale and `aspect` 
+        #       If the source is dimensionally compatible 
+        #       with `dst_scale`. The aspect is determined 
+        #       by `dst_scale`, or `aspect` and could be `no_aspect`
+        #
+        # ii) ComposedScaleAspect to ScaleAspect
+        #       This will be the same as for ComposedScale.       
+        #       There will be information about the aspect expression 
+        #       in the source that is ignored.
+        
+        if (
+            isinstance(dst,Scale) 
+        and 
+            isinstance(self.scale_aspect,ScaleAspect)
+        ):
+        
             if aspect is no_aspect:
-                # Use the initial expression's aspect 
+                # Nothing specifies a destination aspect
+                # carry forward the initial aspect
                 dst_scale_aspect = dst.to_scale_aspect(
                     self.scale_aspect.aspect
                 )
             else:
-                # use the optional argument aspect 
+                # use ``aspect`` 
                 dst_scale_aspect = dst.to_scale_aspect(aspect)
-         
-            
-        # If `aspect` has been specified, it must agree with `dst`
-        elif aspect is not no_aspect and dst_scale_aspect.aspect != aspect:
-            raise RuntimeError(
-                "conflicting final aspects {!r}".format( 
-                    (dst_scale_aspect.aspect,aspect) 
-                ) 
-            )
+                 
+        elif (
+            isinstance(dst,ScaleAspect)
+        and 
+            isinstance(self.scale_aspect,ScaleAspect)
+        ):
+            if dst_scale_aspect.aspect is no_aspect: 
+                if aspect is no_aspect:
+                    # Nothing specifies a destination aspect
+                    # carry forward the initial aspect
+                    dst_scale_aspect = ScaleAspect(
+                        dst_scale_aspect.scale,
+                        self.scale_aspect.aspect
+                    )  
+                else:
+                    # use ``aspect`` 
+                    dst_scale_aspect = ScaleAspect(
+                        dst_scale_aspect.scale,
+                        aspect
+                    )  
         
-        # dst_scale_aspect is now a valid ScaleAspect
-        if dst_scale_aspect.aspect is no_aspect: 
-            if self.scale_aspect.aspect is no_aspect:
-                raise RuntimeError(
-                    "an aspect must be specified"
-                )
-            else:
-                dst_scale_aspect = ScaleAspect(
-                    dst_scale_aspect.scale,
-                    self.scale_aspect.aspect
-                )          
-        
-        # self.aspect may be `no_aspect` at this point.
-        # TODO: normalise uid to a 2-tuple 
-        fn = cxt.casting_fn(
+        fn = cxt.casting_from_scale_aspect(
             self.scale_aspect.scale.uid,
             self.scale_aspect.aspect.uid,
             dst_scale_aspect.scale.uid,
