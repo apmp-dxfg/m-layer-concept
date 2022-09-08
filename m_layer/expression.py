@@ -2,9 +2,11 @@
 import numbers
 import math 
 
-from m_layer.context import default_context as cxt
-from m_layer.scale import Scale, ComposedScale, ScaleAspect, ComposedScaleAspect
-from m_layer.aspect import no_aspect
+# from m_layer.default import context as cxt
+# from m_layer.scale import Scale, ComposedScale, ScaleAspect, ComposedScaleAspect
+# from m_layer.aspect import no_aspect
+
+from m_layer.lib import *
 from m_layer.stack import normal_form
 
 __all__ = (
@@ -205,7 +207,19 @@ class Expression(object):
                 conversion_factor *= c**src_exp
             
             new_token = conversion_factor*self._token
-          
+            
+        elif ( 
+            isinstance(dst_scale,(Scale,ScaleAspect) ) 
+        and isinstance(self.scale_aspect,ComposedScaleAspect)
+        ):
+            # Conversion from a composed scale to a specific one,
+            # which must be generic in the unit system and must
+            # be dimensionally equivalent. 
+ 
+            src_dim = self.scale_aspect.dimension     # A ComposedDimension
+            
+            assert src_dim.simplify == dst_scale.dimension, repr(dst)
+ 
         return Expression(
             new_token,
             dst_scale_aspect
@@ -235,62 +249,69 @@ class Expression(object):
         Raises:
             RuntimeError 
             
-        """
-        # TODO: Other casting operations
-        # 
-        # i) ComposedScale to ScaleAspect or Scale and `aspect` 
-        #       If the source is dimensionally compatible 
-        #       with `dst_scale`. The aspect is determined 
-        #       by `dst_scale`, or `aspect` and could be `no_aspect`
-        #
-        # ii) ComposedScaleAspect to ScaleAspect
-        #       This will be the same as for ComposedScale.       
-        #       There will be information about the aspect expression 
-        #       in the source that is ignored.
+        """        
+        if isinstance(self.scale_aspect,ScaleAspect):
         
-        if (
-            isinstance(dst,Scale) 
-        and 
-            isinstance(self.scale_aspect,ScaleAspect)
-        ):
-        
-            if aspect is no_aspect:
-                # Nothing specifies a destination aspect
-                # carry forward the initial aspect
-                dst_scale_aspect = dst.to_scale_aspect(
-                    self.scale_aspect.aspect
-                )
-            else:
-                # use ``aspect`` 
-                dst_scale_aspect = dst.to_scale_aspect(aspect)
-                 
-        elif (
-            isinstance(dst,ScaleAspect)
-        and 
-            isinstance(self.scale_aspect,ScaleAspect)
-        ):
-            if dst_scale_aspect.aspect is no_aspect: 
+            if isinstance(dst,Scale):            
                 if aspect is no_aspect:
-                    # Nothing specifies a destination aspect
                     # carry forward the initial aspect
-                    dst_scale_aspect = ScaleAspect(
-                        dst_scale_aspect.scale,
+                    dst_scale_aspect = dst.to_scale_aspect(
                         self.scale_aspect.aspect
-                    )  
+                    )
                 else:
-                    # use ``aspect`` 
+                    dst_scale_aspect = dst.to_scale_aspect(aspect)
+                     
+            elif isinstance(dst,ScaleAspect):
+                if dst_scale_aspect.aspect is no_aspect: 
+                    if aspect is no_aspect:
+                        # carry forward the initial aspect
+                        dst_scale_aspect = ScaleAspect(
+                            dst_scale_aspect.scale,
+                            self.scale_aspect.aspect
+                        )  
+                    else:
+                        dst_scale_aspect = ScaleAspect(
+                            dst_scale_aspect.scale,
+                            aspect
+                        )  
+                            
+            fn = cxt.casting_from_scale_aspect(
+                self.scale_aspect.scale.uid,
+                self.scale_aspect.aspect.uid,
+                dst_scale_aspect.scale.uid,
+                dst_scale_aspect.aspect.uid 
+            )
+
+        elif isinstance(
+                self.scale_aspect,
+                (ComposedScale,ComposedScaleAspect)
+            ):
+            src_dim = self.scale_aspect.dimension     # A ComposedDimension
+            
+            assert src_dim.simplify == dst.dimension, repr(dst)
+            
+            if isinstance(dst,Scale):            
+                if aspect is no_aspect:
+                    # cannot carry forward the initial aspect,
+                    # so use no_aspect
+                    dst_scale_aspect = dst.to_scale_aspect(no_aspect)
+                else:
+                    dst_scale_aspect = dst.to_scale_aspect(aspect)
+
+            elif isinstance(dst,ScaleAspect):
+                if dst_scale_aspect.aspect is no_aspect:
+                    # Note `aspect` may just be `no_aspect` anyway
                     dst_scale_aspect = ScaleAspect(
                         dst_scale_aspect.scale,
                         aspect
-                    )  
-        
-        fn = cxt.casting_from_scale_aspect(
-            self.scale_aspect.scale.uid,
-            self.scale_aspect.aspect.uid,
-            dst_scale_aspect.scale.uid,
-            dst_scale_aspect.aspect.uid 
-        )
-
+                    ) 
+                        
+            fn = cxt.casting_from_composed_scale(
+                src.dim.simplify,
+                dst_scale_aspect.scale.uid,
+                dst_scale_aspect.aspect.uid 
+            )
+           
         return Expression(
             fn( self._token ),
             dst_scale_aspect
