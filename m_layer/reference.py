@@ -8,6 +8,29 @@ from m_layer.dimension import Dimension
 __all__ = (
     'Reference',
 )
+
+# ---------------------------------------------------------------------------
+def entry_to_dimension(json_ref):
+    """
+    """
+    to_dim_tuple = lambda x: tuple( literal_eval(x) )
+    
+    # The JSON prefix is a pair of string-formatted
+    # integers for the numerator and denominator
+    to_prefix_tuple = lambda x: tuple( 
+        int( literal_eval(i) ) for i in x 
+    )
+
+    if 'system' in json_ref:
+        return Dimension( 
+            System( UID( json_ref['system']['uid'] ) ),
+            to_dim_tuple( json_ref['system']['dimensions'] ),
+            to_prefix_tuple( json_ref['system']['prefix'] )
+        )
+        
+    else:
+        return None 
+        
 # ---------------------------------------------------------------------------
 class Reference(object):
 
@@ -43,25 +66,14 @@ class Reference(object):
         try:
             return self._dimension
         except AttributeError:
-        
-            to_dim_tuple = lambda x: tuple( literal_eval(x) )
-            
-            # The JSON prefix is a pair of string-formatted
-            # integers for the numerator and denominator
-            to_prefix_tuple = lambda x: tuple( 
-                int( literal_eval(i) ) for i in x 
-            )
-
-            _json = self._json_entry
-            
-            if 'system' in _json:
-                self._dimension = Dimension( 
-                    System( UID( _json['system']['uid'] ) ),
-                    to_dim_tuple( _json['system']['dimensions'] ),
-                    to_prefix_tuple( _json['system']['prefix'] )
+            dim = entry_to_dimension(self._json_entry)
+            if dim is None:
+                raise RuntimeError("no unit system for {!r}".format(
+                        UID( json_ref["uid"] )
+                    )
                 )
-                return self._dimension 
-                
             else:
-                raise RuntimeError("No dimension for {!r}".format(self))
-            
+                self._dimension = dim
+                
+            return self._dimension
+                            
