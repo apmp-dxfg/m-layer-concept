@@ -1,6 +1,6 @@
-from m_layer.context import default_context
-from m_layer.aspect import Aspect, no_aspect
-from m_layer.scale import Scale, ScaleAspect
+from m_layer.lib import (
+    Scale, ScaleAspect, Aspect, no_aspect
+)
 
 from m_layer.expression import (
     expr, 
@@ -17,6 +17,5 @@ __all__ = (
     'Aspect', 
     'Scale',
     'ScaleAspect',
-    'default_context',
 )
 
