@@ -4,11 +4,16 @@ The Context is not intended to be used directly in applications.
 """
 import json 
 import glob
+import os.path
 
 from m_layer import register 
 from m_layer import conversion_register
 from m_layer import casting_register
+from m_layer import dimension_casting_register
 from m_layer import scales_for_aspect_register
+from m_layer.reference import entry_to_dimension
+
+from m_layer.uid import UID 
 
 __all__ = (
     'Context', 'default_context'
@@ -41,11 +46,11 @@ class Context(object):
             aspect_reg = None,
             conversion_reg = None,
             casting_reg = None,
+            dimension_casting_reg=None,
             scales_for_aspect_reg = None,
             system_reg = None
             
-        ):
-        
+        ):       
         
         self.locale = locale 
         self.value_fmt = value_fmt
@@ -74,6 +79,12 @@ class Context(object):
             self.casting_reg = casting_register.CastingRegister(self)
         else:
             self.casting_reg = casting_reg
+
+        if dimension_casting_reg is None:
+            self.dimension_casting_reg =\
+                dimension_casting_register.CastingRegister(self)
+        else:
+            self.dimension_casting_reg = dimension_casting_reg
 
         if scales_for_aspect_reg is None:
             self.scales_for_aspect_reg =\
@@ -109,7 +120,28 @@ class Context(object):
             raise RuntimeError(
                "unknown type: {}".format(entity_type)
             )
+
+    def _build_dimension_casting_reg(self):
+        # TODO: the source needs to be related to a Reference entry 
+        # in order to retrieve the dimensions. This cannot be done 
+        # by just processing the JSON data.
+        # Better to wait until the casting register has been filled 
+        # and then iterate over it to build this register.
+        # Need to iterate over all the keys, look up the source scale 
+        # then find the dimensions of the reference, then 
+        # copy the register value across with the new key. 
+        for k_i in self.casting_reg._table.keys():
         
+            uid_src, uid_dst = k_i  
+            src_scale_uid, src_aspect_uid = uid_src
+            
+            json_scale = self.scale_reg[src_scale_uid]
+            ref_uid = UID(json_scale['reference'] )
+            json_ref = self.reference_reg[ ref_uid ]
+            
+            dim = entry_to_dimension(json_ref)
+
+    
     def _loader(self,data):
         # A JSON object is a dict
         # A JSON array of objects is a list.
@@ -165,10 +197,7 @@ class Context(object):
         scale_pair = (src_scale_uid,dst_scale_uid)
         
         if( 
-            # TODO: ``None`` is replaced by ``no_aspect``
-            # but perhaps this is unnecessary now: there
-            # is always an aspect.
-            src_aspect_uid != self.no_aspect
+            src_aspect_uid != self.no_aspect_uid
         and 
             src_aspect_uid in self.scales_for_aspect_reg
         ):
@@ -179,14 +208,13 @@ class Context(object):
         if scale_pair in self.conversion_reg: return True
                         
         # This is a failure
-        # TODO: ``None`` is replaced by ``no_aspect``        
-        if src_aspect_uid == self.no_aspect:
-            msg = "no conversion from Scale({!r}) to Scale({!r})".format(
+        if src_aspect_uid == self.no_aspect_uid:
+            msg = "no conversion from Scale( {!s} ) to Scale( {!s} )".format(
                     src_scale_uid,
                     dst_scale_uid
                 )
         else:
-            msg = "no conversion from Scale({!r}) to Scale({!r}) for Aspect{!r}".format(
+            msg = "no conversion from Scale( {!s} ) to Scale( {!s} ) for Aspect( {!s} )".format(
                     src_scale_uid,
                     dst_scale_uid,
                     src_aspect_uid
@@ -195,7 +223,12 @@ class Context(object):
         raise RuntimeError(msg)
          
         
-    def conversion_fn(self,src_scale_uid,src_aspect_uid,dst_scale_uid):
+    def conversion_from_scale_aspect(
+        self,
+        src_scale_uid,
+        src_aspect_uid,
+        dst_scale_uid
+    ):
         """
         Return a function that converts a value expressed 
         in the `src` scale and aspect to one in the `dst` scale.
@@ -211,10 +244,6 @@ class Context(object):
             A Python function 
             
         """  
-        # TODO:
-        # May want to strip off additional tuple element
-        # Probably best done by client
-        
         if src_scale_uid == dst_scale_uid:
             # Trivial case where no conversion is required
             return lambda x: x
@@ -230,9 +259,10 @@ class Context(object):
         # Has an aspect argument been given that restricts conversions?
         # Look first in the aspect-specific conversion table
 
-        # TODO: ``None`` is replaced by ``no_aspect``        
-        if( src_aspect_uid != self.no_aspect 
-        and src_aspect_uid in self.scales_for_aspect_reg
+        if( 
+            src_aspect_uid != self.no_aspect_uid 
+        and 
+            src_aspect_uid in self.scales_for_aspect_reg
         ):
             scales_for_aspect = self.scales_for_aspect_reg[src_aspect_uid]
             try:
@@ -240,15 +270,15 @@ class Context(object):
             except KeyError:
                 pass
                 
-        # Aspect-free conversions are possible
-        try:
-            return self.conversion_reg[scale_pair] 
-        except KeyError:
-            pass
+        # Generic aspect conversions
+        if src_aspect_uid == self.no_aspect_uid: 
+            try:
+                return self.conversion_reg[scale_pair] 
+            except KeyError:
+                pass
                         
         # This is a failure 
-        # TODO: ``None`` is replaced by ``no_aspect``        
-        if src_aspect_uid == self.no_aspect.uid:
+        if src_aspect_uid == self.no_aspect_uid:
             raise RuntimeError(
                 "no conversion from Scale( {!s} ) to Scale( {!s} )".format(
                     src_scale_uid,
@@ -264,7 +294,7 @@ class Context(object):
                 )
             )
 
-    def casting_fn(
+    def casting_from_scale_aspect(
         self,
         src_scale_uid, src_aspect_uid,
         dst_scale_uid, dst_aspect_uid
@@ -283,10 +313,6 @@ class Context(object):
             A Python function 
             
         """ 
-        # TODO:
-        # May want to strip off additional tuple element
-        # Probably best done by client
-        
         dst_pair = dst_scale_uid, dst_aspect_uid
         src_pair = src_scale_uid, src_aspect_uid    
           
@@ -298,6 +324,8 @@ class Context(object):
                 return scales_for_aspect[ (src_scale_uid, dst_scale_uid) ]
             except KeyError:
                 pass
+                
+            # NB, the case of `no_aspect` for both could be handled!!
             
         try:
             return self.casting_reg[ src_pair,dst_pair ]   
@@ -309,11 +337,40 @@ class Context(object):
                 )
             ) from None          
 
+    def casting_from_composed_scale(
+        self,
+        dimension,
+        dst_scale_uid, dst_aspect_uid
+    ):
+        """
+        Return a function that transforms the initial expression 
+        to an expression in terms of a different scale and aspect.
+        
+        Args:
+            dimension (:class:`~dimension.Dimension`): initial dimensions    
+            dst_scale_uid: final scale
+            dst_aspect_uid: final aspect
+            
+        Returns:
+            A Python function 
+            
+        """ 
+        dst_pair = dst_scale_uid, dst_aspect_uid                      
+        try:
+            return self.casting_from_dimension_reg[ dimension, dst_pair ]   
+        except KeyError:
+            raise RuntimeError(
+                "no cast defined from {!r} to {!r}".format(
+                    dimension,
+                    dst_pair
+                )
+            ) from None          
+
 # ---------------------------------------------------------------------------
-# Configure a default context object by reading all JSON files
-# in the directories.
+# Configure a default context object 
 #
 import os.path
+this_dir = os.path.dirname(__file__)
 
 default_context = Context()
 """The Context object used during a Python session"""
@@ -327,13 +384,19 @@ for p_i in (
         r'json/scales_for',
         r'json/systems'
     ):
-    path = os.path.join( 
-        os.path.dirname(__file__), 
-        p_i, 
-        r'*.json'
-    )
+    path = os.path.join(this_dir,p_i, r'*.json')
     default_context.load(path)
 
+default_context._build_dimension_casting_reg() 
 
+# The `no_aspect` entry is special, we need the uid
+file_path = os.path.join( this_dir, r'json/aspects/no_aspect.json' )
+assert os.path.isfile( file_path ), repr( file_path )
+
+with open(file_path,'r') as f:
+    data = json.load(f)        
+
+default_context.no_aspect_uid = UID( data[0]['uid'] )
+    
 # ===========================================================================
     
