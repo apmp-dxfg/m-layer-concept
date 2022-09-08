@@ -291,38 +291,35 @@ class ComposedScale(object):
     def __repr__(self):
         return "ComposedScale({!r})".format( self.stack )  
   
-    def to_composed_scale_aspect(self,composed_scale_aspect):
+    def composed_scale_aspect(self,src):
         """
         Return a :class:`~scale.ComposedScaleAspect` 
-        by copying the aspects in ``composed_scale_aspect``.
+        by copying the aspects in ``src_composed_scale_aspect``.
         
         Args:
-            composed_scale_aspect (:class:`~scale.ComposedScaleAspect`)
+            src (:class:`~scale.ComposedScaleAspect`)
         
         .. warning:
         
             This function will fail if the encoded expression is 
-            not in exactly the same form as the expression in ``composed_scale_aspect``.
+            not in exactly the same form as the expression in ``src``.
             
-            For example, reversing the order of terms in a 
+            For example, simply reversing the order of terms in a 
             multiplication will lead to failure.            
             
         """
-        # This seems risky. 
-        
-        sa_stack = composed_scale_aspect.stack 
-        assert len(sa_stack) == len(self.stack)
+        assert len(src.stack) == len(self.stack)
         
         stk = []
-        for i,o_i in enumerate(sa_stack):
+        for i,o_i in enumerate(src.stack):
             if o_i not in ('mul','div','rmul','pow'):
             
                 # At this point the ability to 
                 # convert later can be checked:
-                # if src scale and aspect don't convert 
-                # to the dst scale, then something is wrong.
+                # if src scale and aspect don't convert,
+                # then something is wrong.
                 
-                src_scale_uid, src_aspect_uid = sa_stack[i].uid       
+                src_scale_uid, src_aspect_uid = src.stack[i].uid       
                 dst_scale_uid = self.stack[i].uid 
                 cxt.convertible(
                     src_scale_uid, src_aspect_uid,                   
@@ -331,7 +328,7 @@ class ComposedScale(object):
                 
                 stk.append( 
                     self.stack[i].to_scale_aspect( 
-                        sa_stack[i].aspect 
+                        src.stack[i].aspect 
                     ) 
                 )
             else:
