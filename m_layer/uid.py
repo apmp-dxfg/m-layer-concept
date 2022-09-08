@@ -104,6 +104,9 @@ class ComposedUID(object):
                 for k,v in factors.items()
         }
 
+    def __contains__(self,item):
+        return item in self.factors 
+        
     def __eq__(self,other):
         return (
             isinstance(other,self.__class__)
