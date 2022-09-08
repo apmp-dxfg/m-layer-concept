@@ -2,8 +2,6 @@ from m_layer.context import default_context
 from m_layer.aspect import Aspect, no_aspect
 from m_layer.scale import Scale, ScaleAspect
 
-default_context.no_aspect = no_aspect
-
 from m_layer.expression import (
     expr, 
     token, value,
