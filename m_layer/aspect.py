@@ -47,7 +47,15 @@ class ComposedAspect(object):
         except AttributeError:
             self._uid = ComposedUID(self.stack)
             return self._uid
-  
+ 
+    @property
+    def no_aspect(self):
+        """
+        ``True`` if ``no_aspect` is anywhere in the expression.
+        
+        """
+        return no_aspect.uid in self.uid
+        
     def __mul__(self,y):
         return ComposedAspect(
             self.stack.push(y).mul()
@@ -136,11 +144,8 @@ class Aspect(object):
         else:
             return "Aspect( {!s} )".format( self.uid )
 
-# ---------------------------------------------------------------------------
-no_aspect = Aspect((
-    "ml_no_aspect",
-    295504637700214937127120941173285352815
-))    
+# --------------------------------------------------------------------------- 
+no_aspect = Aspect( default_context.no_aspect_uid )    
 """An object representing no assigned aspect"""
 
 # ===========================================================================
