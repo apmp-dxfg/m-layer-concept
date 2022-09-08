@@ -245,7 +245,7 @@ class Dimension(object):
 if __name__ == '__main__':
 
     from m_layer import *
-    from m_layer.system import System 
+    from m_layer.lib import System 
     
     si = System( ('si_system', 88156805987886421108624908988601219537) )
     d1 = Dimension(si,[1,2,3],prefix=[100,10])
