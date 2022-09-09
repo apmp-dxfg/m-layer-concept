@@ -218,7 +218,7 @@ class Expression(object):
                     raise RuntimeError(
                         "cannot change aspect: {!r}".format(dst_scale)
                     )                
-                dst_scale_aspect = = dst_scale
+                dst_scale_aspect = dst_scale
             else:
                 assert False, repr(dst_scale) 
                 
