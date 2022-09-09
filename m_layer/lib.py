@@ -1,9 +1,5 @@
 import numbers
 
-from ast import literal_eval
-from fractions import Fraction 
-from collections import namedtuple 
-
 from m_layer.context import global_context as cxt
 
 from m_layer.dimension import Dimension, ComposedDimension
@@ -20,7 +16,6 @@ __all__ = (
     'ComposedAspect',
     'no_aspect',
     'System',
-    'cxt',
 )
 
 # ---------------------------------------------------------------------------
@@ -155,6 +150,8 @@ no_aspect = Aspect( cxt.no_aspect_uid )
 """An object representing no assigned aspect"""
 
 # ---------------------------------------------------------------------------
+from collections import namedtuple 
+
 class System(object):
 
     __slots__ = (
@@ -208,6 +205,8 @@ class System(object):
         return hash(self._uid)
         
 # ---------------------------------------------------------------------------
+from ast import literal_eval
+
 def _sys_to_dimension(json_sys):
     """
     """
@@ -223,8 +222,7 @@ def _sys_to_dimension(json_sys):
         System( UID( json_sys['uid'] ) ),
         to_dim_tuple( json_sys['dimensions'] ),
         to_prefix_tuple( json_sys['prefix'] )
-    )
-        
+    )       
         
 # ---------------------------------------------------------------------------
 class Reference(object):
@@ -687,10 +685,37 @@ for k_i,v_i in cxt.casting_reg._table.items():
     src_scale_uid, src_aspect_uid = uid_src
     
     json_scale = cxt.scale_reg[src_scale_uid]
-    ref_uid = UID(json_scale['reference'] )
+    ref_uid = UID( json_scale['reference'] )
     json_ref = cxt.reference_reg[ ref_uid ]
     
-    if "system" in json_ref:
-        # TODO: only certain units belonging to a system are needed
-        dim = _sys_to_dimension(json_ref["system"])
-        cxt.dimension_casting_reg.set( (dim,uid_dst), v_i)
+    if (
+        "system" in json_ref
+    and
+        "generic_name" in json_ref["system"]
+    ):        
+        dim = _sys_to_dimension( json_ref["system"] )
+        cxt.dimension_casting_reg.set( (dim,uid_dst), v_i )
+
+# 2)Build the dimension-conversion register by iterating over all keys in 
+#   the conversions register, finding the source scale, then the reference 
+#   and finally the dimensions when the reference is part of a unit system. 
+#
+#   TODO: this approach also needs a conversion register entry for the 
+#   trivial case of a generic unit to itself, so that the ComposedScale
+#   can be resolved to a single scale. 
+# 
+for k_i,v_i in cxt.conversion_reg._table.items(): 
+
+    uid_src, uid_dst = k_i  
+    
+    json_scale = cxt.scale_reg[src_scale_uid]
+    ref_uid = UID( json_scale['reference'] )
+    json_ref = cxt.reference_reg[ ref_uid ]
+
+    if (
+        "system" in json_ref
+    and
+        "generic_name" in json_ref["system"]
+    ):        
+        dim = _sys_to_dimension( json_ref["system"] )
+        cxt.dimension_conversion_reg.set( (dim,uid_dst), v_i )
