@@ -2,10 +2,6 @@
 import numbers
 import math 
 
-# from m_layer.default import context as cxt
-# from m_layer.scale import Scale, ComposedScale, ScaleAspect, ComposedScaleAspect
-# from m_layer.aspect import no_aspect
-
 from m_layer.lib import *
 from m_layer.stack import normal_form
 
@@ -215,11 +211,32 @@ class Expression(object):
             # Conversion from a composed scale to a specific one,
             # which must be generic in the unit system and must
             # be dimensionally equivalent. 
- 
-            src_dim = self.scale_aspect.dimension     # A ComposedDimension
+            if isinstance(dst_scale,Scale):            
+                dst_scale_aspect = dst_scale.to_scale_aspect(no_aspect)
+            elif isinstance(dst_scale,ScaleAspect):
+                if dst_scale.aspect is not no_aspect:
+                    raise RuntimeError(
+                        "cannot change aspect: {!r}".format(dst_scale)
+                    )                
+                dst_scale_aspect = = dst_scale
+            else:
+                assert False, repr(dst_scale) 
+                
+            src_dim = self.scale_aspect.dimension.simplify
             
-            assert src_dim.simplify == dst_scale.dimension, repr(dst)
- 
+            if src_dim != dst_scale_aspect.dimension:
+                raise RuntimeError(
+                    "incompatible dimensions: {}, {}".format(
+                        src_dim,
+                        dst_scale_aspect.dimension
+                    )
+                )           
+                        
+            new_token = cxt.conversion_from_composed_scale(
+                src_dim,
+                dst_scale_aspect.scale.uid
+            )(self._token)
+            
         return Expression(
             new_token,
             dst_scale_aspect
