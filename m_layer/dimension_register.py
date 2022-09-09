@@ -2,15 +2,11 @@
 Casting can change the type of scale and aspect of an expression. 
 
 """
-from m_layer.ml_eval import ml_eval   
-from m_layer.uid import UID
 
 # ---------------------------------------------------------------------------
-class CastingRegister(object):
+class DimensionRegister(object):
     
     """
-    A ``CastingRegister`` maps scale-aspect pairs 
-    to a function that will convert tokens. 
     """
     
     def __init__(self,context):
@@ -23,12 +19,8 @@ class CastingRegister(object):
     def __getitem__(self,dim_sa):
         return self._table[ dim_sa ]
         
-    def get(self,dim_sa,default=None):
+    def get(self,key,default=None):
         """
-        Return a conversion function 
-        
-        Args:
-            dim_sa: a dimension and a scale-aspect uid
             
         """
         return self._table.get( dim_sa, default ) 
@@ -40,4 +32,10 @@ class CastingRegister(object):
         Create an entry for a casting function
                 
         """
-        self._table[k_i] = v_i
+
+        if k_i in self._table:
+            raise RuntimeError(
+                "existing register entry: {} = {}".format(k_i,v_i)
+            )
+        else:
+            self._table[k_i] = v_i

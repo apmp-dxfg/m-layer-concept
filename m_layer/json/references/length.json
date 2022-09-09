@@ -18,7 +18,7 @@
             ],
             "dimensions": "[0, 1, 0, 0, 0, 0, 0]",
             "prefix": ["1", "1E9" ],
-            "name_in_basis": 1
+            "generic_name": 1
         },
         "UCUM": {
             "code": "nm",

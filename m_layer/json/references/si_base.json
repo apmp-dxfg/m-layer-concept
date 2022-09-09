@@ -18,7 +18,7 @@
             ],
             "dimensions": "[1, 0, 0, 0, 0, 0, 0]",
             "prefix": [ "1", "1" ],
-            "name_in_basis": 1
+            "generic_name": 1
         },
         "UCUM": {
             "code": "kg",
@@ -44,7 +44,7 @@
             ],
             "dimensions": "[0, 1, 0, 0, 0, 0, 0]",
             "prefix": [ "1", "1" ],
-            "name_in_basis": 1
+            "generic_name": 1
         },
         "UCUM": {
             "code": "m",
@@ -70,7 +70,7 @@
             ],
             "dimensions": "[0, 0, 1, 0, 0, 0, 0]",
             "prefix": [ "1", "1" ],
-            "name_in_basis": 1
+            "generic_name": 1
         },
         "UCUM": {
             "code": "s",
@@ -96,7 +96,7 @@
             ],
             "dimensions": "[0, 0, 0, 1, 0, 0, 0]",
             "prefix": [ "1", "1" ],
-            "name_in_basis": 1
+            "generic_name": 1
         },
         "UCUM": {
             "code": "A",
@@ -122,7 +122,7 @@
             ],
             "dimensions": "[0, 0, 0, 0, 1, 0, 0]",
             "prefix": [ "1", "1" ],
-            "name_in_basis": 1
+            "generic_name": 1
         },
         "UCUM": {
             "code": "K",
@@ -148,7 +148,7 @@
             ],
             "dimensions": "[0, 0, 0, 0, 0, 1, 0]",
             "prefix": [ "1", "1" ],
-            "name_in_basis": 1
+            "generic_name": 1
         },
         "UCUM": {
             "code": "mol",
@@ -174,7 +174,7 @@
             ],
             "dimensions": "[0, 0, 0, 0, 0, 0, 1]",
             "prefix": [ "1", "1" ],
-            "name_in_basis": 1
+            "generic_name": 1
         },
         "UCUM": {
             "code": "cd",
