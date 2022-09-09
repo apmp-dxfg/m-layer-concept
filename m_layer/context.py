@@ -9,7 +9,7 @@ import os.path
 from m_layer import register 
 from m_layer import conversion_register
 from m_layer import casting_register
-from m_layer import dimension_casting_register
+from m_layer import dimension_register
 from m_layer import scales_for_aspect_register
 
 from m_layer.uid import UID 
@@ -42,6 +42,7 @@ class Context(object):
             reference_reg = None,
             aspect_reg = None,
             conversion_reg = None,
+            dimension_conversion_reg=None,
             casting_reg = None,
             dimension_casting_reg=None,
             scales_for_aspect_reg = None,
@@ -72,6 +73,12 @@ class Context(object):
         else:
             self.conversion_reg = conversion_reg
 
+        if dimension_conversion_reg is None:
+            self.dimension_conversion_reg =\
+                dimension_register.DimensionRegister(self)
+        else:
+            self.dimension_conversion_reg = dimension_conversion_reg
+
         if casting_reg is None:
             self.casting_reg = casting_register.CastingRegister(self)
         else:
@@ -79,7 +86,7 @@ class Context(object):
 
         if dimension_casting_reg is None:
             self.dimension_casting_reg =\
-                dimension_casting_register.CastingRegister(self)
+                dimension_register.DimensionRegister(self)
         else:
             self.dimension_casting_reg = dimension_casting_reg
 
@@ -265,6 +272,27 @@ class Context(object):
                 )
             )
 
+    def conversion_from_composed_scale(
+        self,
+        src_dim,
+        dst_scale_uid
+    ):
+        """
+            
+        """              
+        try:
+            return self.dimension_conversion_reg[(src_dim,dst_scale_uid)] 
+        except KeyError:
+            pass
+                        
+        # This is a failure 
+        raise RuntimeError(
+            "no conversion from {!r} to Scale( {!s} )".format(
+                src_dim,
+                dst_scale_uid,
+            )
+        )
+            
     def casting_from_scale_aspect(
         self,
         src_scale_uid, src_aspect_uid,
