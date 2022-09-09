@@ -675,47 +675,40 @@ class Scale(object):
 # ===========================================================================
 # Further configuration of `cxt` requiring some classes defined above
 # 
-# 1)Build the dimension-casting register by iterating over all keys in 
-#   the casting register, finding the source scale, then the reference 
-#   and finally the dimensions when the reference is part of a unit system. 
+#   Collect all scale UIDs belonging to generically named scales 
+#   and map their dimension to the scale UID.
+#   Use this mapping to convert from a composed scale to a scale (no_aspect).
+#   Casting of a composed scale must first convert to an M-layer scale 
+#   and then look up the casting.
 #
-for k_i,v_i in cxt.casting_reg._table.items():
+for src_scale_uid in cxt.scale_reg._objects.keys(): 
 
-    uid_src, uid_dst = k_i  
-    src_scale_uid, src_aspect_uid = uid_src
+    json_scale = cxt.scale_reg[src_scale_uid]   
     
-    json_scale = cxt.scale_reg[src_scale_uid]
-    ref_uid = UID( json_scale['reference'] )
-    json_ref = cxt.reference_reg[ ref_uid ]
+    if "generic" in json_scale:   
     
-    if (
-        "system" in json_ref
-    and
-        "generic_name" in json_ref["system"]
-    ):        
+        ref_uid = UID( json_scale['reference'] )
+        json_ref = cxt.reference_reg[ ref_uid ]
+        
+        # A generic scale reference will be associated with a unit system
         dim = _sys_to_dimension( json_ref["system"] )
-        cxt.dimension_casting_reg.set( (dim,uid_dst), v_i )
-
-# 2)Build the dimension-conversion register by iterating over all keys in 
-#   the conversions register, finding the source scale, then the reference 
-#   and finally the dimensions when the reference is part of a unit system. 
-#
-#   TODO: this approach also needs a conversion register entry for the 
-#   trivial case of a generic unit to itself, so that the ComposedScale
-#   can be resolved to a single scale. 
-# 
-for k_i,v_i in cxt.conversion_reg._table.items(): 
-
-    uid_src, uid_dst = k_i  
-    
-    json_scale = cxt.scale_reg[src_scale_uid]
-    ref_uid = UID( json_scale['reference'] )
-    json_ref = cxt.reference_reg[ ref_uid ]
-
-    if (
-        "system" in json_ref
-    and
-        "generic_name" in json_ref["system"]
-    ):        
-        dim = _sys_to_dimension( json_ref["system"] )
-        cxt.dimension_conversion_reg.set( (dim,uid_dst), v_i )
+        
+        if dim not in cxt.dimension_conversion_reg:
+            cxt.dimension_conversion_reg[dim] = src_scale_uid
+            
+        elif cxt.dimension_conversion_reg[dim] != src_scale_uid:
+            # One generic scale is associated with a unit,
+            # although other, non-generic, scales may be associated.
+            # TODO: this could be made an assertion, because testing should 
+            # be written to pick up this condition.
+            raise RuntimeError(
+                "generic scales: {} and {} both refer to {}".format(
+                    src_scale_uid,
+                    cxt.dimension_conversion_reg[dim],
+                    json_ref["uid"]
+                )
+            )
+        else: 
+            # Scale reuse is OK
+            pass
+             
