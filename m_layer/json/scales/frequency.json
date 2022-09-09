@@ -9,6 +9,7 @@
             "si_THz",
             310850909458796788849032855422762414462
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     }
 ]

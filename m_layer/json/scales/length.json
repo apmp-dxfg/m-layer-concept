@@ -9,7 +9,8 @@
             "si_nm",
             230327124043985678197012494098272082173
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",

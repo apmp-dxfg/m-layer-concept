@@ -9,7 +9,8 @@
             "si_volt",
             329937729914753562634885805595267532595
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -21,7 +22,8 @@
             "si_farad",
             326980191860455759475006183606607318398
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -33,7 +35,8 @@
             "si_ohm",
             301106267988465836015458636243981467619
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -45,7 +48,8 @@
             "si_siemens",
             141362926343587532391331354060487382910
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -57,7 +61,8 @@
             "si_weber",
             3389824025561912595583897462196041346
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -69,7 +74,8 @@
             "si_tesla",
             15906806309243323560382538299228898627
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -81,6 +87,7 @@
             "si_henry",
             11327962629869551145083263853955388968
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     }
 ]

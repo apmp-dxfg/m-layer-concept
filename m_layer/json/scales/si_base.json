@@ -9,7 +9,8 @@
             "si_kilogram",
             188151331508313165897603768130808181784
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -21,7 +22,8 @@
             "si_metre",
             61268972265076316018593147152102406832
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -33,7 +35,8 @@
             "si_second",
             110730041758233939215703442037761569190
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -45,7 +48,8 @@
             "si_ampere",
             264081801568151063132838497538090031099
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -57,7 +61,8 @@
             "si_kelvin",
             25703533220788919988679332108037098600
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -69,7 +74,8 @@
             "si_mole",
             96713855510406467826626480289106173630
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     },
     {
         "__entry__": "Scale",
@@ -81,6 +87,7 @@
             "si_candela",
             107700549721211215242458620140782394628
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "generic" : 1
     }
 ]
