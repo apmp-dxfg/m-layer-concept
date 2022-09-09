@@ -9,7 +9,6 @@ import os.path
 from m_layer import register 
 from m_layer import conversion_register
 from m_layer import casting_register
-from m_layer import dimension_register
 from m_layer import scales_for_aspect_register
 
 from m_layer.uid import UID 
@@ -42,9 +41,7 @@ class Context(object):
             reference_reg = None,
             aspect_reg = None,
             conversion_reg = None,
-            dimension_conversion_reg=None,
             casting_reg = None,
-            dimension_casting_reg=None,
             scales_for_aspect_reg = None,
             system_reg = None
             
@@ -52,6 +49,8 @@ class Context(object):
         
         self.locale = locale 
         self.value_fmt = value_fmt
+        self.dimension_conversion_reg={}
+
         
         if scale_reg is None:
             self.scale_reg = register.Register(self)
@@ -73,22 +72,10 @@ class Context(object):
         else:
             self.conversion_reg = conversion_reg
 
-        if dimension_conversion_reg is None:
-            self.dimension_conversion_reg =\
-                dimension_register.DimensionRegister(self)
-        else:
-            self.dimension_conversion_reg = dimension_conversion_reg
-
         if casting_reg is None:
             self.casting_reg = casting_register.CastingRegister(self)
         else:
             self.casting_reg = casting_reg
-
-        if dimension_casting_reg is None:
-            self.dimension_casting_reg =\
-                dimension_register.DimensionRegister(self)
-        else:
-            self.dimension_casting_reg = dimension_casting_reg
 
         if scales_for_aspect_reg is None:
             self.scales_for_aspect_reg =\
