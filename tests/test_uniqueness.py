@@ -312,7 +312,42 @@ class TestInit(unittest.TestCase):
                     else:
                         msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
                         self.fail(msg)  
-                        
+ 
+    def test_systematic_scale_uniqueness(self):
+        """
+        The name of a ratio scale with a reference belonging to a unit  
+        system may be a product of powers of base unit names in that system. 
+        We call such a scale "systematic" here.
+
+        The M-layer dimension of a systematic scale must correspond to 
+        just one systematic scale.
+        
+        """
+        from m_layer.context import global_context as cxt 
+        from m_layer.lib import _sys_to_dimension
+        from m_layer.uid import UID
+        
+        for src_scale_uid in cxt.scale_reg._objects.keys(): 
+        
+            json_scale = cxt.scale_reg[src_scale_uid]  
+            if "systematic" in json_scale: 
+            
+                self.assertTrue(json_scale["scale_type"] == "ratio")
+                
+                ref_uid = UID( json_scale['reference'] )
+                json_ref = cxt.reference_reg[ ref_uid ]
+
+                dim = _sys_to_dimension( json_ref["system"] )
+            
+                if dim not in cxt.dimension_conversion_reg:
+                    cxt.dimension_conversion_reg[dim] = src_scale_uid
+                    
+                elif cxt.dimension_conversion_reg[dim] != src_scale_uid:  
+                    # This is the uniqueness test
+                    self.assertTrue(
+                        cxt.dimension_conversion_reg[dim] == src_scale_uid
+                    )
+
 #============================================================================
 if __name__ == '__main__':
     unittest.main()
