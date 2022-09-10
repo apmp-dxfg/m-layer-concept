@@ -673,42 +673,29 @@ class Scale(object):
         return ScaleAspect(self,aspect) 
         
 # ===========================================================================
-# Further configuration of `cxt` requiring some classes defined above
+# Further configuration of `cxt` requiring some classes defined above.
 # 
-#   Collect all scale UIDs belonging to generically named scales 
-#   and map their dimension to the scale UID.
-#   Use this mapping to convert from a composed scale to a scale (no_aspect).
-#   Casting of a composed scale must first convert to an M-layer scale 
-#   and then look up the casting.
+# Map the M-layer dimensions of systematically named scales to 
+# their scale UID.
 #
 for src_scale_uid in cxt.scale_reg._objects.keys(): 
 
     json_scale = cxt.scale_reg[src_scale_uid]   
     
-    if "generic" in json_scale:   
+    if "systematic" in json_scale:   
     
         ref_uid = UID( json_scale['reference'] )
         json_ref = cxt.reference_reg[ ref_uid ]
         
-        # A generic scale reference will be associated with a unit system
         dim = _sys_to_dimension( json_ref["system"] )
         
         if dim not in cxt.dimension_conversion_reg:
             cxt.dimension_conversion_reg[dim] = src_scale_uid
             
-        elif cxt.dimension_conversion_reg[dim] != src_scale_uid:
-            # One generic scale is associated with a unit,
-            # although other, non-generic, scales may be associated.
-            # TODO: this could be made an assertion, because testing should 
-            # be written to pick up this condition.
-            raise RuntimeError(
-                "generic scales: {} and {} both refer to {}".format(
-                    src_scale_uid,
-                    cxt.dimension_conversion_reg[dim],
-                    json_ref["uid"]
-                )
+        assert cxt.dimension_conversion_reg[dim] == src_scale_uid,\
+            "systematic scales: {} and {} both refer to {}".format(
+                src_scale_uid,
+                cxt.dimension_conversion_reg[dim],
+                json_ref["uid"]
             )
-        else: 
-            # Scale reuse is OK
-            pass
              
