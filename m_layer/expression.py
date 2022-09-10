@@ -3,6 +3,7 @@ import numbers
 import math 
 
 from m_layer.lib import *
+from m_layer.context import global_context as cxt
 from m_layer.stack import normal_form
 
 __all__ = (
@@ -209,8 +210,7 @@ class Expression(object):
         and isinstance(self.scale_aspect,ComposedScaleAspect)
         ):
             # Conversion from a composed scale to a specific one,
-            # which must be generic in the unit system and must
-            # be dimensionally equivalent. 
+            # which must be dimensionally equivalent and generic. 
             if isinstance(dst_scale,Scale):            
                 dst_scale_aspect = dst_scale.to_scale_aspect(no_aspect)
             elif isinstance(dst_scale,ScaleAspect):
@@ -218,7 +218,7 @@ class Expression(object):
                     raise RuntimeError(
                         "cannot change aspect: {!r}".format(dst_scale)
                     )                
-                dst_scale_aspect = dst_scale
+                dst_scale_aspect = dst_scale 
             else:
                 assert False, repr(dst_scale) 
                 
@@ -226,16 +226,25 @@ class Expression(object):
             
             if src_dim != dst_scale_aspect.dimension:
                 raise RuntimeError(
-                    "incompatible dimensions: {}, {}".format(
+                    "dimensions must match: {}, {}".format(
                         src_dim,
                         dst_scale_aspect.dimension
                     )
                 )           
+
+            try:
+                src_scale_uid = self.dimension_conversion_reg[src_dim]   
+            except KeyError:
+                raise RuntimeError(
+                    "no scale defined for {!r}".format(src_dim)
+                )           
                         
-            new_token = cxt.conversion_from_composed_scale(
-                src_dim,
-                dst_scale_aspect.scale.uid
+            new_token = cxt.conversion_from_scale_aspect( 
+                src_scale_uid,
+                no_aspect.uid,
+                dst_scale_aspect.scale.uid 
             )(self._token)
+
             
         return Expression(
             new_token,
@@ -300,16 +309,22 @@ class Expression(object):
             )
 
         elif isinstance(
-                self.scale_aspect,
-                (ComposedScale,ComposedScaleAspect)
-            ):
-            src_dim = self.scale_aspect.dimension     # A ComposedDimension
+            self.scale_aspect,
+            (ComposedScale,ComposedScaleAspect)
+        ):
+            src_dim = self.scale_aspect.dimension.simplify
             
-            assert src_dim.simplify == dst.dimension, repr(dst)
+            if src_dim != dst.dimension:
+                raise RuntimeError(
+                    "dimensions must match: {}, {}".format(
+                        src_dim,
+                        dst_scale_aspect.dimension
+                    )
+                )           
             
             if isinstance(dst,Scale):            
                 if aspect is no_aspect:
-                    # cannot carry forward the initial aspect,
+                    # cannot carry forward an initial aspect,
                     # so use no_aspect
                     dst_scale_aspect = dst.to_scale_aspect(no_aspect)
                 else:
@@ -324,7 +339,7 @@ class Expression(object):
                     ) 
                         
             fn = cxt.casting_from_composed_scale(
-                src.dim.simplify,
+                src_dim,
                 dst_scale_aspect.scale.uid,
                 dst_scale_aspect.aspect.uid 
             )
