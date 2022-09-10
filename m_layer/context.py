@@ -268,10 +268,17 @@ class Context(object):
             
         """              
         try:
-            return self.dimension_conversion_reg[(src_dim,dst_scale_uid)] 
+            src_scale_uid = self.dimension_conversion_reg[src_dim] 
         except KeyError:
             pass
-                        
+ 
+        scale_pair = (src_scale_uid,dst_scale_uid)
+        # Try a generic conversion 
+        try:
+            return self.conversion_reg[scale_pair] 
+        except KeyError:
+            pass
+ 
         # This is a failure 
         raise RuntimeError(
             "no conversion from {!r} to Scale( {!s} )".format(
@@ -341,17 +348,27 @@ class Context(object):
             A Python function 
             
         """ 
-        dst_pair = dst_scale_uid, dst_aspect_uid                      
+        dst_pair = dst_scale_uid, dst_aspect_uid   
+
         try:
-            return self.casting_from_dimension_reg[ dimension, dst_pair ]   
+            src_scale_uid = self.dimension_conversion_reg[dimension]   
         except KeyError:
             raise RuntimeError(
-                "no cast defined from {!r} to {!r}".format(
-                    dimension,
+                "no scale defined for {!r}".format(dimension)
+            )     
+            
+        src_pair = src_scale_uid, no_aspect.uid 
+            
+        try:
+            return self.casting_reg[ src_pair,dst_pair ]   
+        except KeyError:
+            raise RuntimeError(
+                "no cast defined from '{!r}' to '{!r}'".format(
+                    src_pair,
                     dst_pair
                 )
-            ) from None          
-
+            )   
+        
 # ---------------------------------------------------------------------------
 # Configure the global context object 
 #
