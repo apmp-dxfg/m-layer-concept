@@ -6,7 +6,7 @@ from m_layer.stack import normal_form
 
 __all__ = (
     'UID',
-    'ComposedUID'
+    'CompoundUID'
 )
 
 # ---------------------------------------------------------------------------
@@ -77,7 +77,7 @@ class UID(object):
         return "UID( {} )".format(list(self._m_layer_uuid))
   
 # ---------------------------------------------------------------------------
-class ComposedUID(object):
+class CompoundUID(object):
 
     __slots__ = ('prefactor','factors')
 
@@ -88,7 +88,7 @@ class ComposedUID(object):
         # The keys in  pop.factors are Python objects.
         # Some may be distinct objects with the same M-layer UID.
         # In that case, each object occurs only once.    
-        # The ComposedUID representation uses the M-layer UID as key 
+        # The CompoundUID representation uses the M-layer UID as key 
         # and a forzenset of exponents as value. 
         
         setter = lambda factors,i,v: factors[ i.uid ].add(v)
@@ -147,17 +147,17 @@ class ComposedUID(object):
         ) 
         
         if self.prefactor != 1:
-            return "ComposedUID({{ {} }},prefactor={})".format(
+            return "CompoundUID({{ {} }},prefactor={})".format(
                 factors,
                 self.prefactor
             )
         else:
-            return "ComposedUID({})".format(factors)
+            return "CompoundUID({})".format(factors)
         
         
     def json(self,**kwargs):
         """
-        Return a JSON record for the ComposedUID
+        Return a JSON record for the CompoundUID
         
         Args:
             kwargs: will be passed directly to json.dumps
@@ -175,13 +175,13 @@ class ComposedUID(object):
                 prefactor = [ str(self.prefactor), "1" ]
 
             obj = dict(
-                __type__ = "ComposedUID",
+                __type__ = "CompoundUID",
                 factors = factors,
                 prefactor = prefactor
             )
         else:
             obj = dict(
-                __type__ = "ComposedUID",
+                __type__ = "CompoundUID",
                 factors = factors
             )
 

@@ -2,27 +2,27 @@ import numbers
 
 from m_layer.context import global_context as cxt
 
-from m_layer.dimension import Dimension, ComposedDimension
+from m_layer.dimension import Dimension, CompoundDimension
 from m_layer.stack import Stack
-from m_layer.uid import UID, ComposedUID 
+from m_layer.uid import UID, CompoundUID 
 
 __all__ = (
     'Reference',
     'Scale',
-    'ComposedScale',
+    'CompoundScale',
     'ScaleAspect',
-    'ComposedScaleAspect',
+    'CompoundScaleAspect',
     'Aspect',
-    'ComposedAspect',
+    'CompoundAspect',
     'no_aspect',
     'System',
 )
 
 # ---------------------------------------------------------------------------
-class ComposedAspect(object):
+class CompoundAspect(object):
 
     """
-    A ComposedAspect holds an Aspect expression
+    A CompoundAspect holds an Aspect expression
     """
 
     __slots__ = (
@@ -46,7 +46,7 @@ class ComposedAspect(object):
         try:
             return self._uid
         except AttributeError:
-            self._uid = ComposedUID(self.stack)
+            self._uid = CompoundUID(self.stack)
             return self._uid
  
     @property
@@ -58,18 +58,18 @@ class ComposedAspect(object):
         return no_aspect.uid in self.uid
         
     def __mul__(self,y):
-        return ComposedAspect(
+        return CompoundAspect(
             self.stack.push(y).mul()
         )
 
     def __truediv__(self,y):
-        return ComposedAspect(
+        return CompoundAspect(
             self.stack.push(y).div()
         )
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
-        return ComposedAspect(
+        return CompoundAspect(
             self.stack.push(y).pow()
         )
 
@@ -77,7 +77,7 @@ class ComposedAspect(object):
         return "{!s}".format( self.stack )
         
     def __repr__(self):
-        return "ComposedAspect({!r})".format( self.stack )       
+        return "CompoundAspect({!r})".format( self.stack )       
 
 # ---------------------------------------------------------------------------
 class Aspect(object):
@@ -118,18 +118,18 @@ class Aspect(object):
         return isinstance(other,Aspect) and self.uid == other.uid 
 
     def __mul__(self,y):
-        return ComposedAspect(
+        return CompoundAspect(
             Stack().push(self).push(y).mul()
         )
 
     def __truediv__(self,y):
-        return ComposedAspect(
+        return CompoundAspect(
             Stack().push(self).push(y).div()
         )
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
-        return ComposedAspect(
+        return CompoundAspect(
             Stack().push(self).push(y).pow()
         )
         
@@ -272,10 +272,10 @@ class Reference(object):
             return self._dimension
             
 # ---------------------------------------------------------------------------
-class ComposedScaleAspect(object):
+class CompoundScaleAspect(object):
 
     """
-    A :class:`ComposedScaleAspect` holds a :class:`ScaleAspect` expression
+    A :class:`CompoundScaleAspect` holds a :class:`ScaleAspect` expression
     """
     
     __slots__ = ( "_stack","_uid", "_dimension" )
@@ -295,21 +295,21 @@ class ComposedScaleAspect(object):
     def __rmul__(self,x):
         # a numerical scale factor on the left 
         assert isinstance(x,numbers.Integral)
-        return ComposedScaleAspect( self.stack.push(x).rmul() )
+        return CompoundScaleAspect( self.stack.push(x).rmul() )
         
     def __mul__(self,y):
-        return ComposedScaleAspect(
+        return CompoundScaleAspect(
             self.stack.push(y).mul()
         )
 
     def __truediv__(self,y):
-        return ComposedScaleAspect(
+        return CompoundScaleAspect(
             self.stack.push(y).div()
         )
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
-        return ComposedScaleAspect(
+        return CompoundScaleAspect(
             self.stack.push(y).pow()
         )
     
@@ -318,7 +318,7 @@ class ComposedScaleAspect(object):
         try:
             return self._dimension
         except AttributeError:
-            self._dimension = ComposedDimension(self.stack)
+            self._dimension = CompoundDimension(self.stack)
             return self._dimension
 
     @property
@@ -330,19 +330,19 @@ class ComposedScaleAspect(object):
         try:
             return self._uid
         except AttributeError:
-            self._uid = ComposedUID(self.stack)
+            self._uid = CompoundUID(self.stack)
             return self._uid
             
     # Equality (`==` method) could be based on the equivalence of expressions
     # without simplification (indifferent to ordering of terms).
     # Explicit function names like `commensurate` might be better. 
 
-    def composed_scales_and_aspects(self):
+    def compound_scales_and_aspects(self):
         """
-        Return a :class:`ComposedScale`-:class:`~aspect.ComposedAspect` pair 
+        Return a :class:`CompoundScale`-:class:`~aspect.CompoundAspect` pair 
         
         Args:
-            `composed_scale_aspect` (:class:`ComposedScaleAspect`):
+            `compound_scale_aspect` (:class:`CompoundScaleAspect`):
         
         """
         scale_stk = Stack([
@@ -355,15 +355,15 @@ class ComposedScaleAspect(object):
         ])
                     
         return ( 
-            ComposedScale( scale_stk ), 
-            ComposedAspect( aspect_stk ) 
+            CompoundScale( scale_stk ), 
+            CompoundAspect( aspect_stk ) 
         )
               
     def __str__(self):
         return "({!s})".format( self.stack )
         
     def __repr__(self):
-        return "ComposedScaleAspect({!r})".format(self.stack) 
+        return "CompoundScaleAspect({!r})".format(self.stack) 
         
 # ---------------------------------------------------------------------------
 class ScaleAspect(object):
@@ -411,13 +411,13 @@ class ScaleAspect(object):
     def composable(self):
         return self.scale.composable
         
-    # These arithmetic operations must match operations in ComposedScaleAspect
+    # These arithmetic operations must match operations in CompoundScaleAspect
     def __rmul__(self,x):
         # a numerical scale factor on the left 
         assert isinstance(x,numbers.Integral)
         assert self.composable
         
-        return ComposedScaleAspect(
+        return CompoundScaleAspect(
             Stack().push(self).push(x).rmul() 
         )
         
@@ -425,7 +425,7 @@ class ScaleAspect(object):
         assert self.composable
         assert y.composable
 
-        return ComposedScaleAspect(
+        return CompoundScaleAspect(
             Stack().push(self).push(y).mul()
         )
 
@@ -433,7 +433,7 @@ class ScaleAspect(object):
         assert self.composable
         assert y.composable
 
-        return ComposedScaleAspect(
+        return CompoundScaleAspect(
             Stack().push(self).push(y).div()
         )
  
@@ -441,7 +441,7 @@ class ScaleAspect(object):
         assert isinstance(y,numbers.Integral)
         assert self.composable
 
-        return ComposedScaleAspect(
+        return CompoundScaleAspect(
             Stack().push(self).push(y).pow()
         )
         
@@ -467,10 +467,10 @@ class ScaleAspect(object):
         ) 
          
 # ---------------------------------------------------------------------------
-class ComposedScale(object):
+class CompoundScale(object):
  
     """
-    A :class:`ComposedScale` holds a :class:`Scale` expression
+    A :class:`CompoundScale` holds a :class:`Scale` expression
     """
     
     __slots__ = (
@@ -487,7 +487,7 @@ class ComposedScale(object):
         try:
             return self._uid
         except AttributeError:
-            self._uid = ComposedUID(self.stack)
+            self._uid = CompoundUID(self.stack)
             return self._uid
 
     @property
@@ -495,7 +495,7 @@ class ComposedScale(object):
         try:
             return self._dimension
         except AttributeError:
-            self._dimension = ComposedDimension(self.stack)
+            self._dimension = CompoundDimension(self.stack)
             return self._dimension
  
     @property
@@ -513,23 +513,23 @@ class ComposedScale(object):
     def __rmul__(self,x):
         # a numerical scale factor on the left 
         assert isinstance(x,numbers.Integral)      
-        return ComposedScale(
+        return CompoundScale(
             self.stack.push(x).rmul()
         )
 
     def __mul__(self,y):
-        return ComposedScale(
+        return CompoundScale(
             self.stack.push(y).mul()
         )
 
     def __truediv__(self,y):
-        return ComposedScale(
+        return CompoundScale(
             self.stack.push(y).div()
         )
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
-        return ComposedScale(
+        return CompoundScale(
             self.stack.push(y).pow()
         )
 
@@ -537,15 +537,15 @@ class ComposedScale(object):
         return "{}".format( self.stack )
         
     def __repr__(self):
-        return "ComposedScale({!r})".format( self.stack )  
+        return "CompoundScale({!r})".format( self.stack )  
   
-    def composed_scale_aspect(self,src):
+    def compound_scale_aspect(self,src):
         """
-        Return a :class:`~scale.ComposedScaleAspect` 
-        by copying the aspects in ``src_composed_scale_aspect``.
+        Return a :class:`~scale.CompoundScaleAspect` 
+        by copying the aspects in ``src_compound_scale_aspect``.
         
         Args:
-            src (:class:`~scale.ComposedScaleAspect`)
+            src (:class:`~scale.CompoundScaleAspect`)
         
         .. warning:
         
@@ -582,7 +582,7 @@ class ComposedScale(object):
             else:
                 stk.append( o_i )                
                            
-        return ComposedScaleAspect( Stack(stk) )
+        return CompoundScaleAspect( Stack(stk) )
   
 # ---------------------------------------------------------------------------
 class Scale(object):
@@ -635,26 +635,26 @@ class Scale(object):
         # a numerical scale factor on the left 
         assert isinstance(x,numbers.Integral)
         assert self.composable       
-        return ComposedScale(
+        return CompoundScale(
             Stack().push(self).push(x).rmul()
         )
 
     def __mul__(self,y):
         assert self.composable
-        return ComposedScale(
+        return CompoundScale(
             Stack().push(self).push(y).mul()
         )
 
     def __truediv__(self,y):
         assert self.composable
-        return ComposedScale(
+        return CompoundScale(
             Stack().push(self).push(y).div()
         )
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
         assert self.composable
-        return ComposedScale(
+        return CompoundScale(
             Stack().push(self).push(y).pow()
         )    
         

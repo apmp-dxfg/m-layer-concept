@@ -27,13 +27,13 @@ class Expression(object):
     def __init__(self,token,mdata):
         self._token = token 
         
-        if isinstance(mdata,(ScaleAspect,ComposedScaleAspect)):
+        if isinstance(mdata,(ScaleAspect,CompoundScaleAspect)):
             self._scale_aspect = mdata
         else:
             assert False, repr(mdata)
       
     def __str__(self):
-        # TODO: something sensible when scale_aspect is ComposedScaleAspect 
+        # TODO: something sensible when scale_aspect is CompoundScaleAspect 
         if isinstance(self._scale_aspect,ScaleAspect):
             return "{} {}".format( 
                 self.token, 
@@ -46,7 +46,7 @@ class Expression(object):
             )
         
     def __repr__(self):
-        # TODO: something sensible when scale_aspect is ComposedScaleAspect 
+        # TODO: something sensible when scale_aspect is CompoundScaleAspect 
         if isinstance(self._scale_aspect,ScaleAspect):
             if self.scale_aspect.aspect is no_aspect:
                 return "Expression({},{})".format(
@@ -81,7 +81,7 @@ class Expression(object):
     # Alias
     value = token 
   
-    # Note `_scale_aspect` may be a ComposedScaleAspect, so 
+    # Note `_scale_aspect` may be a CompoundScaleAspect, so 
     # there is no reason to provide access to individual `aspect`
     # and `scale` properties.
     @property 
@@ -98,9 +98,9 @@ class Expression(object):
         the associated aspect must match the existing expression.   
         
         Args:
-            dst_scale (:class:`~scale.ComposedScaleAspect` or
+            dst_scale (:class:`~scale.CompoundScaleAspect` or
             :class:`~scale.ScaleAspect` or 
-            :class:`~scale.ComposedScale`
+            :class:`~scale.CompoundScale`
             :class:`~scale.Scale`) 
         
         Returns:
@@ -150,25 +150,25 @@ class Expression(object):
             )(self._token)
             
         elif ( 
-            isinstance(dst_scale,(ComposedScale,ComposedScaleAspect) ) 
-        and isinstance(self.scale_aspect,ComposedScaleAspect)
+            isinstance(dst_scale,(CompoundScale,CompoundScaleAspect) ) 
+        and isinstance(self.scale_aspect,CompoundScaleAspect)
         ):
-            # Conversion from one composed expression to another.
+            # Conversion from one compound expression to another.
             # The expressions must be arithmetically equivalent,  
             # so that pairs of source-destination scale-aspects  
             # can be found in the register. 
                         
             # Note: I take the view that the Context 
             # deals only with registered objects.
-            # The Context knows nothing about composed 
+            # The Context knows nothing about compound 
             # ScaleAspects. 
 
             # Step 1: convert to products of powers
             src_pops = normal_form(self.scale_aspect.stack)
             
-            if isinstance(dst_scale,ComposedScale):
-                # Copy the various src aspects to a new ComposedScaleAspect.
-                dst_scale_aspect = dst_scale.composed_scale_aspect( 
+            if isinstance(dst_scale,CompoundScale):
+                # Copy the various src aspects to a new CompoundScaleAspect.
+                dst_scale_aspect = dst_scale.compound_scale_aspect( 
                     self.scale_aspect
                 ) 
                 dst_pops = normal_form(dst_scale_aspect.stack)
@@ -207,9 +207,9 @@ class Expression(object):
             
         elif ( 
             isinstance(dst_scale,(Scale,ScaleAspect) ) 
-        and isinstance(self.scale_aspect,ComposedScaleAspect)
+        and isinstance(self.scale_aspect,CompoundScaleAspect)
         ):
-            # Conversion from a composed scale to a specific one,
+            # Conversion from a compound scale to a specific one,
             # which must be dimensionally equivalent and generic. 
             if isinstance(dst_scale,Scale):            
                 dst_scale_aspect = dst_scale.to_scale_aspect(no_aspect)
@@ -310,7 +310,7 @@ class Expression(object):
 
         elif isinstance(
             self.scale_aspect,
-            (ComposedScale,ComposedScaleAspect)
+            (CompoundScale,CompoundScaleAspect)
         ):
             src_dim = self.scale_aspect.dimension.simplify
             
@@ -338,7 +338,7 @@ class Expression(object):
                         aspect
                     ) 
                         
-            fn = cxt.casting_from_composed_scale(
+            fn = cxt.casting_from_compound_scale(
                 src_dim,
                 dst_scale_aspect.scale.uid,
                 dst_scale_aspect.aspect.uid 
@@ -409,7 +409,7 @@ def scale_aspect(xp):
         xp: class:`~expression.Expression`
         
     Returns:
-        a :class:`ScaleAspect` or a :class:`ComposedScaleAspect`
+        a :class:`ScaleAspect` or a :class:`CompoundScaleAspect`
         
     """
     return xp.scale_aspect 
@@ -429,7 +429,7 @@ def expr(v,s,a=no_aspect):
     
     """
     # `s` may be a scale-aspect pair or just a scale 
-    if isinstance(s,(ScaleAspect,ComposedScaleAspect)):
+    if isinstance(s,(ScaleAspect,CompoundScaleAspect)):
         return Expression(v,s)
     elif isinstance(s,Scale):
         return Expression(v, s.to_scale_aspect(a) )

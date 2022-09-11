@@ -23,7 +23,7 @@ from fractions import Fraction
 from m_layer.stack import normal_form
 
 # ---------------------------------------------------------------------------
-class ComposedDimension(object):
+class CompoundDimension(object):
 
     __slots__ = ('prefactor','factors')
 
@@ -34,7 +34,7 @@ class ComposedDimension(object):
         # The keys in pop.factors are Python objects.
         # Some may be distinct objects with the same M-layer UID.
         # In that case, each object occurs only once.    
-        # The ComposedDimension representation uses the dimension as key 
+        # The CompoundDimension representation uses the dimension as key 
         # and a frozenset of exponents as value. 
         
         setter = lambda factors,i,v: factors[ i.dimension ].add(v)
@@ -90,11 +90,11 @@ class ComposedDimension(object):
                 for k,v in self.factors.items()
         )
         if self.prefactor == 1:
-            return "ComposedDimension({{ {} }})".format(
+            return "CompoundDimension({{ {} }})".format(
                 factors,
             )
         else:
-            return "ComposedDimension({{ {} }},prefactor={})".format(
+            return "CompoundDimension({{ {} }},prefactor={})".format(
                 factors,
                 self.prefactor
             )

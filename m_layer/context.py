@@ -259,7 +259,7 @@ class Context(object):
                 )
             )
 
-    def conversion_from_composed_scale(
+    def conversion_from_compound_scale(
         self,
         src_dim,
         dst_scale_uid
@@ -330,7 +330,7 @@ class Context(object):
                 )
             ) from None          
 
-    def casting_from_composed_scale(
+    def casting_from_compound_scale(
         self,
         dimension,
         dst_scale_uid, dst_aspect_uid
