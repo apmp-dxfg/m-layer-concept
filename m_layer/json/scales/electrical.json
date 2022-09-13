@@ -10,7 +10,7 @@
             329937729914753562634885805595267532595
         ],
         "scale_type": "ratio",
-        "systematic" : 1
+        "systematic": 1
     },
     {
         "__entry__": "Scale",
@@ -23,7 +23,7 @@
             326980191860455759475006183606607318398
         ],
         "scale_type": "ratio",
-        "systematic" : 1
+        "systematic": 1
     },
     {
         "__entry__": "Scale",
@@ -36,7 +36,7 @@
             301106267988465836015458636243981467619
         ],
         "scale_type": "ratio",
-        "systematic" : 1
+        "systematic": 1
     },
     {
         "__entry__": "Scale",
@@ -49,7 +49,7 @@
             141362926343587532391331354060487382910
         ],
         "scale_type": "ratio",
-        "systematic" : 1
+        "systematic": 1
     },
     {
         "__entry__": "Scale",
@@ -62,7 +62,7 @@
             3389824025561912595583897462196041346
         ],
         "scale_type": "ratio",
-        "systematic" : 1
+        "systematic": 1
     },
     {
         "__entry__": "Scale",
@@ -75,7 +75,7 @@
             15906806309243323560382538299228898627
         ],
         "scale_type": "ratio",
-        "systematic" : 1
+        "systematic": 1
     },
     {
         "__entry__": "Scale",
@@ -88,6 +88,6 @@
             11327962629869551145083263853955388968
         ],
         "scale_type": "ratio",
-        "systematic" : 1
+        "systematic": 1
     }
 ]
