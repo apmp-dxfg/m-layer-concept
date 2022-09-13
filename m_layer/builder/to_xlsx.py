@@ -2,15 +2,15 @@
 Convert an existing collection of M-layer register JSON files 
 into a set of Excel workbooks.
 
-The intention is to modify these workbooks and then generate 
-a new suite of JSON files.
+The intention is to allow these workbooks to be modified and then  
+generate a new suite of JSON files.
 
-References will be resolved when the sheets are opened in Excel. 
+References must be resolved by opening all workbooks in Excel. 
 The internal representation of those paths is then changed and 
 cannot be seen again.
 
-So after running this script, the set of workbooks must be opened in Excel 
-and then saved (at which point the cell contents will be resolved). 
+After running this script, open the workbooks in Excel, allow updates 
+and then save them (at which point the cell contents should be resolved). 
 
 """
 import json 
@@ -49,6 +49,10 @@ def add_uid(file,ws,uid,row,col):
 # --------------------------------------------------------------------------- 
 def add_string(ws,s,row,col):
     ws.cell(row=row,column=col,value=str(s))
+
+# --------------------------------------------------------------------------- 
+def add_integer(ws,i,row,col):
+    ws.cell(row=row,column=col,value=int(i) )
 
 # --------------------------------------------------------------------------- 
 def add_uid_reference(ws,uid,row,col):
@@ -250,12 +254,14 @@ if __name__ == '__main__':
         # 'uid' : [], 
         # 'reference' : [],
         # 'scale_type' : "" 
+        # 'systematic' : 1
     # }
     
     labels = [
         'uid',
         'reference',
-        'scale_type'
+        'scale_type',
+        'systematic'
     ]
         
     path = os.path.abspath(
@@ -285,6 +291,10 @@ if __name__ == '__main__':
             add_uid(directory,ws,d_i['uid'],row=i+2,col=1)
             add_uid_reference(ws,d_i['reference'],row=i+2,col=2)
             add_string(ws,d_i['scale_type'],row=i+2,col=3)
+            try:    # A scale may be systematic
+                add_integer(ws,d_i['systematic'],row=i+2,col=4)
+            except KeyError as k:
+                ws.cell(row=i+2,column=4,value=None)
             
     # ---------------------------------------------------------------------------
     # Process scales_for 

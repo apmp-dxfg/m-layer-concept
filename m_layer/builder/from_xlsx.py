@@ -1,7 +1,7 @@
 """
 Create a set of JSON files from a set of XLSX files for the M-layer register.
 
-The process may require several iterations.
+The process will require iterations.
 
     * Copy the JSON folder under the builder directory.
 
@@ -11,11 +11,22 @@ The process may require several iterations.
 
     * Introduce new rows and/or sheets to the various workbooks to define objects or transformations. 
     
-    When introducing new objects that need UUIDs, enter the word None in place of the UUID. This script will automatically generate the missing UUIDs.
-    
-    When setting up conversions, or other parts of the register, that refer to unique objects, use Excel cell references (type '=' in the cell and then click on the target cell).
+        NOTE: 
+        When introducing new objects that need UUIDs, enter the word None in place of the UUID. 
+        This script will automatically generate the missing UUIDs.
+        
+        It is not possible to use cell references until UUIDs have been assigned. So, new objects 
+        requiring UUIDS should be created by running this script. Then followed by `to_xlsx.py` to 
+        create an updated set of XLSX files. 
 
-    NOTE: It is not possible to use cell references until the UUIDs have been assigned. So, new objects with UUIDS should be created by running this script. Followed by `to_xlsx.py` to create an updated set of XLSX files. 
+        Only one layer of missing UUIDs can be handled at a time. So, do references first, then update
+        and start again, then do the scales, update and start again. Finally, do the conversions.
+    
+        When setting up conversions, or other parts of the register that refer to unique objects, 
+        use Excel cell references (type '=' in the cell and then click on the target cell).
+        
+        To update all the workbooks, open them all then from the task bar Excel grouped button 
+        right-click and select close all. Then accept all requests to save the workbooks.
     
     * When finished, copy the JSON folder, under the builder directory, to replace the JSON folder under the m_layer directory.  
 
@@ -139,8 +150,8 @@ if __name__ == '__main__':
             uid = uid,
             locale = dict( 
                 default = dict(
-                    name = str( r[1].value ),
-                    symbol = str( r[2].value )
+                    name = str() if r[1].value is None else str( r[1].value ),
+                    symbol = str() if r[1].value is None else str( r[2].value )
                 )
             )
         )
@@ -230,21 +241,20 @@ if __name__ == '__main__':
             locale = dict( 
                 default = dict(
                     name = str( r[1].value ),
-                    symbol = str( r[2].value )
+                    symbol = str() if r[2].value is None else str( if r[2].value )
                 )
             )
         )
 
-        # A unit system may not be provided
-        print("r[3]", repr(r[3].value))
+        # A unit system might not be associated with a reference
         if r[3].value is not None:
             obj['system'] = dict(
                 uid = put_uid(directory,ws,r[3].value,i,3+1),
                 dimensions = str( literal_eval( r[4].value ) ),
-                prefix = str( literal_eval( r[5].value ) )
+                prefix = literal_eval( r[5].value )
             )
            
-        # Code in UCUM may not exist
+        # Code in UCUM may not be provided
         if r[6].value is not None:  
             obj['UCUM'] = dict(
                 code = str( r[6].value ),
@@ -275,6 +285,7 @@ if __name__ == '__main__':
         # 'uid' : [], 
         # 'reference' : [],
         # 'scale_type' : "" 
+        # 'systematic' : 1
     # }
     
     directory = "scales"
@@ -282,21 +293,29 @@ if __name__ == '__main__':
 
         uid = get_uid(directory,ws,r[0].value,i,0+1)
 
-        return dict(
+        obj =  dict(
             __entry__ = 'Scale',
             uid = uid,
             reference = put_uid(directory,ws,r[1].value,i,1+1),
             scale_type = str( r[2].value )
         )
-        
+ 
+        # A unit system might not be associated with a reference
+        if r[3].value is not None:
+            obj['systematic'] = int( r[3].value )
+            
+        return obj 
+ 
     wb = load_workbook( xl_path(directory), data_only=True  )
     for s in wb.sheetnames:
+        # print(directory,s)
         lst = []
         ws = wb[s]
         for i,r in enumerate(ws.rows):
             if i == 0: 
                 continue
             else:
+                # print(r,i)
                 lst.append( to_scale(ws,r,i+1) )
 
         dump_to_json(directory,s,lst)
