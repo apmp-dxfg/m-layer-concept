@@ -241,7 +241,7 @@ if __name__ == '__main__':
             locale = dict( 
                 default = dict(
                     name = str( r[1].value ),
-                    symbol = str() if r[2].value is None else str( if r[2].value )
+                    symbol = str() if r[2].value is None else str( r[2].value )
                 )
             )
         )
