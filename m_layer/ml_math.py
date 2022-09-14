@@ -6,7 +6,9 @@ __all__ = (
     'bounded_convert',
     'interval_convert',
     'ratio_convert',
+    'Fraction',
 )
+from fractions import Fraction
 
 # This will import uncertain-number math functions when they are available in the system
 # otherwise the regular math library is imported

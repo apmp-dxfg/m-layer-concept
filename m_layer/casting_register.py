@@ -64,7 +64,9 @@ class CastingRegister(object):
             )            
                                        
         # Parameter values are stored as strings in a dictionary
+        # E.g., { "a": "1", "b": "+273.15" }
         # They may take the form of arithmetic expressions
+        # E.g., { "c": "si.h*si.c/si.e/si.nano" }
         parameters_dict = { 
             k : ml_eval(v) 
                 for (k,v) in entry['parameters'].items() 
