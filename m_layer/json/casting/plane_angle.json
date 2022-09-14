@@ -24,8 +24,8 @@
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
         "parameters": {
             "a": "180.0/number.pi",
-            "y_lb": "-180.0",
-            "y_ub": "+180.0"
+            "y_lb": "-180",
+            "y_ub": "+180"
         }
     },
     {
