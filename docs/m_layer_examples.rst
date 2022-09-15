@@ -41,22 +41,20 @@ M-layer conversion may occur between different scales of the same type without t
     Expression(22.22222222222222,degree C)
     <BLANKLINE>
 
-However, conversion to a different type of scale must specify the aspect.
-The M-layer will not allow an expression to be converted without this information. For example, ::
+M-layer conversion may also occur between different scales of different types provided the conversion is to higher level of scale type 
+For example, ::
 
     >>> kelvin = Scale( ('ml_si_kelvin_ratio', 302952256288207449238881076502466548054) )
-
     >>> t_K = convert(t_C,kelvin)
-    Traceback (most recent call last):
-    ...
-    RuntimeError: no conversion from Scale( ['ml_si_celsius_interval', 245795086332095731716589481707012001072] ) to Scale( ['ml_si_kelvin_ratio', 302952256288207449238881076502466548054] )
 
-Information about the aspect can be specified initially when creating an expression, or injected during later casting, as shown below. Once specified, conversion operations cannot change the aspect. :: 
+Information about the aspect can be specified initially, when creating an expression. 
+Once specified, conversion operations cannot change the aspect. :: 
 
     >>> T = Aspect( ("ml_thermodynamic_temperature", 227327310217856015944698060802418784871) )         
     
-    >>> t_C = t.convert(celsius_interval)     
-    >>> t_K = cast(t_C,kelvin,T)    # Inject the aspect 'T'
+    >>> t_F = expr(72,fahrenheit_interval,T)     
+    >>> t_C = convert(t_F,celsius_interval)     
+    >>> t_K = convert(t_C,kelvin)    
     >>> display(t_K)
     295.3722222222222 K
     Expression(295.3722222222222,K,thermodynamic temperature)
