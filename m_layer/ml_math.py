@@ -8,20 +8,21 @@ __all__ = (
     'ratio_convert',
     'Fraction',
 )
+# The environment used by ml_eval needs Fraction available 
 from fractions import Fraction
 
 # This will import uncertain-number math functions when they are available in the system
-# otherwise the regular math library is imported
+# otherwise the regular math library is used
 try: 
     import GTC as math
     
     # TODO: when GTC gets an implementation of fmod, use that 
-    import math as py_math    
-    def fmod(x,y):
-        value = math.value(x)
-        return py_math.fmod(value,y) + (x - value)
+    # import math as py_math    
+    # def fmod(x,y):
+        # value = math.value(x)
+        # return py_math.fmod(value,y) + (x - value)
         
-    math.fmod = fmod 
+    # math.fmod = fmod 
     
 except ImportError:
     import math

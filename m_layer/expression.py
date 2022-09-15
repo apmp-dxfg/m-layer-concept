@@ -2,6 +2,8 @@
 import numbers
 import math 
 
+from fractions import Fraction
+
 from m_layer.lib import *
 from m_layer.context import global_context as cxt
 from m_layer.stack import normal_form
@@ -33,7 +35,7 @@ class Expression(object):
             assert False, repr(mdata)
       
     def __str__(self):
-        # TODO: something sensible when scale_aspect is CompoundScaleAspect 
+        # TODO: something sensible when scale_aspect is CompoundScaleAspect
         if isinstance(self._scale_aspect,ScaleAspect):
             return "{} {}".format( 
                 self.token, 
@@ -76,7 +78,13 @@ class Expression(object):
     @property
     def token(self):
         "The token or value of the Expression"
-        return self._token
+        # The Fraction display can be disconcerting when 
+        # the ratio involves large integers
+        if isinstance(self._token,Fraction):
+            x = float(self._token) 
+        else:
+            x = self._token
+        return x
 
     # Alias
     value = token 
