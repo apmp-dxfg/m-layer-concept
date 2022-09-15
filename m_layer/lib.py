@@ -459,12 +459,20 @@ class ScaleAspect(object):
         return id(self)
         
     def __str__(self):
-        return "({}, {})".format(self.scale,self.aspect)
+        if self.aspect is no_aspect:
+            return str(self.scale)
+        else:
+            return "({}, {})".format(self.scale,self.aspect)
         
     def __repr__(self):
-        return "ScaleAspect({!r},{!r})".format( 
-            self.scale,self.aspect
-        ) 
+        if self.aspect is no_aspect:
+            return "ScaleAspect({!r})".format( 
+                self.scale
+            ) 
+        else:
+            return "ScaleAspect({!r},{!r})".format( 
+                self.scale,self.aspect
+            ) 
          
 # ---------------------------------------------------------------------------
 class CompoundScale(object):
@@ -539,10 +547,10 @@ class CompoundScale(object):
     def __repr__(self):
         return "CompoundScale({!r})".format( self.stack )  
   
-    def compound_scale_aspect(self,src):
+    def to_compound_scale_aspect(self,src):
         """
         Return a :class:`~scale.CompoundScaleAspect` 
-        by copying the aspects in ``src_compound_scale_aspect``.
+        by copying the aspects in ``src``.
         
         Args:
             src (:class:`~scale.CompoundScaleAspect`)
@@ -558,27 +566,43 @@ class CompoundScale(object):
         """
         assert len(src.stack) == len(self.stack)
         
+        
         stk = []
         for i,o_i in enumerate(src.stack):
-            if o_i not in ('mul','div','rmul','pow'):
-            
+            if (
+                o_i not in ('mul','div','rmul','pow') 
+            and
+                not isinstance(o_i,numbers.Integral)
+            ):
                 # At this point the ability to 
                 # convert later can be checked:
                 # if src scale and aspect don't convert,
                 # then something is wrong.
                 
-                src_scale_uid, src_aspect_uid = src.stack[i].uid       
+                if isinstance(src,CompoundScaleAspect):
+                    src_scale_uid, src_aspect_uid = src.stack[i].uid
+                elif isinstance(src,CompoundScale):
+                    src_scale_uid, src_aspect_uid = src.stack[i].uid, no_aspect.uid
+                else:
+                    assert False, repr(src)
+                    
                 dst_scale_uid = self.stack[i].uid 
+                
                 cxt.convertible(
                     src_scale_uid, src_aspect_uid,                   
                     dst_scale_uid
                 )    
                 
-                stk.append( 
-                    self.stack[i].to_scale_aspect( 
-                        src.stack[i].aspect 
-                    ) 
-                )
+                if isinstance(src,CompoundScaleAspect):
+                    stk.append( 
+                        self.stack[i].to_scale_aspect( src.stack[i].aspect ) 
+                    )
+                else:
+                    # The generic aspect is used
+                    stk.append( 
+                        self.stack[i].to_scale_aspect( no_aspect ) 
+                    )
+
             else:
                 stk.append( o_i )                
                            
