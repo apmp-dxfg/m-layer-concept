@@ -10,7 +10,9 @@
             124567088583703716502057160299542649451
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a" : "180/number.pi" }
+        "parameters": {
+            "a": "180/number.pi"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -23,7 +25,9 @@
             273301153578020696303516833405033923738
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a" : "number.pi/180" }
+        "parameters": {
+            "a": "number.pi/180"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -36,7 +40,11 @@
             273805538217618733078298377573965188309
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
-        "parameters": { "a" : "1", "y_lb" : "-180", "y_ub" : "180" }
+        "parameters": {
+            "a": "1",
+            "y_lb": "-180",
+            "y_ub": "180"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -49,7 +57,11 @@
             125066222841962802760576607996391537405
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
-        "parameters": { "a" : "1", "y_lb" : "0", "y_ub" : "360" }
+        "parameters": {
+            "a": "1",
+            "y_lb": "0",
+            "y_ub": "360"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -62,7 +74,11 @@
             181367268705518406168243034119604185497
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
-        "parameters": { "a" : "1", "y_lb" : "-number.pi", "y_ub" : "number.pi" }
+        "parameters": {
+            "a": "1",
+            "y_lb": "-number.pi",
+            "y_ub": "number.pi"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -75,7 +91,11 @@
             300556212736422769570885306883285535638
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
-        "parameters": { "a" : "1", "y_lb" : "0", "y_ub" : "2*number.pi" }
+        "parameters": {
+            "a": "1",
+            "y_lb": "0",
+            "y_ub": "2*number.pi"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -88,7 +108,11 @@
             125066222841962802760576607996391537405
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
-        "parameters": { "a" : "180/number.pi", "y_lb" : "0", "y_ub" : "360" }
+        "parameters": {
+            "a": "180/number.pi",
+            "y_lb": "0",
+            "y_ub": "360"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -101,7 +125,11 @@
             300556212736422769570885306883285535638
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
-        "parameters": { "a" : "number.pi/180", "y_lb" : "0", "y_ub" : "2*number.pi" }
+        "parameters": {
+            "a": "number.pi/180",
+            "y_lb": "0",
+            "y_ub": "2*number.pi"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -114,7 +142,11 @@
             300556212736422769570885306883285535638
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
-        "parameters": { "a" : "number.pi/180", "y_lb" : "0", "y_ub" : "2*number.pi" }
+        "parameters": {
+            "a": "number.pi/180",
+            "y_lb": "0",
+            "y_ub": "2*number.pi"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -127,7 +159,11 @@
             181367268705518406168243034119604185497
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
-        "parameters": { "a" : "number.pi/180", "y_lb" : "-number.pi", "y_ub" : "number.pi" }
+        "parameters": {
+            "a": "number.pi/180",
+            "y_lb": "-number.pi",
+            "y_ub": "number.pi"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -140,6 +176,10 @@
             181367268705518406168243034119604185497
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
-        "parameters": { "a" : "number.pi/180", "y_lb" : "-number.pi", "y_ub" : "number.pi" }
+        "parameters": {
+            "a": "number.pi/180",
+            "y_lb": "-number.pi",
+            "y_ub": "number.pi"
+        }
     }
 ]

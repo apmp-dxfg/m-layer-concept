@@ -10,7 +10,9 @@
             17771593641054934856197983478245767638
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a" : "0.3048" }
+        "parameters": {
+            "a": "0.3048"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -23,7 +25,9 @@
             150280610960339969789551668292960104920
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a" : "3.28084" }
+        "parameters": {
+            "a": "3.28084"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -36,6 +40,8 @@
             257091757625055920788370123828667027186
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a" : "1/1E9" }
+        "parameters": {
+            "a": "1/1E9"
+        }
     }
 ]

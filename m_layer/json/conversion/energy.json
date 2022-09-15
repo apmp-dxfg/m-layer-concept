@@ -10,7 +10,9 @@
             121864523473489992307630707008460819401
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a" : "1/si.e" }
+        "parameters": {
+            "a": "1/si.e"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -23,6 +25,8 @@
             165050666678496469850612022016789737781
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a" : "si.e" }
+        "parameters": {
+            "a": "si.e"
+        }
     }
 ]

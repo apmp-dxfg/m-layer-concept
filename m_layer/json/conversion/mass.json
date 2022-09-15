@@ -10,7 +10,9 @@
             188380796861507506602975683857494523991
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a" : "2.2046" }
+        "parameters": {
+            "a": "2.2046"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -23,6 +25,8 @@
             12782167041499057092439851237297548539
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a" : "0.45360" }
+        "parameters": {
+            "a": "0.45360"
+        }
     }
 ]

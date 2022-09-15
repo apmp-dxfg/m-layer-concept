@@ -2,12 +2,12 @@
     {
         "__entry__": "Conversion",
         "src": [
-                "ml_si_celsius_interval",
-                245795086332095731716589481707012001072
-            ],
+            "ml_si_celsius_interval",
+            245795086332095731716589481707012001072
+        ],
         "dst": [
-                "ml_si_kelvin_ratio",
-                302952256288207449238881076502466548054
+            "ml_si_kelvin_ratio",
+            302952256288207449238881076502466548054
         ],
         "function": "lambda x: x + b",
         "parameters": {
@@ -26,7 +26,10 @@
             22817745368296240233220712518826840767
         ],
         "function": "lambda x: ml_math.interval_convert(x,a,b)",
-        "parameters": { "a" : "9/5", "b" : "32" }
+        "parameters": {
+            "a": "9/5",
+            "b": "32"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -39,7 +42,10 @@
             245795086332095731716589481707012001072
         ],
         "function": "lambda x: ml_math.interval_convert(x,a,b)",
-        "parameters": { "a" : "5/9", "b" : "-160/9" }
+        "parameters": {
+            "a": "5/9",
+            "b": "-160/9"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -78,7 +84,9 @@
             101981007467621768906734129174569080512
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a" : "9/5" }
+        "parameters": {
+            "a": "9/5"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -91,6 +99,8 @@
             278784445377172064355281533676474538407
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a" : "5/9" }
+        "parameters": {
+            "a": "5/9"
+        }
     }
 ]
