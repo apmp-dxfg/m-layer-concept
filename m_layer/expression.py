@@ -102,14 +102,14 @@ class Expression(object):
     def convert(self,dst_scale):
         """Return a new expression in terms of the scale ``dst_scale``
         
-        If ``dst_scale`` is a :class:`~scale.ScaleAspect`,
+        If ``dst_scale`` is a :class:`~lib.ScaleAspect`,
         the associated aspect must match the existing expression.   
         
         Args:
-            dst_scale (:class:`~scale.CompoundScaleAspect` or
-            :class:`~scale.ScaleAspect` or 
-            :class:`~scale.CompoundScale`
-            :class:`~scale.Scale`) 
+            dst_scale (:class:`~lib.CompoundScaleAspect` or
+            :class:`~lib.ScaleAspect` or 
+            :class:`~lib.CompoundScale`
+            :class:`~lib.Scale`) 
         
         Returns:
             :class:`~expression.Expression` 
@@ -314,12 +314,12 @@ class Expression(object):
         ii) the aspect specified in ``aspect``, or,
         iii) the aspect of the initial expression 
                 
-        Args:            
-            dst(:class:`~scale.ScaleAspect` or :class:`~scale.Scale`): 
-                the scale or scale-aspect pair for the new expression. 
+        Args:
+        
+            dst(:class:`~lib.ScaleAspect` or :class:`~lib.Scale`): the scale or scale-aspect pair for the new expression. 
                 
-            aspect(:class:`~aspect.Aspect`): is used
-            if ``dst`` is a :class:`~scale.Scale`. When an aspect
+            aspect(:class:`~lib.Aspect`): is used
+            if ``dst`` is a :class:`~lib.Scale`. When an aspect
             is specified, it will be attributed to 
             the result, otherwise the expression aspect is carried over.  
 
@@ -424,7 +424,7 @@ def convert(xp,dst_scale):
 
     Args:
         xp (:class:`~expression.Expression`) : the expression to be converted    
-        dst_scale (:class:`~scale.ScaleAspect` or :class:`~scale.Scale`): the scale-aspect pair for the new expression 
+        dst_scale (:class:`~lib.ScaleAspect` or :class:`~lib.Scale`): the scale-aspect pair for the new expression 
     
     Returns:
         :class:`~expression.Expression` 
@@ -442,7 +442,7 @@ def cast(xp,dst,aspect=no_aspect):
     Args:
         xp (:class:`~expression.Expression`): the expression to be converted.
         
-        dst_scale_aspect (:class:`~scale.ScaleAspect` or :class:`~scale.Scale`): 
+        dst_scale_aspect (:class:`~lib.ScaleAspect` or :class:`~lib.Scale`): 
             the scale-aspect pair for the new expression 
             
         aspect
@@ -463,7 +463,7 @@ def scale_aspect(xp):
         xp: class:`~expression.Expression`
         
     Returns:
-        a :class:`ScaleAspect` or a :class:`CompoundScaleAspect`
+        a :class:`~lib.ScaleAspect` or a :class:`~lib.CompoundScaleAspect`
         
     """
     return xp.scale_aspect 
@@ -476,8 +476,8 @@ def expr(v,s,a=no_aspect):
     
     Args:
         v: the expression value or token
-        s (:class:`~scale.ScaleAspect`, :class:`~scale.Scale`): the scale-aspect pair for the expression 
-        a (:class:`~aspect.Aspect`, optional): the expression aspect 
+        s (:class:`~lib.ScaleAspect`, :class:`~lib.Scale`): the scale-aspect pair for the expression 
+        a (:class:`~lib.Aspect`, optional): the expression aspect 
     Returns:
         an  M-layer :class:`~expression.Expression`  
     

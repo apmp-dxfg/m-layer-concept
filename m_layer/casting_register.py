@@ -1,7 +1,7 @@
 """
 Casting can change the type of scale and aspect of an expression. 
 
-Legitimate castings are recorded in a :class:`~.casting_register.CastingRegister`, which is an attribute of the :class:`~context.Context` object.
+Legitimate castings are recorded in a :class:`~.casting_register.CastingRegister`.
 
 """
 from m_layer.ml_eval import ml_eval   

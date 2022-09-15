@@ -147,7 +147,7 @@ class Aspect(object):
 
 # --------------------------------------------------------------------------- 
 no_aspect = Aspect( cxt.no_aspect_uid )    
-"""An object representing no assigned aspect"""
+"An object representing no assigned aspect"
 
 # ---------------------------------------------------------------------------
 from collections import namedtuple 
@@ -339,7 +339,7 @@ class CompoundScaleAspect(object):
 
     def compound_scales_and_aspects(self):
         """
-        Return a :class:`CompoundScale`-:class:`~aspect.CompoundAspect` pair 
+        Return a :class:`CompoundScale`-:class:`CompoundAspect` pair 
         
         Args:
             `compound_scale_aspect` (:class:`CompoundScaleAspect`):
@@ -549,11 +549,11 @@ class CompoundScale(object):
   
     def to_compound_scale_aspect(self,src):
         """
-        Return a :class:`~scale.CompoundScaleAspect` 
+        Return a :class:`CompoundScaleAspect` 
         by copying the aspects in ``src``.
         
         Args:
-            src (:class:`~scale.CompoundScaleAspect`)
+            src (:class:`CompoundScaleAspect`)
         
         .. warning:
         
@@ -690,7 +690,7 @@ class Scale(object):
 
     def to_scale_aspect(self,aspect=no_aspect):
         """
-        Return a :class:`~scale.ScaleAspect` 
+        Return a :class:`ScaleAspect` 
         combining this scale and ``aspect``.
         
         """

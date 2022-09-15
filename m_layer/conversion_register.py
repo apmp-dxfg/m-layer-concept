@@ -1,7 +1,7 @@
 """
 Conversion changes the scale of an expression but leaves the type of scale and aspect unchanged. 
 
-Legitimate conversions are recorded in a :class:`~.conversion_register.ConversionRegister`, which is an attribute of the :class:`~context.Context` object.
+Legitimate conversions are recorded in a :class:`ConversionRegister`
 
 """
 from m_layer.ml_eval import ml_eval

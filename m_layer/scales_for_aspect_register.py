@@ -37,7 +37,7 @@ class ScalesForAspectRegister(object):
         (same format as conversion_register entries)
         
         Args:
-            aspect (:class:`~aspect.Aspect`)
+            aspect (:class:`~lib.Aspect`)
             
         """
         return self._table.get( aspect, default )
@@ -48,7 +48,7 @@ class ScalesForAspectRegister(object):
         Return a conversion function 
         
         Args:
-            aspect (:class:`~aspect.Aspect`)
+            aspect (:class:`~lib.Aspect`)
             scale_uid_pair: a pair of M-layer scale uids
             
         """        
