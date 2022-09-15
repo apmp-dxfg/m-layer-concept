@@ -24,17 +24,17 @@ Classes
 .. autoclass:: expression.Expression
     :members: token, value, scale_aspect, convert, cast 
 
-.. autoclass:: aspect.Aspect
+.. autoclass:: lib.Aspect
     :noindex:
     :members:
     :special-members: __eq__
   
-.. autoclass:: scale.Scale
+.. autoclass:: lib.Scale
     :noindex:
     :members: 
     :special-members: __eq__
     
-.. autoclass:: scale.ScaleAspect
+.. autoclass:: lib.ScaleAspect
     :noindex:
     :members: uid, scale, aspect
     :special-members: __eq__

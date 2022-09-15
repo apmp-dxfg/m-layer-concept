@@ -38,24 +38,10 @@ Scales for Aspect register
 .. automodule:: scales_for_aspect_register
     :members:
     
-Scale
------
+Lib
+---
 
-.. automodule:: scale
-    :members:
-    :special-members: __eq__
-
-Reference
----------
-
-.. automodule:: reference
-    :members:
-    :special-members: __eq__
-
-
-Aspect
-------
-.. automodule:: aspect
+.. automodule:: lib
     :members:
     :special-members: __eq__
    
