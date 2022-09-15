@@ -9,9 +9,8 @@
             "ml_imp_pound_ratio",
             188380796861507506602975683857494523991
         ],
-        "factors": [
-            "2.2046"
-        ]
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": { "a" : "2.2046" }
     },
     {
         "__entry__": "Conversion",
@@ -23,8 +22,7 @@
             "ml_si_kilogram_ratio",
             12782167041499057092439851237297548539
         ],
-        "factors": [
-            "0.45360"
-        ]
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": { "a" : "0.45360" }
     }
 ]

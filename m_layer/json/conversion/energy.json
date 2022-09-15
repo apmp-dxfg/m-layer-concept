@@ -9,9 +9,8 @@
             "ml_electronvolt_ratio",
             121864523473489992307630707008460819401
         ],
-        "factors": [
-            "1.0/si.e"
-        ]
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": { "a" : "1/si.e" }
     },
     {
         "__entry__": "Conversion",
@@ -23,8 +22,7 @@
             "ml_si_joule_ratio",
             165050666678496469850612022016789737781
         ],
-        "factors": [
-            "si.e"
-        ]
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": { "a" : "si.e" }
     }
 ]

@@ -9,8 +9,7 @@
             "ml_si_s-1_ratio",
             323506565708733284157918472061580302494
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     }
 ]

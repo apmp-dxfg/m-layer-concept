@@ -9,9 +9,8 @@
             "ml_si_kg.m2.s-3.A-1_ratio",
             99600280752733052556150747434649814921
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     },
     {
         "__entry__": "Conversion",
@@ -23,9 +22,8 @@
             "ml_si_kg-1.m-2.s4.A2_ratio",
             310174906794003749777876070854583690996
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     },
     {
         "__entry__": "Conversion",
@@ -37,9 +35,8 @@
             "ml_si_kg.m2.s-3.A-2_ratio",
             154120316111741118419407192208214050914
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     },
     {
         "__entry__": "Conversion",
@@ -51,9 +48,8 @@
             "ml_si_kg-1.m-2.s3.A2_ratio",
             235675064333026759565068955231833764452
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     },
     {
         "__entry__": "Conversion",
@@ -65,9 +61,8 @@
             "ml_si_kg.m2.s-2.A-1_ratio",
             123074114253301537873407416011262630402
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     },
     {
         "__entry__": "Conversion",
@@ -79,9 +74,8 @@
             "ml_si_kg.s-2.A-1_ratio",
             167967338865671657984242700764339160196
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     },
     {
         "__entry__": "Conversion",
@@ -93,8 +87,7 @@
             "ml_si_kg.m2.s-2.A-2_ratio",
             254136790182074053006532385644940274064
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     }
 ]

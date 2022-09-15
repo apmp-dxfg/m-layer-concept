@@ -2,6 +2,22 @@
     {
         "__entry__": "Conversion",
         "src": [
+                "ml_si_celsius_interval",
+                245795086332095731716589481707012001072
+            ],
+        "dst": [
+                "ml_si_kelvin_ratio",
+                302952256288207449238881076502466548054
+        ],
+        "function": "lambda x: x + b",
+        "parameters": {
+            "a": "1",
+            "b": "+273.15"
+        }
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
             "ml_si_celsius_interval",
             245795086332095731716589481707012001072
         ],
@@ -9,10 +25,8 @@
             "ml_imp_fahrenheit_interval",
             22817745368296240233220712518826840767
         ],
-        "factors": [
-            "9/5",
-            "32"
-        ]
+        "function": "lambda x: ml_math.interval_convert(x,a,b)",
+        "parameters": { "a" : "9/5", "b" : "32" }
     },
     {
         "__entry__": "Conversion",
@@ -24,10 +38,8 @@
             "ml_si_celsius_interval",
             245795086332095731716589481707012001072
         ],
-        "factors": [
-            "5/9",
-            "-32*5/9"
-        ]
+        "function": "lambda x: ml_math.interval_convert(x,a,b)",
+        "parameters": { "a" : "5/9", "b" : "-160/9" }
     },
     {
         "__entry__": "Conversion",
@@ -39,9 +51,8 @@
             "ml_si_celsius_ratio",
             278784445377172064355281533676474538407
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     },
     {
         "__entry__": "Conversion",
@@ -53,9 +64,8 @@
             "ml_si_kelvin_ratio",
             302952256288207449238881076502466548054
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     },
     {
         "__entry__": "Conversion",
@@ -67,9 +77,8 @@
             "ml_imp_fahrenheit_ratio",
             101981007467621768906734129174569080512
         ],
-        "factors": [
-            "9/5"
-        ]
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": { "a" : "9/5" }
     },
     {
         "__entry__": "Conversion",
@@ -81,8 +90,7 @@
             "ml_si_celsius_ratio",
             278784445377172064355281533676474538407
         ],
-        "factors": [
-            "5/9"
-        ]
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": { "a" : "5/9" }
     }
 ]
