@@ -352,13 +352,15 @@ if __name__ == '__main__':
         # '__entry__' : 'Conversion',        
         # 'src' : [], 
         # 'dst' : [], 
-        # 'factors' : [], 
+        # 'function' : "",
+        # 'parameters' : dict()
     # }
     
     labels = [
         'src',
         'dst',
-        'factors'
+        'function',
+        'parameters'
     ]
         
     path = os.path.abspath(
@@ -387,7 +389,8 @@ if __name__ == '__main__':
         for i,d_i in enumerate( data ):
             add_uid_reference(ws,d_i['src'],row=i+2,col=1)
             add_uid_reference(ws,d_i['dst'],row=i+2,col=2)
-            add_string(ws,d_i['factors'],row=i+2,col=3) 
+            add_string(ws,d_i['function'],row=i+2,col=3)             
+            add_string(ws,d_i['parameters'],row=i+2,col=4)    
             
     # ---------------------------------------------------------------------------
     # Process casting 

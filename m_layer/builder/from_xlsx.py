@@ -363,7 +363,8 @@ if __name__ == '__main__':
         # '__entry__' : 'Conversion',        
         # 'src' : [], 
         # 'dst' : [], 
-        # 'factors' : [], 
+        # 'function' : "",
+        # 'parameters' : dict()
     # }
     
     directory = "conversion"
@@ -372,7 +373,8 @@ if __name__ == '__main__':
             __entry__ = 'Conversion',
             src = put_uid(directory,ws,r[0].value,i,0+1),
             dst = put_uid(directory,ws,r[1].value,i,1+1),
-            factors = literal_eval( r[2].value )
+            function = str( r[2].value ),
+            parameters = literal_eval( r[3].value )
         )
         
     wb = load_workbook( xl_path(directory), data_only=True  )
