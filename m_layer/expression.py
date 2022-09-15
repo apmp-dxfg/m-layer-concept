@@ -29,7 +29,7 @@ class Expression(object):
     def __init__(self,token,mdata):
         self._token = token 
         
-        if isinstance(mdata,(ScaleAspect,CompoundScaleAspect)):
+        if isinstance(mdata,(ScaleAspect,CompoundScale,CompoundScaleAspect)):
             self._scale_aspect = mdata
         else:
             assert False, repr(mdata)
@@ -161,16 +161,13 @@ class Expression(object):
             isinstance(dst_scale,(CompoundScale,CompoundScaleAspect) ) 
         and isinstance(self.scale_aspect,CompoundScaleAspect)
         ):
-            # Conversion from one compound expression to another.
+            # Conversion from a compound expression.
             # The expressions must be arithmetically equivalent,  
             # so that pairs of source-destination scale-aspects  
             # can be found in the register. 
+            # If the destination is just a CompoundScale, then 
+            # the current aspects are copied into the result.
                         
-            # Note: I take the view that the Context 
-            # deals only with registered objects.
-            # The Context knows nothing about compound 
-            # ScaleAspects. 
-
             # Step 1: convert to products of powers
             src_pops = normal_form(self.scale_aspect.stack)
             
@@ -179,11 +176,11 @@ class Expression(object):
                 dst_scale_aspect = dst_scale.compound_scale_aspect( 
                     self.scale_aspect
                 ) 
-                dst_pops = normal_form(dst_scale_aspect.stack)
             
             else:    
                 dst_scale_aspect = dst_scale                
-                dst_pops = normal_form(dst_scale_aspect.stack)
+                
+            dst_pops = normal_form(dst_scale_aspect.stack)
             
             # Step 2: take into account any stand-alone numerical factors
             conversion_factor = src_pops.prefactor/dst_pops.prefactor
@@ -212,26 +209,73 @@ class Expression(object):
                 conversion_factor *= c**src_exp
             
             new_token = conversion_factor*self._token
+
+        elif ( 
+            isinstance(dst_scale,CompoundScale ) 
+        and isinstance(self.scale_aspect,CompoundScale)
+        ):
+            # This is the generic case, where no aspect is available
             
+            # Conversion from one compound expression to another.
+            # The expressions must be arithmetically equivalent,  
+            # so that pairs of source-destination scale-aspects  
+            # can be found in the register. 
+                        
+            # Step 1: convert to products of powers
+            src_pops = normal_form(self.scale_aspect.stack)            
+            dst_pops = normal_form(dst_scale.stack)         
+            
+            # Step 2: take into account any stand-alone numerical factors
+            conversion_factor = src_pops.prefactor/dst_pops.prefactor
+            
+            # Step 3: step through the scale terms,
+            # obtaining a conversion factor for each
+            src_factors = src_pops.factors
+            dst_factors = dst_pops.factors
+            for src_i,dst_i in zip(src_factors.keys(),dst_factors.keys()):
+            
+                # Each term also has an exponent
+                src_exp = src_factors[src_i]
+                assert src_exp == dst_factors[dst_i],\
+                    "{} != {}".format(src_exp,dst_factors[dst_i])
+
+                src_s_uid = src_i.uid
+                dst_s_uid = dst_i.uid
+                src_a_uid = no_aspect.uid
+
+                c = cxt.conversion_from_scale_aspect( 
+                        src_s_uid,src_a_uid,dst_s_uid                     
+                )(1.0) 
+                conversion_factor *= c**src_exp
+            
+            new_token = conversion_factor*self._token
+ 
+            # Set the aspect component of the new CompoundScaleAspect.
+            dst_scale_aspect = dst_scale.to_compound_scale_aspect( 
+                self.scale_aspect
+            ) 
+ 
         elif ( 
             isinstance(dst_scale,(Scale,ScaleAspect) ) 
         and isinstance(self.scale_aspect,CompoundScaleAspect)
         ):
             # Conversion from a compound scale to a specific one,
             # which must be dimensionally equivalent and generic. 
+            
             if isinstance(dst_scale,Scale):            
                 dst_scale_aspect = dst_scale.to_scale_aspect(no_aspect)
+                
             elif isinstance(dst_scale,ScaleAspect):
                 if dst_scale.aspect is not no_aspect:
                     raise RuntimeError(
                         "cannot change aspect: {!r}".format(dst_scale)
-                    )                
-                dst_scale_aspect = dst_scale 
+                    ) 
+                else:
+                    dst_scale_aspect = dst_scale 
             else:
                 assert False, repr(dst_scale) 
                 
-            src_dim = self.scale_aspect.dimension.simplify
-            
+            src_dim = self.scale_aspect.dimension.simplify     
             if src_dim != dst_scale_aspect.dimension:
                 raise RuntimeError(
                     "dimensions must match: {}, {}".format(
@@ -253,6 +297,8 @@ class Expression(object):
                 dst_scale_aspect.scale.uid 
             )(self._token)
 
+        else:
+            assert False
             
         return Expression(
             new_token,
@@ -437,7 +483,7 @@ def expr(v,s,a=no_aspect):
     
     """
     # `s` may be a scale-aspect pair or just a scale 
-    if isinstance(s,(ScaleAspect,CompoundScaleAspect)):
+    if isinstance(s,(ScaleAspect,CompoundScale,CompoundScaleAspect)):
         return Expression(v,s)
     elif isinstance(s,Scale):
         return Expression(v, s.to_scale_aspect(a) )
