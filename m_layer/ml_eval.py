@@ -31,13 +31,12 @@ ml_dict = dict(
 re_int_ratio = re.compile( r'^([+-]?[0-9]+){1}/([0-9]+){1}$' )
 
 # In a mixed ratio we accept powers of 10 in standard form (e.g., 1E9), but 
-# Python's Fraction will not process them, so they need special treatment
+# they need special treatment
 re_mixed_ratio = re.compile( 
-    r'^'
-    r'([+-]?[0-9]+){1}/([0-9]+)|'
-    r'1[eE][+]?\d{1,3}/([0-9]+)|'
-    r'1[eE][+]?\d{1,3}/1[eE][+]?\d{1,3}|'
-    r'([+-]?[0-9]+){1}/1[eE][+]?\d{1,3}'
+    r'^'     
+    r'1[eE][+]?\d{1,3}/([0-9]+)|'     
+    r'1[eE][+]?\d{1,3}/1[eE][+]?\d{1,3}|'     
+    r'([+-]?[0-9]+){1}/1[eE][+]?\d{1,3}'     
     r'$'
 )
 
@@ -68,5 +67,5 @@ def ml_eval(txt,d={}):
         if token is not None:
             num, den = token.group().split('/')
             txt = "ml_math.Fraction( {}, {} )".format( int(float(num)), int(float(den)) )      
-      
+     
     return eval(txt,d)
