@@ -213,16 +213,19 @@ class Context(object):
         Returns:
             A Python function 
             
-        """  
+        """ 
+        assert isinstance(src_scale_uid,UID), repr(src_scale_uid)
+        assert isinstance(src_aspect_uid,UID), repr(src_aspect_uid)
+        assert isinstance(dst_scale_uid,UID), repr(dst_scale_uid)
+        
         if src_scale_uid == dst_scale_uid:
             # Trivial case where no conversion is required
             return lambda x: x
             
         scale_pair = (src_scale_uid,dst_scale_uid)
-        
-        # Note, by doing the aspect-specific look-up first, this implementation
-        # allows multiple definitions and gives precedence to 
-        # aspect-specific cases.
+        # Note, by doing the aspect-specific look-up first,  
+        # multiple definitions are possible and precedence  
+        # can be given to aspect-specific cases.
         
         if( 
             src_aspect_uid != self.no_aspect_uid 
@@ -235,7 +238,7 @@ class Context(object):
             except KeyError:
                 pass
                 
-        # When a generic conversion is available it can be used 
+        # If a generic conversion is available it can be used 
         # and the initial aspect is carried forward
         try:
             return self.conversion_reg[scale_pair] 
@@ -259,33 +262,33 @@ class Context(object):
                 )
             )
 
-    def conversion_from_compound_scale(
-        self,
-        src_dim,
-        dst_scale_uid
-    ):
-        """
+    # def conversion_from_compound_scale(
+        # self,
+        # src_dim,
+        # dst_scale_uid
+    # ):
+        # """
             
-        """              
-        try:
-            src_scale_uid = self.dimension_conversion_reg[src_dim] 
-        except KeyError:
-            pass
+        # """    
+        # try:
+            # src_scale_uid = self.dimension_conversion_reg[src_dim] 
+        # except KeyError:
+            # pass
  
-        scale_pair = (src_scale_uid,dst_scale_uid)
-        # Try a generic conversion 
-        try:
-            return self.conversion_reg[scale_pair] 
-        except KeyError:
-            pass
+        # scale_pair = (src_scale_uid,dst_scale_uid)
+        # # Try a generic conversion 
+        # try:
+            # return self.conversion_reg[scale_pair] 
+        # except KeyError:
+            # pass
  
-        # This is a failure 
-        raise RuntimeError(
-            "no conversion from {!r} to Scale( {!s} )".format(
-                src_dim,
-                dst_scale_uid,
-            )
-        )
+        # # This is a failure 
+        # raise RuntimeError(
+            # "no conversion from {!r} to Scale( {!s} )".format(
+                # src_dim,
+                # dst_scale_uid,
+            # )
+        # )
             
     def casting_from_scale_aspect(
         self,
