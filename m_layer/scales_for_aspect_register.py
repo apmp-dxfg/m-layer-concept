@@ -89,43 +89,15 @@ class ScalesForAspectRegister(object):
         src_type = _scales[ uid_pair[0] ]['scale_type']
         dst_type = _scales[ uid_pair[1] ]['scale_type']
 
-        # if src_type != dst_type:
-            # raise RuntimeError(
-                # "scale types must be the same: {} and {}".format(
-                # src_type,dst_type)
-            # )
-                                  
-        # Conversion function parameter values are in a sequence 
-        # they are stored as strings to allow fractions 
-        factors = tuple(  ml_eval(x_i) for x_i in entry['factors'] )
-        
-        # Set the conversion function
-        if (src_type,dst_type) == ('ratio','ratio'):
-            _tbl[uid_pair] = lambda x: factors[0]*x 
-        elif (
-            (src_type,dst_type) == ('interval','interval') 
-        or  (src_type,dst_type) == ('ratio','interval')
-        or  (src_type,dst_type) == ('interval','ratio')
-        ):
-            # `factors[0]` is the scale divisions conversion factor 
-            # `factors[1]` is the offset
-            _tbl[uid_pair] = lambda x: factors[0]*x + factors[1]
-        elif (
-            (src_type,dst_type) == ('bounded','bounded')
-        ):
-            # `factors[0]` is the scale divisions conversion factor 
-            # `factors[1]` is the lower bound of the dst scale 
-            # `factors[2]` is the range of values in the dst scale
-            _tbl[uid_pair] = lambda x: \
-                (factors[0]*x - factors[1]) % factors[2] + factors[1]
-        elif (
-            (src_type,dst_type) == ('bounded','ratio')
-        ):
-            # This is just removal of the cyclic bounds 
-            # `factors[0]`  is the scale divisions conversion factor 
-            _tbl[uid_pair] = lambda x: factors[0]*x
-        else:
-            raise RuntimeError(
-                "unrecognised case: {}".format((src_type,dst_type))
-            )            
-        
+        # Parameter values are stored as strings in a dictionary
+        # E.g., { "a": "1", "b": "+273.15" }
+        # They may take the form of arithmetic expressions
+        # E.g., { "c": "si.h*si.c/si.e/si.nano" }
+        parameters_dict = { 
+            k : ml_eval(v) 
+                for (k,v) in entry['parameters'].items() 
+        }
+                
+        # Set the casting function
+        _tbl[uid_pair] = ml_eval(entry['function'],parameters_dict)
+                                   
