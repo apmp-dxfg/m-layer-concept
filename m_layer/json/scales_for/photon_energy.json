@@ -13,9 +13,10 @@
             "ml_si_cm-1_ratio",
             333995508470114516586033303775415043902
         ],
-        "factors": [
-            "si.tera/si.c*si.centi"
-        ]
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "si.tera/si.c*si.centi"
+        }
     },
     {
         "__entry__": "ScalesForAspect",
@@ -31,9 +32,10 @@
             "ml_si_THz_ratio",
             271382954339420591832277422907953823861
         ],
-        "factors": [
-            "si.hecto*si.c/si.tera"
-        ]
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "si.hecto*si.c/si.tera"
+        }
     },
     {
         "__entry__": "ScalesForAspect",
@@ -49,9 +51,10 @@
             "ml_si_THz_ratio",
             271382954339420591832277422907953823861
         ],
-        "factors": [
-            "si.e/si.h/si.tera"
-        ]
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "si.e/si.h/si.tera"
+        }
     },
     {
         "__entry__": "ScalesForAspect",
@@ -67,8 +70,9 @@
             "ml_si_cm-1_ratio",
             333995508470114516586033303775415043902
         ],
-        "factors": [
-            "si.e/si.h/si.c/si.hecto"
-        ]
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "si.e/si.h/si.c/si.hecto"
+        }
     }
 ]

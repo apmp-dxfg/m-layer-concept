@@ -13,8 +13,7 @@
             "ml_si_hertz_ratio",
             307647520921278207356294979342476646905
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     }
 ]

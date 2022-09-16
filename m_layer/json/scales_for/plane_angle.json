@@ -13,9 +13,10 @@
             "ml_si_radian_ratio",
             273301153578020696303516833405033923738
         ],
-        "factors": [
-            "number.pi/180"
-        ]
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "number.pi/180"
+        }
     },
     {
         "__entry__": "ScalesForAspect",
@@ -31,8 +32,7 @@
             "ml_si_radian_ratio",
             273301153578020696303516833405033923738
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": { }
     }
 ]

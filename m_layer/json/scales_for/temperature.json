@@ -13,9 +13,10 @@
             "ml_si_celsius_interval",
             245795086332095731716589481707012001072
         ],
-        "factors": [
-            "1",
-            "-273.15"
-        ]
+        "function": "lambda x: ml_math.interval_convert(x,a,b)",
+        "parameters": {
+            "a": "1",
+            "b": "-273.15"
+        }
     }
 ]

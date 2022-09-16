@@ -13,8 +13,7 @@
             "ml_si_becquerel_ratio",
             327022986202149438703681911339752143822
         ],
-        "factors": [
-            "1"
-        ]
+        "function": "lambda x: x",
+        "parameters": {}
     }
 ]
