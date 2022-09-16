@@ -24,31 +24,5 @@
                 "symbol": "V"
             }
         }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
-            "ml_speed",
-            239696004207976705357808095771482812099
-        ],
-        "locale": {
-            "default": {
-                "name": "speed",
-                "symbol": "v"
-            }
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
-            "ml_acceleration",
-            174003774095064737144656838578315048217
-        ],
-        "locale": {
-            "default": {
-                "name": "acceleration",
-                "symbol": "a"
-            }
-        }
     }
 ]
