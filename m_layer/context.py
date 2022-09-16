@@ -30,13 +30,13 @@ def uid_as_str(uid,short=True):
 class Context(object):
     
     """
-    A `Context` object contains M-layer records. 
+    A `Context` provide a Python interface to M-layer registry records. 
     """
     
     def __init__(
             self,
             locale = 'default',
-            value_fmt = "{:.5f}",
+            # value_fmt = "{:.5f}",
             scale_reg = None,
             reference_reg = None,
             aspect_reg = None,
@@ -48,7 +48,7 @@ class Context(object):
         ):       
         
         self.locale = locale 
-        self.value_fmt = value_fmt
+        # self.value_fmt = value_fmt
         self.dimension_conversion_reg={}
 
         
