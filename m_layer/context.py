@@ -121,10 +121,6 @@ class Context(object):
         else:       
             self._load_entity(data)
             
-    # def loads(self,json_str,**kwargs):
-        # data = json.loads(json_str,**kwargs)
-        # self._loader(data)
-            
     def load_json(self,file_path,**kwargs):
         with open(file_path,'r') as f:
             data = json.load(f,**kwargs)        
@@ -156,11 +152,14 @@ class Context(object):
   
     def convertible(self,src_scale_uid,src_aspect_uid,dst_scale_uid):
         """
-        Return ``True`` if there is a registered conversion from the  
-        source scale and aspect to the destination scale. 
-        Raise RuntimeError otherwise.
+        Raise ``RuntimeError`` if there is not a registered conversion  
+        from the source scale and aspect to the destination scale. 
         
         """
+        assert isinstance(src_scale_uid,UID), repr(src_scale_uid)
+        assert isinstance(src_aspect_uid,UID), repr(src_aspect_uid)
+        assert isinstance(dst_scale_uid,UID), repr(dst_scale_uid)
+
         if src_scale_uid == dst_scale_uid:
             return True
             
@@ -200,8 +199,8 @@ class Context(object):
         dst_scale_uid
     ):
         """
-        Return a function that converts a value expressed 
-        in the `src` scale and aspect to one in the `dst` scale.
+        Return a function that converts data expressed 
+        in the `src` scale and aspect to the `dst` scale.
         
         The aspect does not change.  
         
@@ -223,7 +222,8 @@ class Context(object):
             return lambda x: x
             
         scale_pair = (src_scale_uid,dst_scale_uid)
-        # Note, by doing the aspect-specific look-up first,  
+        
+        # By doing the aspect-specific look-up first,  
         # multiple definitions are possible and precedence  
         # can be given to aspect-specific cases.
         
@@ -261,34 +261,6 @@ class Context(object):
                     src_aspect_uid
                 )
             )
-
-    # def conversion_from_compound_scale(
-        # self,
-        # src_dim,
-        # dst_scale_uid
-    # ):
-        # """
-            
-        # """    
-        # try:
-            # src_scale_uid = self.dimension_conversion_reg[src_dim] 
-        # except KeyError:
-            # pass
- 
-        # scale_pair = (src_scale_uid,dst_scale_uid)
-        # # Try a generic conversion 
-        # try:
-            # return self.conversion_reg[scale_pair] 
-        # except KeyError:
-            # pass
- 
-        # # This is a failure 
-        # raise RuntimeError(
-            # "no conversion from {!r} to Scale( {!s} )".format(
-                # src_dim,
-                # dst_scale_uid,
-            # )
-        # )
             
     def casting_from_scale_aspect(
         self,
@@ -296,8 +268,8 @@ class Context(object):
         dst_scale_uid, dst_aspect_uid
     ):
         """
-        Return a function that transforms the initial expression 
-        to an expression in terms of a different scale and aspect.
+        Return a function that transforms data on an initial scale-aspect  
+        to a different scale and aspect.
         
         Args:
             src_scale_uid: initial scale   
@@ -311,6 +283,10 @@ class Context(object):
         """ 
         dst_pair = dst_scale_uid, dst_aspect_uid
         src_pair = src_scale_uid, src_aspect_uid    
+        
+        if src_scale_uid == dst_scale_uid and src_aspect_uid == self.no_aspect_uid:
+            # Apply the aspect
+            return lambda x: x 
           
         if src_aspect_uid == dst_aspect_uid:
         
@@ -320,9 +296,12 @@ class Context(object):
                 return scales_for_aspect[ (src_scale_uid, dst_scale_uid) ]
             except KeyError:
                 pass
-                
-            # NB, the case of `no_aspect` for both could be handled!!
-            
+
+        # TODO:
+        # Should casting requests also look for legitimate conversions
+        # if the aspect is unchanged?
+       
+        
         try:
             return self.casting_reg[ src_pair,dst_pair ]   
         except KeyError:
@@ -333,17 +312,17 @@ class Context(object):
                 )
             ) from None          
 
-    def casting_from_compound_scale(
+    def casting_from_compound_scale_dim(
         self,
         dimension,
         dst_scale_uid, dst_aspect_uid
     ):
         """
-        Return a function that transforms the initial expression 
-        to an expression in terms of a different scale and aspect.
+        Return a function that transforms data on an initial compound-scale  
+        to a different scale.
         
         Args:
-            dimension (:class:`~dimension.Dimension`): initial dimensions    
+            dimension (:class:`~dimension.Dimension`): the dimensions of the compound scale   
             dst_scale_uid: final scale
             dst_aspect_uid: final aspect
             
@@ -359,14 +338,17 @@ class Context(object):
             raise RuntimeError(
                 "no scale defined for {!r}".format(dimension)
             )     
-            
+             
+        if src_scale_uid == dst_scale_uid:
+            # Apply the aspect
+            return lambda x: x 
+ 
         src_pair = src_scale_uid, no_aspect.uid 
-            
         try:
             return self.casting_reg[ src_pair,dst_pair ]   
         except KeyError:
             raise RuntimeError(
-                "no cast defined from '{!r}' to '{!r}'".format(
+                "no cast defined from '{}' to '{}'".format(
                     src_pair,
                     dst_pair
                 )
