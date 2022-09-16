@@ -107,8 +107,8 @@ class Expression(object):
         
         Args:
             dst_scale (:class:`~lib.CompoundScaleAspect` or
-            :class:`~lib.ScaleAspect` or 
             :class:`~lib.CompoundScale`
+            :class:`~lib.ScaleAspect` or 
             :class:`~lib.Scale`) 
         
         Returns:
@@ -257,7 +257,7 @@ class Expression(object):
  
         elif ( 
             isinstance(dst_scale,(Scale,ScaleAspect) ) 
-        and isinstance(self.scale_aspect,CompoundScaleAspect)
+        and isinstance(self.scale_aspect,CompoundScale)
         ):
             # Conversion from a compound scale to a specific one,
             # which must be dimensionally equivalent and generic. 
@@ -267,6 +267,56 @@ class Expression(object):
                 
             elif isinstance(dst_scale,ScaleAspect):
                 if dst_scale.aspect is not no_aspect:
+                    raise RuntimeError(
+                        "cannot change aspect: {!r}".format(dst_scale)
+                    ) 
+                else:
+                    dst_scale_aspect = dst_scale 
+            else:
+                assert False, repr(dst_scale) 
+                
+            src_dim = self.scale_aspect.dimension.simplify     
+            if src_dim != dst_scale_aspect.dimension:
+                raise RuntimeError(
+                    "dimensions must match: {}, {}".format(
+                        src_dim,
+                        dst_scale_aspect.dimension
+                    )
+                )           
+
+            try:
+                src_scale_uid = cxt.dimension_conversion_reg[src_dim]   
+            except KeyError:
+                raise RuntimeError(
+                    "no scale defined for {!r}".format(src_dim)
+                )           
+                        
+            new_token = cxt.conversion_from_scale_aspect( 
+                src_scale_uid,
+                no_aspect.uid,
+                dst_scale_aspect.scale.uid 
+            )(self._token)
+            
+        elif ( 
+            isinstance(dst_scale,(Scale,ScaleAspect) ) 
+        and isinstance(self.scale_aspect,CompoundScaleAspect)
+        ):
+            # Conversion from a compound scale-aspect to a specific one.
+            # Since the result must have a single aspect, we are limited
+            # to just the generic no_aspect. So this function must 
+            # fail if there are any non-trivial aspects in the expression.
+            if not self.scale_aspect.to_compound_scales_and_aspects()[1].no_aspect: 
+                raise RuntimeError(
+                    "conversion would loose aspect information {}".format(
+                        self.scale_aspect
+                    )
+                )
+            if isinstance(dst_scale,Scale):            
+                dst_scale_aspect = dst_scale.to_scale_aspect(no_aspect)
+                
+            elif isinstance(dst_scale,ScaleAspect):
+                if dst_scale.aspect is not no_aspect:
+                    # A cast would be required to change the aspect
                     raise RuntimeError(
                         "cannot change aspect: {!r}".format(dst_scale)
                     ) 
@@ -311,7 +361,7 @@ class Expression(object):
         
         The aspect of the resulting expression is determined as follows:
         i) the aspect specified in ``dst``, or, 
-        ii) the aspect specified in ``aspect``, or,
+        ii) the aspect specified by ``aspect``, or,
         iii) the aspect of the initial expression 
                 
         Args:
@@ -342,19 +392,23 @@ class Expression(object):
                     dst_scale_aspect = dst.to_scale_aspect(aspect)
                      
             elif isinstance(dst,ScaleAspect):
-                if dst_scale_aspect.aspect is no_aspect: 
+                if dst.aspect is no_aspect: 
                     if aspect is no_aspect:
                         # carry forward the initial aspect
                         dst_scale_aspect = ScaleAspect(
-                            dst_scale_aspect.scale,
+                            dst.scale,
                             self.scale_aspect.aspect
                         )  
                     else:
                         dst_scale_aspect = ScaleAspect(
-                            dst_scale_aspect.scale,
+                            dst.scale,
                             aspect
-                        )  
-                            
+                        )
+                else:
+                    dst_scale_aspect = dst
+            else:
+                assert False, repr(dst)
+                
             fn = cxt.casting_from_scale_aspect(
                 self.scale_aspect.scale.uid,
                 self.scale_aspect.aspect.uid,
@@ -363,8 +417,7 @@ class Expression(object):
             )
 
         elif isinstance(
-            self.scale_aspect,
-            (CompoundScale,CompoundScaleAspect)
+            self.scale_aspect,(CompoundScale,CompoundScaleAspect)
         ):
             src_dim = self.scale_aspect.dimension.simplify
             
@@ -385,14 +438,19 @@ class Expression(object):
                     dst_scale_aspect = dst.to_scale_aspect(aspect)
 
             elif isinstance(dst,ScaleAspect):
-                if dst_scale_aspect.aspect is no_aspect:
+                if dst.aspect is no_aspect:
                     # Note `aspect` may just be `no_aspect` anyway
                     dst_scale_aspect = ScaleAspect(
-                        dst_scale_aspect.scale,
+                        dst.scale,
                         aspect
                     ) 
-                        
-            fn = cxt.casting_from_compound_scale(
+                else:
+                    dst_scale_aspect = dst                
+                
+            else:
+                assert False, repr(dst)
+                
+            fn = cxt.casting_from_compound_scale_dim(
                 src_dim,
                 dst_scale_aspect.scale.uid,
                 dst_scale_aspect.aspect.uid 
