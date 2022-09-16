@@ -147,7 +147,7 @@ class Aspect(object):
 
 # --------------------------------------------------------------------------- 
 no_aspect = Aspect( cxt.no_aspect_uid )    
-"An object representing no assigned aspect"
+"An object to represent the absence of an assigned aspect"
 
 # ---------------------------------------------------------------------------
 from collections import namedtuple 
@@ -337,7 +337,7 @@ class CompoundScaleAspect(object):
     # without simplification (indifferent to ordering of terms).
     # Explicit function names like `commensurate` might be better. 
 
-    def compound_scales_and_aspects(self):
+    def to_compound_scales_and_aspects(self):
         """
         Return a :class:`CompoundScale`-:class:`CompoundAspect` pair 
         
@@ -375,8 +375,8 @@ class ScaleAspect(object):
     __slots__ = ("_scale","_aspect","_dimension")
 
     def __init__(self,scale,aspect=no_aspect):
-        assert isinstance(scale,Scale)
-        assert isinstance(aspect,Aspect)
+        assert isinstance(scale,Scale), repr(scale)
+        assert isinstance(aspect,Aspect), repr(aspect)
         
         self._scale = scale
         self._aspect = aspect
@@ -547,13 +547,15 @@ class CompoundScale(object):
     def __repr__(self):
         return "CompoundScale({!r})".format( self.stack )  
   
-    def to_compound_scale_aspect(self,src):
+    def to_compound_scale_aspect(self,src=no_aspect):
         """
         Return a :class:`CompoundScaleAspect` 
-        by copying the aspects in ``src``.
+        taking aspects from ``src``.
         
         Args:
-            src (:class:`CompoundScaleAspect`)
+            src (:class:`CompoundScaleAspect` or 
+            :class:`CompoundScale` or 
+            :class:`CompoundAspect`)
         
         .. warning:
         
@@ -564,8 +566,7 @@ class CompoundScale(object):
             multiplication will lead to failure.            
             
         """
-        assert len(src.stack) == len(self.stack)
-        
+        assert len(src.stack) == len(self.stack)       
         
         stk = []
         for i,o_i in enumerate(src.stack):
@@ -579,15 +580,20 @@ class CompoundScale(object):
                 # if src scale and aspect don't convert,
                 # then something is wrong.
                 
+                dst_scale_uid = self.stack[i].uid 
+                
                 if isinstance(src,CompoundScaleAspect):
                     src_scale_uid, src_aspect_uid = src.stack[i].uid
-                elif isinstance(src,CompoundScale):
-                    src_scale_uid, src_aspect_uid = src.stack[i].uid, no_aspect.uid
+                elif isinstance(src,CompoundAspect):
+                    src_scale_uid = dst_scale_uid
+                    src_aspect_uid = src.stack[i].uid
+                elif src is no_aspect:
+                    src_scale_uid = dst_scale_uid
+                    src_aspect_uid = no_aspect.uid
                 else:
                     assert False, repr(src)
                     
-                dst_scale_uid = self.stack[i].uid 
-                
+                # Raise an exception if conversion is not going to be possible.
                 cxt.convertible(
                     src_scale_uid, src_aspect_uid,                   
                     dst_scale_uid
@@ -597,11 +603,16 @@ class CompoundScale(object):
                     stk.append( 
                         self.stack[i].to_scale_aspect( src.stack[i].aspect ) 
                     )
-                else:
-                    # The generic aspect is used
+                elif isinstance(src,CompoundAspect):
+                    stk.append( 
+                        self.stack[i].to_scale_aspect( src.stack[i] ) 
+                    )
+                elif src is no_aspect:
                     stk.append( 
                         self.stack[i].to_scale_aspect( no_aspect ) 
                     )
+                else:
+                    assert False
 
             else:
                 stk.append( o_i )                
