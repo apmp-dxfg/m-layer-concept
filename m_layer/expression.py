@@ -283,17 +283,9 @@ class Expression(object):
                         dst_scale_aspect.dimension
                     )
                 )           
-
-            try:
-                src_scale_uid = cxt.dimension_conversion_reg[src_dim]   
-            except KeyError:
-                raise RuntimeError(
-                    "no scale defined for {!r}".format(src_dim)
-                )           
                         
-            new_token = cxt.conversion_from_scale_aspect( 
-                src_scale_uid,
-                no_aspect.uid,
+            new_token = cxt.conversion_from_compound_scale_dim( 
+                src_dim,
                 dst_scale_aspect.scale.uid 
             )(self._token)
             
@@ -333,17 +325,9 @@ class Expression(object):
                         dst_scale_aspect.dimension
                     )
                 )           
-
-            try:
-                src_scale_uid = self.dimension_conversion_reg[src_dim]   
-            except KeyError:
-                raise RuntimeError(
-                    "no scale defined for {!r}".format(src_dim)
-                )           
                         
-            new_token = cxt.conversion_from_scale_aspect( 
-                src_scale_uid,
-                no_aspect.uid,
+            new_token = cxt.conversion_from_compound_scale_dim( 
+                src_dim,
                 dst_scale_aspect.scale.uid 
             )(self._token)
 

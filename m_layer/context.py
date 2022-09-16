@@ -261,7 +261,42 @@ class Context(object):
                     src_aspect_uid
                 )
             )
+ 
+    def conversion_from_compound_scale_dim(
+        self,
+        dimension,
+        dst_scale_uid
+    ):
+        """
             
+        """ 
+        # Note the caller must have checked that the dimension 
+        # and the dimensions associated with dst_scale_uid
+        # are compatible. 
+        try:
+            src_scale_uid = self.dimension_conversion_reg[dimension] 
+        except KeyError:
+            raise RuntimeError(
+                    "no scale defined for {!r}".format(src_dim)
+                )           
+ 
+        if src_scale_uid == dst_scale_uid:
+            # Trivial case where no conversion is required
+            return lambda x: x
+
+        scale_pair = (src_scale_uid,dst_scale_uid)
+        
+        # Only a generic conversion is possible? 
+        try:
+            return self.conversion_reg[scale_pair] 
+        except KeyError:
+            raise RuntimeError(
+                "no conversion from {!r} to {!r}".format(
+                    src_scale_uid,
+                    dst_scale_uid,
+                )
+            )
+        
     def casting_from_scale_aspect(
         self,
         src_scale_uid, src_aspect_uid,
@@ -300,8 +335,7 @@ class Context(object):
         # TODO:
         # Should casting requests also look for legitimate conversions
         # if the aspect is unchanged?
-       
-        
+               
         try:
             return self.casting_reg[ src_pair,dst_pair ]   
         except KeyError:
@@ -330,6 +364,9 @@ class Context(object):
             A Python function 
             
         """ 
+        # Note the caller must have checked that the dimension 
+        # and the dimensions associated with dst_scale_uid
+        # are compatible. 
         dst_pair = dst_scale_uid, dst_aspect_uid   
 
         try:
@@ -353,7 +390,7 @@ class Context(object):
                     dst_pair
                 )
             )   
-        
+
 # ---------------------------------------------------------------------------
 # Configure the global context object 
 #
