@@ -26,33 +26,5 @@
             "code": "THz",
             "description": "terahertz"
         }
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_s-1",
-            116741812607130898126240371497946537198
-        ],
-        "locale": {
-            "default": {
-                "name": "per second",
-                "symbol": "1/s"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[0, 0, -1, 0, 0, 0, 0]",
-            "prefix": [
-                "1",
-                "1"
-            ]
-        },
-        "UCUM": {
-            "code": "/s",
-            "description": "per second"
-        }
     }
 ]
