@@ -7,21 +7,13 @@ M-layer-concept Python code
 .. contents::
    :local:
 
-Package overview
-================ 
-
 The Python code has two main roles: i) to connect to the M-layer registry (the JSON files), and ii) to support client-side Python code that will make use of the M-layer representation system. There is also some Python code that can assist when extending the M-layer JSON entries. 
 
 M-layer-register API
---------------------
+====================
 The first role is handled by the :class:`~context.Context` class, which provides access to conversion and casting tables in the registry. Client-side software does not see the context. 
 
 A default context is created when the Python package is imported. This object reads and internally organises all the JSON data.
-
-.. autoclass:: context.Context
-    :noindex:
-    :members: conversion_from_scale_aspect, casting_from_scale_aspect, casting_from_compound_scale_dim, conversion_from_compound_scale_dim
-
 
 Support for scale transformation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -55,43 +47,73 @@ The following conversion functions for scales are defined in the ``ml_math`` nam
 .. automodule:: ml_math
     :members: bounded_convert, interval_convert, ratio_convert
 
-    
+The Context
+^^^^^^^^^^^
+The :class:`~context.Context` methods that are used to access the registry are documented here.
+
+.. autoclass:: context.Context
+    :members: conversion_from_scale_aspect, casting_from_scale_aspect, casting_from_compound_scale_dim, conversion_from_compound_scale_dim
+
+Supporting modules
+^^^^^^^^^^^^^^^^^^
+
+A number of other modules support :class:`~context.Context`
 
         
-Register
---------
-
 .. automodule:: register
     :members:
-    
-Conversion register
--------------------
 
 .. automodule:: conversion_register
     :members:
 
-Casting register
-----------------
-
 .. automodule:: casting_register
     :members:
    
-Scales for Aspect register
---------------------------
-
 .. automodule:: scales_for_aspect_register
     :members:
-    
-Lib
----
+  
+Client-side API
+===============
 
-.. automodule:: lib
-    :members:
-    :special-members: __eq__
-   
-Dimension
----------
-.. automodule:: dimension
+The user API is supported by the :class:`~lib.Aspect` and :class:`~lib.Scale` classes, which encapsulate unique identifiers.
+
+.. autoclass:: lib.Aspect
     :members: 
     :special-members: __eq__
-    
+  
+.. autoclass:: lib.Scale
+    :members: 
+    :special-members: __eq__
+
+There is also a class in which a scale and an aspect are encapsulated,  :class:`~lib.ScaleAspect`.
+
+.. autoclass:: lib.ScaleAspect
+    :members: 
+    :special-members: __eq__
+   
+These objects can be multiplied, divided and exponentiated, which generates corresponding compound classes.
+
+.. autoclass:: lib.CompoundAspect
+    :members: 
+    :special-members: __eq__
+  
+.. autoclass:: lib.CompoundScale
+    :members: 
+    :special-members: __eq__
+
+.. autoclass:: lib.CompoundScaleAspect
+    :members: 
+    :special-members: __eq__
+   
+The :class:`dimension.Dimension` class encapsulates the dimensional signature of a scale in terms
+of the corresponding system dimensions. The object also holds a 
+  
+.. autoclass:: dimension.Dimension
+    :members: 
+    :special-members: __eq__
+ 
+Dimension objects can be multiplied, divided and exponentiated, which generates the corresponding compound class. 
+
+.. autoclass:: dimension.CompoundDimension
+    :members: 
+    :special-members: __eq__

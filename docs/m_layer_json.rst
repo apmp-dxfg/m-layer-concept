@@ -10,10 +10,11 @@ M-layer-concept JSON data
 Registry file structure
 =======================
 
-The M-layer registry is implemented with JSON files.
+The ``m-layer-concept`` registry is implemented in JSON files.
 
-There is a root directory called ``json``, under ``m_layer`` in the Python distribution,
-with the following directory substructure::
+There is a root directory ``json``, under the directory ``m_layer`` in the Python distribution.
+The ``json`` directory contains subdirectories where the JSON files (with file extension '.json') are stored.
+The structure is as follows::
 
     json/
         |
@@ -30,26 +31,28 @@ with the following directory substructure::
         +---> scales_for/
         |
         +---> systems/
-
-JSON files are stored in these subdirectories (with file extension '.json'). 
-
     
-General comments about JSON records 
-===================================
-Each file contains one single JSON array (starting and ending with ``[`` and ``]``),
-with any number of M-layer JSON objects (starting and ending with ``{`` and ``}``),
+General comments about JSON data 
+================================
+Each file contains one JSON array (starting and ending with ``[`` and ``]``),
+containing any number of M-layer JSON objects (starting and ending with ``{`` and ``}``),
 each defining a register entry. 
 
-All M-layer JSON objects begin with the name ``__entry__``, which identifies the type of entry (aspect, reference, scale, etc.)
-
-Each entity that requires a unique identifier uses the name ``uid`` for that element. Although the M-layer will need to use persistent globally unique identifiers for certain elements, the details are not determined yet. This project adopts an ad hoc arrangement (see below).
+The JSON objects for M-layer entities begin with the name ``__entry__``, which identifies the type (aspect, reference, scale, etc.)
 
 All entities that could be rendered include the name ``locale``, which holds information about display options. This feature has not been developed beyond default behaviour yet.
+
+Entities that have a unique identifier name that element ``uid`` in the JSON object. 
+
+.. note::
+
+    Although the M-layer will use persistent globally unique identifiers for elements, such as aspects and scales, the details are not determined yet. This project adopts an *ad hoc* arrangement (see `M-layer-concept unique identifiers`_ below).
+
 
 M-layer-concept unique identifiers
 ---------------------------------- 
 
-Unique identifiers have two components: a name (string) and a UUID (integer). 
+Unique identifiers have two components in a JSON array: a name (string) and a UUID (integer). 
 Although the UUID provides a unique identifier of register entries, the names help people navigate entries.
 
 Two identifiers are considered equal when *both* the name and UUID match.
@@ -64,7 +67,7 @@ The naming convention is as follows.
 
     * For a **scale**, the name begins with ``ml`` followed by a string associated reference and ending in the name of the scale type. Hence, ``ml_si_kg.m2.s-3.A-1_ratio`` and ``ml_si_volt_ratio``, for example (note, there may be alternative strings associated with a single reference).
 
-
+The examples of JSON objects in the following sections provide many examples of the unique identifier format.
        
         
 Aspect

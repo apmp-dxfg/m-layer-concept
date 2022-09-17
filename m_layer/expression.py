@@ -347,15 +347,15 @@ class Expression(object):
         i) the aspect specified in ``dst``, or, 
         ii) the aspect specified by ``aspect``, or,
         iii) the aspect of the initial expression 
+        
+        The ``aspect`` is used if ``dst`` is a :class:`~lib.Scale`. 
+        When specified, it will be attributed to the result, otherwise
+        the expression aspect is carried over.
                 
         Args:
         
-            dst(:class:`~lib.ScaleAspect` or :class:`~lib.Scale`): the scale or scale-aspect pair for the new expression. 
-                
-            aspect(:class:`~lib.Aspect`): is used
-            if ``dst`` is a :class:`~lib.Scale`. When an aspect
-            is specified, it will be attributed to 
-            the result, otherwise the expression aspect is carried over.  
+            dst(:class:`~lib.ScaleAspect` or :class:`~lib.Scale`): the scale or scale-aspect pair for the new expression 
+            aspect(:class:`~lib.Aspect`):   
 
         Returns:
             an  M-layer :class:`~expression.Expression` 

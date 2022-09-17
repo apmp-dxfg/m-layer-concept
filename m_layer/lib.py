@@ -22,7 +22,7 @@ __all__ = (
 class CompoundAspect(object):
 
     """
-    A CompoundAspect holds an Aspect expression
+    A CompoundAspect holds an :class:`Aspect` expression
     """
 
     __slots__ = (
@@ -52,7 +52,7 @@ class CompoundAspect(object):
     @property
     def no_aspect(self):
         """
-        ``True`` if ``no_aspect` is anywhere in the expression.
+        ``True`` if ``no_aspect`` is anywhere in the expression.
         
         """
         return no_aspect.uid in self.uid

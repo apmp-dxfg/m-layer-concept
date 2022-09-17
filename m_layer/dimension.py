@@ -1,15 +1,14 @@
 """
 A reference (unit) belonging to a coherent unit system has a dimensional  
-signature that can be represented as a sequence of exponents referred to a 
-corresponding sequence of base units. 
+signature that can be represented as a sequence of exponents referred 
+to base units. 
 
-Multiplication and division of such units 
-may be accompanied by addition (respectively subtraction) of the 
-corresponding dimensional exponents, with raising to an integer power
-understood as repeated multiplication or division. 
+Multiplication and division of scales may be recorded by addition (respectively  
+subtraction) of the corresponding dimensional exponents, with raising to an 
+integer power understood as repeated multiplication or division. 
 
-Coherent unit systems also have (incoherent) units that are multiples or 
-submultiples of coherent units. So, given a system, the combination of a  
+Coherent unit systems also have (incoherent) units, which are multiples or 
+submultiples of the coherent units. So, given a system, the combination of a  
 dimensional vector and a prefix is enough to identify a unit expressed as a 
 product of powers of system base units.
 
@@ -24,6 +23,11 @@ from m_layer.stack import normal_form
 
 # ---------------------------------------------------------------------------
 class CompoundDimension(object):
+
+    """
+    A :class:`CompoundDimension` holds an expression 
+    of :class:`Dimension` objects
+    """
 
     __slots__ = ('prefactor','factors')
 
@@ -102,7 +106,7 @@ class CompoundDimension(object):
     @property
     def simplify(self):
         """
-        Return the dimensional combination of the exponentiated factors
+        Return the combination of the exponentiated factors
         
         """
         x = 1
@@ -136,10 +140,12 @@ class Dimension(object):
 
     @property 
     def dim(self):
+        "The tuple of dimensions"
         return self._dim
         
     @property 
     def prefix(self):
+        "The numerical unit prefix"
         return self._prefix
 
     def __hash__(self):
