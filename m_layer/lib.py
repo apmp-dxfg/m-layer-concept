@@ -725,6 +725,7 @@ for src_scale_uid in cxt.scale_reg._objects.keys():
         dim = _sys_to_dimension( json_ref["system"] )
         
         if dim not in cxt.dimension_conversion_reg:
+            assert isinstance(src_scale_uid,UID), type(src_scale_uid)
             cxt.dimension_conversion_reg[dim] = src_scale_uid
             
         assert cxt.dimension_conversion_reg[dim] == src_scale_uid,\

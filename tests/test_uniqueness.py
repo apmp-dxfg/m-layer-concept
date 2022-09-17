@@ -318,10 +318,11 @@ class TestInit(unittest.TestCase):
         The name of a ratio scale with a reference belonging to a unit  
         system may be a product of powers of base unit names in that system. 
         We call such a scale "systematic". A scale name may also be special 
-        in some way (i.e., non-systematic, like "v.m-1")
+        in some way (i.e., non-systematic, like "V.m-1")
 
         The M-layer dimension of any non-systematic scale must map to 
-        just one systematic scale.
+        just one systematic scale (the client may then need to cast
+        to the desired scale).
         
         """
         from m_layer.context import global_context as cxt 
@@ -329,13 +330,14 @@ class TestInit(unittest.TestCase):
         from m_layer.uid import UID
         
         for src_scale_uid in cxt.scale_reg._objects.keys(): 
-        
+            
             json_scale = cxt.scale_reg[src_scale_uid]  
             ref_uid = UID( json_scale['reference'] )
             json_ref = cxt.reference_reg[ ref_uid ]
 
             if "system" in json_ref:                
-                dim = _sys_to_dimension( json_ref["system"] )               
+                dim = _sys_to_dimension( json_ref["system"] )  
+                
                 if "systematic" in json_scale: 
                     self.assertTrue(
                         json_scale["scale_type"] == "ratio",
@@ -346,12 +348,27 @@ class TestInit(unittest.TestCase):
                         msg="{} from {}".format(src_scale_uid,dim)
                     )
                 elif json_scale["scale_type"] == "ratio":
-                    # For every name of a ratio scale with a reference belonging to a unit  
-                    # system there should be a matching scale name that is a product 
-                    # of powers of base unit names.                   
-                    # This test will report any missing cases
-                    with self.subTest(msg = "no match: {!r} to {!r}".format(src_scale_uid,dim)):
+                    # For every name of a ratio scale with a reference belonging 
+                    # to a unit system and not systematic, there should 
+                    # be a systematic scale entry with the same dimensions in the 
+                    # `dimension_conversion_reg`. 
+                    # This systematic scale provides a basis for casting.
+                    # This test reports any missing cases.
+                    with self.subTest(
+                        msg = "no mapping from {!r} to {!r}".format(
+                            src_scale_uid,dim
+                        )
+                    ):
                         self.assertTrue( dim in cxt.dimension_conversion_reg )
+                        
+                    with self.subTest(
+                        msg = "{} is not systematic".format(
+                            cxt.dimension_conversion_reg[dim]
+                        )
+                    ):
+                        s_uid = cxt.dimension_conversion_reg[dim]
+                        s_json = cxt.scale_reg[ s_uid ]
+                        self.assertTrue( "systematic" in s_json )
                 else:
                     pass
       

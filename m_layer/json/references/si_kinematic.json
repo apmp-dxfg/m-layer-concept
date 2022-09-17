@@ -1,0 +1,52 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_m.s-1",
+            209336055680499528994573882116031757760
+        ],
+        "locale": {
+            "default": {
+                "name": "metre per second",
+                "symbol": "m.s-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 1, -1, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        },
+        "systematic": 1
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_m.s-2",
+            98972761155715571290666055209767955122
+        ],
+        "locale": {
+            "default": {
+                "name": "metre per second squared",
+                "symbol": "m.s-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 1, -2, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        },
+        "systematic": 1
+    }
+]

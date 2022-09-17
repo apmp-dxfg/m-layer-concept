@@ -27,14 +27,15 @@ class Register(object):
     def set(self,entry):
         """
         """
-        # Convert the string representation of a JSON sequence to tuple
-        if isinstance( entry['uid'],str ):
-            # Is this still needed?
-            assert False
-            uid = tuple( literal_eval(entry['uid']) )
-        else:
-            # Encapsulate the JSON uid
-            uid = UID( entry['uid'] )
+        # # Convert the string representation of a JSON sequence to tuple
+        # if isinstance( entry['uid'],str ):
+            # # Is this still needed?
+            # assert False
+            # uid = tuple( literal_eval(entry['uid']) )
+        # else:
+        # Encapsulate the JSON uid
+        
+        uid = UID( entry['uid'] )
         
         if uid in self._objects:
             raise RuntimeError(
