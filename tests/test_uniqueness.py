@@ -317,9 +317,10 @@ class TestInit(unittest.TestCase):
         """
         The name of a ratio scale with a reference belonging to a unit  
         system may be a product of powers of base unit names in that system. 
-        We call such a scale "systematic" here.
+        We call such a scale "systematic". A scale name may also be special 
+        in some way (i.e., non-systematic, like "v.m-1")
 
-        The M-layer dimension of a systematic scale must correspond to 
+        The M-layer dimension of any non-systematic scale must map to 
         just one systematic scale.
         
         """
@@ -330,23 +331,31 @@ class TestInit(unittest.TestCase):
         for src_scale_uid in cxt.scale_reg._objects.keys(): 
         
             json_scale = cxt.scale_reg[src_scale_uid]  
-            if "systematic" in json_scale: 
-            
-                self.assertTrue(json_scale["scale_type"] == "ratio")
-                
-                ref_uid = UID( json_scale['reference'] )
-                json_ref = cxt.reference_reg[ ref_uid ]
+            ref_uid = UID( json_scale['reference'] )
+            json_ref = cxt.reference_reg[ ref_uid ]
 
-                dim = _sys_to_dimension( json_ref["system"] )
-            
-                if dim not in cxt.dimension_conversion_reg:
-                    cxt.dimension_conversion_reg[dim] = src_scale_uid
-                    
-                elif cxt.dimension_conversion_reg[dim] != src_scale_uid:  
-                    # This is the uniqueness test
+            if "system" in json_ref:                
+                dim = _sys_to_dimension( json_ref["system"] )               
+                if "systematic" in json_scale: 
                     self.assertTrue(
-                        cxt.dimension_conversion_reg[dim] == src_scale_uid
+                        json_scale["scale_type"] == "ratio",
+                        msg="{}".format(src_scale_uid)
                     )
+                    self.assertTrue( 
+                        cxt.dimension_conversion_reg[dim] == src_scale_uid,
+                        msg="{} from {}".format(src_scale_uid,dim)
+                    )
+                elif json_scale["scale_type"] == "ratio":
+                    # For every name of a ratio scale with a reference belonging to a unit  
+                    # system there should be a matching scale name that is a product 
+                    # of powers of base unit names.                   
+                    # This test will report any missing cases
+                    with self.subTest(msg = "no match: {!r} to {!r}".format(src_scale_uid,dim)):
+                        self.assertTrue( dim in cxt.dimension_conversion_reg )
+                else:
+                    pass
+      
+            
 
 #============================================================================
 if __name__ == '__main__':
