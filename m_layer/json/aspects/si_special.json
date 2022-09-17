@@ -15,6 +15,19 @@
     {
         "__entry__": "Aspect",
         "uid": [
+            "ml_solid_angle",
+            126885015316814934813258084520681577083
+        ],
+        "locale": {
+            "default": {
+                "name": "solid-angle",
+                "symbol": "\\Omega"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
             "ml_frequency",
             153247472008167864427404739264717558529
         ],
@@ -22,19 +35,6 @@
             "default": {
                 "name": "frequency",
                 "symbol": "f"
-            }
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
-            "ml_activity",
-            20106649997056189817632954430448298015
-        ],
-        "locale": {
-            "default": {
-                "name": "activity",
-                "symbol": "A"
             }
         }
     },
@@ -154,5 +154,84 @@
                 "symbol": "L "
             }
         }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_luminous_flux",
+            184374416391180047623543658952093985674
+        ],
+        "locale": {
+            "default": {
+                "name": "luminous-flux",
+                "symbol": "\\Phi_v"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_illuminance",
+            289370219754830901087935206154484667469
+        ],
+        "locale": {
+            "default": {
+                "name": "illuminance",
+                "symbol": "E_v"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_activity",
+            20106649997056189817632954430448298015
+        ],
+        "locale": {
+            "default": {
+                "name": "activity",
+                "symbol": "A"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_absorbed_dose",
+            261054223272012664089159971740322302399
+        ],
+        "locale": {
+            "default": {
+                "name": "absorbed-dose",
+                "symbol": "D"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_dose_equivalent",
+            284653740991849900984518014251944971921
+        ],
+        "locale": {
+            "default": {
+                "name": "dose-equivalent",
+                "symbol": "H"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_catalytic_activity",
+            194420480746624846468495742207206334642
+        ],
+        "locale": {
+            "default": {
+                "name": "catalytic-activity",
+                "symbol": "K"
+            }
+        }
     }
+    
 ]
