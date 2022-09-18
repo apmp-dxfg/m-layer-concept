@@ -34,5 +34,29 @@
             86027072402622903744975433595176472531
         ],
         "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_cd.sr_ratio",
+            
+        ],
+        "reference": [
+            "si_lumen",
+            178604853758124415947190859599928060691
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_cd.sr.m-2_ratio",
+            
+        ],
+        "reference": [
+            "si_lux",
+            251981903838384865021301348395596094419
+        ],
+        "scale_type": "ratio"
     }
 ]

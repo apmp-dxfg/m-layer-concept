@@ -1,0 +1,36 @@
+[
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_absorbed_dose",
+            261054223272012664089159971740322302399
+        ],
+        "src": [
+            "ml_si_m2.s-2_ratio",
+            328273707104631467998318700468322317239
+        ],
+        "dst": [
+            "ml_si_gray_ratio",
+            23633034713414612299487808194790293197
+        ],
+        "function": "lambda x: x",
+        "parameters": {}
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_dose_equivalent",
+            284653740991849900984518014251944971921
+        ],
+        "src": [
+            "ml_si_m2.s-2_ratio",
+            328273707104631467998318700468322317239
+        ],
+        "dst": [
+            "ml_si_sivert_ratio",
+            53186499560198469150916689883346793995
+        ],
+        "function": "lambda x: x",
+        "parameters": {}
+    }
+]
