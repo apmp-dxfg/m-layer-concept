@@ -58,11 +58,6 @@ class UID(object):
     def uuid(self):
         return self._m_layer_uuid[1]
         
-    @property 
-    def uid(self):
-        "The M-layer identifier"
-        return self._m_layer_uuid
-        
     def json(self,**kwargs):
         obj = dict(
             __type__ = "UID",
