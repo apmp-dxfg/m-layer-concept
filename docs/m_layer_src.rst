@@ -7,7 +7,12 @@ M-layer-concept Python code
 .. contents::
    :local:
 
-The Python code has two main roles: i) to connect to the M-layer registry (the JSON files), and ii) to support client-side Python code that will make use of the M-layer representation system. There is also some Python code that can assist when extending the M-layer JSON entries. 
+The Python code has two main roles: 
+
+    i) to refer to the M-layer registry (the JSON files), and 
+    ii) to support client-side code that will uses the M-layer representation. 
+    
+(There are also some Python modules that can assist when extending the M-layer JSON entries.)
 
 M-layer-register API
 ====================
@@ -15,18 +20,20 @@ The first role is handled by the :class:`~context.Context` class, which provides
 
 A default context is created when the Python package is imported. This object reads and internally organises all the JSON data.
 
+.. _ml_math-label:
+
 Support for scale transformation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As part of the initialisation process, transformation functions are instantiated from the string descriptors stored in the registry. The parameters to these functions are also stored in string format. 
+As part of the initialisation process, mathematical transformation functions are instantiated from string descriptors for the functions and parameters stored in the registry.  
 
-The built-in Python function :func:`eval` is used to convert parameter strings and functions into Python objects.
+The built-in Python function :func:`eval` is used to convert parameter strings and functions into Python objects. During evaluation, some numerical constants defined in the SI and mathematical constants are available. There is also a small number of scale transformation functions.
   
 
 Defined SI constants
 ^^^^^^^^^^^^^^^^^^^^
 
-The following definitions of numeric values are available in the namespace ``si``  during evaluation of JSON strings. 
+The following definitions of numeric values are available in the namespace ``si``  during evaluation. 
 
 .. literalinclude:: ../m_layer/si_constants.py
     :language: py
@@ -34,7 +41,7 @@ The following definitions of numeric values are available in the namespace ``si`
 Mathematical constants
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The following definitions provide numeric constants in the namespace ``number``  during evaluation of JSON strings.
+The following definitions provide numeric constants in the namespace ``number``  during evaluation.
 
 .. literalinclude:: ../m_layer/math_constants.py
     :language: py
@@ -42,23 +49,23 @@ The following definitions provide numeric constants in the namespace ``number`` 
 Defined transformations
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The following conversion functions for scales are defined in the ``ml_math`` namespace during evaluation of JSON strings.
+The following conversion functions for scales are defined in the ``ml_math`` namespace during evaluation.
 
 .. automodule:: ml_math
     :members: bounded_convert, interval_convert, ratio_convert
 
 The Context
-^^^^^^^^^^^
-The :class:`~context.Context` methods that are used to access the registry are documented here.
+~~~~~~~~~~~
+
+The :class:`~context.Context` methods used to access registry entries are shown here.
 
 .. autoclass:: context.Context
     :members: conversion_from_scale_aspect, casting_from_scale_aspect, casting_from_compound_scale_dim, conversion_from_compound_scale_dim
 
-Supporting modules
-^^^^^^^^^^^^^^^^^^
+Modules that support the context
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A number of other modules support :class:`~context.Context`
-
         
 .. automodule:: register
     :members:
@@ -75,7 +82,7 @@ A number of other modules support :class:`~context.Context`
 Client-side API
 ===============
 
-The user API is supported by the :class:`~lib.Aspect` and :class:`~lib.Scale` classes, which encapsulate unique identifiers.
+The :class:`~lib.Aspect` and :class:`~lib.Scale` classes encapsulate unique identifiers.
 
 .. autoclass:: lib.Aspect
     :members: 
@@ -85,13 +92,16 @@ The user API is supported by the :class:`~lib.Aspect` and :class:`~lib.Scale` cl
     :members: 
     :special-members: __eq__
 
-There is also a class in which a scale and an aspect are encapsulated,  :class:`~lib.ScaleAspect`.
+There is also :class:`~lib.ScaleAspect`, in which a scale-aspect pair are encapsulated.
 
 .. autoclass:: lib.ScaleAspect
     :members: 
     :special-members: __eq__
-   
-These objects can be multiplied, divided and exponentiated, which generates corresponding compound classes.
+  
+Supporting classes for compound expressions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Aspects, Scales or ScaleAspects can be multiplied, divided and exponentiated, which will generate corresponding compound objects. 
 
 .. autoclass:: lib.CompoundAspect
     :members: 
@@ -105,14 +115,15 @@ These objects can be multiplied, divided and exponentiated, which generates corr
     :members: 
     :special-members: __eq__
    
-The :class:`dimension.Dimension` class encapsulates the dimensional signature of a scale in terms
-of the corresponding system dimensions. The object also holds a 
+Dimension and CompoundDimension 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When the expression encapsulated in a :class:`~lib.CompoundScale` or :class:`~lib.CompoundScaleAspect` consists of scales associated with a unit system, a :class:`dimension.Dimension` can express the dimensional exponents in that system's dimensions. 
   
 .. autoclass:: dimension.Dimension
     :members: 
     :special-members: __eq__
  
-Dimension objects can be multiplied, divided and exponentiated, which generates the corresponding compound class. 
+Dimensions can be multiplied, divided and exponentiated, which generates a corresponding compound class. 
 
 .. autoclass:: dimension.CompoundDimension
     :members: 

@@ -12,8 +12,8 @@ Registry file structure
 
 The ``m-layer-concept`` registry is implemented in JSON files.
 
-There is a root directory ``json``, under the directory ``m_layer`` in the Python distribution.
-The ``json`` directory contains subdirectories where the JSON files (with file extension '.json') are stored.
+There is a root directory named ``json``, under ``m_layer`` in the Python distribution.
+This ``json`` directory has subdirectories that contain the JSON files (with file extension '.json').
 The structure is as follows::
 
     json/
@@ -34,45 +34,45 @@ The structure is as follows::
     
 General comments about JSON data 
 ================================
-Each file contains one JSON array (starting and ending with ``[`` and ``]``),
-containing any number of M-layer JSON objects (starting and ending with ``{`` and ``}``),
+Each file contains a single JSON array (starting and ending with ``[`` and ``]``),
+which contains a sequence of M-layer JSON objects (starting and ending with ``{`` and ``}``),
 each defining a register entry. 
 
-The JSON objects for M-layer entities begin with the name ``__entry__``, which identifies the type (aspect, reference, scale, etc.)
+The objects for M-layer entities begin with the name ``__entry__``, which identifies the type (aspect, reference, scale, etc.)
 
-All entities that could be rendered include the name ``locale``, which holds information about display options. This feature has not been developed beyond default behaviour yet.
+All entities that could be rendered include the name ``locale``, which holds information about display options. This feature has not been developed beyond simple default behaviour yet.
 
-Entities that have a unique identifier name that element ``uid`` in the JSON object. 
+If the type of entity has a unique identifier, that element is named ``uid`` in the JSON object. 
 
 .. note::
 
-    Although the M-layer will use persistent globally unique identifiers for elements, such as aspects and scales, the details are not determined yet. This project adopts an *ad hoc* arrangement (see `M-layer-concept unique identifiers`_ below).
+    The M-layer will use persistent globally unique identifiers for elements, but the details are not determined yet. This concept project adopts an *ad hoc* arrangement (see `M-layer-concept identifier names`_ below).
 
 
-M-layer-concept unique identifiers
----------------------------------- 
+M-layer-concept identifier names
+-------------------------------- 
 
-Unique identifiers have two components in a JSON array: a name (string) and a UUID (integer). 
-Although the UUID provides a unique identifier of register entries, the names help people navigate entries.
+The *ad hoc* structure adopted for unique identifiers uses two components in a JSON array: a name (string) and a UUID (integer). 
+The names help people navigate entries, although the UUID already provides uniqueness. 
 
-Two identifiers are considered equal when *both* the name and UUID match.
+The combination of the name and UUID is considered to be the unique identifier. Two identifiers are considered equal when *both* the name and UUID match.
 
-The naming convention is as follows.
+A naming convention has been followed:
 
-    * For an **aspect**, the name begins with ``ml_`` followed by an arbitrary descriptor (``ml_[aspect_name]``).
+    * **aspect**: the name is prefixed with ``ml`` followed by an arbitrary descriptor (e.g., ``ml_length``).
 
-    * For a unit **system**, the name begins with initials associated with the system and ends with '_system', e.g., ``si_system``.
+    * **system**: the name is prefixed with initials associated with the system's name and ends with the suffix '_system', e.g., ``si_system``.
 
-    * For a **reference**, the name begins with initials that identify (broadly) the system or family of units. This is followed by a descriptor. When the reference is a compound unit, the descriptor takes on a short form but when there is a single unit name the long form is used. Hence, ``si_kilogram`` and ``si_m.s-1``, for example.
+    * **reference**: the name is prefixed with initials that identify a system or (broadly) a family of units. This is followed by a descriptor. When the reference is a single unit, the unit name is used, but for compound unit names the descriptor adopts a short form based on unit symbols. Hence, for example, ``si_kilogram`` and ``si_m.s-1``.
 
-    * For a **scale**, the name begins with ``ml`` followed by a string associated reference and ending in the name of the scale type. Hence, ``ml_si_kg.m2.s-3.A-1_ratio`` and ``ml_si_volt_ratio``, for example (note, there may be alternative strings associated with a single reference).
+    * **scale**: the name is prefixed with ``ml`` followed by a string associated with the reference and ends with a suffix for the scale type. Hence, for example, ``ml_si_kg.m2.s-3.A-1_ratio`` and ``ml_si_volt_ratio`` (note, alternative strings may related to a single reference, as in this example).
 
-The examples of JSON objects in the following sections provide many examples of the unique identifier format.
+JSON objects shown below provide naming examples.
        
         
 Aspect
 ======
-Aspects require a unique identifier, but do not refer to other M-layer entities. An example follows. 
+Aspects have a unique identifier, but do not refer to other M-layer entities.  
 
 .. code:: json 
 
@@ -92,14 +92,15 @@ Aspects require a unique identifier, but do not refer to other M-layer entities.
     
 Reference 
 =========
-References require a unique identifier. 
+References have a unique identifier. 
 
 If the reference is a unit belonging to a system of units then 
-additional information is entered against the name ``system``. 
-This 'system' object holds an M-layer identifier of the system, 
+additional information is entered under the name ``system``. 
+
+The 'system' object holds an M-layer identifier for the system, 
 the dimensions of the unit in the system, and the numerical
-prefix of the unit (expressed in rational form as a numerator and denominator)
-with respect to the corresponding coherent unit.
+prefix of the unit (expressed in rational form, as a numerator and denominator strings)
+with respect to the corresponding coherent system unit.
         
 .. code:: json 
 
@@ -130,7 +131,9 @@ with respect to the corresponding coherent unit.
     
 System 
 ======
-A system requires a unique identifier and contains references to the references that form the system basis. An example follows. 
+A system has a unique identifier and an array of identifiers for the system base units (references). 
+The order of elements in this array is important. 
+It matches the order of exponents in the ``system.dimensions`` array in a JSON Reference.
 
 .. code:: json 
 
@@ -175,11 +178,9 @@ A system requires a unique identifier and contains references to the references 
     
 Scale 
 =====
-A scale requires a unique identifier and identifies a reference in the M-layer. 
+A scale combines a reference with 'scale type' ('ratio', 'interval', etc.). A scale has a unique identifier and referes to the identifier of an M-layer reference. 
 
-The type of scale is identified ('ratio', 'interval', etc.).
-
-The name ``systematic`` is included when a scale is associated with a reference belonging to a unit system and the scale name is composed of products of powers of base-unit names.
+A scale may include the name ``systematic`` when the scale's name is composed of products of powers of base-unit symbols (the base units of a unit system). 
     
 .. code:: json 
 
@@ -201,14 +202,17 @@ The name ``systematic`` is included when a scale is associated with a reference 
     
 Conversion
 ==========
-A conversion entry holds an operation to transform data from one scale to another. We distinguish between conversions that are restricted to specific aspects and conversions that are aspect-independent.
+Conversion is a mathematical operation related to a pair of M-layer scales.
+
+A JSON conversion entry holds a definition of the mathematical operation required to transform data from one scale to the other. 
+The M-layer distinguishes between conversions that are aspect-independent and conversions restricted to specific aspects.
 
 Aspect-specific conversion
 --------------------------
 
-An example of an aspect-specific conversion entry is shown below. The conversion is identified by the combination of three M-layer identifiers: the aspect, the initial (source) scale and the final (destination) scale.
+An aspect-specific conversion is identified by the combination of: an aspect, the initial (source) scale and the final (destination) scale.
 
-The transformation function is specified in text as are the parameters needed (see ??? for details). In this example, the transformation is a trivial mapping.
+The conversion function is specified in text, as are the parameters needed (see :ref:`ml_math-label` for details). In this example, the transformation is a simple identity mapping.
         
 .. code:: json 
 
@@ -233,7 +237,9 @@ The transformation function is specified in text as are the parameters needed (s
 Aspect-independent conversion
 -----------------------------
   
-The aspect-independent conversion data has the same form, except there is no ``aspect`` name. The conversion is identified by the combination of two M-layer identifiers: the initial (source) scale and the final (destination) scale.
+An aspect-independent conversion is identified by the M-layer identifiers for the initial (source) scale and the final (destination) scale. 
+
+In this example, the transformation is the conversion function :math:`y = x + 273.15`, where :math:`x` is data on the Celsius scale and :math:`y` is the data converted to kelvin.
         
 .. code:: json 
 
@@ -258,10 +264,12 @@ The aspect-independent conversion data has the same form, except there is no ``a
     
 Casting
 =======
+An M-layer cast is an operation to transform data from one scale-aspect pair to another. 
 
-A cast entry holds an operation to transform data from one scale-aspect pair to another. The cast is identified by the combination of identifiers for the initial (source) scale-aspect pair and the final (destination) scale-aspect pair.
+A cast is identified by the initial (source) scale-aspect pair and the final (destination) scale-aspect pair.
  
-In the following example, the cast transforms data expressed in inverse seconds to data expressed in hertz.
+In the following example, the casting operation transforms data in inverse seconds with aspect undefined to data expressed in hertz (aspect is frequency). 
+The numerical part of this operation is trivial, but the change of aspect must be directly specified, because data in inverse seconds could also be associated with activity (with SI unit becquerel). 
         
 .. code:: json 
 
