@@ -39,7 +39,7 @@
         "__entry__": "Scale",
         "uid": [
             "ml_cd.sr_ratio",
-            
+            238969103557683206122602353202968335504
         ],
         "reference": [
             "si_lumen",
@@ -51,7 +51,7 @@
         "__entry__": "Scale",
         "uid": [
             "ml_cd.sr.m-2_ratio",
-            
+            182732708619526989176622865736799301820
         ],
         "reference": [
             "si_lux",
