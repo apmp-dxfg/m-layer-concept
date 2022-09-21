@@ -136,6 +136,7 @@ setup(
     extras_require={'tests': tests_require},
     cmdclass={'docs': BuildDocs, 'apidocs': ApiDocs},
     packages=find_packages( include=('m_layer*',) ),
+    include_package_data=True,
     package_data = {
         "m_layer" : ["json/*.json"]
     }
