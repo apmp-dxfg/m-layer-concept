@@ -32,6 +32,64 @@
         "__entry__": "Cast",
         "src": [
             [
+                "ml_si_radian_ratio",
+                273301153578020696303516833405033923738
+            ],
+            [
+                "ml_no_aspect",
+                295504637700214937127120941173285352815
+            ]
+        ],
+        "dst": [
+            [
+                "ml_imp_degree_bounded_360",
+                125066222841962802760576607996391537405
+            ],
+            [
+                "ml_plane_angle",
+                95173225557230344956477808929590724690
+            ]
+        ],
+        "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
+        "parameters": {
+            "a": "180.0/number.pi",
+            "y_lb": "0",
+            "y_ub": "+360"
+        }
+    },
+    {
+        "__entry__": "Cast",
+        "src": [
+            [
+                "ml_si_radian_ratio",
+                273301153578020696303516833405033923738
+            ],
+            [
+                "ml_no_aspect",
+                295504637700214937127120941173285352815
+            ]
+        ],
+        "dst": [
+            [
+                "ml_imp_degree_bounded_180",
+                273805538217618733078298377573965188309
+            ],
+            [
+                "ml_plane_angle",
+                95173225557230344956477808929590724690
+            ]
+        ],
+        "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
+        "parameters": {
+            "a": "180.0/number.pi",
+            "y_lb": "-180",
+            "y_ub": "+180"
+        }
+    },
+    {
+        "__entry__": "Cast",
+        "src": [
+            [
                 "ml_imp_degree_bounded_180",
                 273805538217618733078298377573965188309
             ],
