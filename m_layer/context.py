@@ -413,7 +413,7 @@ for p_i in (
 
 # The `no_aspect` entry is special, we need the uid
 file_path = os.path.join( _dir, r'json/aspects/no_aspect.json' )
-assert os.path.isfile( file_path ), repr( file_path )
+# assert os.path.isfile( file_path ), repr( file_path )
 
 with open(file_path,'r') as f:
     data = json.load(f)        
