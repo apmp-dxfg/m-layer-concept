@@ -248,10 +248,9 @@ class Expression(object):
             
             new_token = conversion_factor*self._token
  
-            # Set the aspect component of the new CompoundScaleAspect.
-            dst_scale_aspect = dst.to_compound_scale_aspect( 
-                self.scale_aspect
-            ) 
+            # Set the aspect component of the new CompoundScaleAspect
+            # to the default value.
+            dst_scale_aspect = dst.to_compound_scale_aspect() 
  
         elif ( 
             isinstance(dst,(Scale,ScaleAspect) ) 
