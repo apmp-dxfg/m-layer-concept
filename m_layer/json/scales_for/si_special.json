@@ -2,6 +2,23 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect": [
+            "ml_energy",
+            12139911566084412692636353460656684046
+        ],
+        "src": [
+            "ml_si_kg.m2.s-2_ratio",
+            92059200321763611267904598246242830863
+        ],
+        "dst": [
+            "ml_si_joule_ratio",
+            165050666678496469850612022016789737781
+        ],
+        "function": "lambda x: x",
+        "parameters": {}
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
             "ml_electrical_potential_difference",
             151870621188872364765656837703584479789
         ],

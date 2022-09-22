@@ -1,0 +1,28 @@
+[
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_second_ratio",
+            276296348539283398608930897564542275037
+        ],
+        "dst": [
+            "ml_si_minute_ratio",
+            219754916679293138667106941253484129447
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": { "a": "1/60"}
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_minute_ratio",
+            219754916679293138667106941253484129447
+        ],
+        "dst": [
+            "ml_si_second_ratio",
+            276296348539283398608930897564542275037
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": { "a": "60"}
+    }
+]
