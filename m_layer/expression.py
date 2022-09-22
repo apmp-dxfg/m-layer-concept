@@ -256,8 +256,9 @@ class Expression(object):
             isinstance(dst,(Scale,ScaleAspect) ) 
         and isinstance(self.scale_aspect,CompoundScale)
         ):
-            # Conversion from a compound scale to a specific one,
-            # which must be dimensionally equivalent and generic. 
+            # To convert from a compound scale, to a specific one,
+            # the compound scale must be dimensionally equivalent 
+            # to the final scale, which must not have an aspect. 
             
             if isinstance(dst,Scale):            
                 dst_scale_aspect = dst.to_scale_aspect(no_aspect)
@@ -265,7 +266,8 @@ class Expression(object):
             elif isinstance(dst,ScaleAspect):
                 if dst.aspect is not no_aspect:
                     raise RuntimeError(
-                        "cannot change aspect: {!r}".format(dst)
+                        "conversion cannot change from ``no_aspect`` "
+                        "to {!r}".format(dst.aspect)
                     ) 
                 else:
                     dst_scale_aspect = dst 
