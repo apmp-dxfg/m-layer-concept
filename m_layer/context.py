@@ -380,7 +380,7 @@ class Context(object):
             # Apply the aspect
             return lambda x: x 
  
-        src_pair = src_scale_uid, no_aspect.uid 
+        src_pair = src_scale_uid, self.no_aspect_uid 
         try:
             return self.casting_reg[ src_pair,dst_pair ]   
         except KeyError:
