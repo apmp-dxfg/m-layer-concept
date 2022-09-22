@@ -41,6 +41,19 @@
     {
         "__entry__": "Aspect",
         "uid": [
+            "ml_force",
+            253161982591064007446238888026090562042
+        ],
+        "locale": {
+            "default": {
+                "name": "force",
+                "symbol": "F"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
             "ml_energy",
             12139911566084412692636353460656684046
         ],
@@ -54,13 +67,26 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml_work",
-            253161982591064007446238888026090562042
+            "ml_power",
+            84761629337502808578226703685743651693
         ],
         "locale": {
             "default": {
-                "name": "work",
-                "symbol": "E"
+                "name": "power",
+                "symbol": "P"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electric_charge",
+            156116358753013952105463016805539999401
+        ],
+        "locale": {
+            "default": {
+                "name": "electric charge",
+                "symbol": "q"
             }
         }
     },
