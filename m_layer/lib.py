@@ -566,21 +566,17 @@ class CompoundScale(object):
             multiplication will lead to failure.            
             
         """
-        assert len(src.stack) == len(self.stack)       
+        if src is not no_aspect:
+            assert len(src.stack) == len(self.stack)       
         
         stk = []
-        for i,o_i in enumerate(src.stack):
+        for i,o_i in enumerate(self.stack):
             if (
                 o_i not in ('mul','div','rmul','pow') 
             and
                 not isinstance(o_i,numbers.Integral)
             ):
-                # At this point the ability to 
-                # convert later can be checked:
-                # if src scale and aspect don't convert,
-                # then something is wrong.
-                
-                dst_scale_uid = self.stack[i].uid 
+                dst_scale_uid = o_i.uid 
                 
                 if isinstance(src,CompoundScaleAspect):
                     src_scale_uid, src_aspect_uid = src.stack[i].uid
@@ -612,11 +608,11 @@ class CompoundScale(object):
                         self.stack[i].to_scale_aspect( no_aspect ) 
                     )
                 else:
-                    assert False
+                    assert False, repr(src)
 
             else:
                 stk.append( o_i )                
-                           
+                    
         return CompoundScaleAspect( Stack(stk) )
   
 # ---------------------------------------------------------------------------
