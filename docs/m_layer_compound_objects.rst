@@ -108,6 +108,20 @@ or ::
     >>> print(w.cast(ScaleAspect(N_m,moment)))
     10.1 N m
     
+Compound scale dimensions
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A ``dimension`` property in :class:`~lib.CompoundScale` returns a :class:`~dimension.CompoundDimension` associated with the expression :: 
+
+    >>> kg_mm_ss.dimension
+    CompoundDimension({ SI(0, 0, 1, 0, 0, 0, 0) : [-2], SI(0, 1, 0, 0, 0, 0, 0) : [2], SI(1, 0, 0, 0, 0, 0, 0) : [1] })
+
+This is a collection of :class:`~dimension.Dimension` objects for each individual scale and an associated exponent. 
+The compound dimension may be simplified to a single :class:`~dimension.Dimension` ::
+
+    >>> kg_mm_ss.dimension.simplify
+    Dimension( SI, (1, 2, -2, 0, 0, 0, 0) )
+
 What is the m-layer-concept doing?
 ==================================
 
@@ -116,3 +130,32 @@ The m-layer-concept code works with compound-scale expressions, because M-layer 
 Conversion from a compound-scale expression to a single M-layer scale is not always possible. The m-layer-concept requires all scales in an expression to be associated with a unit system, so they are ratio scales and the associated references each have dimensions in that system. Using this information, the compound-scale dimensions can be evaluated. Then the compound scale can be converted to a corresponding systematic scale, if defined in the register.   
 
 This process is subject to the usual difficulties associated with dimensional representations for units: there may be more than one scale defined with given dimensions. This situation can be handled by using a casting operation to specify the correct scale.
+
+Compound scale-aspects 
+======================
+
+Multiplication, division and exponentiation operations can be used with :class:`~lib.ScaleAspect` objects.  For instance ::
+
+    >>> m = ScaleAspect(
+    ...     Scale( ('ml_si_metre_ratio', 17771593641054934856197983478245767638) ),
+    ...     Aspect( ('ml_length', 993853592179723568440264076369400241) )
+    ...     )
+    >>> s = ScaleAspect( 
+    ...     Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) ),
+    ...     Aspect( ('ml_time', 59007067547744628223483093626372886675) )
+    ...     )
+    >>> print( m/s )
+    ((m, length)/((s, time))) 
+    >>> print( expr(1.5, m/s ) ) 
+    1.5 ((m, length)/((s, time)))
+
+Units conversion now checks the compatibility of each term's scale and aspect ::
+
+    >>> length = Aspect( ('ml_length', 993853592179723568440264076369400241) )
+    >>> foot = ft.to_scale_aspect(length)   
+    
+    >>> y = expr(1.5, m/s )
+    >>> convert(y, foot/s )
+    Expression(4.92126,((ft, length)/((s, time))))
+
+Note, the earlier declaration of ``ft`` created a :class:`~lib.Scale`, which does not specify an aspect. The code above explicitly promotes ``ft`` to ``foot``, a :class:`~lib.ScaleAspect` with aspect length. 
