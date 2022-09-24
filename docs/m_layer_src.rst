@@ -128,3 +128,17 @@ Dimensions can be multiplied, divided and exponentiated, which generates a corre
 .. autoclass:: dimension.CompoundDimension
     :members: 
     :special-members: __eq__
+
+UID and CompoundUID 
+^^^^^^^^^^^^^^^^^^^
+The :class:`~uid.UID` class encapsulates M-layer unique identifiers 
+
+.. autoclass:: uid.UID
+    :members: 
+    :special-members: __eq__
+
+A :class:`~uid.CompoundUID` encapsulates the individual uids of the scales, or scale-aspects, in a compound unit expression. 
+
+.. autoclass:: uid.CompoundUID
+    :members: 
+    :special-members: __eq__
