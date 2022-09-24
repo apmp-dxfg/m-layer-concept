@@ -171,7 +171,7 @@ class Expression(object):
             
             if isinstance(dst,CompoundScale):
                 # Copy the various src aspects to a new CompoundScaleAspect.
-                dst_scale_aspect = dst.compound_scale_aspect( 
+                dst_scale_aspect = dst.to_compound_scale_aspect( 
                     self.scale_aspect
                 ) 
             
@@ -198,8 +198,12 @@ class Expression(object):
                 dst_s_uid, dst_a_uid = dst_i.uid
                 
                 # Aspects must match
-                assert src_a_uid == dst_a_uid,\
-                    "{!r} != {!r}".format(src_a_uid,dst_a_uid)
+                if src_a_uid != dst_a_uid:
+                    raise RuntimeError(
+                        "aspects do not match: {} != {}".format(
+                            src_a_uid,dst_a_uid
+                        )
+                    )
 
                 c = cxt.conversion_from_scale_aspect( 
                         src_s_uid,src_a_uid,dst_s_uid                     

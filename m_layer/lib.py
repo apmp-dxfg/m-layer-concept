@@ -293,19 +293,26 @@ class CompoundScaleAspect(object):
         return self._stack 
  
     def __rmul__(self,x):
-        # a numerical scale factor on the left 
-        assert isinstance(x,numbers.Integral)
-        return CompoundScaleAspect( self.stack.push(x).rmul() )
-        
+         
+        if isinstance(x,numbers.Integral):
+            # a numerical scale factor on the left
+            return CompoundScaleAspect( self.stack.push(x).rmul() )
+        else:
+            assert False, repr(x)
+            
     def __mul__(self,y):
         return CompoundScaleAspect(
             self.stack.push(y).mul()
-        )
+        ) if isinstance( 
+            y,(ScaleAspect,CompoundScaleAspect) 
+          ) else NotImplemented
 
     def __truediv__(self,y):
         return CompoundScaleAspect(
             self.stack.push(y).div()
-        )
+        ) if isinstance( 
+            y,(ScaleAspect,CompoundScaleAspect) 
+          ) else NotImplemented
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
@@ -427,15 +434,19 @@ class ScaleAspect(object):
 
         return CompoundScaleAspect(
             Stack().push(self).push(y).mul()
-        )
-
+        ) if isinstance( 
+            y,(ScaleAspect,CompoundScaleAspect) 
+          ) else NotImplemented
+            
     def __truediv__(self,y):
         assert self.composable
         assert y.composable
 
         return CompoundScaleAspect(
             Stack().push(self).push(y).div()
-        )
+        ) if isinstance( 
+            y,(ScaleAspect,CompoundScaleAspect) 
+          ) else NotImplemented
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
@@ -528,12 +539,12 @@ class CompoundScale(object):
     def __mul__(self,y):
         return CompoundScale(
             self.stack.push(y).mul()
-        )
+        ) if isinstance( y,(Scale,CompoundScale) ) else NotImplemented
 
     def __truediv__(self,y):
         return CompoundScale(
             self.stack.push(y).div()
-        )
+        ) if isinstance( y,(Scale,CompoundScale) ) else NotImplemented
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
@@ -576,6 +587,8 @@ class CompoundScale(object):
             and
                 not isinstance(o_i,numbers.Integral)
             ):
+                assert isinstance(o_i,Scale) , repr(o_i)
+                
                 dst_scale_uid = o_i.uid 
                 
                 if isinstance(src,CompoundScaleAspect):
@@ -671,16 +684,16 @@ class Scale(object):
         )
 
     def __mul__(self,y):
-        assert self.composable
+        assert self.composable        
         return CompoundScale(
             Stack().push(self).push(y).mul()
-        )
+        ) if isinstance( y,(Scale,CompoundScale) ) else NotImplemented
 
     def __truediv__(self,y):
         assert self.composable
         return CompoundScale(
             Stack().push(self).push(y).div()
-        )
+        ) if isinstance( y,(Scale,CompoundScale) ) else NotImplemented
  
     def __pow__(self,y):
         assert isinstance(y,numbers.Integral)
