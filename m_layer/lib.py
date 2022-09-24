@@ -503,6 +503,7 @@ class CompoundScale(object):
            
     @property 
     def uid(self):
+        "The UIDs of the component scales"
         try:
             return self._uid
         except AttributeError:
@@ -511,6 +512,7 @@ class CompoundScale(object):
 
     @property
     def dimension(self):
+        "The dimensions of the component scales"
         try:
             return self._dimension
         except AttributeError:
