@@ -1,0 +1,43 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_litre",
+            260915713341515846568337571003725271161
+        ],
+        "locale": {
+            "default": {
+                "name": "litre",
+                "symbol": "l"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 3, 0, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1E6"
+            ]
+        },
+        "UCUM": {
+            "code": "L",
+            "description": "Liters"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "im_gallon",
+            164039965745660680349273089954333406291
+        ],
+        "locale": {
+            "default": {
+                "name": "gallon",
+                "symbol": "gal"
+            }
+        }
+    }
+]

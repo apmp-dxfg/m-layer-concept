@@ -1,0 +1,32 @@
+[
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_litre_ratio",
+            33582684568426633247271396229916901122
+        ],
+        "dst": [
+            "ml_im_gallon_ratio",
+            305751523308212220441734931290377152106
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "0.21997"
+        }
+    },
+{
+        "__entry__": "Conversion",
+        "src": [
+            "ml_im_gallon_ratio",
+            305751523308212220441734931290377152106
+        ],
+        "dst": [
+            "ml_si_litre_ratio",
+            33582684568426633247271396229916901122
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "4.54609"
+        }
+    }
+]
