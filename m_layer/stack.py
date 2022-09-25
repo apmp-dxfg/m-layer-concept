@@ -30,7 +30,7 @@ class ProductOfPowers(object):
     # Note that the powers-of-products form is insensitive to the 
     # order of multiplication and division in the initial expression;
     # it allows arithmetically equivalent forms to be seen 
-    # as equal. However, sometimes there is embedded in the original
+    # as equal. However, sometimes there are factors embedded in the original
     # expression. For instance, [litres per 100 kilometres] could 
     # become {'litres':1,'kilometres':-1,'prefactor':0.01}, in which
     # the numerical factor of 1/100 is retained but not as might be expected. 

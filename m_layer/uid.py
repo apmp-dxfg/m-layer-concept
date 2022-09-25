@@ -80,13 +80,13 @@ class CompoundUID(object):
     
         pops = normal_form(stack)
 
-        # The keys in  pop.factors are Python objects.
-        # Some may be distinct objects with the same M-layer UID.
-        # In that case, each object occurs only once.    
+        # The keys in pop.factors are Python objects.
+        # There may be distinct objects with the same M-layer UID.
+        # In that case, each object is recorded only once.    
         # The CompoundUID representation uses the M-layer UID as key 
         # and a forzenset of exponents as value. 
         
-        setter = lambda factors,i,v: factors[ i.uid ].add(v)
+        setter = lambda factors,i,v: factors[ i.uid ].add(v) if v != 0 else None
         
         factors = defaultdict(set)
         for k,v in pops.factors.items():

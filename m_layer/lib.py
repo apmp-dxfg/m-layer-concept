@@ -365,7 +365,9 @@ class CompoundScaleAspect(object):
             CompoundScale( scale_stk ), 
             CompoundAspect( aspect_stk ) 
         )
-              
+  
+    # TODO:
+    # Use the PoP form to display the scale
     def __str__(self):
         return "({!s})".format( self.stack )
         
@@ -554,6 +556,8 @@ class CompoundScale(object):
             self.stack.push(y).pow()
         )
 
+    # TODO:
+    # Use the PoP form to display the scale as a string
     def __str__(self):
         return "{}".format( self.stack )
         
