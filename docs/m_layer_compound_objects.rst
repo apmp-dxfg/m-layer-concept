@@ -24,7 +24,7 @@ Compound scales
 Terminology: 'systematic' names
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The term systematic is used in m-layer-concept to describe unit names that are composed from products of powers of base unit names or symbols in a unit system. For example, kilogram metre squared per second squared (kg.m2.s-2) is a systematic unit name in the SI.
+The term systematic is used in m-layer-concept to describe unit names that are composed from products of powers of base unit names or symbols in a unit system (or prefixed base unit names). For example, kilogram metre squared per second squared (kg.m2.s-2) is a systematic unit name in the SI. 
 
 Speed
 ~~~~~
@@ -148,39 +148,45 @@ This captures the identifiers of the individual scales and their exponents. :cla
 Ratios involving the same scale
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-One of the difficulties that arises in representations of compound units in terms of their dimensions, is arithmetic cancellation of terms with the same dimensions. 
+One of the difficulties that arises when compound units are represented in terms of their SI dimensions, is the arithmetic cancellation of terms with the same dimension. 
 
-For instance, we may wish to express a horizontal velocity gradient with respect to height (e.g., a rate of change in wind speed with altitude). Units for this could be metre-per-second-per-metre. The m-layer-concept can form a compound scale for this ::
+For instance, we may wish to express a horizontal velocity gradient with respect to height (e.g., a rate of change in wind speed with altitude). Suitable units could be metres per second per metre. A compound scale for this can be declared ::
 
+    >>> m = Scale( ('ml_si_metre_ratio', 17771593641054934856197983478245767638) )
+    >>> s = Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) )
+
+    >>> m_s = m/s
     >>> m_s_m = m_s/m
-    >>> print( m_s_m )
-    m/(s)/(m)
 
-Note that the dependence on the metre in the units of speed has not been cancelled by the dependence on the metre in the unit for height in the denominator. The :class:`~uid.CompoundUID` representation records the fact that the metre scale appears in both the numerator and denominator by recording the metre exponents as ``[1, -1]``] ::
+However, the software recognises that reference is made twice to the *same* metre Scale object, which appears in both the numerator and denominator. The default behaviour is to cancel this common factor ::
 
     >>> m_s_m.uid
-    CompoundUID(['ml_si_metre_ratio', 17771593641054934856197983478245767638] : [1, -1], ['ml_si_second_ratio', 276296348539283398608930897564542275037] : [-1])
+    CompoundUID(['ml_si_second_ratio', 276296348539283398608930897564542275037] : [-1]) 
+    
+Nevertheless, a distinction between units of elevation and horizontal length can be made by creating a second instance of the metre Scale. The software recognises that the different objects have distinct roles in the expression, although they are associated with the same M-layer scale ::
 
-Similarly, the :class:`~dimension.CompoundDimension` captures the two exponents associated with length
+    >>> m_height = Scale( ('ml_si_metre_ratio',17771593641054934856197983478245767638) )
+    >>> m_s_m = m_s/m_height 
+    >>> m_s_m.uid
+    CompoundUID(['ml_si_metre_ratio', 17771593641054934856197983478245767638] : [1, -1], ['ml_si_second_ratio', 276296348539283398608930897564542275037] : [-1]) 
+    
+The SI metre is now seen to appear in the numerator and denominator of the compound unit. 
+
+Similarly, the :class:`~dimension.CompoundDimension` captures the two exponents associated with length when distinct Scale object are used ::
 
     >>> m_s_m.dimension
     CompoundDimension({ SI(0, 1, 0, 0, 0, 0, 0) : [1, -1], SI(0, 0, 1, 0, 0, 0, 0) : [-1] })
 
-However, if the compound dimension is simplified, to form a single dimensional representation, the pair of references to the metre scale cancel ::
+This compound dimension can simplified, which cancels references to the metre Scale ::
     
     >>> m_s_m.dimension.simplify
     Dimension( SI, (0, 0, -1, 0, 0, 0, 0) )
-    
-What is the m-layer-concept doing?
-==================================
+ 
+.. note::
+ 
+    The M-layer register does not hold records for compound scales. So, the software works with the compound-scale expressions that encapsulate individual scales. These compound-scale expressions can be matched, term by term, to scales in another expression. This requires the two expressions to have exactly the same arithmetic form.
 
-The M-layer register does not hold records for compound scales. So, m-layer-concept works with compound-scale expressions that encapsulate individual scales. The compound-scale expressions can be matched, scale by scale, to scales in another expression. This requires the two expressions to have exactly the same arithmetic form.
-
-Conversion from a compound-scale expression to a single M-layer scale is not always possible. All scales must be associated with a particular unit system, which means they are ratio scales and are associated with dimensions in that system. Using this information, compound-scale dimensions can be evaluated. Using the dimensiuonal signature, a compound scale can be converted to a corresponding systematic scale.   
-
-Of course, more than one scale may have a particular set of dimensions (and scale factor, for incoherent units). Such cases require a casting operation to specify the correct scale.
-
-
+    Conversion from a compound-scale expression to a single-scale expression is not always possible. The individual scales must belong to the same unit system, so they have dimensions in that system. This information may be used to evaluate the compound-scale dimensions, which may be matched to a corresponding systematic scale.   
 
 Compound scale-aspects 
 ======================
