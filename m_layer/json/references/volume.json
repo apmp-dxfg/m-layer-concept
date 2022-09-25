@@ -27,6 +27,30 @@
             "description": "Liters"
         }
     },
+        {
+        "__entry__": "Reference",
+        "uid": [
+            "si_cm3",
+            318277800879820227773341038804270973180
+        ],
+        "locale": {
+            "default": {
+                "name": "cubic centimetre",
+                "symbol": "cm3"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 3, 0, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1E6"
+            ]
+        }
+    },
     {
         "__entry__": "Reference",
         "uid": [
