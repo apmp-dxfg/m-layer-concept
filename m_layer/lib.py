@@ -1,9 +1,11 @@
 import numbers
 
+from collections import defaultdict
+
 from m_layer.context import global_context as cxt
 
 from m_layer.dimension import Dimension, CompoundDimension
-from m_layer.stack import Stack
+from m_layer.stack import Stack, normal_form
 from m_layer.uid import UID, CompoundUID 
 
 __all__ = (
@@ -278,13 +280,41 @@ class CompoundScaleAspect(object):
     A :class:`CompoundScaleAspect` holds a :class:`ScaleAspect` expression
     """
     
-    __slots__ = ( "_stack","_uid", "_dimension" )
+    __slots__ = ( "_stack","_uid", "_dimension", "_str" )
 
     def __init__(self,scale_aspect_stack):
     
         assert isinstance(scale_aspect_stack,Stack), repr(scale_aspect_stack)       
         self._stack = scale_aspect_stack
+        
+        self._str = self._pop_to_str(scale_aspect_stack)
+        
+    def _pop_to_str(self,scale_aspect_stack):
+        
+        # The keys in pop.factors are Scale objects.
+        # There may be different objects with the same M-layer UID,
+        # but each object instance is recorded once.     
+        pops = normal_form(scale_aspect_stack)
 
+        setter = lambda factors,i,v: (
+            # `str(i)` should not be ambiguous in the expression!
+            factors[ str(i) ].add(v) if v != 0 else None
+        )
+        
+        factors = defaultdict(set)
+        for k,v in pops.factors.items():
+            setter(factors,k,v)
+          
+        s = ""
+        for k,v in factors.items():
+            for i in v:
+                if i == 1:
+                    s += "{}.".format(k)
+                else:
+                    s += "{}{}.".format(k,i) 
+                    
+        return s[:-1] if s[-1] == "." else s
+        
     @property 
     def composable(self): return True
  
@@ -366,10 +396,8 @@ class CompoundScaleAspect(object):
             CompoundAspect( aspect_stk ) 
         )
   
-    # TODO:
-    # Use the PoP form to display the scale
     def __str__(self):
-        return "({!s})".format( self.stack )
+        return "{}".format( self.stack )
         
     def __repr__(self):
         return "CompoundScaleAspect({!r})".format(self.stack) 
@@ -495,14 +523,49 @@ class CompoundScale(object):
     """
     
     __slots__ = (
-        '_uid', '_stack', '_dimension'
+        '_uid', '_stack', '_dimension', '_str'
     )
  
     def __init__(self,scale_stack):
 
         assert isinstance(scale_stack,Stack)
         self._stack = scale_stack
-           
+        
+        self._str = self._pop_to_str(scale_stack)
+        
+    def _pop_to_str(self,scale_stack):
+        
+        # The keys in pop.factors are Scale objects.
+        # There may be different objects with the same M-layer UID,
+        # but each object instance is recorded once.     
+        pops = normal_form(scale_stack)
+
+        setter = lambda factors,i,v: (
+            # `str(i)` should not be ambiguous in the expression!
+            factors[ str(i) ].add(v) if v != 0 else None
+        )
+        
+        factors = defaultdict(set)
+        for k,v in pops.factors.items():
+            setter(factors,k,v)
+          
+        s = ""
+        for k,v in factors.items():
+            for i in v:
+                if i == 1:
+                    s += "{}.".format(k)
+                else:
+                    s += "{}{}.".format(k,i) 
+                    
+        return s[:-1] if s[-1] == "." else s
+            
+    
+    def __str__(self):
+        return "{}".format( self.stack )
+        
+    def __repr__(self):
+        return "CompoundScale({!r})".format( self.stack )  
+  
     @property 
     def uid(self):
         "The UIDs of the component scales"
@@ -556,14 +619,6 @@ class CompoundScale(object):
             self.stack.push(y).pow()
         )
 
-    # TODO:
-    # Use the PoP form to display the scale as a string
-    def __str__(self):
-        return "{}".format( self.stack )
-        
-    def __repr__(self):
-        return "CompoundScale({!r})".format( self.stack )  
-  
     def to_compound_scale_aspect(self,src=no_aspect):
         """
         Return a :class:`CompoundScaleAspect` 

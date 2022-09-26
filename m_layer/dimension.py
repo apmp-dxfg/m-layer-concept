@@ -29,10 +29,12 @@ class CompoundDimension(object):
     of :class:`Dimension` objects
     """
 
-    __slots__ = ('prefactor','factors')
+    __slots__ = ('prefactor','factors','_stack')
 
     def __init__(self,stack):
     
+        self._stack = stack
+        
         pops = normal_form(stack)
 
         # The keys in pop.factors are Python objects.
@@ -41,7 +43,9 @@ class CompoundDimension(object):
         # The CompoundDimension representation uses the dimension as key 
         # and a frozenset of exponents as value. 
         
-        setter = lambda factors,i,v: factors[ i.dimension ].add(v)
+        setter = lambda factors,i,v: (
+            factors[ i.dimension ].add(v) if v != 0 else None
+        )
         
         factors = defaultdict(set)
         for k,v in pops.factors.items():
@@ -79,7 +83,7 @@ class CompoundDimension(object):
                 for k,v in self.factors.items()
         )
         if self.prefactor == 1:
-            return "{{ factors = {{ {} }} }}".format(
+            return "{{ {} }}".format(
                 factors
             )
         else:
@@ -89,20 +93,8 @@ class CompoundDimension(object):
             )
         
     def __repr__(self):
-        factors = ", ".join(
-            "{} : {}".format(k,list(v) )
-                for k,v in self.factors.items()
-        )
-        if self.prefactor == 1:
-            return "CompoundDimension({{ {} }})".format(
-                factors,
-            )
-        else:
-            return "CompoundDimension({{ {} }},prefactor={})".format(
-                factors,
-                self.prefactor
-            )
- 
+        return "CompoundDimension({!r})".format(self._stack)
+        
     @property
     def simplify(self):
         """
@@ -198,8 +190,15 @@ class Dimension(object):
                 self.dim
             )
         else:
+            if self.prefix.numerator > 1E3 :
+                prefix = "{:.0E}".format( float(self.prefix) )
+            elif self.prefix.denominator > 1E3:
+                prefix = "{:.0E}".format( float(self.prefix) )
+            else:
+                prefix = str(self.prefix)
+                
             return "{}*{}{}".format(
-                self.prefix,
+                prefix,
                 self.system,
                 self.dim
             )

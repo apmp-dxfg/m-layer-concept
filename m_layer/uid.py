@@ -74,15 +74,17 @@ class UID(object):
 # ---------------------------------------------------------------------------
 class CompoundUID(object):
 
-    __slots__ = ('prefactor','factors')
+    __slots__ = ('prefactor','factors','_stack')
 
     def __init__(self,stack):
     
+        self._stack = stack 
+        
         pops = normal_form(stack)
 
         # The keys in pop.factors are Python objects.
-        # There may be distinct objects with the same M-layer UID.
-        # In that case, each object is recorded only once.    
+        # There may be different objects with the same M-layer UID.
+        # In that case, each object instance is recorded once.    
         # The CompoundUID representation uses the M-layer UID as key 
         # and a forzenset of exponents as value. 
         
@@ -136,18 +138,7 @@ class CompoundUID(object):
             return "{{ {} }}".format(factors)
             
     def __repr__(self):
-        factors = ", ".join(
-                "{} : {}".format(k if isinstance(k,UID) else fmt_key(k), list(v) 
-            ) for k,v in self.factors.items() 
-        ) 
-        
-        if self.prefactor != 1:
-            return "CompoundUID({{ {} }},prefactor={})".format(
-                factors,
-                self.prefactor
-            )
-        else:
-            return "CompoundUID({})".format(factors)
+        return "CompoundUID({!r})".format(self._stack)
         
         
     def json(self,**kwargs):

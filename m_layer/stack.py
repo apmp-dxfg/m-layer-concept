@@ -207,8 +207,12 @@ class Stack(object):
                                     
                 elif o_i == 'div':
                     x,y = stk.pop(), stk.pop()
-                    # Numerator brackets could be added
-                    stk.append( "{!s}/({!s})".format( y,x ) )
+                    
+                    den = str(y)
+                    if den[0] == '(' and den[-1] == ')':
+                        stk.append( "{!s}/{!s}".format( y,x ) )
+                    else:
+                        stk.append( "{!s}/({!s})".format( y,x ) )
                                     
                 elif o_i == 'pow':
                     # `x` must be an integer
