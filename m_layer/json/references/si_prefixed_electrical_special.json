@@ -1,0 +1,98 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_mV",
+            322779512872219340606688283372803345336
+        ],
+        "locale": {
+            "default": {
+                "name": "millivolt",
+                "symbol": "mV"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1E3"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_uV",
+            274200986803129423788673960623552258538
+        ],
+        "locale": {
+            "default": {
+                "name": "microvolt",
+                "symbol": "uV"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1E6"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_nV",
+            81961471669107870038174823982180775144
+        ],
+        "locale": {
+            "default": {
+                "name": "nano=ovolt",
+                "symbol": "nV"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1E9"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_pV",
+            206439621419231760419784763799341218338
+        ],
+        "locale": {
+            "default": {
+                "name": "picovolt",
+                "symbol": "pV"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1E12"
+            ]
+        }
+    }
+]

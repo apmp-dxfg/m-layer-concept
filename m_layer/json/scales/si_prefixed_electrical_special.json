@@ -1,0 +1,54 @@
+[
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_mV_ratio",
+            198003412807998624987043120288110344365
+        ],
+        "reference": [
+            "si_mV",
+            322779512872219340606688283372803345336
+        ],
+        "scale_type": "ratio",
+        "systematic": 1
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_uV_ratio",
+            205750365395038572616737805807559494661
+        ],
+        "reference": [
+            "si_uV",
+            274200986803129423788673960623552258538
+        ],
+        "scale_type": "ratio",
+        "systematic": 1
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_nV_ratio",
+            2467209754778232353783778251664853474
+        ],
+        "reference": [
+            "si_nV",
+            81961471669107870038174823982180775144
+        ],
+        "scale_type": "ratio",
+        "systematic": 1
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_pV_ratio",
+            82044477201173066720472034767008183292
+        ],
+        "reference": [
+            "si_pV",
+            206439621419231760419784763799341218338
+        ],
+        "scale_type": "ratio",
+        "systematic": 1
+    }
+]
