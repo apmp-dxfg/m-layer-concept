@@ -106,7 +106,15 @@ class CompoundDimension(object):
             x *= k**sum(v)
             
         return x
-        
+ 
+    def commensurate(self,other):
+        if isinstance(other,CompoundDimension):
+            return self.simplify.commensurate(other.simplify)
+        elif isinstance(other,Dimension):
+            return self.simplify.commensurate(other)
+        else:
+            return NotImplementedError( repr(other) )
+ 
 # ---------------------------------------------------------------------------
 class Dimension(object):
 
