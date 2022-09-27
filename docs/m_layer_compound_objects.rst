@@ -15,18 +15,13 @@ Unit composition is often a useful way to express measured quantities, and is su
     Another widely-held belief is that the rules of quantity calculus can be applied to measurement data expressed in any format. 
     This is also a misunderstanding.  
 
-The problem with unit arithmetic 
-================================
+Unit arithmetic 
+===============
 
-Unit multiplication is sensible when unit names are treated as conversion factor variables. For example, a speed expressed as 50 km/h, may be converted to 13.89 m/s by knowing that kg = 1000 m and h = 3600 s. The unit names, km/h and m/s, encode the dimensions of speed, L/T; they describe a formula for a unit conversion factor. However, software struggles to deal with situations where the dimensions of a compound unit expression can be associated with several different units of measurement (e.g., the fact that kg m2 s-2 may be considered as a unit for torque or as a unit for work or energy). Additional information is needed to specify the correct unit in such cases. 
+Unit multiplication is sensible when the unit names, or symbols, are treated as variables for conversion factors. For example, a speed expressed as 50 km/h, may be converted to 13.89 m/s by knowing that kg = 1000 m and h = 3600 s. The unit names, km/h and m/s, actually encode the dimensions of speed, L/T; so, they describe a formula for a unit conversion factor. However, software struggles with situations where the dimensions of a compound unit are associated with several different units of measurement (e.g., the fact that the name kg.m2.s-2 may be considered as a unit for torque or as a unit for work or energy). In such cases, there are often a number of alternative names for the compound unit, but more information is needed to determine which names apply (e.g., energy would be expressed in J, but torque in N.m).
 
 Compound scales 
 ===============
-
-Terminology: 'systematic' names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The term systematic is used in m-layer-concept to describe unit names that are composed from products of powers of base unit names or symbols in a unit system (or prefixed base unit names). For example, kilogram metre squared per second squared (kg.m2.s-2) is a systematic unit name in the SI. 
 
 Speed
 ~~~~~
@@ -58,7 +53,7 @@ Alternative compound units for speed can be created using different scales for l
     >>> print( ft_min ) 
     ft/(min)
     
-Conversion is possible (but the arithmetic expressions defining the compound scales must have exactly the same form) ::
+Conversion is possible, but the arithmetic expressions defining the compound scales must have exactly the same form ::
 
     >>> print( v.convert( ft_min ) )
     295.2756 ft/(min)
@@ -75,9 +70,13 @@ Note, the compound-scale objects shown above are not automatically resolved to a
 Energy or moment of force
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The special name joule is defined for the unit of energy in the SI, and the compound name newton-metre is the recommended unit for moment of force. Nevertheless, the systematic unit name kilogram-metre-squared-per-second-squared (kg.m2.s-2) in a valid alternative to both these unit names. 
+The special unit name joule is used for energy in the SI, and the compound name newton-metre is the recommended unit for moment of force. Nevertheless, there is a systematic unit, the kilogram-metre-squared-per-second-squared (kg.m2.s-2), which is a valid alternative to both these units. 
 
-It is possible to form a compound scale for kg.m2.s-2 and use it to express data ::
+.. note::
+
+    For convenience, we use the term 'systematic' for a unit name that is composed from products of powers of base unit names (or prefixed base units), or symbols. For example, kilogram metre squared per second squared (kg.m2.s-2) is systematic. This terminology helps to describe how the m-layer-concept resolves compound scales to individual scales.  
+
+A compound scale for kg.m2.s-2 can be created and used to express data ::
 
     >>> kg = Scale( ('ml_si_kilogram_ratio', 12782167041499057092439851237297548539) )
     >>> m = Scale( ('ml_si_metre_ratio', 17771593641054934856197983478245767638) )
@@ -90,7 +89,9 @@ It is possible to form a compound scale for kg.m2.s-2 and use it to express data
     >>> print( w )
     10.1 kg.m^2/(s^2)
 
-However, the aspect is unspecified and this expression does not distinguish between energy and moment of force. By declaring the aspects ::
+However, no aspect is specified, so this expression does not distinguish between energy and moment of force. 
+
+By declaring the aspects ::
 
     >>> energy = Aspect( ("ml_energy", 12139911566084412692636353460656684046) )
     >>> moment = Aspect( ("ml_force_moment", 313648474034040825357489751369673453388) )
@@ -100,7 +101,7 @@ and the scales ::
     >>> J = Scale( ("ml_si_joule_ratio",165050666678496469850612022016789737781) )
     >>> N_m = Scale( ("ml_si_N.m_ratio",180123565723874772354088506298557924442) )
 
-it is possible to cast the systematic unit representation to one that is quantity-specific, such as ::
+it is possible to cast the systematic unit to one that is quantity-specific, such as ::
 
     >>> print( w.cast( ScaleAspect(J,energy) ) )
     10.1 J
@@ -109,7 +110,8 @@ or ::
 
     >>> print( w.cast( ScaleAspect(N_m,moment) ) )
     10.1 N m
-    
+ 
+ 
 Compound scale dimensions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -120,19 +122,19 @@ A :class:`~lib.CompoundScale` has a :meth:`dimension<lib.CompoundScale.dimension
 
 The :class:`~dimension.CompoundDimension` is a collection of :class:`~dimension.Dimension` objects -- one for every scale -- each with an associated exponent. 
 
-A compound dimension can be reduced to a single :class:`~dimension.Dimension`, by combining and simplifying the dimensions and exponents ::
+A compound dimension can be reduced to a single :class:`~dimension.Dimension` (combining the dimensions and their exponents) ::
 
     >>> print( kg_mm_ss.dimension.simplify )
     SI(1, 2, -2, 0, 0, 0, 0)
 
-If a scale is not coherent in the unit system, a factor relating the incoherent unit to the corresponding coherent unit is included. For example, using the unit nanometre, which is not the coherent unit for length in the SI
+If a scale is not coherent in the unit system, a factor relating the unit to the corresponding coherent unit is included. For example, using the unit nanometre ::
 
     >>> nm = Scale( ("ml_si_nm_ratio", 257091757625055920788370123828667027186) )
     >>> kg_nmnm_ss = kg*nm**2/s**2
     >>> print( kg_nmnm_ss.dimension )
     { SI(0, 0, 1, 0, 0, 0, 0) : [-2], 1E-09*SI(0, 1, 0, 0, 0, 0, 0) : [2], SI(1, 0, 0, 0, 0, 0, 0) : [1] }
 
-When this compound unit is simplified, the association of the prefix nano with the metre scale is lost but a resultant prefix value is retained ::
+The prefix nano is associated with the metre scale, but the association is lost when the :class:`~dimension.CompoundDimension` is simplified ::
      
     >>> print( kg_nmnm_ss.dimension.simplify )
     1E-18*SI(1, 2, -2, 0, 0, 0, 0)
@@ -140,19 +142,87 @@ When this compound unit is simplified, the association of the prefix nano with t
 Compound scale identifiers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A :class:`~lib.CompoundScale` has a :meth:`uid<lib.CompoundScale.uid>` property that returns a :class:`~uid.CompoundUID` associated with an expression ::
+The :class:`~lib.CompoundScale` class has a :meth:`uid<lib.CompoundScale.uid>` property that returns a :class:`~uid.CompoundUID` associated with an expression. This encapsulates the identifiers of individual scales and their exponents. :class:`~uid.CompoundUID` objects may be compared for for equality. ::
 
     >>> print( kg_mm_ss.uid )
     { ['ml_si_second_ratio', 276296348539283398608930897564542275037] : [-2], ['ml_si_metre_ratio', 17771593641054934856197983478245767638] : [2], ['ml_si_kilogram_ratio', 12782167041499057092439851237297548539] : [1] } 
     
-This captures the identifiers of the individual scales and their exponents. :class:`~uid.CompoundUID` objects may be compared for equality.
 
-Ratios involving the same scale
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-One of the difficulties that arises when compound units are represented in terms of their SI dimensions, is the arithmetic cancellation of terms with the same dimension. 
+Ratios that form a scale of dimension one  
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For instance, we may wish to express a horizontal velocity gradient with respect to height (e.g., a rate of change in wind speed with altitude). Suitable units could be metres per second per metre. A compound scale for this can be declared ::
+When a compound unit is equivalent to a multiple or submultiple of the SI unit one, It is considered good practice to explicitly retain unit names in the numerator and denominator (e.g., mm/m instead of 1E-3). The m-layer-concept software supports this. For example, ::
+
+    >>> V = Scale( ("ml_si_volt_ratio",324370471112617696659965827203196197232) )
+    >>> mV = Scale( ("ml_si_mV_ratio",198003412807998624987043120288110344365) )
+    
+    >>> mV_V = mV/V 
+    >>> print( mV_V )
+    mV/(V)
+    
+    >>> nV = Scale( ("ml_si_nV_ratio",2467209754778232353783778251664853474) )
+    >>> pV = Scale( ("ml_si_pV_ratio",82044477201173066720472034767008183292) )
+    
+    >>> pV_nV = pV/nV
+    >>> print( pV_nV )
+    pV/(nV)
+    
+The UIDs of these compound scales retain information about the different scales ::
+
+    >>> print( mV_V.uid )
+    { ['ml_si_volt_ratio', 324370471112617696659965827203196197232] : [-1], ['ml_si_mV_ratio', 198003412807998624987043120288110344365] : [1] }
+
+    >>> print( pV_nV.uid )
+    { ['ml_si_nV_ratio', 2467209754778232353783778251664853474] : [-1], ['ml_si_pV_ratio', 82044477201173066720472034767008183292] : [1] }
+
+and compound dimensions also encode scale differences ::
+
+    >>> print( mV_V.dimension )
+    { SI(1, 2, -3, -1, 0, 0, 0) : [-1], 1/1000*SI(1, 2, -3, -1, 0, 0, 0) : [1] }
+   
+    >>> print( pV_nV.dimension )
+    { 1E-09*SI(1, 2, -3, -1, 0, 0, 0) : [-1], 1E-12*SI(1, 2, -3, -1, 0, 0, 0) : [1] }
+    
+Nevertheless, the compound scales are commensurate (have the same dimensional exponents) ::
+
+    >>> print( mV_V.dimension.commensurate( pV_nV.dimension ) )
+    True 
+    
+and they become indistinguishable when simplified ::
+
+    >>> print( mV_V.dimension.simplify )
+    1/1000*SI(0, 0, 0, 0, 0, 0, 0)    
+    
+    >>> print( pV_nV.dimension.simplify )
+    1/1000*SI(0, 0, 0, 0, 0, 0, 0)
+    
+    >>> print( mV_V.dimension.simplify == pV_nV.dimension.simplify )
+    True
+
+The compound scale volt-per-volt can also be used. However, two Scale objects must be created to retain the numerator and denominator scales (otherwise cancellation will occur, see :ref:`unit_simplicication`) ::
+
+    >>> V1 = Scale( ("ml_si_volt_ratio",324370471112617696659965827203196197232) )
+    >>> V2 = Scale( ("ml_si_volt_ratio",324370471112617696659965827203196197232) )
+    
+    >>> V_V = V1/V2
+    >>> print( V_V.uid )
+    { ['ml_si_volt_ratio', 324370471112617696659965827203196197232] : [1, -1] }
+    
+    >>> print( V_V.dimension )
+    { SI(1, 2, -3, -1, 0, 0, 0) : [1, -1] }
+    
+    >>> print( V_V.dimension.simplify )
+    SI(0, 0, 0, 0, 0, 0, 0)
+
+.. _unit_simplicication: 
+ 
+Compound scales and base-unit simplification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+
+One of the difficulties that arises when compound-unit representation is based on system dimensions, is that arithmetic cancellation of terms with the same dimension may occur. 
+
+For instance, we may wish to express a horizontal velocity gradient with respect to height (e.g., a rate of change in wind speed with altitude). Suitable units are metres per second per metre. A compound scale for this can be declared ::
 
     >>> m = Scale( ('ml_si_metre_ratio', 17771593641054934856197983478245767638) )
     >>> s = Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) )
@@ -160,35 +230,33 @@ For instance, we may wish to express a horizontal velocity gradient with respect
     >>> m_s = m/s
     >>> m_s_m = m_s/m
 
-However, the software recognises that reference is made twice to the *same* metre Scale object, which appears in both the numerator and denominator. The default behaviour is to cancel this common factor ::
+However, the m-layer-concept software recognises that reference is made to the *same* metre Scale object twice, because metre appears in both the numerator and denominator. The default behaviour is to allow this common factor to be cancelled ::
 
     >>> print( m_s_m.uid )
     { ['ml_si_second_ratio', 276296348539283398608930897564542275037] : [-1] } 
     
-Nevertheless, a distinction between units of elevation and horizontal length can be made by creating a second instance of the metre Scale. The software recognises that the different objects have distinct roles in the expression, although they are associated with the same M-layer scale ::
+Nevertheless, the distinction between units of elevation and horizontal length can be made. This requires a second instance of the metre Scale to be created. The software recognises that different objects are involved, and that they have distinct roles in the expression. It also recognises that they are associated with the same M-layer scale. The :class:`~uid.CompoundUID` now shows two exponents associated with the metre Scale, which indicates that the metre appears in the numerator and denominator of the compound unit.  ::
 
     >>> m_height = Scale( ('ml_si_metre_ratio',17771593641054934856197983478245767638) )
     >>> m_s_m = m_s/m_height 
     >>> print( m_s_m.uid )
     { ['ml_si_metre_ratio', 17771593641054934856197983478245767638] : [1, -1], ['ml_si_second_ratio', 276296348539283398608930897564542275037] : [-1] } 
     
-The SI metre is now seen to appear in the numerator and denominator of the compound unit. 
-
-Similarly, the :class:`~dimension.CompoundDimension` captures the two exponents associated with length when distinct Scale object are used ::
+Similarly, when distinct Scale object are used, the :class:`~dimension.CompoundDimension` captures two exponents associated with the length dimension ::
 
     >>> print( m_s_m.dimension )
     { SI(0, 1, 0, 0, 0, 0, 0) : [1, -1], SI(0, 0, 1, 0, 0, 0, 0) : [-1] }
 
-This compound dimension can simplified, which cancels references to the metre Scale ::
+The compound dimension can be simplified, which cancels references to the metre Scale ::
     
     >>> print( m_s_m.dimension.simplify )
     SI(0, 0, -1, 0, 0, 0, 0)
  
 .. note::
  
-    The M-layer register does not hold records for compound scales. So, the software works with the compound-scale expressions that encapsulate individual scales. These compound-scale expressions can be matched, term by term, to scales in another expression. This requires the two expressions to have exactly the same arithmetic form.
+    The M-layer register does not hold compound-scale records. The software works with compound-scale expressions that encapsulate individual M-layer scales. To convert from one compound scale to another, expressions will be matched, term by term, which requires the expressions involved to have exactly the same arithmetic form.
 
-    Conversion from a compound-scale expression to a single-scale expression is not always possible. The individual scales must belong to the same unit system, so they have dimensions in that system. This information may be used to evaluate the compound-scale dimensions, which may be matched to a corresponding systematic scale.   
+    Conversion from a compound-scale expression to a single-scale expression is also possible. A single M-layer scale will be identified using unit dimensions. Individual scales must belong to the same unit system, so they have dimensions in that system. The compound-scale dimensions are evaluated and used to look up the M-layer registry for a corresponding scale designated as systematic.   
 
 Compound scale-aspects 
 ======================
@@ -208,7 +276,7 @@ The functionality described above for scales has also been implemented for scale
     >>> print( expr(1.5, m/s ) ) 
     1.5 (m, length)/(s, time)
 
-Units conversion now checks the compatibility of each term's scale and aspect ::
+The units conversion process now checks the compatibility of each term's scale and aspect ::
 
     >>> length = Aspect( ('ml_length', 993853592179723568440264076369400241) )
     >>> foot = ft.to_scale_aspect(length)   
@@ -217,4 +285,4 @@ Units conversion now checks the compatibility of each term's scale and aspect ::
     >>> convert(y, foot/s )
     Expression(4.92126,(ft, length)/(s, time))
 
-Note, the earlier declaration of ``ft`` created a :class:`~lib.Scale`, which does not specify an aspect. Mixing of scales and scale-aspects is not supported, so the code above explicitly promotes ``ft`` to a :class:`~lib.ScaleAspect` ``foot``, with aspect length. 
+Note, the earlier declaration of ``ft`` created a :class:`~lib.Scale`, which does not specify an aspect. Mixing of scales and scale-aspects is not supported at present, so the code above explicitly promotes ``ft`` to a :class:`~lib.ScaleAspect` ``foot``, with aspect length. 
