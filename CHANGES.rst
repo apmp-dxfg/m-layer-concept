@@ -2,9 +2,13 @@
 Release Notes
 =============
 
-Version 0.3.x (2022-??-??)
+Version 0.3.0 (2022-09-27)
 ==========================
 
+    * Capability for compound scales has been added
+    * Compound UID format developed
+    * Many more registry entries needed for examples 
+    * Spreadsheet tools provide a little help to build the registry 
 
 Version 0.2.0 (2022-07-08)
 ==========================
