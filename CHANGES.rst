@@ -2,6 +2,14 @@
 Release Notes
 =============
 
+Version 0.3.0 (2022-09-27)
+==========================
+
+    * Capability for compound scales has been added
+    * Compound UID format developed
+    * Many more registry entries needed for examples 
+    * Spreadsheet tools provide a little help to build the registry 
+
 Version 0.2.0 (2022-07-08)
 ==========================
 
@@ -9,8 +17,7 @@ Version 0.2.0 (2022-07-08)
     * An API has been better established
     * A unit test suite is included
     * Continuous integration on github runs the unit tests and doctests 
-    * Documentation has been extended and includes examples 
-        of use and details about the current API
+    * Documentation has been extended and includes examples of use and details about the current API
     * Building the Read The Docs documentation is automated on github
 
 Version 0.1.0 (2022-04-11)

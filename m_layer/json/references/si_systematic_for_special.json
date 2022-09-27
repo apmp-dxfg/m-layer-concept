@@ -1,0 +1,78 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_s-1",
+            116741812607130898126240371497946537198
+        ],
+        "locale": {
+            "default": {
+                "name": "per second",
+                "symbol": "1/s"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 0, -1, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        },
+        "UCUM": {
+            "code": "/s",
+            "description": "per second"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-2",
+            336418795013753717299145887275402842834
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram metre squared per second squared",
+                "symbol": "kg.m2.s-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -2, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_m2.s-2",
+            43884249580662399686209013824067636999
+        ],
+        "locale": {
+            "default": {
+                "name": "metre squared per second squared",
+                "symbol": "m2.s-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 2, -2, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    }
+]

@@ -24,8 +24,8 @@ Application programming interface
    
    Programming interface <m_layer_api>
    
-Source code documentation
--------------------------
+Design details
+--------------
 .. toctree::
    :maxdepth: 1
    

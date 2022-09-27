@@ -1,0 +1,78 @@
+[
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_photon_energy",
+            291306321925738991196807372973812640971
+        ],
+        "src": [
+            "ml_si_THz_ratio",
+            271382954339420591832277422907953823861
+        ],
+        "dst": [
+            "ml_si_cm-1_ratio",
+            333995508470114516586033303775415043902
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "si.tera/si.c*si.centi"
+        }
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_photon_energy",
+            291306321925738991196807372973812640971
+        ],
+        "src": [
+            "ml_si_cm-1_ratio",
+            333995508470114516586033303775415043902
+        ],
+        "dst": [
+            "ml_si_THz_ratio",
+            271382954339420591832277422907953823861
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "si.hecto*si.c/si.tera"
+        }
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_photon_energy",
+            291306321925738991196807372973812640971
+        ],
+        "src": [
+            "ml_electronvolt_ratio",
+            121864523473489992307630707008460819401
+        ],
+        "dst": [
+            "ml_si_THz_ratio",
+            271382954339420591832277422907953823861
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "si.e/si.h/si.tera"
+        }
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_photon_energy",
+            291306321925738991196807372973812640971
+        ],
+        "src": [
+            "ml_electronvolt_ratio",
+            121864523473489992307630707008460819401
+        ],
+        "dst": [
+            "ml_si_cm-1_ratio",
+            333995508470114516586033303775415043902
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "si.e/si.h/si.c/si.hecto"
+        }
+    }
+]

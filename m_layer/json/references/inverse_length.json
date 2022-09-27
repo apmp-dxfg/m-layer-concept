@@ -1,0 +1,58 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_m-1",
+            276726793797424878828710191985121127007
+        ],
+        "locale": {
+            "default": {
+                "name": "per metre",
+                "symbol": "1/m"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, -1, 0, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        },
+        "UCUM": {
+            "code": "/m",
+            "description": "1/meter"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_cm-1",
+            78709620630780303268211656738112203703
+        ],
+        "locale": {
+            "default": {
+                "name": "per centimetre",
+                "symbol": "1/cm"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, -1, 0, 0, 0, 0, 0]",
+            "prefix": [
+                "100",
+                "1"
+            ]
+        },
+        "UCUM": {
+            "code": "/cm",
+            "description": "1/centimeter"
+        }
+    }
+]

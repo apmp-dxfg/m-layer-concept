@@ -5,6 +5,7 @@ import json
 import sys
 
 from m_layer import * 
+from m_layer.context import global_context as cxt
 
 #----------------------------------------------------------------------------
 class TestUniqueConversion(unittest.TestCase):
@@ -27,7 +28,6 @@ class TestUniqueConversion(unittest.TestCase):
     # an error. However, we may wish to revisit that policy down the track.
     
     def test_unique_conversion(self):
-        cxt = default_context
         
         # A table of conversions indexed by a pair of scale IDs
         conversions = cxt.conversion_reg._table

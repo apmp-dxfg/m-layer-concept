@@ -1,0 +1,263 @@
+[
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_plane_angle",
+            95173225557230344956477808929590724690
+        ],
+        "locale": {
+            "default": {
+                "name": "plane-angle",
+                "symbol": "ang"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_solid_angle",
+            126885015316814934813258084520681577083
+        ],
+        "locale": {
+            "default": {
+                "name": "solid-angle",
+                "symbol": "\\Omega"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_frequency",
+            153247472008167864427404739264717558529
+        ],
+        "locale": {
+            "default": {
+                "name": "frequency",
+                "symbol": "f"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_force",
+            253161982591064007446238888026090562042
+        ],
+        "locale": {
+            "default": {
+                "name": "force",
+                "symbol": "F"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_energy",
+            12139911566084412692636353460656684046
+        ],
+        "locale": {
+            "default": {
+                "name": "energy",
+                "symbol": "E"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_power",
+            84761629337502808578226703685743651693
+        ],
+        "locale": {
+            "default": {
+                "name": "power",
+                "symbol": "P"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electric_charge",
+            156116358753013952105463016805539999401
+        ],
+        "locale": {
+            "default": {
+                "name": "electric charge",
+                "symbol": "q"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electrical_potential_difference",
+            151870621188872364765656837703584479789
+        ],
+        "locale": {
+            "default": {
+                "name": "electrical_potential",
+                "symbol": "\\varphi"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_capacitance",
+            71389154219991690162524670607701811066
+        ],
+        "locale": {
+            "default": {
+                "name": "capacitance",
+                "symbol": "C"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electric_resistance",
+            141553794019147199113539464577413472895
+        ],
+        "locale": {
+            "default": {
+                "name": "electric_resistance",
+                "symbol": "R"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electric_conductance",
+            224210057072391752979458820351296865124
+        ],
+        "locale": {
+            "default": {
+                "name": "conductance",
+                "symbol": "G"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_magnetic_flux",
+            97836911963092249225625369850619247693
+        ],
+        "locale": {
+            "default": {
+                "name": "magnetic_flux",
+                "symbol": "\\Phi"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_magnetic_flux_density",
+            320713564384309809808399402840043679990
+        ],
+        "locale": {
+            "default": {
+                "name": "magnetic_flux_density",
+                "symbol": "B"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_inductance",
+            49195475508913177401314491185040782855
+        ],
+        "locale": {
+            "default": {
+                "name": "inductance",
+                "symbol": "L "
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_luminous_flux",
+            184374416391180047623543658952093985674
+        ],
+        "locale": {
+            "default": {
+                "name": "luminous-flux",
+                "symbol": "\\Phi_v"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_illuminance",
+            289370219754830901087935206154484667469
+        ],
+        "locale": {
+            "default": {
+                "name": "illuminance",
+                "symbol": "E_v"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_activity",
+            20106649997056189817632954430448298015
+        ],
+        "locale": {
+            "default": {
+                "name": "activity",
+                "symbol": "A"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_absorbed_dose",
+            261054223272012664089159971740322302399
+        ],
+        "locale": {
+            "default": {
+                "name": "absorbed-dose",
+                "symbol": "D"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_dose_equivalent",
+            284653740991849900984518014251944971921
+        ],
+        "locale": {
+            "default": {
+                "name": "dose-equivalent",
+                "symbol": "H"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_catalytic_activity",
+            194420480746624846468495742207206334642
+        ],
+        "locale": {
+            "default": {
+                "name": "catalytic-activity",
+                "symbol": "K"
+            }
+        }
+    }
+    
+]

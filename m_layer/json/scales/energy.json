@@ -1,0 +1,14 @@
+[
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_electronvolt_ratio",
+            121864523473489992307630707008460819401
+        ],
+        "reference": [
+            "electronvolt",
+            182363982750140887436275027803151015498
+        ],
+        "scale_type": "ratio"
+    }
+]

@@ -1,11 +1,13 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+from ast import literal_eval 
 
-import json
+from m_layer.uid import UID
 
 # ---------------------------------------------------------------------------
 class Register(object):
     
     """
+    
     """
     
     def __init__(self,context):
@@ -18,17 +20,22 @@ class Register(object):
     def get(self,uid,default=None):
         """
         """
-        # `uid` may be a list from json
-        return self._objects.get( tuple(uid), default ) 
+        # # `uid` may be a list from json
+        # return self._objects.get( tuple(uid), default ) 
+        return self._objects.get( uid, default )
         
     def set(self,entry):
         """
         """
-        # Convert string of sequence from json to tuple
-        if isinstance(entry['uid'],str):
-            uid = tuple( eval(entry['uid']) )
-        else:
-            uid = tuple( entry['uid'] )
+        # # Convert the string representation of a JSON sequence to tuple
+        # if isinstance( entry['uid'],str ):
+            # # Is this still needed?
+            # assert False
+            # uid = tuple( literal_eval(entry['uid']) )
+        # else:
+        # Encapsulate the JSON uid
+        
+        uid = UID( entry['uid'] )
         
         if uid in self._objects:
             raise RuntimeError(
@@ -37,18 +44,4 @@ class Register(object):
         else:
             self._objects[uid] = entry 
                           
-    # def dumps_entry(self,uid): 
-         # """
-         # """
-         # return json.dumps( self._objects[uid] )
-     
-    # def dumps(self,choice=None):
-        # """
-        # """
-        # if choice is None:
-            # choice = self._objects.keys()
-            
-        # return json.dumps( [ 
-            # self.dumps_entry(uid) for uid in choice
-        # ] )
                 

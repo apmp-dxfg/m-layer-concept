@@ -1,0 +1,19 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "imp_fahrenheit",
+            314545844086913572859566825785893557749
+        ],
+        "locale": {
+            "default": {
+                "name": "fahrenheit",
+                "symbol": "degree F"
+            }
+        },
+        "UCUM": {
+            "code": "[degF]",
+            "description": "degrees Fahrenheit"
+        }
+    }
+]

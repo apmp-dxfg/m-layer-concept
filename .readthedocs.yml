@@ -9,11 +9,11 @@ sphinx:
   fail_on_warning: false
 
 formats:
-  - epub
   - pdf
 
 python:
   install:
+    - requirements: docs/requirements.txt
     - method: setuptools
       path: .
 build:

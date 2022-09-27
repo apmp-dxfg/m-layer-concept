@@ -1,34 +1,18 @@
 """
-Casting can change the scale and aspect of an expression. 
+Casting can change the type of scale and aspect of an expression. 
 
-Legitimate castings are recorded in a :class:`~.casting_register.CastingRegister`, which is an attribute of the :class:`~context.Context` object.
+Legitimate castings are recorded in a :class:`~.casting_register.CastingRegister`.
 
 """
-import json
-
-# Terms in JSON strings for numerical factors are converted to numbers using 
-# `eval()`. By importing math, we can include defined constants, like math.pi.
-
-import math
-
-from m_layer import si_constants as si 
-
-# ---------------------------------------------------------------------------
-def _to_tuple(lst):
-    """
-    Convert nested lists to nested tuples
-    """
-    return tuple(
-        _to_tuple(i) if isinstance(i, list) else i for i in lst
-    )
+from m_layer.ml_eval import ml_eval   
+from m_layer.uid import UID
     
 # ---------------------------------------------------------------------------
 class CastingRegister(object):
     
     """
     A ``CastingRegister`` maps scale-aspect pairs 
-    to a function that will convert tokens between expressions
-    in different scale-aspects. 
+    to a function that will convert tokens. 
     """
     
     def __init__(self,context):
@@ -61,6 +45,14 @@ class CastingRegister(object):
             entry: the M-layer record for a casting
         
         """
+        # The JSON format is an array containing a 
+        # pair of uids (also arrays).
+        # _to_tuple = lambda l: tuple(
+            # _to_tuple(i) if isinstance(i, list) else i 
+                # for i in l
+        # )
+        _to_tuple = lambda lst: tuple( UID(i) for i in lst )
+        
         uid_src = _to_tuple( entry['src'] )        
         uid_dst = _to_tuple( entry['dst'] )
             
@@ -72,10 +64,13 @@ class CastingRegister(object):
             )            
                                        
         # Parameter values are stored as strings in a dictionary
+        # E.g., { "a": "1", "b": "+273.15" }
+        # They may take the form of arithmetic expressions
+        # E.g., { "c": "si.h*si.c/si.e/si.nano" }
         parameters_dict = { 
-            k : eval(v) 
+            k : ml_eval(v) 
                 for (k,v) in entry['parameters'].items() 
         }
                 
         # Set the casting function
-        self._table[uid_pair] = eval(entry['function'],parameters_dict)
+        self._table[uid_pair] = ml_eval(entry['function'],parameters_dict)

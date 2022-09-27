@@ -1,0 +1,32 @@
+[
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_kilogram_ratio",
+            12782167041499057092439851237297548539
+        ],
+        "dst": [
+            "ml_imp_pound_ratio",
+            188380796861507506602975683857494523991
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "2.2046"
+        }
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_imp_pound_ratio",
+            188380796861507506602975683857494523991
+        ],
+        "dst": [
+            "ml_si_kilogram_ratio",
+            12782167041499057092439851237297548539
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "0.45360"
+        }
+    }
+]

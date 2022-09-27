@@ -1,0 +1,15 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_minute",
+            44201378517656436621015505669555344119
+        ],
+        "locale": {
+            "default": {
+                "name": "minute",
+                "symbol": "min"
+            }
+        }
+    }
+]

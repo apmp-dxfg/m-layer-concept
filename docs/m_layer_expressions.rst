@@ -6,27 +6,23 @@ The M-layer expression of measurement data
 .. contents::
    :local:
 
-The M-layer is intended to support the unambiguous representation of measurement data in digital systems. It does this in terms using *expressions*. 
-
 In traditional unit systems, like the SI, a quantity is expressed using two factors: a value and a name or symbol for a unit (e.g., 10 kg). 
-The M-layer goes further, using three components to express a datum: a token, a scale, and an aspect. 
-These components allow the M-layer to represent a much wider range of measurement data than traditional unit systems. In some sense, these three components are generalisations of concepts used with traditional unit systems. 
+The M-layer uses two or three components to express a datum: a token, a scale, or a token, a scale, and an aspect. 
+These components are related to notions used in traditional unit systems. 
 
 .. figure:: pictures/ExpressionClass.png
    :figwidth: 80%
    :align: center
    :alt: Class diagram for M-layer expression
    
-   A UML class diagram showing an expression an its associations 
-   with token (value), scale and aspect (kind of quantity). Although 
-   an aspect is not necessarily part of an expression, it is needed 
-   to resolve some cases of ambiguity.
+   A UML class diagram showing an expression, consisting of: a token (value), 
+   a scale and (optionally) an aspect (kind of quantity). 
    
 
 Tokens
 ------
 
-A token corresponds to the numeric value in a traditional expression. In most cases, a token will be numeric but some measurement data use symbols rather than numbers to denote a result (e.g., a sequence of letters and numbers used to catalogue library books), so the M-layer accommodates this possibility.
+The token corresponds to the numeric factor in a traditional expression. A token will usually be numeric, but some data adopt symbols other than numbers, so the M-layer accommodates this possibility.
 
 .. _concept_m_expressions_scales:
 
@@ -34,11 +30,11 @@ Scales
 ------
   
 
-Traditional units do not convey information about the (numeric, or other) structure of results. So, the M-layer defines entities called scales that combine a unit, or other reference, with information about the structure of data. This information is used to manage expression changes (conversion or casting). 
+Scales combine a unit (or other reference) with information about the structure of data values. The additional information in a scale is sometimes helpful in distinguishing between closely related expressions. For example, a ratio scale associated with the unit degree Celsius is distinct from an interval scale associated with the same unit (the former could be for expression of a temperature difference whereas the latter would be used to express absolute temperature). 
 
-There are 5 scale types in the M-layer. Each has an associated conversion transformation that generates a different scale of the same type (an invariance transform). For example, multiplying values on a ratio scale by a positive real number produces another ratio scale.
+The m-layer-concept includes 5 scale types. For each, there is a form of transformation that generates a different scale of the same type (an invariance transform). For example, multiplying values on a ratio scale by a positive real number produces another ratio scale.
 
-.. list-table:: Scale types and invariance transforms. Note, the operator 'mod' divides the left argument by the right and returns the remainder with the same sign as the right argument.
+.. list-table:: Scale types and invariance transforms. Note, here the 'mod' operator divides the left argument by the right and returns the remainder with the same sign as the right argument.
    :width: 75%
    :widths: 15 30
    :header-rows: 1
@@ -55,12 +51,13 @@ There are 5 scale types in the M-layer. Each has an associated conversion transf
      - any monotonic increasing function of :math:`x`
    * - nominal
      - any 1-to1 substitution for :math:`x`
-  
-M-layer scales associate a unit, or some other reference, with a scale type. This is helpful in distinguishing between closely related expressions. For example, a ratio scale associated with unit degree Celsius is distinct from an interval scale associated with the same unit (the former would be appropriate for expression of a temperature difference whereas the latter would be used to express absolute temperature). 
 
 Aspects
 -------
 
-Unit systems like the SI do not make explicit reference to quantity in expressions. Nevertheless, the kind of quantity can usually be inferred from contextual information. This poses a problem for digital systems, because the kind of quantity cannot be obtained in a systematic way. The M-layer uses a component, called aspect, to represent the kind of quantity in an expression. 
+The M-layer uses the component called aspect to represent the kind of quantity in an expression. Aspects may also be things that are not considered physical quantities (such as the intelligence of students, or the hardness of a material). 
 
-Aspect represents the nature of what is being measured and is interpreted more broadly than just a kind of quantity. Aspects may include things that are not considered physical quantities (like mass or length), such as the intelligence scores of a group of students, or the hardness of a material. The aspect is used to discern legitimate conversion and casting operations for expressions.  
+In the SI, every unit can be expressed as a product of powers of base units (perhaps prefixed). However, this does not always identify a kind of quantity. There are 22 special unit names in the SI that are used for specific kinds of quantity, but many other cases are not supported.
+The M-layer can use the aspect component to disambiguate legitimate conversion and casting operations for expressions based on kind of quantity information.
+
+

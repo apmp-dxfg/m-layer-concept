@@ -1,76 +1,85 @@
 .. _src_json:
 
-=============================
-M-layer JSON register entries
-=============================
-For the purposes of this proof of concept project, the M-layer registry 
-of scales, aspects, conversions, etc., is implemented in JSON.
-
+=========================
+M-layer-concept JSON data
+=========================
 
 .. contents::
    :local:
 
-Registry database in JSON files
-===============================
+Registry file structure
+=======================
 
-There is a directory called ``json`` under ``m_layer`` in the Python distribution
-with the following substructure::
+The ``m-layer-concept`` registry is implemented in JSON files.
+
+There is a root directory named ``json``, under ``m_layer`` in the Python distribution.
+This ``json`` directory has subdirectories that contain the JSON files (with file extension '.json').
+The structure is as follows::
 
     json/
         |
         +---> aspects/
         |
-        +---> conversion_casting/
+        +---> casting/
+        |
+        +---> conversion/
         |
         +---> references/
         |
         +---> scales/
         |
-        +---> scales_for_aspects/
-
-All JSON files (with file extension '.json') in these 
-directories are automatically read when the m_layer 
-module is imported. The file contents is parsed for entries to the M-layer central register.
-
-Files contain a single JSON array (starting and ending with ``[`` and ``]``),
-which may contain any number of JSON objects (starting and ending with ``{`` and ``}``)
-that define register entries.
-
-M-layer unique identifier names
--------------------------------
-
-The unique identifiers in this project have two components: a name (string) and a UUID (integer). 
-The UUID is used as the unique identifier of register entries. 
-The name is provided to help people navigate JSON file entries.
-
-Names are formed according to the following formats, where '[some_text]' is intended to be an appropriate text substitution::
-
-    Aspect:
+        +---> scales_for/
+        |
+        +---> systems/
     
-        ml-[aspect_name]
-        
-    Scale:
-    
-        ml-[reference_name]-[scale_type]
-        
-    Reference:
-    
-        [reference_name]
-        
-Aspect entries
---------------
-An example of an aspect entry is shown below. The following named elements are used by the M-layer currently:
+General comments about JSON data 
+================================
+Each file contains a single JSON array (starting and ending with ``[`` and ``]``),
+which contains a sequence of M-layer JSON objects (starting and ending with ``{`` and ``}``),
+each defining a register entry. 
 
-    - ``__entry__``: the type of entry (used during parsing)
-    - ``uid``:  the M-layer unique identifier for the aspect
-    - ``locale``: an object containing information used to render the aspect 
+The objects for M-layer entities begin with the name ``__entry__``, which identifies the type (aspect, reference, scale, etc.)
+
+All entities that could be rendered include the name ``locale``, which holds information about display options. This feature has not been developed beyond simple default behaviour yet.
+
+If the type of entity has a unique identifier, that element is named ``uid`` in the JSON object. 
+
+.. note::
+
+    The M-layer will use persistent globally unique identifiers for elements, but the details are not determined yet. This concept project adopts an *ad hoc* arrangement (see `M-layer-concept identifier names`_ below).
+
+
+M-layer-concept identifier names
+-------------------------------- 
+
+The *ad hoc* structure adopted for unique identifiers uses two components in a JSON array: a name (string) and a UUID (integer). 
+The names help people navigate entries, although the UUID already provides uniqueness. 
+
+The combination of the name and UUID is considered to be the unique identifier. Two identifiers are considered equal when *both* the name and UUID match.
+
+A naming convention has been followed:
+
+    * **aspect**: the name is prefixed with ``ml`` followed by an arbitrary descriptor (e.g., ``ml_length``).
+
+    * **system**: the name is prefixed with initials associated with the system's name and ends with the suffix '_system', e.g., ``si_system``.
+
+    * **reference**: the name is prefixed with initials that identify a system or (broadly) a family of units. This is followed by a descriptor. When the reference is a single unit, the unit name is used, but for compound unit names the descriptor adopts a short form based on unit symbols. Hence, for example, ``si_kilogram`` and ``si_m.s-1``.
+
+    * **scale**: the name is prefixed with ``ml`` followed by a string associated with the reference and ends with a suffix for the scale type. Hence, for example, ``ml_si_kg.m2.s-3.A-1_ratio`` and ``ml_si_volt_ratio`` (note, alternative strings may related to a single reference, as in this example).
+
+JSON objects shown below provide naming examples.
+       
+        
+Aspect
+======
+Aspects have a unique identifier, but do not refer to other M-layer entities.  
 
 .. code:: json 
 
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml-reflectance",
+            "ml_reflectance",
             77619173328682587252206794509402414758
         ],
         "locale": {
@@ -80,158 +89,213 @@ An example of an aspect entry is shown below. The following named elements are u
             }
         }
     }        
-
-Scale entries 
--------------
-An example of a scale entry is shown below. The JSON object has the following named elements:
-
-    - ``__entry__``: the type of entry (used during parsing)
-    - ``uid``:  the M-layer unique identifier for the scale
-    - ``reference``: the M-layer unique identifier for the reference associated with the scale 
-    - ``scale_type``: the name of the type of scale
     
-.. code:: json 
+Reference 
+=========
+References have a unique identifier. 
 
-    {
-        "__entry__": "Scale",
-        "uid": [
-            "ml-reflectance-ratio",
-            231644681522224058023728516454961855496
-        ],
-        "reference": [
-            "si-one",
-            86027072402622903744975433595176472531
-        ],
-        "scale_type": "ratio"
-    }
+If the reference is a unit belonging to a system of units then 
+additional information is entered under the name ``system``. 
 
-Reference entries 
------------------
-An example of a reference entry is shown below. The following named elements are used by the M-layer currently:
-
-    - ``__entry__``: the type of entry (used during parsing)
-    - ``uid``:  the M-layer unique identifier for the reference
-    - ``locale``: an object containing information used to render the aspect 
+The 'system' object holds an M-layer identifier for the system, 
+the dimensions of the unit in the system, and the numerical
+prefix of the unit (expressed in rational form, as a numerator and denominator strings)
+with respect to the corresponding coherent system unit.
         
 .. code:: json 
 
     {
         "__entry__": "Reference",
         "uid": [
-            "si-one",
-            86027072402622903744975433595176472531
+            "si_m.s-1",
+            209336055680499528994573882116031757760
         ],
         "locale": {
             "default": {
-                "name": "one",
-                "symbol": ""
+                "name": "metre per second",
+                "symbol": "m.s-1"
             }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 1, -1, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
         }
     }
     
-Conversion entries
-------------------
-An example of a conversion entry is shown below. The following named elements are used by the M-layer currently:
+System 
+======
+A system has a unique identifier and an array of identifiers for the system base units (references). 
+The order of elements in this array is important. 
+It matches the order of exponents in the ``system.dimensions`` array in a JSON Reference.
 
-    - ``__entry__``: the type of entry (used during parsing)
-    - ``src``:  the unique identifier for the initial (source) scale
-    - ``dst``: the unique identifier for the final (destination) scale 
-    - ``factors``: an array expressions that will evaluate to numerical conversion function coefficients (the number and nature of these factors depends on the scale type) 
+.. code:: json 
+
+    {
+        "__entry__": "UnitSystem",
+        "uid": [
+            "si_system",
+            88156805987886421108624908988601219537
+        ],
+        "name": "SI",
+        "basis": [
+            [
+                "si_kilogram",
+                188151331508313165897603768130808181784
+            ],
+            [
+                "si_metre",
+                61268972265076316018593147152102406832
+            ],
+            [
+                "si_second",
+                110730041758233939215703442037761569190
+            ],
+            [
+                "si_ampere",
+                264081801568151063132838497538090031099
+            ],
+            [
+                "si_kelvin",
+                25703533220788919988679332108037098600
+            ],
+            [
+                "si_mole",
+                96713855510406467826626480289106173630
+            ],
+            [
+                "si_candela",
+                107700549721211215242458620140782394628
+            ]
+        ]
+    }
+    
+Scale 
+=====
+A scale combines a reference with 'scale type' ('ratio', 'interval', etc.). A scale has a unique identifier and referes to the identifier of an M-layer reference. 
+
+A scale may include the name ``systematic`` when the scale's name is composed of products of powers of base-unit symbols (the base units of a unit system). 
+    
+.. code:: json 
+
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_kg.m2.s-2.A-1_ratio",
+            123074114253301537873407416011262630402
+        ],
+        "reference": [
+            "si_weber",
+            3389824025561912595583897462196041346
+        ],
+        "scale_type": "ratio",
+        "systematic": 1
+    }
+
+
+    
+Conversion
+==========
+Conversion is a mathematical operation related to a pair of M-layer scales.
+
+A JSON conversion entry holds a definition of the mathematical operation required to transform data from one scale to the other. 
+The M-layer distinguishes between conversions that are aspect-independent and conversions restricted to specific aspects.
+
+Aspect-specific conversion
+--------------------------
+
+An aspect-specific conversion is identified by the combination of: an aspect, the initial (source) scale and the final (destination) scale.
+
+The conversion function is specified in text, as are the parameters needed (see :ref:`ml_math-label` for details). In this example, the transformation is a simple identity mapping.
+        
+.. code:: json 
+
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_frequency",
+            153247472008167864427404739264717558529
+        ],
+        "src": [
+            "ml_si_s-1_ratio",
+            323506565708733284157918472061580302494
+        ],
+        "dst": [
+            "ml_si_hertz_ratio",
+            307647520921278207356294979342476646905
+        ],
+        "function": "lambda x: x",
+        "parameters": {}
+    }
+  
+Aspect-independent conversion
+-----------------------------
+  
+An aspect-independent conversion is identified by the M-layer identifiers for the initial (source) scale and the final (destination) scale. 
+
+In this example, the transformation is the conversion function :math:`y = x + 273.15`, where :math:`x` is data on the Celsius scale and :math:`y` is the data converted to kelvin.
         
 .. code:: json 
 
     {
         "__entry__": "Conversion",
         "src": [
-            "ml-si-kilogram-ratio",
-            12782167041499057092439851237297548539
+            "ml_si_celsius_interval",
+            245795086332095731716589481707012001072
         ],
-        "dst":[
-            "ml-imp-pound-ratio", 
-            188380796861507506602975683857494523991
+        "dst": [
+            "ml_si_kelvin_ratio",
+            302952256288207449238881076502466548054
         ],
-        "factors": [ "2.2046" ]
+        "function": "lambda x: x + b",
+        "parameters": {
+            "a": "1",
+            "b": "+273.15"
+        }
     }
     
-Aspect-specific conversion entries
-----------------------------------
 
-An example of an aspect-specific conversion entry is shown below. The following named elements are used by the M-layer currently:
+    
+Casting
+=======
+An M-layer cast is an operation to transform data from one scale-aspect pair to another. 
 
-    - ``__entry__``: the type of entry (used during parsing) 
-    - ``aspect``: the unique identifier for the aspect
-    - ``src``:  the unique identifier for the initial (source) scale
-    - ``dst``: the unique identifier for the final (destination) scale 
-    - ``factors``: an array expressions that will evaluate to numerical conversion function coefficients (the number and nature of these factors depends on the scale type) 
+A cast is identified by the initial (source) scale-aspect pair and the final (destination) scale-aspect pair.
+ 
+In the following example, the casting operation transforms data in inverse seconds with aspect undefined to data expressed in hertz (aspect is frequency). 
+The numerical part of this operation is trivial, but the change of aspect must be directly specified, because data in inverse seconds could also be associated with activity (with SI unit becquerel). 
         
 .. code:: json 
 
     {
-        "__entry__": "ScalesForAspect",
-        "aspect" : [
-            "ml-photon-energy",
-            291306321925738991196807372973812640971
-        ],
-        "src": [
-            "ml-si-terahertz-ratio",
-            271382954339420591832277422907953823861
-        ],
-        "dst":[
-            "ml-si-per-centimetre-ratio",
-            333995508470114516586033303775415043902
-        ],
-        "factors": [ "si.tera/si.c*si.centi" ]
-    }
-    
-Casting entries
----------------
-An example of a casting entry is shown below. The following named elements are used by the M-layer currently:
-
-    - ``__entry__``: the type of entry (used during parsing)
-    - ``src``:  dentifiers for the initial (source) scale and aspect
-    - ``dst``: identifiers for the final (destination) scale and aspect
-    - ``function``: a string that will be evaluated to define a Python casting function
-    - ``factors``: an object that will be evaluated to define a Python dictionary in which casting function parameters are defined 
-        
-.. code:: json 
-
-   {
         "__entry__": "Cast",
         "src": [
             [
-                "ml-electronvolt-ratio",
-                121864523473489992307630707008460819401
+                "ml_si_s-1_ratio",
+                323506565708733284157918472061580302494
             ],
-                        [
-                "ml-photon-energy",
-                291306321925738991196807372973812640971
-            ]
-        ],
-        "dst":[
             [
-                "ml-si-nanometre-ratio",
-                257091757625055920788370123828667027186
-            ],
-                        [
-                "ml-photon-energy",
-                291306321925738991196807372973812640971
+                "ml_no_aspect",
+                295504637700214937127120941173285352815
             ]
         ],
-        "function" : "lambda x: c/x",
-        "parameters" : { "c" : "si.h*si.c/si.e/si.nano" }
+        "dst": [
+            [
+                "ml_si_hertz_ratio",
+                307647520921278207356294979342476646905
+            ],
+            [
+                "ml_frequency",
+                153247472008167864427404739264717558529
+            ]
+        ],
+        "function": "lambda x: x",
+        "parameters": {}
     }
     
-Python module of defined constants
-----------------------------------
-The functions and coefficients used to convert and cast data are created from strings stored in the JSON entries. 
-The built-in Python function :func:`eval` is used to convert these strings to Python objects.
-
-The following file is imported during this evaluation process to provide numeric constants.
-
-.. literalinclude:: ../m_layer/si_constants.py
-    :language: py
-
-Utility script for new UUIDs
-----------------------------
-   
-.. automodule:: new_uuid

@@ -1,0 +1,92 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_nm",
+            230327124043985678197012494098272082173
+        ],
+        "locale": {
+            "default": {
+                "name": "nanometre",
+                "symbol": "nm"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 1, 0, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1E9"
+            ]
+        },
+        "UCUM": {
+            "code": "nm",
+            "description": "nanometer"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_km",
+            104092958581100090077541295886399703580
+        ],
+        "locale": {
+            "default": {
+                "name": "kilometre",
+                "symbol": "km"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 1, 0, 0, 0, 0, 0]",
+            "prefix": [
+                "1E3",
+                "1"
+            ]
+        },
+        "UCUM": {
+            "code": "km",
+            "description": "kilometer"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "foot",
+            86662124155742117525125549059860475926
+        ],
+        "locale": {
+            "default": {
+                "name": "foot",
+                "symbol": "ft"
+            }
+        },
+        "UCUM": {
+            "code": "[ft_i]",
+            "description": "foot"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "mile",
+            321669254669513832042318604679570457152
+        ],
+        "locale": {
+            "default": {
+                "name": "mile",
+                "symbol": "mi"
+            }
+        },
+        "UCUM": {
+            "code": "[mi_i]",
+            "description": "mile"
+        }
+    }
+]

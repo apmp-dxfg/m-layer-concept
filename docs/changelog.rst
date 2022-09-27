@@ -5,7 +5,7 @@
 Roadmap
 =======
 
-    -   In version 0.2.x, the intention is to build up the basic M-layer structure in a collection of JSON files representing central-register information about scales, aspects, conversions, and castings. The aim is to build up sufficient information to support a few use-cases. No attempt is made to be comprehensive.
+    -   In version 0.2.x, the intention is to build up the basic M-layer structure in a collection of JSON files representing central-register information about scales, aspects, conversions, and castings. The aim is to assemble sufficient information to support a few use-cases. There is no intention to be comprehensive.
 
         At the same time a Python API will be developed. This will support a suite of examples and client-side usability to be assessed.
 

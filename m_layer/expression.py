@@ -1,15 +1,18 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-from m_layer.context import default_context as cxt
-from m_layer.scale_aspect import ScaleAspect
-from m_layer.scale import Scale
+import numbers
+import math 
+
+from fractions import Fraction
+
+from m_layer.lib import *
+from m_layer.context import global_context as cxt
+from m_layer.stack import normal_form
 
 __all__ = (
     'expr', 
     'token', 'value',
     'convert', 
     'cast',
-    'aspect', 'kind_of_quantity',
-    'scale',
     'scale_aspect',
 )
 
@@ -17,62 +20,78 @@ __all__ = (
 class Expression(object):
     
     """
-    An ``Expression`` is defined by a token and a scale. 
-    A third component called aspect may also be specified.
+    An ``Expression`` is defined by a token and a scale-aspect pair. 
+    The scale-aspect may be a composition of several scale-aspect pairs.
     """
     
     __slots__ = ("_token","_scale_aspect")
     
-    def __init__(self,token,scale_aspect):
+    def __init__(self,token,mdata):
         self._token = token 
-        self._scale_aspect = scale_aspect
+        
+        if isinstance(mdata,(ScaleAspect,CompoundScale,CompoundScaleAspect)):
+            self._scale_aspect = mdata
+        else:
+            assert False, repr(mdata)
       
     def __str__(self):
-        short=True
-        locale=cxt.locale       
-        
-        return "{} {}".format( 
-            self._token, 
-            self._scale_aspect.scale._json_scale_to_ref(locale,short) 
-        )
+        # TODO: something sensible when scale_aspect is CompoundScaleAspect
+        if isinstance(self._scale_aspect,ScaleAspect):
+            return "{} {}".format( 
+                self.token, 
+                self.scale_aspect.scale 
+            )
+        else:
+            return "{} {}".format( 
+                self.token, 
+                self.scale_aspect 
+            )
         
     def __repr__(self):
-        locale=cxt.locale
-        short=False
-        
-        v = "{}".format( self.token )
-        r = "{}".format( self._scale_aspect.scale._json_scale_to_ref(locale,short) )
-        
-        if self.aspect is None:
-            return "Expression({},{})".format(v,r)
+        # TODO: something sensible when scale_aspect is CompoundScaleAspect 
+        if isinstance(self._scale_aspect,ScaleAspect):
+            if self.scale_aspect.aspect is no_aspect:
+                return "Expression({},{})".format(
+                    self.token,
+                    self.scale_aspect.scale 
+                    )
+            elif str(self.scale_aspect.scale) == "": 
+                # Special case, not sure how better to do this
+                return "Expression({},1,{})".format(
+                    self.token,
+                    self.scale_aspect.aspect
+                )
+            else:
+                return "Expression({},{},{})".format(
+                    self.token,
+                    self.scale_aspect.scale,
+                    self.scale_aspect.aspect
+                )                
         else:
-            a = "{}".format( self.aspect._from_json(locale,short) )
-            return "Expression({},{},{})".format(v,r,a)
+            return "Expression({},{})".format( 
+                self.token, 
+                self.scale_aspect 
+            )
             
+    # In future it may be sensible to define a subclass of Expression 
+    # for (the majority of) cases where the tokens are real numbers 
     @property
     def token(self):
         "The token or value of the Expression"
-        return self._token
+        # The Fraction display can be disconcerting when 
+        # the ratio involves large integers
+        if isinstance(self._token,Fraction):
+            x = float(self._token) 
+        else:
+            x = self._token
+        return x
 
     # Alias
-    # In future it may be sensible to define a subclass of Expression 
-    # for (the majority of) cases where the tokens are real numbers 
     value = token 
- 
-    @property 
-    def scale(self):
-        "The Scale of the Expression"
-        return self._scale_aspect.scale 
- 
-    @property 
-    def aspect(self):
-        "The Aspect of the Expression"
-        return self._scale_aspect.aspect 
-        
-    # Alias
-    # See also the comment for ``value`` above     
-    kind_of_quantity = aspect 
- 
+  
+    # Note `_scale_aspect` may be a CompoundScaleAspect, so 
+    # there is no reason to provide access to individual `aspect`
+    # and `scale` properties.
     @property 
     def scale_aspect(self):
         "The ScaleAspect of the Expression"
@@ -80,104 +99,343 @@ class Expression(object):
         
  
     # ---------------------------------------------------------------------------
-    def convert(self,dst_scale,aspect=None):
-        """Return a new M-layer expression in the scale ``dst_scale``
-        
-        If ``dst_scale`` is a :class:`~scale.Scale` object,
-        or a :class:`~scale_aspect.ScaleAspect` object with 
-        no defined aspect, then the aspect of the existing
-        expression will be applied to the new expression
-        
-        If ``aspect`` is defined, it must match the aspect in the 
-        existing expression. 
-        If the existing expression has no defined aspect, ``aspect`` 
-        will be applied to the new expression.
+    def convert(self,dst):
+        """Return a new expression in terms of ``dst``
         
         Args:
-            dst_scale (:class:`~scale_aspect.ScaleAspect` or :class:`~scale.Scale`): the scale-aspect pair for the new expression 
-            aspect (:class:`~aspect.Aspect`,optional): an aspect may be specified
+            dst (:class:`~lib.CompoundScaleAspect` or
+            :class:`~lib.CompoundScale`
+            :class:`~lib.ScaleAspect` or 
+            :class:`~lib.Scale`) 
         
         Returns:
             :class:`~expression.Expression` 
-            
-        Raises:
-            RuntimeError: if ``aspect`` differs from the aspect of the existing expression.
 
-        """ 
-        # Rules for determining the aspect:
-        #   1: There is the possibility of aspect attributes associated with 
-        #       `self`, `dst_scale` and `aspect`. They must all agree or be None. 
-        #   2: The resulting aspect will be attributed to the new expression.
-        aspects = [
-            self.aspect,
-            dst_scale.aspect if isinstance(dst_scale,ScaleAspect) else None,
-            aspect
-        ]
-        if aspects[0] is not None:
-            _aspect = aspects[0]        
-            if not all( a_i == _aspect for a_i in aspects if a_i is not None ):
-                raise RuntimeError(
-                    "incompatible aspects: {!r}".format(
-                        [ a_i for a_i in aspects if a_i is not None ]
-                    )
-                ) 
-        elif aspects[1] is not None:
-            _aspect = aspects[1]        
-            if aspects[2] is not None and _aspect != aspects[2]:
-                raise RuntimeError(
-                    "incompatible aspects: {!r}".format(
-                        [ a_i for a_i in aspects[1:] if a_i is not None ]
-                    )
-                ) 
-        else:
-            _aspect = aspects[2] 
-                       
-        # Discard the destination aspect if it was provided
-        if isinstance(dst_scale,ScaleAspect):
-            dst_scale = dst_scale.scale            
-         
-        fn = cxt.conversion_fn( self.scale, dst_scale, _aspect )
+        If ``dst`` is a :class:`~lib.ScaleAspect`,
+        the associated aspect must match the existing expression.   
         
-        # inject `_aspect`
+        
+        """
+        if (
+            isinstance(dst,ScaleAspect) 
+        and isinstance(self.scale_aspect,ScaleAspect)
+        ):
+            # The source and destination aspects must match
+            if self.scale_aspect.aspect != dst.aspect:          
+                raise RuntimeError(
+                    "incompatible aspects: {!r} and {!r}".format( 
+                        self.scale_aspect.aspect, 
+                        dst.aspect 
+                    )
+                )
+                
+            else:
+                dst_scale_aspect = dst 
+                
+                new_token = cxt.conversion_from_scale_aspect( 
+                    self.scale_aspect.scale.uid,
+                    self.scale_aspect.aspect.uid,
+                    dst_scale_aspect.scale.uid 
+                )(self._token)
+
+        elif (
+            isinstance(dst,Scale) 
+        and isinstance(self.scale_aspect,ScaleAspect)
+        ): 
+            # The source aspect will be applied to the result.
+            # Create a ScaleAspect return object with the initial aspect 
+            # Again, the aspect can be `no_aspect`.
+            dst_scale_aspect = dst.to_scale_aspect( 
+                self.scale_aspect.aspect 
+            ) 
+            
+            new_token = cxt.conversion_from_scale_aspect( 
+                self.scale_aspect.scale.uid,
+                self.scale_aspect.aspect.uid,
+                dst_scale_aspect.scale.uid 
+            )(self._token)
+            
+        elif ( 
+            isinstance(dst,(CompoundScale,CompoundScaleAspect) ) 
+        and isinstance(self.scale_aspect,CompoundScaleAspect)
+        ):
+            # Conversion from a compound expression.
+            # The expressions must be arithmetically equivalent,  
+            # so that pairs of source-destination scale-aspects  
+            # can be found in the register. 
+            # If the destination is just a CompoundScale, then 
+            # the current aspects are copied into the result.
+                        
+            # Step 1: convert to products of powers
+            src_pops = normal_form(self.scale_aspect.stack)
+            
+            if isinstance(dst,CompoundScale):
+                # Copy the various src aspects to a new CompoundScaleAspect.
+                dst_scale_aspect = dst.to_compound_scale_aspect( 
+                    self.scale_aspect
+                ) 
+            
+            else:    
+                dst_scale_aspect = dst                
+                
+            dst_pops = normal_form(dst_scale_aspect.stack)
+            
+            # Step 2: take into account any stand-alone numerical factors
+            conversion_factor = src_pops.prefactor/dst_pops.prefactor
+            
+            # Step 3: step through the scale-aspect terms,
+            # obtaining a conversion factor for each
+            src_factors = src_pops.factors
+            dst_factors = dst_pops.factors
+            for src_i,dst_i in zip(src_factors.keys(),dst_factors.keys()):
+            
+                # Each term also has an exponent
+                src_exp = src_factors[src_i]
+                assert src_exp == dst_factors[dst_i],\
+                    "{} != {}".format(src_exp,dst_factors[dst_i])
+
+                src_s_uid,src_a_uid = src_i.uid
+                dst_s_uid, dst_a_uid = dst_i.uid
+                
+                # Aspects must match
+                if src_a_uid != dst_a_uid:
+                    raise RuntimeError(
+                        "aspects do not match: {} != {}".format(
+                            src_a_uid,dst_a_uid
+                        )
+                    )
+
+                c = cxt.conversion_from_scale_aspect( 
+                        src_s_uid,src_a_uid,dst_s_uid                     
+                )(1.0) 
+                conversion_factor *= c**src_exp
+            
+            new_token = conversion_factor*self._token
+
+        elif ( 
+            isinstance(dst,CompoundScale ) 
+        and isinstance(self.scale_aspect,CompoundScale)
+        ):
+            # This is the generic case, where no aspect is available
+            
+            # Conversion from one compound expression to another.
+            # The expressions must be arithmetically equivalent,  
+            # so that pairs of source-destination scale-aspects  
+            # can be found in the register. 
+                        
+            # Step 1: convert to products of powers
+            src_pops = normal_form(self.scale_aspect.stack)            
+            dst_pops = normal_form(dst.stack)         
+            
+            # Step 2: take into account any stand-alone numerical factors
+            conversion_factor = src_pops.prefactor/dst_pops.prefactor
+            
+            # Step 3: step through the scale terms,
+            # obtaining a conversion factor for each
+            src_factors = src_pops.factors
+            dst_factors = dst_pops.factors
+            for src_i,dst_i in zip(src_factors.keys(),dst_factors.keys()):
+            
+                # Each term also has an exponent
+                src_exp = src_factors[src_i]
+                assert src_exp == dst_factors[dst_i],\
+                    "{} != {}".format(src_exp,dst_factors[dst_i])
+
+                src_s_uid = src_i.uid
+                dst_s_uid = dst_i.uid
+                src_a_uid = no_aspect.uid
+
+                c = cxt.conversion_from_scale_aspect( 
+                        src_s_uid,src_a_uid,dst_s_uid                     
+                )(1.0) 
+                conversion_factor *= c**src_exp
+            
+            new_token = conversion_factor*self._token
+ 
+            # Set the aspect component of the new CompoundScaleAspect
+            # to the default value.
+            dst_scale_aspect = dst.to_compound_scale_aspect() 
+ 
+        elif ( 
+            isinstance(dst,(Scale,ScaleAspect) ) 
+        and isinstance(self.scale_aspect,CompoundScale)
+        ):
+            # To convert from a compound scale, to a specific one,
+            # the compound scale must be dimensionally equivalent 
+            # to the final scale, which must not have an aspect. 
+            
+            if isinstance(dst,Scale):            
+                dst_scale_aspect = dst.to_scale_aspect(no_aspect)
+                
+            elif isinstance(dst,ScaleAspect):
+                if dst.aspect is not no_aspect:
+                    raise RuntimeError(
+                        "conversion cannot change from ``no_aspect`` "
+                        "to {!r}".format(dst.aspect)
+                    ) 
+                else:
+                    dst_scale_aspect = dst 
+            else:
+                assert False, repr(dst) 
+                
+            src_dim = self.scale_aspect.dimension.simplify     
+            if src_dim != dst_scale_aspect.dimension:
+                raise RuntimeError(
+                    "dimensions must match: {}, {}".format(
+                        src_dim,
+                        dst_scale_aspect.dimension
+                    )
+                )           
+                        
+            new_token = cxt.conversion_from_compound_scale_dim( 
+                src_dim,
+                dst_scale_aspect.scale.uid 
+            )(self._token)
+            
+        elif ( 
+            isinstance(dst,(Scale,ScaleAspect) ) 
+        and isinstance(self.scale_aspect,CompoundScaleAspect)
+        ):
+            # Conversion from a compound scale-aspect to a specific one.
+            # Since the result must have a single aspect, we are limited
+            # to just the generic no_aspect. So this function must 
+            # fail if there are any non-trivial aspects in the expression.
+            if not self.scale_aspect.to_compound_scales_and_aspects()[1].no_aspect: 
+                raise RuntimeError(
+                    "conversion would loose aspect information {}".format(
+                        self.scale_aspect
+                    )
+                )
+            if isinstance(dst,Scale):            
+                dst_scale_aspect = dst.to_scale_aspect(no_aspect)
+                
+            elif isinstance(dst,ScaleAspect):
+                if dst.aspect is not no_aspect:
+                    # A cast would be required to change the aspect
+                    raise RuntimeError(
+                        "cannot change aspect: {!r}".format(dst)
+                    ) 
+                else:
+                    dst_scale_aspect = dst 
+            else:
+                assert False, repr(dst) 
+                
+            src_dim = self.scale_aspect.dimension.simplify     
+            if src_dim != dst_scale_aspect.dimension:
+                raise RuntimeError(
+                    "dimensions must match: {}, {}".format(
+                        src_dim,
+                        dst_scale_aspect.dimension
+                    )
+                )           
+                        
+            new_token = cxt.conversion_from_compound_scale_dim( 
+                src_dim,
+                dst_scale_aspect.scale.uid 
+            )(self._token)
+
+        else:
+            assert False
+            
         return Expression(
-            fn( self._token ),
-            dst_scale.to_scale_aspect(_aspect)
+            new_token,
+            dst_scale_aspect
         )
 
     # ---------------------------------------------------------------------------
-    def cast(self,dst_scale_aspect):
-        """Return a new M-layer expression in the scale-aspect ``dst_scale_aspect``
-            
-        If ``dst_scale_aspect`` does not define an aspect, the aspect of the 
-        existing expression will be applied to the new expression.
-
-        Args:            
-            dst_scale_aspect(:class:`~scale_aspect.ScaleAspect` or :class:`~scale.Scale`): 
-                the scale-aspect pair for the new expression. 
+    def cast(self,dst,aspect=no_aspect):
+        """Return a new M-layer expression 
+        
+        Args:
+        
+            dst(:class:`~lib.ScaleAspect` or :class:`~lib.Scale`): the scale-aspect pair for the new expression 
+            aspect(:class:`~lib.Aspect`):   
 
         Returns:
-            an  M-layer :class:`~expression.Expression` 
-
-        Raises:
-            RuntimeError: if no aspect is specified in the existing expression 
+            class:`~expression.Expression` 
             
-        """
-        # `dst_scale_aspect` could be a Scale or a ScaleAspect
-        dst_scale_aspect = dst_scale_aspect.to_scale_aspect()
+        Casting determines an aspect for the new expression as follows:
+        i) the aspect as specified in ``dst``, or, 
+        ii) the aspect as specified by ``aspect``, or,
+        iii) the aspect of the initial expression                 
+            
+        """        
+        if isinstance(self.scale_aspect,ScaleAspect):
         
-        if self._scale_aspect.aspect is None:
-            raise RuntimeError(
-                "{!r} has no declared aspect, so it cannot be cast".format(self)
+            if isinstance(dst,Scale):            
+                if aspect is no_aspect:
+                    # carry forward the initial aspect
+                    dst_scale_aspect = dst.to_scale_aspect(
+                        self.scale_aspect.aspect
+                    )
+                else:
+                    dst_scale_aspect = dst.to_scale_aspect(aspect)
+                     
+            elif isinstance(dst,ScaleAspect):
+                if dst.aspect is no_aspect: 
+                    if aspect is no_aspect:
+                        # carry forward the initial aspect
+                        dst_scale_aspect = ScaleAspect(
+                            dst.scale,
+                            self.scale_aspect.aspect
+                        )  
+                    else:
+                        dst_scale_aspect = ScaleAspect(
+                            dst.scale,
+                            aspect
+                        )
+                else:
+                    dst_scale_aspect = dst
+            else:
+                assert False, repr(dst)
+                
+            fn = cxt.casting_from_scale_aspect(
+                self.scale_aspect.scale.uid,
+                self.scale_aspect.aspect.uid,
+                dst_scale_aspect.scale.uid,
+                dst_scale_aspect.aspect.uid 
             )
 
-        # No destination aspect => reuse the object's aspect
-        if dst_scale_aspect.aspect is None: 
-            dst_scale_aspect = dst_scale_aspect.scale.to_scale_aspect(
-                self._scale_aspect.aspect
-            )
+        elif isinstance(
+            self.scale_aspect,(CompoundScale,CompoundScaleAspect)
+        ):
+            src_dim = self.scale_aspect.dimension.simplify
+            
+            if src_dim != dst.dimension:
+                raise RuntimeError(
+                    "dimensions must match: {}, {}".format(
+                        src_dim,
+                        dst_scale_aspect.dimension
+                    )
+                )           
+            
+            if isinstance(dst,Scale):            
+                if aspect is no_aspect:
+                    # cannot carry forward an initial aspect,
+                    # so use no_aspect
+                    dst_scale_aspect = dst.to_scale_aspect(no_aspect)
+                else:
+                    dst_scale_aspect = dst.to_scale_aspect(aspect)
 
-        fn = cxt.casting_fn(self, dst_scale_aspect )
-        
+            elif isinstance(dst,ScaleAspect):
+                if dst.aspect is no_aspect:
+                    # Note `aspect` may just be `no_aspect` anyway
+                    dst_scale_aspect = ScaleAspect(
+                        dst.scale,
+                        aspect
+                    ) 
+                else:
+                    dst_scale_aspect = dst                
+                
+            else:
+                assert False, repr(dst)
+                
+            fn = cxt.casting_from_compound_scale_dim(
+                src_dim,
+                dst_scale_aspect.scale.uid,
+                dst_scale_aspect.aspect.uid 
+            )
+           
         return Expression(
             fn( self._token ),
             dst_scale_aspect
@@ -192,75 +450,75 @@ def token(xp):
 
 value = token
 
-def convert(xp,dst_scale,aspect=None):
-    """Return a new M-layer expression in the scale ``dst_scale``
+def convert(xp,dst):
+    """Return a new expression in terms of ``dst``
     
-    If ``dst_scale`` is a :class:`~scale.Scale` object,
-    or a :class:`~scale_aspect.ScaleAspect` object with 
-    no defined aspect, the aspect of ``xp`` will be 
-    applied to the new expression
+    If ``dst`` does not specify an aspect, 
+    the aspect of the initial expression will be carried over.
+
+    If ``dst`` and the initial expression, ``xp``, 
+    each specify an aspect, they must match.   
 
     Args:
-        xp (:class:`~expression.Expression`) : the expression to be converted    
-        dst_scale (:class:`~scale_aspect.ScaleAspect` or :class:`~scale.Scale`): the scale-aspect pair for the new expression 
+        xp (:class:`~expression.Expression`) : the initial expression    
+        dst (:class:`~lib.ScaleAspect` or :class:`~lib.Scale`): the scale-aspect for the new expression 
     
     Returns:
         :class:`~expression.Expression` 
 
     """        
-    return xp.convert(dst_scale,aspect)
+    return xp.convert(dst)
     
-def cast(xp,dst_scale_aspect):
-    """Return a new M-layer expression in the scale-aspect ``dst_scale_aspect``
+# ---------------------------------------------------------------------------
+def cast(xp,dst,aspect=no_aspect):
+    """Return a new expression in terms of ``dst``
             
-    If ``dst_scale_aspect`` does not specify an aspect,
-    the aspect of ``xp`` will be applied to the new expression
+    If ``dst`` does not specify an aspect, ``aspect`` is used. 
+    If ``aspect`` is ``None``, the aspect of ``xp`` is carried over to 
+    the new expression
 
     Args:
-        xp (:class:`~expression.Expression`): the expression to be converted.
+        xp (:class:`~expression.Expression`): the initial expression
         
-        dst_scale_aspect (:class:`~scale_aspect.ScaleAspect` or :class:`~scale.Scale`): 
-            the scale-aspect pair for the new expression 
+        dst (:class:`~lib.ScaleAspect` or :class:`~lib.Scale`): 
+            the scale-aspect for the new expression 
+            
+        aspect (:class:`~lib.Aspect`, optional)
 
     Returns:
-        an  M-layer :class:`~expression.Expression` 
-
-    Raises:
-        RuntimeError: if no aspect is specified by ``xp`` 
+        :class:`~expression.Expression` 
         
     """
-    return xp.cast(dst_scale_aspect)
+    return xp.cast(dst,aspect)
     
-def aspect(xp):
-    "Return the aspect or kind of quantity of an expression"
-    return xp.aspect 
-    
-kind_of_quantity = aspect
-    
-def scale(xp):
-    "Return the scale of an expression"
-    return xp.scale 
-
+# ---------------------------------------------------------------------------
 def scale_aspect(xp):
-    "Return the scale-aspect of an :class:`~expression.Expression`"
+    """
+    Args:
+        xp: class:`~expression.Expression`
+        
+    Returns:
+        a :class:`~lib.ScaleAspect` or a :class:`~lib.CompoundScaleAspect`
+        
+    """
     return xp.scale_aspect 
   
 # ---------------------------------------------------------------------------
 # For the API 
 #   
-def expr(v,s,a=None):
-    """Returns an M-layer expression 
+def expr(v,s,a=no_aspect):
+    """Create a new expression 
     
     Args:
         v: the expression value or token
-        s(:class:`~scale_aspect.ScaleAspect` or :class:`~scale.Scale`): the scale-aspect pair for the expression 
-        a(:class:`~aspect.Aspect`, optional): the expression aspect 
+        s (:class:`~lib.ScaleAspect`, :class:`~lib.Scale`): the scale
+        a (:class:`~lib.Aspect`, optional): the aspect 
     Returns:
-        an  M-layer :class:`~expression.Expression`  
+        :class:`~expression.Expression`  
     
     """
     # `s` may be a scale-aspect pair or just a scale 
-    if isinstance(s,ScaleAspect):
+    if isinstance(s,(ScaleAspect,CompoundScale,CompoundScaleAspect)):
         return Expression(v,s)
     elif isinstance(s,Scale):
         return Expression(v, s.to_scale_aspect(a) )
@@ -268,7 +526,3 @@ def expr(v,s,a=None):
         assert False, "unexpected: {!r}, {!r}".format(s,a)
     
         
-# ===========================================================================
-if __name__ == '__main__':
-    
-    pass

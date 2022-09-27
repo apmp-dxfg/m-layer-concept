@@ -1,0 +1,28 @@
+[
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_area",
+            137024065605743626011574084833944382157
+        ],
+        "locale": {
+            "default": {
+                "name": "area",
+                "symbol": "A"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_volume",
+            95257530687227026152247350126054525188
+        ],
+        "locale": {
+            "default": {
+                "name": "volume",
+                "symbol": "V"
+            }
+        }
+    }
+]

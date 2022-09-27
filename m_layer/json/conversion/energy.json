@@ -1,0 +1,32 @@
+[
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_joule_ratio",
+            165050666678496469850612022016789737781
+        ],
+        "dst": [
+            "ml_electronvolt_ratio",
+            121864523473489992307630707008460819401
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "1/si.e"
+        }
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_electronvolt_ratio",
+            121864523473489992307630707008460819401
+        ],
+        "dst": [
+            "ml_si_joule_ratio",
+            165050666678496469850612022016789737781
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "si.e"
+        }
+    }
+]

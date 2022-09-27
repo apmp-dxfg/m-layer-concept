@@ -1,0 +1,19 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "electronvolt",
+            182363982750140887436275027803151015498
+        ],
+        "locale": {
+            "default": {
+                "name": "electronvolt",
+                "symbol": "eV"
+            }
+        },
+        "UCUM": {
+            "code": "eV",
+            "description": "electronvolt"
+        }
+    }
+]

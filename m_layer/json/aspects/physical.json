@@ -1,0 +1,157 @@
+[
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_torque",
+            130931339493516375135609650190501980170
+        ],
+        "locale": {
+            "default": {
+                "name": "torque",
+                "symbol": "M"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_wavenumber",
+            144971063540877887430756064314490007964
+        ],
+        "locale": {
+            "default": {
+                "name": "wavenumber",
+                "symbol": "\\sigma"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_wavelength",
+            286560112267714281146712032556984229473
+        ],
+        "locale": {
+            "default": {
+                "name": "wavelength",
+                "symbol": "\\lambda"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_period",
+            86706581527829787194017804485248983592
+        ],
+        "locale": {
+            "default": {
+                "name": "period",
+                "symbol": "T"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_photon_energy",
+            291306321925738991196807372973812640971
+        ],
+        "locale": {
+            "default": {
+                "name": "photon energy",
+                "symbol": "E"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_ITS90",
+            333567868916523888067500483865254994090
+        ],
+        "locale": {
+            "default": {
+                "name": "ITS-90",
+                "symbol": "T_90"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_temperature_difference",
+            212368324110263031011700652725345220325
+        ],
+        "locale": {
+            "default": {
+                "name": "temperature_difference",
+                "symbol": "dT"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_transmittance",
+            106338157389217634821305827494648287004
+        ],
+        "locale": {
+            "default": {
+                "name": "transmittance",
+                "symbol": "T"
+            }
+        },
+        "metadata": {
+            "url": "https://en.wikipedia.org/wiki/Transmittance"
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_absorbance",
+            86383731859836773954686958763955022575
+        ],
+        "locale": {
+            "default": {
+                "name": "absorbance",
+                "symbol": "A"
+            }
+        },
+        "metadata": {
+            "url": "https://en.wikipedia.org/wiki/Absorbance"
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_optical_density",
+            246281658431686855826084788549817949261
+        ],
+        "locale": {
+            "default": {
+                "name": "optical density",
+                "symbol": "OD"
+            }
+        },
+        "metadata": {
+            "url": "https://en.wikipedia.org/wiki/Absorbance"
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_reflectance",
+            77619173328682587252206794509402414758
+        ],
+        "locale": {
+            "default": {
+                "name": "reflectance",
+                "symbol": "R"
+            }
+        },
+        "metadata": {
+            "url": "https://en.wikipedia.org/wiki/Reflectance"
+        }
+    }
+]

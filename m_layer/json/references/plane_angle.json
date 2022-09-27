@@ -1,0 +1,19 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "imp_degree",
+            277818260541443964889383928855946049570
+        ],
+        "locale": {
+            "default": {
+                "name": "degree",
+                "symbol": "deg"
+            }
+        },
+        "UCUM": {
+            "code": "deg",
+            "description": "degree - plane angle"
+        }
+    }
+]

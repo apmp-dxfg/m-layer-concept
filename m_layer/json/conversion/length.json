@@ -1,0 +1,76 @@
+[
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_km_ratio",
+            303013158647987756739692585250160483422
+        ],
+        "dst": [
+            "ml_mile_ratio",
+            61354123525481966618488200545930838577
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "0.62137"
+        }
+    },
+{
+        "__entry__": "Conversion",
+        "src": [
+            "ml_mile_ratio",
+            61354123525481966618488200545930838577
+        ],
+        "dst": [
+            "ml_si_km_ratio",
+            303013158647987756739692585250160483422
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "1/0.62137"
+        }
+    },    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_foot_ratio",
+            150280610960339969789551668292960104920
+        ],
+        "dst": [
+            "ml_si_metre_ratio",
+            17771593641054934856197983478245767638
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "0.3048"
+        }
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_metre_ratio",
+            17771593641054934856197983478245767638
+        ],
+        "dst": [
+            "ml_foot_ratio",
+            150280610960339969789551668292960104920
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "3.28084"
+        }
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_metre_ratio",
+            17771593641054934856197983478245767638
+        ],
+        "dst": [
+            "ml_si_nm_ratio",
+            257091757625055920788370123828667027186
+        ],
+        "function": "lambda x: ml_math.ratio_convert(x,a)",
+        "parameters": {
+            "a": "1/1E9"
+        }
+    }
+]

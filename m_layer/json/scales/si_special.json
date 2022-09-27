@@ -1,0 +1,242 @@
+[
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_radian_ratio",
+            273301153578020696303516833405033923738
+        ],
+        "reference": [
+            "si_radian",
+            311561499536022904630229742672799278060
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_steradian_ratio",
+            32770856226407901062990983569518403912
+        ],
+        "reference": [
+            "si_steradian",
+            306592660820534377373397144190459295073
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_hertz_ratio",
+            307647520921278207356294979342476646905
+        ],
+        "reference": [
+            "si_hertz",
+            198610898083606115768120013170738979781
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_newton_ratio",
+            189557404890962043877029120197866874763
+        ],
+        "reference": [
+            "si_newton",
+            65199853203390813538946972276645893542
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_joule_ratio",
+            165050666678496469850612022016789737781
+        ],
+        "reference": [
+            "si_joule",
+            100917883444018504706749879854610536252
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_watt_ratio",
+            187283128390663390999796624059676699282
+        ],
+        "reference": [
+            "si_watt",
+            129413603491642245256399180650298918787
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_coulomb_ratio",
+            198748368208800477995348327936593700088
+        ],
+        "reference": [
+            "si_coulomb",
+            5618510566188282954608530194550214044
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_volt_ratio",
+            324370471112617696659965827203196197232
+        ],
+        "reference": [
+            "si_volt",
+            329937729914753562634885805595267532595
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_farad_ratio",
+            336913163134845067118985388522794592386
+        ],
+        "reference": [
+            "si_farad",
+            326980191860455759475006183606607318398
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_ohm_ratio",
+            303280496571585261425542097983003197755
+        ],
+        "reference": [
+            "si_ohm",
+            301106267988465836015458636243981467619
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_siemens_ratio",
+            223990350734561749169194412894610930505
+        ],
+        "reference": [
+            "si_siemens",
+            141362926343587532391331354060487382910
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_weber_ratio",
+            106266035350012799757898573540667841681
+        ],
+        "reference": [
+            "si_weber",
+            3389824025561912595583897462196041346
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_tesla_ratio",
+            63565002149316643705463155466715720636
+        ],
+        "reference": [
+            "si_tesla",
+            15906806309243323560382538299228898627
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_henry_ratio",
+            201687168262850561730483492138349131967
+        ],
+        "reference": [
+            "si_henry",
+            11327962629869551145083263853955388968
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_lumen_ratio",
+            136780883433708489065848897588637818235
+        ],
+        "reference": [
+            "si_lumen",
+            178604853758124415947190859599928060691
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_lux_ratio",
+            133525930046188902301745875083134807036
+        ],
+        "reference": [
+            "si_lux",
+            251981903838384865021301348395596094419
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_becquerel_ratio",
+            327022986202149438703681911339752143822
+        ],
+        "reference": [
+            "si_becquerel",
+            242810001130839645194060996978894233380
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_gray_ratio",
+            23633034713414612299487808194790293197
+        ],
+        "reference": [
+            "si_gray",
+            42625819543687514969872652687928706428
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_sivert_ratio",
+            53186499560198469150916689883346793995
+        ],
+        "reference": [
+            "si_sievert",
+            260800576749023642398207910270708676006
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_katal_ratio",
+            336666281013545490110035254871921983511
+        ],
+        "reference": [
+            "si_katal",
+            210050588990714299280261293485706188845
+        ],
+        "scale_type": "ratio"
+    }
+]

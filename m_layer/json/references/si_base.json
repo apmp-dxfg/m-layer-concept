@@ -1,0 +1,198 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kilogram",
+            188151331508313165897603768130808181784
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram",
+                "symbol": "kg"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 0, 0, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        },
+        "UCUM": {
+            "code": "kg",
+            "description": "kilogram"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_metre",
+            61268972265076316018593147152102406832
+        ],
+        "locale": {
+            "default": {
+                "name": "metre",
+                "symbol": "m"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 1, 0, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        },
+        "UCUM": {
+            "code": "m",
+            "description": "meter"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_second",
+            110730041758233939215703442037761569190
+        ],
+        "locale": {
+            "default": {
+                "name": "second",
+                "symbol": "s"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 0, 1, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        },
+        "UCUM": {
+            "code": "s",
+            "description": "second"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_ampere",
+            264081801568151063132838497538090031099
+        ],
+        "locale": {
+            "default": {
+                "name": "ampere",
+                "symbol": "A"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 0, 0, 1, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        },
+        "UCUM": {
+            "code": "A",
+            "description": "ampere"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kelvin",
+            25703533220788919988679332108037098600
+        ],
+        "locale": {
+            "default": {
+                "name": "kelvin",
+                "symbol": "K"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 0, 0, 0, 1, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        },
+        "UCUM": {
+            "code": "K",
+            "description": "degree Kelvin"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_mole",
+            96713855510406467826626480289106173630
+        ],
+        "locale": {
+            "default": {
+                "name": "mole",
+                "symbol": "mol"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 0, 0, 0, 0, 1, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        },
+        "UCUM": {
+            "code": "mol",
+            "description": "mole"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_candela",
+            107700549721211215242458620140782394628
+        ],
+        "locale": {
+            "default": {
+                "name": "candela",
+                "symbol": "cd"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 0, 0, 0, 0, 0, 1]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        },
+        "UCUM": {
+            "code": "cd",
+            "description": "candela"
+        }
+    }
+]

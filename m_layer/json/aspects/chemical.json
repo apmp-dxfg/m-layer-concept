@@ -1,0 +1,28 @@
+[
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_amount<H2>",
+            22874499152608371964181019881919989519
+        ],
+        "locale": {
+            "default": {
+                "name": "amount_<H2>",
+                "symbol": "H2"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_amount<Na2SO4>",
+            4303594025179229828240367600027145012
+        ],
+        "locale": {
+            "default": {
+                "name": "amount<Na2SO4>",
+                "symbol": "Na2SO4"
+            }
+        }
+    }
+]

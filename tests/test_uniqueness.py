@@ -92,8 +92,31 @@ class TestInit(unittest.TestCase):
             self.assertFalse( s_i in aspects, msg = "{}, {}".format(s_i,scales[s_i]) )
             self.assertFalse( s_i in references, msg = "{}, {}".format(s_i,scales[s_i]) )
 
-        # conversion and casting can be cross checked
-        type_dir = os.path.join(json_files,'conversion_casting')
+        # conversion can be cross checked
+        type_dir = os.path.join(json_files,'conversion')
+        self.assertTrue(os.path.isdir(type_dir))
+        files = os.path.join(type_dir,r'*.json')
+        # print(files)
+        for f_json in glob.glob( files ):
+            # print(f_json)
+            with open(f_json,'r') as f:
+                data = json.load(f)  
+                # Expect a list of dicts 
+                for i in data:
+                            
+                    if i['__entry__'] == 'Conversion':
+                        s = i['src']
+                        self.assertTrue( str(s[1]) in scales, msg=s )
+                        s = i['dst']
+                        self.assertTrue( str(s[1]) in scales, msg=s )
+
+                    else:
+                        msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
+                        self.fail(msg)
+
+
+        # aspect-scales can be cross checked
+        type_dir = os.path.join(json_files,'scales_for')
         self.assertTrue(os.path.isdir(type_dir))
         files = os.path.join(type_dir,r'*.json')
         # print(files)
@@ -106,18 +129,31 @@ class TestInit(unittest.TestCase):
                     if i['__entry__'] == 'ScalesForAspect':
                         a = i['aspect']
                         self.assertTrue( str(a[1]) in aspects )
-                        
-                        s_lst = i['scales']
-                        for s in s_lst:
-                            msg = "{} in {}".format(s[0],f_json)
-                            self.assertTrue( str(s[1]) in scales, msg=msg )
-                            
-                    elif i['__entry__'] == 'Conversion':
+                                                    
                         s = i['src']
-                        self.assertTrue( str(s[1]) in scales, msg=s )
-                        s = i['dst']
-                        self.assertTrue( str(s[1]) in scales, msg=s )
-                    elif i['__entry__'] == 'Cast':
+                        msg = "{} in {}".format(s[0],f_json)
+                        self.assertTrue( str(s[1]) in scales, msg=msg )
+
+                        d = i['dst']
+                        msg = "{} in {}".format(d[0],f_json)
+                        self.assertTrue( str(d[1]) in scales, msg=msg )
+
+                    else:
+                        msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
+                        self.fail(msg)
+
+        # casting can be cross checked
+        type_dir = os.path.join(json_files,'casting')
+        self.assertTrue(os.path.isdir(type_dir))
+        files = os.path.join(type_dir,r'*.json')
+        # print(files)
+        for f_json in glob.glob( files ):
+            # print(f_json)
+            with open(f_json,'r') as f:
+                data = json.load(f)  
+                # Expect a list of dicts 
+                for i in data:
+                    if i['__entry__'] == 'Cast':
                         # aspects follow scales in the JSON files 
                         x = i['src']
                         self.assertTrue( str(x[0][1]) in scales, msg=x )
@@ -158,7 +194,7 @@ class TestInit(unittest.TestCase):
         
     def test_names(self):
         """
-        In a particular aspect/scale/reference directory defined my `ml_type`,
+        In a particular aspect/scale/reference directory defined by `ml_type`,
         run through all the entries and make sure that each name is indeed different 
         from all the others.
         
@@ -205,8 +241,29 @@ class TestInit(unittest.TestCase):
             self.assertFalse( s_i in aspects, msg = "{}, {}".format(s_i,scales[s_i]) )
             self.assertFalse( s_i in references, msg = "{}, {}".format(s_i,scales[s_i]) )
 
-        # conversion and casting can be cross checked
-        type_dir = os.path.join(json_files,'conversion_casting')
+        # conversion can be cross checked
+        type_dir = os.path.join(json_files,'conversion')
+        self.assertTrue(os.path.isdir(type_dir))
+        files = os.path.join(type_dir,r'*.json')
+        # print(files)
+        for f_json in glob.glob( files ):
+            # print(f_json)
+            with open(f_json,'r') as f:
+                data = json.load(f)  
+                # Expect a list of dicts 
+                for i in data:
+                            
+                    if i['__entry__'] == 'Conversion':
+                        s = i['src']
+                        self.assertTrue( str(s[0]) in scales, msg=s )
+                        s = i['dst']
+                        self.assertTrue( str(s[0]) in scales, msg=s )
+                    else:
+                        msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
+                        self.fail(msg)        
+
+        # aspect-scales can be cross checked
+        type_dir = os.path.join(json_files,'scales_for')
         self.assertTrue(os.path.isdir(type_dir))
         files = os.path.join(type_dir,r'*.json')
         # print(files)
@@ -220,17 +277,30 @@ class TestInit(unittest.TestCase):
                         a = i['aspect']
                         self.assertTrue( str(a[0]) in aspects )
                         
-                        s_lst = i['scales']
-                        for s in s_lst:
-                            msg = "{} in {}".format(s[0],f_json)
-                            self.assertTrue( str(s[0]) in scales, msg=msg )
-                            
-                    elif i['__entry__'] == 'Conversion':
                         s = i['src']
-                        self.assertTrue( str(s[0]) in scales, msg=s )
-                        s = i['dst']
-                        self.assertTrue( str(s[0]) in scales, msg=s )
-                    elif i['__entry__'] == 'Cast':
+                        msg = "{} in {}".format(s[0],f_json)
+                        self.assertTrue( str(s[0]) in scales, msg=msg )
+
+                        d = i['dst']
+                        msg = "{} in {}".format(d[0],f_json)
+                        self.assertTrue( str(d[0]) in scales, msg=msg )
+                            
+                    else:
+                        msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
+                        self.fail(msg)  
+                        
+        # casting can be cross checked
+        type_dir = os.path.join(json_files,'casting')
+        self.assertTrue(os.path.isdir(type_dir))
+        files = os.path.join(type_dir,r'*.json')
+        # print(files)
+        for f_json in glob.glob( files ):
+            # print(f_json)
+            with open(f_json,'r') as f:
+                data = json.load(f)  
+                # Expect a list of dicts 
+                for i in data:
+                    if i['__entry__'] == 'Cast':
                         # aspects follow scales in the JSON files 
                         x = i['src']
                         self.assertTrue( str(x[0][0]) in scales, msg=x )
@@ -241,7 +311,69 @@ class TestInit(unittest.TestCase):
                         self.assertTrue( str(x[1][0]) in aspects, msg=x )
                     else:
                         msg = "unknown type: {} in {}".format(i['__entry__'],f_json)
-                        self.fail(msg)        
+                        self.fail(msg)  
+ 
+    def test_systematic_scale_uniqueness(self):
+        """
+        The name of a ratio scale with a reference belonging to a unit  
+        system may be a product of powers of base unit names in that system. 
+        We call such a scale "systematic". A scale name may also be special 
+        in some way (i.e., non-systematic, like "V.m-1")
+
+        The M-layer dimension of any non-systematic scale must map to 
+        just one systematic scale (the client may then need to cast
+        to the desired scale).
+        
+        """
+        from m_layer.context import global_context as cxt 
+        from m_layer.lib import _sys_to_dimension
+        from m_layer.uid import UID
+        
+        for src_scale_uid in cxt.scale_reg._objects.keys(): 
+            
+            json_scale = cxt.scale_reg[src_scale_uid]  
+            ref_uid = UID( json_scale['reference'] )
+            json_ref = cxt.reference_reg[ ref_uid ]
+
+            if "system" in json_ref:                
+                dim = _sys_to_dimension( json_ref["system"] )  
+                
+                if "systematic" in json_scale: 
+                    self.assertTrue(
+                        json_scale["scale_type"] == "ratio",
+                        msg="{}".format(src_scale_uid)
+                    )
+                    self.assertTrue( 
+                        cxt.dimension_conversion_reg[dim] == src_scale_uid,
+                        msg="{} from {}".format(src_scale_uid,dim)
+                    )
+                elif json_scale["scale_type"] == "ratio":
+                    # For every name of a ratio scale with a reference belonging 
+                    # to a unit system and not systematic, there should 
+                    # be a systematic scale entry with the same dimensions in the 
+                    # `dimension_conversion_reg`. 
+                    # This systematic scale provides a basis for casting.
+                    # This test reports any missing cases.
+                    with self.subTest(
+                        msg = "no mapping from {!r} to {!r}".format(
+                            src_scale_uid,dim
+                        )
+                    ):
+                        self.assertTrue( dim in cxt.dimension_conversion_reg )
+                        
+                    with self.subTest(
+                        msg = "{} is not systematic".format(
+                            cxt.dimension_conversion_reg[dim]
+                        )
+                    ):
+                        s_uid = cxt.dimension_conversion_reg[dim]
+                        s_json = cxt.scale_reg[ s_uid ]
+                        self.assertTrue( "systematic" in s_json )
+                else:
+                    pass
+      
+            
+
 #============================================================================
 if __name__ == '__main__':
     unittest.main()

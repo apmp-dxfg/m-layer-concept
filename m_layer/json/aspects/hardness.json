@@ -1,0 +1,28 @@
+[
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_hardness<Vickers>",
+            22764066689128529062358332498159884424
+        ],
+        "locale": {
+            "default": {
+                "name": "Vickers",
+                "symbol": "?"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_hardness<Mohs>",
+            301609995418669955585394848633185126850
+        ],
+        "locale": {
+            "default": {
+                "name": "mohs",
+                "symbol": "mohs"
+            }
+        }
+    }
+]

@@ -18,11 +18,11 @@ Clone this repository and then either install the package using the python comma
 Documentation
 =============
 
-The documentation for the latest version of **M-Layer** can be found `here <https://m-layer-concept.readthedocs.io/>`_.  
+The documentation for the **M-Layer** can be found `here <https://m-layer-concept.readthedocs.io/>`_.  
 
 .. |docs| image:: https://readthedocs.org/projects/m-layer-concept/badge/?version=main
     :target: https://m-layer-concept.readthedocs.io/en/main/?badge=main
-    :alt: Documentation Status
       
 .. |github tests| image:: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml/badge.svg
    :target: https://github.com/apmp-dxfg/m-layer-concept/actions/workflows/run-tests.yml
+        

@@ -97,6 +97,7 @@ tests_require = [
     'pytest>=4.4',  # >=4.4 to support the "-p conftest" option
     'pytest-cov',
     'sybil',
+    'openpyxl',
 ]
 
 testing = {'test', 'tests', 'pytest'}.intersection(sys.argv)
@@ -135,6 +136,7 @@ setup(
     extras_require={'tests': tests_require},
     cmdclass={'docs': BuildDocs, 'apidocs': ApiDocs},
     packages=find_packages( include=('m_layer*',) ),
+    include_package_data=True,
     package_data = {
         "m_layer" : ["json/*.json"]
     }

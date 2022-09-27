@@ -1,20 +1,19 @@
 """
-The Context is an interface between external M-layer registers 
-and the local Python session where the M-layer is being used.
-
+The Context provides a local interface to external M-layer registers.
+The Context is not intended to be used directly in applications.
 """
 import json 
 import glob
+import os.path
 
 from m_layer import register 
 from m_layer import conversion_register
 from m_layer import casting_register
 from m_layer import scales_for_aspect_register
 
-__all__ = (
-    'Context',
-    'default_context',
-)
+from m_layer.uid import UID 
+
+__all__ = ('global_context', )
 
 # ---------------------------------------------------------------------------
 def uid_as_str(uid,short=True):
@@ -31,24 +30,27 @@ def uid_as_str(uid,short=True):
 class Context(object):
     
     """
-    A `Context` object contains M-layer records for aspects, scales, 
-    conversions, casting, and conventional references. 
+    A `Context` provide a Python interface to M-layer registry records. 
     """
     
     def __init__(
             self,
             locale = 'default',
-            value_fmt = "{:.5f}",
+            # value_fmt = "{:.5f}",
             scale_reg = None,
             reference_reg = None,
             aspect_reg = None,
             conversion_reg = None,
             casting_reg = None,
-            scales_for_aspect_reg = None
+            scales_for_aspect_reg = None,
+            system_reg = None
             
-        ):
+        ):       
+        
         self.locale = locale 
-        self.value_fmt = value_fmt
+        # self.value_fmt = value_fmt
+        self.dimension_conversion_reg={}
+
         
         if scale_reg is None:
             self.scale_reg = register.Register(self)
@@ -80,10 +82,17 @@ class Context(object):
                 scales_for_aspect_register.ScalesForAspectRegister(self)
         else:
             self.scales_for_aspect_reg = scales_for_aspect_reg
-
+                
+        if system_reg is None:
+            self.system_reg = register.Register(self)
+        else:
+            self.system_reg = reference_reg
 
     def _load_entity(self,entity):
+        # Handle one JSON object
+        
         entity_type = entity['__entry__']
+        
         if entity_type == "Reference":
             self.reference_reg.set(entity)
         elif entity_type == "Aspect":
@@ -96,23 +105,21 @@ class Context(object):
             self.casting_reg.set(entity)
         elif entity_type == "ScalesForAspect":
             self.scales_for_aspect_reg.set(entity)
+        elif entity_type == "UnitSystem":
+            self.system_reg.set(entity)
         else:
             raise RuntimeError(
                "unknown type: {}".format(entity_type)
             )
-        
+
     def _loader(self,data):
-        # A single entity will be presented as a dict
-        # A json array is a list.
+        # A JSON object is a dict
+        # A JSON array of objects is a list.
         if isinstance(data,list):
             for l_i in data:
                 self._load_entity(l_i)
         else:       
             self._load_entity(data)
-            
-    def loads(self,json_str,**kwargs):
-        data = json.loads(json_str,**kwargs)
-        self._loader(data)
             
     def load_json(self,file_path,**kwargs):
         with open(file_path,'r') as f:
@@ -130,7 +137,7 @@ class Context(object):
         """
         for f_json in glob.glob( path ):
             try:
-                default_context.load_json( f_json, **kwargs )
+                self.load_json( f_json, **kwargs )
             except json.decoder.JSONDecodeError as e:
                 # Report errors but do not stop execution
                 print("json.decoder.JSONDecodeError",e, 'in:',f_json)
@@ -142,115 +149,273 @@ class Context(object):
     @locale.setter
     def locale(self,l):
         self._locale = l 
-        
-    def conversion_fn(self,src_scale,dst_scale,aspect=None):
+  
+    def convertible(self,src_scale_uid,src_aspect_uid,dst_scale_uid):
         """
-        Return a function to convert a value expressed 
-        in `src_scale` to an expression in terms of `dst_scale`.
+        Raise ``RuntimeError`` if there is not a registered conversion  
+        from the source scale and aspect to the destination scale. 
         
-        The ``aspect`` argument extends the search to
-        aspect-specific conversion definitions.  
+        """
+        assert isinstance(src_scale_uid,UID), repr(src_scale_uid)
+        assert isinstance(src_aspect_uid,UID), repr(src_aspect_uid)
+        assert isinstance(dst_scale_uid,UID), repr(dst_scale_uid)
+
+        if src_scale_uid == dst_scale_uid:
+            return True
+            
+        scale_pair = (src_scale_uid,dst_scale_uid)
+        
+        if( 
+            src_aspect_uid != self.no_aspect_uid
+        and 
+            src_aspect_uid in self.scales_for_aspect_reg
+        ):
+            if scale_pair in self.scales_for_aspect_reg[src_aspect_uid]:
+                return True
+                
+        # Default aspect conversions are possible
+        if scale_pair in self.conversion_reg: return True
+                        
+        # This is a failure
+        if src_aspect_uid == self.no_aspect_uid:
+            msg = "no conversion from Scale( {!s} ) to Scale( {!s} )".format(
+                    src_scale_uid,
+                    dst_scale_uid
+                )
+        else:
+            msg = "no conversion from Scale( {!s} ) to Scale( {!s} ) for Aspect( {!s} )".format(
+                    src_scale_uid,
+                    dst_scale_uid,
+                    src_aspect_uid
+                )
+         
+        raise RuntimeError(msg)
+         
+        
+    def conversion_from_scale_aspect(
+        self,
+        src_scale_uid,
+        src_aspect_uid,
+        dst_scale_uid
+    ):
+        """
+        Return a function that converts data expressed 
+        in the `src` scale and aspect to the `dst` scale.
+        
+        The aspect does not change.  
         
         Args:
-            src_scale (:class:`~scale.Scale`): the initial scale 
-            dst_scale (:class:`~scale.Scale`): the final scale
-            aspect (:class:`~aspect.Aspect`, optional): the aspect for scales
+            src_scale_uid: initial scale   
+            src_aspect_uid: initial aspect
+            dst_scale_uid: final scale
         
         Returns:
             A Python function 
             
-        """                
-        scale_pair = (src_scale.uid,dst_scale.uid)
+        """ 
+        assert isinstance(src_scale_uid,UID), repr(src_scale_uid)
+        assert isinstance(src_aspect_uid,UID), repr(src_aspect_uid)
+        assert isinstance(dst_scale_uid,UID), repr(dst_scale_uid)
         
-        # Note, the register should probably not allow an aspect-free conversion 
-        # to be defined when there is already an aspect-specific one defined.
-        # However, by doing the aspect-specific look-up first, this implementation
-        # will allow multiple definitions to coexist and give precedence to 
-        # aspect-specific definitions.
+        if src_scale_uid == dst_scale_uid:
+            # Trivial case where no conversion is required
+            return lambda x: x
+            
+        scale_pair = (src_scale_uid,dst_scale_uid)
         
-        # Has an aspect argument been given that restricts conversions?
-        # Look first in the aspect-specific conversion table
-        if( aspect is not None 
-        and aspect.uid in self.scales_for_aspect_reg
+        # By doing the aspect-specific look-up first,  
+        # multiple definitions are possible and precedence  
+        # can be given to aspect-specific cases.
+        
+        if( 
+            src_aspect_uid != self.no_aspect_uid 
+        and 
+            src_aspect_uid in self.scales_for_aspect_reg
         ):
-            scales_for_aspect = self.scales_for_aspect_reg[aspect.uid]
+            scales_for_aspect = self.scales_for_aspect_reg[src_aspect_uid]
             try:
                 return scales_for_aspect[scale_pair]
             except KeyError:
                 pass
                 
-        # Aspect-free conversions are possible
+        # If a generic conversion is available it can be used 
+        # and the initial aspect is carried forward
         try:
             return self.conversion_reg[scale_pair] 
         except KeyError:
             pass
                         
         # This is a failure 
-        if aspect is None:
+        if src_aspect_uid == self.no_aspect_uid:
             raise RuntimeError(
-                "no conversion from {!r} to {!r}".format(
-                    src_scale,
-                    dst_scale
+                "no conversion from Scale( {!s} ) to Scale( {!s} )".format(
+                    src_scale_uid,
+                    dst_scale_uid
                 )
             )
         else:
             raise RuntimeError(
-                "no conversion from {!r} to {!r} for {!r}".format(
-                    src_scale,
-                    dst_scale,
-                    aspect
+                "no conversion from Scale( {!s} ) to Scale( {!s} ) for Aspect( {!s} )".format(
+                    src_scale_uid,
+                    dst_scale_uid,
+                    src_aspect_uid
                 )
             )
-
-    def casting_fn(self,src_exp,dst_scale_aspect):
+ 
+    def conversion_from_compound_scale_dim(
+        self,
+        dimension,
+        dst_scale_uid
+    ):
         """
-        Return a function to cast the value of ``src_exp`` to an
-        expression in ``dst_scale_aspect``.
+            
+        """ 
+        # Note the caller must have checked that the dimension 
+        # and the dimensions associated with dst_scale_uid
+        # are compatible. 
+        try:
+            src_scale_uid = self.dimension_conversion_reg[dimension] 
+        except KeyError:
+            raise RuntimeError(
+                    "no scale defined for {!r}".format(src_dim)
+                )           
+ 
+        if src_scale_uid == dst_scale_uid:
+            # Trivial case where no conversion is required
+            return lambda x: x
+
+        scale_pair = (src_scale_uid,dst_scale_uid)
+        
+        # Only a generic conversion is possible? 
+        try:
+            return self.conversion_reg[scale_pair] 
+        except KeyError:
+            raise RuntimeError(
+                "no conversion from {!r} to {!r}".format(
+                    src_scale_uid,
+                    dst_scale_uid,
+                )
+            )
+        
+    def casting_from_scale_aspect(
+        self,
+        src_scale_uid, src_aspect_uid,
+        dst_scale_uid, dst_aspect_uid
+    ):
+        """
+        Return a function that transforms data on an initial scale-aspect  
+        to a different scale and aspect.
         
         Args:
-            src_exp (:class:`~expression.Expression`): the initial expression
-            dst_scale_aspect (:class:`scale_aspect.ScaleAspect`): the scale-aspect pair for the final expression
+            src_scale_uid: initial scale   
+            src_aspect_uid: initial aspect
+            dst_scale_uid: final scale
+            dst_aspect_uid: final aspect
             
         Returns:
             A Python function 
             
-        """        
-        src_pair = src_exp.scale_aspect.uid     # scale-aspect pair
-        dst_pair = dst_scale_aspect.uid         # scale-aspect pair
+        """ 
+        dst_pair = dst_scale_uid, dst_aspect_uid
+        src_pair = src_scale_uid, src_aspect_uid    
         
+        if src_scale_uid == dst_scale_uid and src_aspect_uid == self.no_aspect_uid:
+            # Apply the aspect
+            return lambda x: x 
+          
+        if src_aspect_uid == dst_aspect_uid:
+        
+            # Look for aspect-specific conversions first
+            scales_for_aspect = self.scales_for_aspect_reg[ dst_aspect_uid ]
+            try:
+                return scales_for_aspect[ (src_scale_uid, dst_scale_uid) ]
+            except KeyError:
+                pass
+
+        # TODO:
+        # Should casting requests also look for legitimate conversions
+        # if the aspect is unchanged?
+               
         try:
-            return self.casting_reg[ (src_pair,dst_pair) ]
-            
+            return self.casting_reg[ src_pair,dst_pair ]   
         except KeyError:
             raise RuntimeError(
                 "no cast defined from '{!r}' to '{!r}'".format(
                     src_pair,
                     dst_pair
                 )
-            )            
+            ) from None          
+
+    def casting_from_compound_scale_dim(
+        self,
+        dimension,
+        dst_scale_uid, dst_aspect_uid
+    ):
+        """
+        Return a function that transforms data on an initial compound-scale  
+        to a different scale.
+        
+        Args:
+            dimension (:class:`~dimension.Dimension`): the dimensions of the compound scale   
+            dst_scale_uid: final scale
+            dst_aspect_uid: final aspect
+            
+        Returns:
+            A Python function 
+            
+        """ 
+        # Note the caller must have checked that the dimension 
+        # and the dimensions associated with dst_scale_uid
+        # are compatible. 
+        dst_pair = dst_scale_uid, dst_aspect_uid   
+
+        try:
+            src_scale_uid = self.dimension_conversion_reg[dimension]   
+        except KeyError:
+            raise RuntimeError(
+                "no scale defined for {!r}".format(dimension)
+            )     
+             
+        if src_scale_uid == dst_scale_uid:
+            # Apply the aspect
+            return lambda x: x 
+ 
+        src_pair = src_scale_uid, self.no_aspect_uid 
+        try:
+            return self.casting_reg[ src_pair,dst_pair ]   
+        except KeyError:
+            raise RuntimeError(
+                "no cast defined from '{}' to '{}'".format(
+                    src_pair,
+                    dst_pair
+                )
+            )   
 
 # ---------------------------------------------------------------------------
-# Configure a default context object by reading all JSON files
-# in the directories.
+# Configure the global context object 
 #
-import os.path
+_dir = os.path.dirname(__file__)
 
-default_context = Context()
+global_context = Context()
+"""The Context object used during a Python session"""
 
 for p_i in (
         r'json/references', 
         r'json/scales',
-        r'json/conversion_casting',
+        r'json/conversion',
+        r'json/casting',
         r'json/aspects',
-        r'json/scales_for_aspects'
+        r'json/scales_for',
+        r'json/systems'
     ):
-    path = os.path.join( 
-        os.path.dirname(__file__), 
-        p_i, 
-        r'*.json'
-    )
-    default_context.load(path)
+    path = os.path.join(_dir,p_i, r'*.json')
+    global_context.load(path)
 
+# The `no_aspect` entry is special, we need the uid
+file_path = os.path.join( _dir, r'json/aspects/no_aspect.json' )
+# assert os.path.isfile( file_path ), repr( file_path )
 
-# ===========================================================================
-    
+with open(file_path,'r') as f:
+    data = json.load(f)        
+
+global_context.no_aspect_uid = UID( data[0]['uid'] )   
