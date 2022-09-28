@@ -222,7 +222,8 @@ if __name__ == '__main__':
         # 'unit-system' : dict(
             # uid = [],
             # dimensions = [],
-            # prefix = []
+            # prefix = [],
+            # coherent : 1
         # ),
         # "UCUM" : dict(
             # code = "",
@@ -251,14 +252,17 @@ if __name__ == '__main__':
             obj['system'] = dict(
                 uid = put_uid(directory,ws,r[3].value,i,3+1),
                 dimensions = str( literal_eval( r[4].value ) ),
-                prefix = literal_eval( r[5].value )
+                prefix = literal_eval( r[5].value ),
             )
+            if r[6].value is not None:
+                obj['system']['coherent'] = int( r[6].value )
+                
            
         # Code in UCUM may not be provided
-        if r[6].value is not None:  
+        if r[7].value is not None:  
             obj['UCUM'] = dict(
-                code = str( r[6].value ),
-                description = str( r[7].value )
+                code = str( r[7].value ),
+                description = str( r[8].value )
             )
         
         return obj
@@ -328,7 +332,8 @@ if __name__ == '__main__':
         # 'aspect' : [], 
         # 'src' : [], 
         # 'dst' : [], 
-        # 'factors' : [], 
+        # 'function' : [], 
+        # 'parameters' : dict()
     # }
             
     directory = "scales_for"
@@ -339,7 +344,8 @@ if __name__ == '__main__':
             aspect = put_uid(directory,ws,r[0].value,i,0+1),
             src = put_uid(directory,ws,r[1].value,i,1+1),
             dst = put_uid(directory,ws,r[2].value,i,2+1),
-            factors = literal_eval( r[3].value )
+            function = str( r[3].value ),
+            parameters = literal_eval( r[4].value )
         )
         
     wb = load_workbook( xl_path(directory), data_only=True  )

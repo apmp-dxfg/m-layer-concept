@@ -27,6 +27,16 @@ json_root = os.path.join( root, r'json' )
 xl_root = os.path.join( root, 'xl' )
 
 # --------------------------------------------------------------------------- 
+def ws_title(ws,title_str):
+    title = str(title_str)
+    if len(title) > 31:
+        raise RuntimeError(
+            "sheet name would be truncated to: '{}'".format(title[:31])
+        )
+    else:
+        return title
+        
+# --------------------------------------------------------------------------- 
 def ws_label(ws,labels):
     for i,l_i in enumerate(labels):
         ws.cell(row=1,column=i+1,value=l_i)
@@ -112,7 +122,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = str(name)       
+        ws.title = ws_title(ws,name)       
         ws_label(ws,labels)
 
         try:        
@@ -161,7 +171,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = str(name)       
+        ws.title = ws_title(ws,name)       
         ws_label(ws,labels)
 
         try:        
@@ -188,7 +198,8 @@ if __name__ == '__main__':
         # 'system' : dict(
             # uid = [],
             # dimensions = [],
-            # prefix = []
+            # prefix = [],
+            # coherent = 1
         # ),
         # "UCUM" : dict(
             # code = "",
@@ -199,7 +210,7 @@ if __name__ == '__main__':
     labels = [
         'uid',
         'locale.default.name','locale.default.symbol',
-        'system.uid', 'system.dimensions', 'system.prefix',
+        'system.uid', 'system.dimensions', 'system.prefix', 'system.coherent',
         'UCUM.code','UCUM.description'
     ]
         
@@ -215,7 +226,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = str(name)       
+        ws.title = ws_title(ws,name)       
         ws_label(ws,labels)
 
         try:        
@@ -233,17 +244,22 @@ if __name__ == '__main__':
             try:    # UnitSystem may not be included
                 add_uid_reference(ws,d_i['system']['uid'],row=i+2,col=4)
                 add_string(ws,d_i['system']['dimensions'],row=i+2,col=5)
-                add_string(ws,d_i['system']['prefix'],row=i+2,col=6)
+                add_string(ws,d_i['system']['prefix'],row=i+2,col=6)                    
             except KeyError as k:   
                 ws.cell(row=i+2,column=4,value=None)
                 ws.cell(row=i+2,column=5,value=None)
                 ws.cell(row=i+2,column=6,value=None)
-            try:    # UCUM code may not be included
-                add_string(ws,d_i['UCUM']['code'],row=i+2,col=7)
-                add_string(ws,d_i['UCUM']['description'],row=i+2,col=8)
-            except KeyError as k:
+            try: # system.coherent may be omitted
+                add_string(ws,d_i['system']['coherent'],row=i+2,col=7)
+            except KeyError:
                 ws.cell(row=i+2,column=7,value=None)
+                
+            try:    # UCUM code may not be included
+                add_string(ws,d_i['UCUM']['code'],row=i+2,col=8)
+                add_string(ws,d_i['UCUM']['description'],row=i+2,col=9)
+            except KeyError as k:
                 ws.cell(row=i+2,column=8,value=None)
+                ws.cell(row=i+2,column=9,value=None)
             
     # ---------------------------------------------------------------------------
     # Process scales 
@@ -276,7 +292,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = str(name)       
+        ws.title = ws_title(ws,name)       
         ws_label(ws,labels)
 
         try:        
@@ -305,14 +321,16 @@ if __name__ == '__main__':
         # 'aspect' : [], 
         # 'src' : [], 
         # 'dst' : [], 
-        # 'factors' : [], 
+        # 'function' : [], 
+        # 'parameters' : dict()
     # }
     
     labels = [
         'aspect',
         'src',
         'dst',
-        'factors'
+        'function',
+        'parameters'
     ]
         
     path = os.path.abspath(
@@ -327,7 +345,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = str(name)        
+        ws.title = ws_title(ws,name)        
         ws_label(ws,labels)
 
         try:        
@@ -342,7 +360,8 @@ if __name__ == '__main__':
             add_uid_reference(ws,d_i['aspect'],row=i+2,col=1)
             add_uid_reference(ws,d_i['src'],row=i+2,col=2)
             add_uid_reference(ws,d_i['dst'],row=i+2,col=3)
-            add_string(ws,d_i['factors'],row=i+2,col=4)
+            add_string(ws,d_i['function'],row=i+2,col=4)             
+            add_string(ws,d_i['parameters'],row=i+2,col=5)    
  
     # ---------------------------------------------------------------------------
     # Process conversion 
@@ -375,7 +394,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = str(name)        
+        ws.title = ws_title(ws,name)        
         ws_label(ws,labels)
 
         try:        
@@ -423,7 +442,7 @@ if __name__ == '__main__':
     for f_json in glob.glob( path ):
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
-        ws.title = str(name)
+        ws.title = ws_title(ws,name)
         ws_label(ws,labels)
 
         try:        
@@ -449,6 +468,7 @@ if __name__ == '__main__':
     for name_i in workbooks:        
         destination = os.path.join( root, "xl" )
         document_name = '{}.xlsx'.format(name_i)
-        filename = os.path.join(destination, document_name)        
+        filename = os.path.join(destination, document_name)  
+        print(len(filename),repr(filename))
         workbooks[name_i].save(filename=filename)
     
