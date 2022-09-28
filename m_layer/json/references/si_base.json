@@ -20,7 +20,8 @@
             "prefix": [
                 "1",
                 "1"
-            ]
+            ],
+            "coherent": 1
         },
         "UCUM": {
             "code": "kg",
@@ -48,7 +49,8 @@
             "prefix": [
                 "1",
                 "1"
-            ]
+            ],
+            "coherent": 1
         },
         "UCUM": {
             "code": "m",
@@ -76,7 +78,8 @@
             "prefix": [
                 "1",
                 "1"
-            ]
+            ],
+            "coherent": 1
         },
         "UCUM": {
             "code": "s",
@@ -104,7 +107,8 @@
             "prefix": [
                 "1",
                 "1"
-            ]
+            ],
+            "coherent": 1
         },
         "UCUM": {
             "code": "A",
@@ -132,7 +136,8 @@
             "prefix": [
                 "1",
                 "1"
-            ]
+            ],
+            "coherent": 1
         },
         "UCUM": {
             "code": "K",
@@ -160,7 +165,8 @@
             "prefix": [
                 "1",
                 "1"
-            ]
+            ],
+            "coherent": 1
         },
         "UCUM": {
             "code": "mol",
@@ -188,7 +194,8 @@
             "prefix": [
                 "1",
                 "1"
-            ]
+            ],
+            "coherent": 1
         },
         "UCUM": {
             "code": "cd",
