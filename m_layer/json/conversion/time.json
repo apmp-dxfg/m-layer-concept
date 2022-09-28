@@ -10,7 +10,9 @@
             219754916679293138667106941253484129447
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a": "1/60"}
+        "parameters": {
+            "a": "1/60"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -23,6 +25,8 @@
             276296348539283398608930897564542275037
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a": "60"}
+        "parameters": {
+            "a": "60"
+        }
     }
 ]

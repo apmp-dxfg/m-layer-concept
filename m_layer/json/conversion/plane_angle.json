@@ -156,7 +156,9 @@
             124567088583703716502057160299542649451
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a": "180/number.pi" }
+        "parameters": {
+            "a": "180/number.pi"
+        }
     },
     {
         "__entry__": "Conversion",
@@ -169,7 +171,9 @@
             124567088583703716502057160299542649451
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
-        "parameters": { "a": "180/number.pi" }
+        "parameters": {
+            "a": "180/number.pi"
+        }
     },
     {
         "__entry__": "Conversion",

@@ -14,7 +14,7 @@
             "a": "0.62137"
         }
     },
-{
+    {
         "__entry__": "Conversion",
         "src": [
             "ml_mile_ratio",
@@ -28,7 +28,8 @@
         "parameters": {
             "a": "1/0.62137"
         }
-    },    {
+    },
+    {
         "__entry__": "Conversion",
         "src": [
             "ml_foot_ratio",
