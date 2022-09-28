@@ -326,8 +326,8 @@ class Context(object):
         if src_aspect_uid == dst_aspect_uid:
         
             # Look for aspect-specific conversions first
-            scales_for_aspect = self.scales_for_aspect_reg[ dst_aspect_uid ]
             try:
+                scales_for_aspect = self.scales_for_aspect_reg[ dst_aspect_uid ]
                 return scales_for_aspect[ (src_scale_uid, dst_scale_uid) ]
             except KeyError:
                 pass
