@@ -30,6 +30,78 @@
     {
         "__entry__": "Reference",
         "uid": [
+            "si_m2.s-2",
+            43884249580662399686209013824067636999
+        ],
+        "locale": {
+            "default": {
+                "name": "metre squared per second squared",
+                "symbol": "m2.s-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 2, -2, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m.s-2",
+            42491345314260602784861712066199660422
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram metre per second squared",
+                "symbol": "kg.m.s-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 1, -2, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m-1.s-2",
+            83097223821115425098330032535404536494
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram per metre per second squared",
+                "symbol": "kg.m-1.s-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, -1, -2, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
             "si_kg.m2.s-2",
             336418795013753717299145887275402842834
         ],
@@ -54,13 +126,13 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_m2.s-2",
-            43884249580662399686209013824067636999
+            "s-_kg.m2.s-3",
+            20608495247943734382135871803409918502
         ],
         "locale": {
             "default": {
-                "name": "metre squared per second squared",
-                "symbol": "m2.s-2"
+                "name": "kilogram metre squared per second cubed",
+                "symbol": "kg.m2.s-3"
             }
         },
         "system": {
@@ -68,7 +140,247 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 2, -2, 0, 0, 0, 0]",
+            "dimensions": "[1, 2, -3, 0, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_A.s",
+            283302541399235689666323745568467797393
+        ],
+        "locale": {
+            "default": {
+                "name": "ampere second",
+                "symbol": "A.s"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 0, 1, 1, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-3.A-1",
+            106244046109467309848568258112891877139
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram metre squared per second cubed per ampere",
+                "symbol": "kg.m2.s-3.A-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg-1,m-2.s4.A2",
+            134814508174849618107610628962028799628
+        ],
+        "locale": {
+            "default": {
+                "name": "per kilogram per metre squared second quadrupled ampere squared",
+                "symbol": "kg-1,m-2.s4.A2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[-1, -2, 4, 2, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-3.A-2",
+            171578473862491388196612187226588461531
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram metre squared per second cubed per ampere squared",
+                "symbol": "kg.m2.s-3.A-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -2, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg-1.m-2.s3.A2",
+            4579579696975120193473697195778175127
+        ],
+        "locale": {
+            "default": {
+                "name": "per kilogram per metre squared second cubed ampere squared",
+                "symbol": "kg-1.m-2.s3.A2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[-1, -2, 3, 2, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-2.A-1",
+            120753861936841495090145936718753092107
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram metre squared per second squared per ampere",
+                "symbol": "kg.m2.s-2.A-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -2, -1, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.s-2.A-1",
+            195281169203572148079814223897622612124
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram per second squared per ampere",
+                "symbol": "kg.s-2.A-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -2, -1, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-2.A-2",
+            63645404309296881020712034930539290090
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram metre squared per second squared per ampere squared",
+                "symbol": "kg.m2.s-2.A-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -2, -2, 0, 0, 0]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_cd.m-2",
+            190854967573003511214075922116323989609
+        ],
+        "locale": {
+            "default": {
+                "name": "candela per metre squared ",
+                "symbol": "cd.m-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, -2, 0, 0, 0, 0, 1]",
+            "prefix": [
+                "1",
+                "1"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_mol.s-1",
+            177768032996776331701140181644133084931
+        ],
+        "locale": {
+            "default": {
+                "name": "mole per second",
+                "symbol": "mol.s-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 0, -1, 0, 0, 1, 0]",
             "prefix": [
                 "1",
                 "1"
