@@ -235,7 +235,7 @@ class Reference(object):
 
     """
 
-    slots = ( '_uid', '_json_entry', '_dimension'  )
+    slots = ( '_uid', '_json_entry', '_dimension', '_coherent'  )
     
     def __init__(self,json_uid):
     
@@ -253,13 +253,28 @@ class Reference(object):
         return "{}".format(
             self._json_entry['locale']['default']['symbol'] 
         )
-        
+
+    @property
+    def coherent(self):
+        "``True`` if the reference is a coherent unit in its unit system"
+        try:
+            return self._coherent
+        except AttributeError:
+            if "system" in self._json_entry :
+                self._coherent = "coherent" in self._json_entry["system"]
+            else:    
+                self._coherent = False
+                
+            return self._coherent
+            
     @property
     def uid(self): 
+        "The unique identifier of the reference"
         return self._uid 
     
     @property
     def dimension(self):
+        "A :class:`~dimension.Dimension` representing the unit in its unit system"
         try:
             return self._dimension
         except AttributeError:
@@ -280,7 +295,7 @@ class CompoundScaleAspect(object):
     A :class:`CompoundScaleAspect` holds a :class:`ScaleAspect` expression
     """
     
-    __slots__ = ( "_stack","_uid", "_dimension", "_str" )
+    __slots__ = ( "_stack","_uid", "_dimension", "_str", "_coherent" )
 
     def __init__(self,scale_aspect_stack):
     
@@ -315,6 +330,13 @@ class CompoundScaleAspect(object):
                     
         return s[:-1] if s[-1] == "." else s
         
+    # @property 
+    # def coherent(self):
+        # try: 
+            # return self._coherent
+        # except AttributeError:
+            # # TODO is coherent iff all components are
+
     @property 
     def composable(self): return True
  
@@ -409,7 +431,7 @@ class ScaleAspect(object):
     A wrapper around a scale and aspect pair.
     """
 
-    __slots__ = ("_scale","_aspect","_dimension")
+    __slots__ = ("_scale","_aspect","_dimension", "_coherent")
 
     def __init__(self,scale,aspect=no_aspect):
         assert isinstance(scale,Scale), repr(scale)
@@ -443,6 +465,10 @@ class ScaleAspect(object):
     def uid(self):
         "A pair of M-layer identifiers for scale and aspect"
         return (self.scale.uid,self.aspect.uid)
+
+    # @property 
+    # def coherent(self):
+        # return self.scale.coherent
 
     @property 
     def composable(self):
@@ -523,7 +549,7 @@ class CompoundScale(object):
     """
     
     __slots__ = (
-        '_uid', '_stack', '_dimension', '_str'
+        '_uid', '_stack', '_dimension', '_str', '_coherent'
     )
  
     def __init__(self,scale_stack):
@@ -591,6 +617,13 @@ class CompoundScale(object):
     @property 
     def scale_type(self):
         return "ratio"
+
+    # @property 
+    # def coherent(self):
+        # try: 
+            # return self._coherent
+        # except AttributeError:
+            # # TODO is coherent iff all components are
   
     @property 
     def composable(self):
@@ -697,7 +730,7 @@ class Scale(object):
     """
 
     __slots__ = (
-        '_scale_uid','_scale_type', '_reference'
+        '_scale_uid','_scale_type', '_reference',  '_coherent'
     )
     
     def __init__(self,scale_uid):    
@@ -706,7 +739,14 @@ class Scale(object):
         self._reference = Reference(
             cxt.scale_reg[self._scale_uid]['reference']
         ) 
-        
+ 
+    # @property 
+    # def coherent(self):
+        # try: 
+            # return self._coherent
+        # except AttributeError:
+            # # TODO look up reference to see if coherent
+ 
     @property 
     def composable(self):
         return self.scale_type == "ratio"
