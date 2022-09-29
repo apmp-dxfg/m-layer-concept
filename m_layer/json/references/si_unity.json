@@ -20,7 +20,8 @@
             "prefix": [
                 "1",
                 "1"
-            ]
+            ],
+            "coherent" : 1
         },
         "UCUM": {
             "code": "1",
