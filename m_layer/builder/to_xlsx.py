@@ -79,7 +79,35 @@ def get_wb(directory):
         workbooks[directory] = wb
     
     return workbooks[directory]
-        
+
+# ---------------------------------------------------------------------------
+def get_file_list(directory): 
+    """
+    Return a list of file paths with filenames prefixed by 'si_' first
+    
+    """
+    path = os.path.abspath(
+        os.path.join( 
+            json_root,
+            directory,
+            r'si_*.json'
+        )
+    )
+    si_parents = glob.glob( path )
+
+    path = os.path.abspath(
+        os.path.join( 
+            json_root,
+            directory,
+            r'*.json'
+        )
+    )
+    
+    return si_parents + [ 
+        f_i for f_i in glob.glob( path ) 
+            if f_i not in si_parents 
+    ]
+ 
 # =========================================================================== 
 if __name__ == '__main__': 
 
@@ -195,11 +223,13 @@ if __name__ == '__main__':
         # '__entry__' : 'Reference',        
         # 'uid' : [], 
         # 'locale' : locale, 
+        # 'recognised_by' : [],
         # 'system' : dict(
             # uid = [],
             # dimensions = [],
-            # prefix = [],
-            # coherent = 1
+            # special | systematic 
+            # prefixed = []
+            # prefix = []
         # ),
         # "UCUM" : dict(
             # code = "",
@@ -210,20 +240,19 @@ if __name__ == '__main__':
     labels = [
         'uid',
         'locale.default.name','locale.default.symbol',
-        'system.uid', 'system.dimensions', 'system.prefix', 'system.coherent',
+        'recognised_by',
+        'system.uid', 'system.dimensions', 'system.special', 'system.systematic',
+        'system.prefixed', 'system.prefix',
         'UCUM.code','UCUM.description'
     ]
         
-    path = os.path.abspath(
-        os.path.join( 
-            json_root,
-            directory,
-            r'*.json'
-        )
-    )
+    # References that are prefixed contain UIDs to the non-prefixed parent
+    # So the parents need to be processed before the children. Parents 
+    # will be in files with names beginning "si_"
+    files = get_file_list(directory)
 
-    wb = get_wb(directory)
-    for f_json in glob.glob( path ):
+    wb = get_wb(directory)       
+    for f_json in files:
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
         ws.title = ws_title(ws,name)       
@@ -241,25 +270,46 @@ if __name__ == '__main__':
             add_uid(directory,ws,d_i['uid'],row=i+2,col=1)
             add_string(ws,d_i['locale']['default']['name'],row=i+2,col=2)
             add_string(ws,d_i['locale']['default']['symbol'],row=i+2,col=3)
-            try:    # UnitSystem may not be included
-                add_uid_reference(ws,d_i['system']['uid'],row=i+2,col=4)
-                add_string(ws,d_i['system']['dimensions'],row=i+2,col=5)
-                add_string(ws,d_i['system']['prefix'],row=i+2,col=6)                    
-            except KeyError as k:   
+            
+            if 'recognised_by' in d_i:
+                add_uid_reference(ws,d_i['recognised_by'],row=i+2,col=4)
+            else:   
                 ws.cell(row=i+2,column=4,value=None)
+                        
+            if 'system' in d_i:    # UnitSystem may not be included
+                d_i_system = d_i['system']
+                add_uid_reference(ws,d_i_system['uid'],row=i+2,col=5)
+                add_string(ws,d_i_system['dimensions'],row=i+2,col=6)
+
+                if 'special' in d_i_system:
+                    add_string(ws,d_i['system']['special'],row=i+2,col=7)
+                else:
+                    ws.cell(row=i+2,column=7,value=None)
+                    
+                if 'systematic' in d_i_system:
+                    add_string(ws,d_i['system']['systematic'],row=i+2,col=8)
+                else:
+                    ws.cell(row=i+2,column=8,value=None)
+
+                if 'prefixed' in d_i_system:
+                    add_uid_reference(ws,d_i['system']['prefixed'],row=i+2,col=9)
+                else:               
+                    ws.cell(row=i+2,column=9,value=None)
+
+                if 'prefix' in d_i_system:
+                    add_string(ws,d_i['system']['prefix'],row=i+2,col=10)                    
+                else:   
+                    ws.cell(row=i+2,column=10,value=None)                
+            else:   
                 ws.cell(row=i+2,column=5,value=None)
-                ws.cell(row=i+2,column=6,value=None)
-            try: # system.coherent may be omitted
-                add_string(ws,d_i['system']['coherent'],row=i+2,col=7)
-            except KeyError:
-                ws.cell(row=i+2,column=7,value=None)
+                ws.cell(row=i+2,column=6,value=None)               
                 
             try:    # UCUM code may not be included
-                add_string(ws,d_i['UCUM']['code'],row=i+2,col=8)
-                add_string(ws,d_i['UCUM']['description'],row=i+2,col=9)
+                add_string(ws,d_i['UCUM']['code'],row=i+2,col=11)
+                add_string(ws,d_i['UCUM']['description'],row=i+2,col=12)
             except KeyError as k:
-                ws.cell(row=i+2,column=8,value=None)
-                ws.cell(row=i+2,column=9,value=None)
+                ws.cell(row=i+2,column=11,value=None)
+                ws.cell(row=i+2,column=12,value=None)
             
     # ---------------------------------------------------------------------------
     # Process scales 
@@ -270,26 +320,18 @@ if __name__ == '__main__':
         # 'uid' : [], 
         # 'reference' : [],
         # 'scale_type' : "" 
-        # 'systematic' : 1
     # }
     
     labels = [
         'uid',
         'reference',
-        'scale_type',
-        'systematic'
+        'scale_type'
     ]
         
-    path = os.path.abspath(
-        os.path.join( 
-            json_root,
-            directory,
-            r'*.json'
-        )
-    )
+    files = get_file_list(directory)
 
     wb = get_wb(directory)
-    for f_json in glob.glob( path ):
+    for f_json in files:
         name = os.path.splitext( os.path.basename(f_json) )[0]
         ws = wb.create_sheet()
         ws.title = ws_title(ws,name)       
@@ -307,10 +349,6 @@ if __name__ == '__main__':
             add_uid(directory,ws,d_i['uid'],row=i+2,col=1)
             add_uid_reference(ws,d_i['reference'],row=i+2,col=2)
             add_string(ws,d_i['scale_type'],row=i+2,col=3)
-            try:    # A scale may be systematic
-                add_integer(ws,d_i['systematic'],row=i+2,col=4)
-            except KeyError as k:
-                ws.cell(row=i+2,column=4,value=None)
             
     # ---------------------------------------------------------------------------
     # Process scales_for 

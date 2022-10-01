@@ -219,11 +219,13 @@ if __name__ == '__main__':
         # '__entry__' : 'Reference',        
         # 'uid' : [], 
         # 'locale' : locale, 
+        # 'recognised_by' : [],
         # 'unit-system' : dict(
             # uid = [],
             # dimensions = [],
-            # prefix = [],
-            # coherent : 1
+            # systematic | special 
+            # prefixed = []
+            # prefix = []
         # ),
         # "UCUM" : dict(
             # code = "",
@@ -246,23 +248,30 @@ if __name__ == '__main__':
                 )
             )
         )
-
-        # A unit system might not be associated with a reference
+        # A unit may be recognised for use with a system 
         if r[3].value is not None:
+            obj['recognised_by'] = put_uid(directory,ws,r[3].value,i,3+1)
+                    
+        # A unit system might not be associated with a reference
+        if r[4].value is not None:
             obj['system'] = dict(
-                uid = put_uid(directory,ws,r[3].value,i,3+1),
-                dimensions = str( literal_eval( r[4].value ) ),
-                prefix = literal_eval( r[5].value ),
+                uid = put_uid(directory,ws,r[4].value,i,4),
+                dimensions = str( literal_eval( r[5].value ) ),               
             )
             if r[6].value is not None:
-                obj['system']['coherent'] = int( r[6].value )
+                obj['system']['special'] = int( r[6].value )
+            if r[7].value is not None:
+                obj['system']['systematic'] = int( r[7].value )
+            if r[8].value is not None:
+                obj['system']['prefixed'] = put_uid(directory,ws,r[8].value,i,8)
                 
-           
+            obj['system']['prefix'] = literal_eval( r[9].value ),
+                         
         # Code in UCUM may not be provided
-        if r[7].value is not None:  
+        if r[10].value is not None:  
             obj['UCUM'] = dict(
-                code = str( r[7].value ),
-                description = str( r[8].value )
+                code = str( r[10].value ),
+                description = str( r[11].value )
             )
         
         return obj
@@ -289,7 +298,6 @@ if __name__ == '__main__':
         # 'uid' : [], 
         # 'reference' : [],
         # 'scale_type' : "" 
-        # 'systematic' : 1
     # }
     
     directory = "scales"
@@ -304,11 +312,6 @@ if __name__ == '__main__':
             scale_type = str( r[2].value )
         )
  
-        # A unit system might not be associated with a reference
-        if r[3].value is not None:
-            obj['systematic'] = int( r[3].value )
-            
-        return obj 
  
     wb = load_workbook( xl_path(directory), data_only=True  )
     for s in wb.sheetnames:
