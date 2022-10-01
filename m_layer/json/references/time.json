@@ -10,6 +10,10 @@
                 "name": "minute",
                 "symbol": "min"
             }
-        }
+        },
+        "recognised_by": [
+            "si_system",
+            88156805987886421108624908988601219537
+        ]
     }
 ]

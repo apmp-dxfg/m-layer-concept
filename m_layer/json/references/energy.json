@@ -11,10 +11,10 @@
                 "symbol": "eV"
             }
         },
-        "recognised_by" : [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
+        "recognised_by": [
+            "si_system",
+            88156805987886421108624908988601219537
+        ],
         "UCUM": {
             "code": "eV",
             "description": "electronvolt"

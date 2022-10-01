@@ -1,14 +1,3 @@
 [
-    {
-        "__entry__": "Scale",
-        "uid": [
-            "ml_si_minute_ratio",
-            219754916679293138667106941253484129447
-        ],
-        "reference": [
-            "si_minute",
-            44201378517656436621015505669555344119
-        ],
-        "scale_type": "ratio"
-    }
+    null
 ]
