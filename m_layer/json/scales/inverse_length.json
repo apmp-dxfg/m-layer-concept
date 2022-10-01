@@ -9,8 +9,7 @@
             "si_m-1",
             276726793797424878828710191985121127007
         ],
-        "scale_type": "ratio",
-        "systematic": 1
+        "scale_type": "ratio"
     },
     {
         "__entry__": "Scale",
@@ -22,7 +21,6 @@
             "si_cm-1",
             78709620630780303268211656738112203703
         ],
-        "scale_type": "ratio",
-        "systematic": 1
+        "scale_type": "ratio"
     }
 ]

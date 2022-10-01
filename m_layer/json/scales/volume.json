@@ -21,8 +21,7 @@
             "si_cm3",
             318277800879820227773341038804270973180
         ],
-        "scale_type": "ratio",
-        "systematic": 1
+        "scale_type": "ratio"
     },
     {
         "__entry__": "Scale",

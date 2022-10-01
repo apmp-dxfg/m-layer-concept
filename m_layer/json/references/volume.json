@@ -11,20 +11,38 @@
                 "symbol": "l"
             }
         },
+        "recognised_by" : [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+        "UCUM": {
+            "code": "L",
+            "description": "Liters"
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_m3",
+            35646268733433401632305034170797621760
+        ],
+        "locale": {
+            "default": {
+                "name": "cubic metre",
+                "symbol": "m3"
+            }
+        },
         "system": {
             "uid": [
                 "si_system",
                 88156805987886421108624908988601219537
             ],
             "dimensions": "[0, 3, 0, 0, 0, 0, 0]",
+            "systematic" : 1,
             "prefix": [
                 "1",
-                "1E6"
+                "1"
             ]
-        },
-        "UCUM": {
-            "code": "L",
-            "description": "Liters"
         }
     },
     {
@@ -45,6 +63,11 @@
                 88156805987886421108624908988601219537
             ],
             "dimensions": "[0, 3, 0, 0, 0, 0, 0]",
+            "systematic" : 1,
+            "prefixed" : [
+                "si_m3",
+                35646268733433401632305034170797621760
+            ],
             "prefix": [
                 "1",
                 "1E6"

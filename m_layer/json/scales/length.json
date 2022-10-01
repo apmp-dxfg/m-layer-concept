@@ -9,8 +9,7 @@
             "si_km",
             104092958581100090077541295886399703580
         ],
-        "scale_type": "ratio",
-        "systematic": 1
+        "scale_type": "ratio"
     },
     {
         "__entry__": "Scale",
@@ -22,8 +21,7 @@
             "si_nm",
             230327124043985678197012494098272082173
         ],
-        "scale_type": "ratio",
-        "systematic": 1
+        "scale_type": "ratio"
     },
     {
         "__entry__": "Scale",
