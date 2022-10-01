@@ -1,9 +1,86 @@
 [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_kilogram_ratio",
+            12782167041499057092439851237297548539
+        ],
+        "reference": [
+            "si_kilogram",
+            188151331508313165897603768130808181784
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_metre_ratio",
+            17771593641054934856197983478245767638
+        ],
+        "reference": [
+            "si_metre",
+            61268972265076316018593147152102406832
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_second_ratio",
+            276296348539283398608930897564542275037
+        ],
+        "reference": [
+            "si_second",
+            110730041758233939215703442037761569190
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_ampere_ratio",
+            257680203120950316968604264670884361610
+        ],
+        "reference": [
+            "si_ampere",
+            264081801568151063132838497538090031099
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_kelvin_ratio",
+            302952256288207449238881076502466548054
+        ],
+        "reference": [
+            "si_kelvin",
+            25703533220788919988679332108037098600
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_mole_ratio",
+            15496259120657933158664487705643275334
+        ],
+        "reference": [
+            "si_mole",
+            96713855510406467826626480289106173630
+        ],
+        "scale_type": "ratio"
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_candela_ratio",
+            13171319201648801065089085279216910048
+        ],
+        "reference": [
+            "si_candela",
+            107700549721211215242458620140782394628
+        ],
+        "scale_type": "ratio"
+    }
 ]
