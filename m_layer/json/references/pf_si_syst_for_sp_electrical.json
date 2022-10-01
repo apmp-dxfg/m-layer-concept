@@ -1,0 +1,118 @@
+[
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-3.A-1",
+            145763543564997190923155305239053318840
+        ],
+        "locale": {
+            "default": {
+                "name": "gram metre squared per second cubed per ampere",
+                "symbol": "g.m2.s-3.A-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
+            "systematic": 1,
+            "prefixed" : [
+                "si_volt",
+                329937729914753562634885805595267532595
+            ],  
+            "prefix": [
+                "1",
+                "1E3"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-3.A-1",
+            73650387155451797529145929536783016094
+        ],
+        "locale": {
+            "default": {
+                "name": "milligram metre squared per second cubed per ampere",
+                "symbol": "mg.m2.s-3.A-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
+            "systematic": 1,
+            "prefixed" : [
+                "si_volt",
+                329937729914753562634885805595267532595
+            ],  
+            "prefix": [
+                "1",
+                "1E6"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-3.A-1",
+            116723229372271760529480139518771029041
+        ],
+        "locale": {
+            "default": {
+                "name": "microgram metre squared per second cubed per ampere",
+                "symbol": "ug.m2.s-3.A-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
+            "systematic": 1,
+            "prefixed" : [
+                "si_volt",
+                329937729914753562634885805595267532595
+            ],  
+            "prefix": [
+                "1",
+                "1E9"
+            ]
+        }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-3.A-1",
+            91432558720171681079713221680888199203
+        ],
+        "locale": {
+            "default": {
+                "name": "nanogram metre squared per second cubed per ampere",
+                "symbol": "ng.m2.s-3.A-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
+            "systematic": 1,
+            "prefixed" : [
+                "si_volt",
+                329937729914753562634885805595267532595
+            ],  
+            "prefix": [
+                "1",
+                "1E12"
+            ]
+        }
+    }
+]
