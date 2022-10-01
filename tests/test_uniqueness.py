@@ -335,10 +335,13 @@ class TestInit(unittest.TestCase):
             ref_uid = UID( json_scale['reference'] )
             json_ref = cxt.reference_reg[ ref_uid ]
 
-            if "system" in json_ref:                
-                dim = _sys_to_dimension( json_ref["system"] )  
+            if "system" in json_ref: 
+            
+                json_sys = json_ref["system"]
+                dim = _sys_to_dimension( json_sys )  
                 
-                if "systematic" in json_scale: 
+                if 'systematic' in json_sys:
+                
                     self.assertTrue(
                         json_scale["scale_type"] == "ratio",
                         msg="{}".format(src_scale_uid)
@@ -347,9 +350,10 @@ class TestInit(unittest.TestCase):
                         cxt.dimension_conversion_reg[dim] == src_scale_uid,
                         msg="{} from {}".format(src_scale_uid,dim)
                     )
+                    
                 elif json_scale["scale_type"] == "ratio":
                     # For every name of a ratio scale with a reference belonging 
-                    # to a unit system and not systematic, there should 
+                    # to a unit system that is not systematic, there should 
                     # be a systematic scale entry with the same dimensions in the 
                     # `dimension_conversion_reg`. 
                     # This systematic scale provides a basis for casting.
@@ -368,7 +372,9 @@ class TestInit(unittest.TestCase):
                     ):
                         s_uid = cxt.dimension_conversion_reg[dim]
                         s_json = cxt.scale_reg[ s_uid ]
-                        self.assertTrue( "systematic" in s_json )
+                        r_uid = UID( s_json['reference'] )
+                        json_r = cxt.reference_reg[ ref_uid ]
+                        self.assertTrue( "systematic" in json_r["system"] )
                 else:
                     pass
       
