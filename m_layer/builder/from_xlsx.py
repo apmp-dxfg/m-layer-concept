@@ -256,7 +256,7 @@ if __name__ == '__main__':
         if r[4].value is not None:
             obj['system'] = dict(
                 uid = put_uid(directory,ws,r[4].value,i,4),
-                dimensions = str( literal_eval( r[5].value ) ),               
+                dimensions = str( literal_eval( r[5].value ) )               
             )
             if r[6].value is not None:
                 obj['system']['special'] = int( r[6].value )
@@ -265,7 +265,7 @@ if __name__ == '__main__':
             if r[8].value is not None:
                 obj['system']['prefixed'] = put_uid(directory,ws,r[8].value,i,8)
                 
-            obj['system']['prefix'] = literal_eval( r[9].value ),
+            obj['system']['prefix'] = literal_eval( r[9].value )
                          
         # Code in UCUM may not be provided
         if r[10].value is not None:  
@@ -311,7 +311,9 @@ if __name__ == '__main__':
             reference = put_uid(directory,ws,r[1].value,i,1+1),
             scale_type = str( r[2].value )
         )
- 
+        
+        return obj
+        
  
     wb = load_workbook( xl_path(directory), data_only=True  )
     for s in wb.sheetnames:
