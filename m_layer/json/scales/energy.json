@@ -1,23 +1,14 @@
 [
     {
-        "__entry__": "Reference",
+        "__entry__": "Scale",
         "uid": [
+            "ml_electronvolt_ratio",
+            121864523473489992307630707008460819401
+        ],
+        "reference": [
             "electronvolt",
             182363982750140887436275027803151015498
         ],
-        "locale": {
-            "default": {
-                "name": "electronvolt",
-                "symbol": "eV"
-            }
-        },
-        "recognised_by": [
-            "si_system",
-            88156805987886421108624908988601219537
-        ],
-        "UCUM": {
-            "code": "eV",
-            "description": "electronvolt"
-        }
+        "scale_type": "ratio"
     }
 ]
