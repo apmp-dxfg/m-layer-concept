@@ -36,7 +36,6 @@ class Context(object):
     def __init__(
             self,
             locale = 'default',
-            # value_fmt = "{:.5f}",
             scale_reg = None,
             reference_reg = None,
             aspect_reg = None,
@@ -45,12 +44,13 @@ class Context(object):
             scales_for_aspect_reg = None,
             system_reg = None
             
-        ):       
+        ):   
+        
+        # Default inputs are used at the moment, but the 
+        # idea is perhaps to allow contextual information 
+        # to be built up over several registries.
         
         self.locale = locale 
-        # self.value_fmt = value_fmt
-        self.dimension_conversion_reg={}
-
         
         if scale_reg is None:
             self.scale_reg = register.Register(self)
@@ -87,9 +87,10 @@ class Context(object):
             self.system_reg = register.Register(self)
         else:
             self.system_reg = reference_reg
+            
 
     def _load_entity(self,entity):
-        # Handle one JSON object
+        # Handles one JSON object
         
         entity_type = entity['__entry__']
         
@@ -149,8 +150,13 @@ class Context(object):
     @locale.setter
     def locale(self,l):
         self._locale = l 
-  
-    def convertible(self,src_scale_uid,src_aspect_uid,dst_scale_uid):
+    
+    # -----------------------------------------------------------------------
+    def convertible(
+            self,
+            src_scale_uid,src_aspect_uid,
+            dst_scale_uid
+        ):
         """
         Raise ``RuntimeError`` if there is not a registered conversion  
         from the source scale and aspect to the destination scale. 
@@ -170,20 +176,22 @@ class Context(object):
         and 
             src_aspect_uid in self.scales_for_aspect_reg
         ):
-            if scale_pair in self.scales_for_aspect_reg[src_aspect_uid]:
-                return True
-                
-        # Default aspect conversions are possible
-        if scale_pair in self.conversion_reg: return True
+            if src_aspect_uid in self.scales_for_aspect_reg:
+                scales_for_aspect = self.scales_for_aspect_reg[src_aspect_uid]
+                if scale_pair in scales_for_aspect:
+                    return True
+
+        if scale_pair in self.conversion_reg: 
+            return True
                         
-        # This is a failure
+        # Otherwise it's a failure 
         if src_aspect_uid == self.no_aspect_uid:
-            msg = "no conversion from Scale( {!s} ) to Scale( {!s} )".format(
+            msg = "no conversion from {} to {}".format(
                     src_scale_uid,
                     dst_scale_uid
                 )
         else:
-            msg = "no conversion from Scale( {!s} ) to Scale( {!s} ) for Aspect( {!s} )".format(
+            msg = "no conversion from {} to {} for {}".format(
                     src_scale_uid,
                     dst_scale_uid,
                     src_aspect_uid
@@ -191,7 +199,7 @@ class Context(object):
          
         raise RuntimeError(msg)
          
-        
+    #------------------------------------------------------------------------    
     def conversion_from_scale_aspect(
         self,
         src_scale_uid,
@@ -199,7 +207,7 @@ class Context(object):
         dst_scale_uid
     ):
         """
-        Return a function that converts data expressed 
+        Return a function to convert data expressed 
         in the `src` scale and aspect to the `dst` scale.
         
         The aspect does not change.  
@@ -223,9 +231,9 @@ class Context(object):
             
         scale_pair = (src_scale_uid,dst_scale_uid)
         
-        # By doing the aspect-specific look-up first,  
-        # multiple definitions are possible and precedence  
-        # can be given to aspect-specific cases.
+        # Doing the aspect-specific look-up first, makes
+        # multiple definitions possible with precedence  
+        # given to aspect-specific cases.
         
         if( 
             src_aspect_uid != self.no_aspect_uid 
@@ -245,65 +253,31 @@ class Context(object):
         except KeyError:
             pass
                         
-        # This is a failure 
+        # Otherwise it's a failure 
         if src_aspect_uid == self.no_aspect_uid:
             raise RuntimeError(
-                "no conversion from Scale( {!s} ) to Scale( {!s} )".format(
+                "no conversion from {!r} to {!r}".format(
                     src_scale_uid,
                     dst_scale_uid
                 )
-            )
+            ) 
         else:
             raise RuntimeError(
-                "no conversion from Scale( {!s} ) to Scale( {!s} ) for Aspect( {!s} )".format(
+                "no conversion from {!r} to {!r} for {!r}".format(
                     src_scale_uid,
                     dst_scale_uid,
                     src_aspect_uid
                 )
-            )
- 
-    def conversion_from_compound_scale_dim(
-        self,
-        dimension,
-        dst_scale_uid
-    ):
-        """
-            
-        """ 
-        # Note the caller must have checked that the dimension 
-        # and the dimensions associated with dst_scale_uid
-        # are compatible. 
-        try:
-            src_scale_uid = self.dimension_conversion_reg[dimension] 
-        except KeyError:
-            raise RuntimeError(
-                    "no scale defined for {!r}".format(src_dim)
-                )           
- 
-        if src_scale_uid == dst_scale_uid:
-            # Trivial case where no conversion is required
-            return lambda x: x
-
-        scale_pair = (src_scale_uid,dst_scale_uid)
-        
-        # Only a generic conversion is possible? 
-        try:
-            return self.conversion_reg[scale_pair] 
-        except KeyError:
-            raise RuntimeError(
-                "no conversion from {!r} to {!r}".format(
-                    src_scale_uid,
-                    dst_scale_uid,
-                )
-            )
-        
-    def casting_from_scale_aspect(
+            ) 
+    
+    #------------------------------------------------------------------------    
+    def cast_from_scale_aspect(
         self,
         src_scale_uid, src_aspect_uid,
         dst_scale_uid, dst_aspect_uid
     ):
         """
-        Return a function that transforms data on an initial scale-aspect  
+        Return a function to transform data on an initial scale-aspect  
         to a different scale and aspect.
         
         Args:
@@ -315,81 +289,57 @@ class Context(object):
         Returns:
             A Python function 
             
+        When the initial and final aspect is the same 
+        and no cast has been defined, a matching 
+        conversion will be used.   
+
+        When the initial aspect is unspecified, an 
+        aspect-specific conversion can be used.
+            
         """ 
         dst_pair = dst_scale_uid, dst_aspect_uid
         src_pair = src_scale_uid, src_aspect_uid    
         
-        if src_scale_uid == dst_scale_uid and src_aspect_uid == self.no_aspect_uid:
-            # Apply the aspect
-            return lambda x: x 
-          
-        if src_aspect_uid == dst_aspect_uid:
+        try:
+            return self.casting_reg[ src_pair,dst_pair ]   
+        except KeyError:
+            pass 
+            
+        if src_aspect_uid == self.no_aspect_uid:
+            if src_scale_uid == dst_scale_uid:
+                # Accept the dst aspect without question
+                # This is the same as defining a ScaleAspect using
+                # a Scale and an aspect.
+                return lambda x: x 
+                         
+        # A conversion may be possible for 
+        # a common aspect; 
+        # casting may promote an unspecified 
+        # aspect to the final aspect.
+        if src_aspect_uid == self.no_aspect_uid or src_aspect_uid == dst_aspect_uid:   
         
-            # Look for aspect-specific conversions first
+            # Aspect-specific conversions
             try:
                 scales_for_aspect = self.scales_for_aspect_reg[ dst_aspect_uid ]
                 return scales_for_aspect[ (src_scale_uid, dst_scale_uid) ]
             except KeyError:
                 pass
-
-        # TODO:
-        # Should casting requests also look for legitimate conversions
-        # if the aspect is unchanged?
-               
-        try:
-            return self.casting_reg[ src_pair,dst_pair ]   
-        except KeyError:
-            raise RuntimeError(
-                "no cast defined from '{!r}' to '{!r}'".format(
-                    src_pair,
-                    dst_pair
-                )
-            ) from None          
-
-    def casting_from_compound_scale_dim(
-        self,
-        dimension,
-        dst_scale_uid, dst_aspect_uid
-    ):
-        """
-        Return a function that transforms data on an initial compound-scale  
-        to a different scale.
-        
-        Args:
-            dimension (:class:`~dimension.Dimension`): the dimensions of the compound scale   
-            dst_scale_uid: final scale
-            dst_aspect_uid: final aspect
-            
-        Returns:
-            A Python function 
-            
-        """ 
-        # Note the caller must have checked that the dimension 
-        # and the dimensions associated with dst_scale_uid
-        # are compatible. 
-        dst_pair = dst_scale_uid, dst_aspect_uid   
-
-        try:
-            src_scale_uid = self.dimension_conversion_reg[dimension]   
-        except KeyError:
-            raise RuntimeError(
-                "no scale defined for {!r}".format(dimension)
-            )     
-             
-        if src_scale_uid == dst_scale_uid:
-            # Apply the aspect
-            return lambda x: x 
- 
-        src_pair = src_scale_uid, self.no_aspect_uid 
-        try:
-            return self.casting_reg[ src_pair,dst_pair ]   
-        except KeyError:
-            raise RuntimeError(
-                "no cast defined from '{}' to '{}'".format(
-                    src_pair,
-                    dst_pair
-                )
-            )   
+                
+        if src_aspect_uid == dst_aspect_uid:
+            # If the aspect is not changing,
+            # generic conversions are legitimate
+            try: 
+                return self.conversion_reg[ (src_scale_uid, dst_scale_uid) ]
+            except KeyError:
+                pass
+                
+        # Everything failed
+        raise RuntimeError(
+            "no cast defined from '{}' to '{}'".format(
+                src_pair,
+                dst_pair
+            )
+        )          
 
 # ---------------------------------------------------------------------------
 # Configure the global context object 
@@ -413,7 +363,7 @@ for p_i in (
 
 # The `no_aspect` entry is special, we need the uid
 file_path = os.path.join( _dir, r'json/aspects/no_aspect.json' )
-# assert os.path.isfile( file_path ), repr( file_path )
+assert os.path.isfile( file_path ), repr( file_path )
 
 with open(file_path,'r') as f:
     data = json.load(f)        
