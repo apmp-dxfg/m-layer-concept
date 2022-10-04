@@ -139,7 +139,7 @@ class Dimension(object):
         return self._system
 
     @property 
-    def dim(self):
+    def dimensions(self):
         "The tuple of dimensions"
         return self._dim
         
@@ -175,19 +175,19 @@ class Dimension(object):
         and
             self.system == other.system
         and 
-            self.dim == other.dim
+            self.dimensions == other.dimensions
         )
       
     def __repr__(self):
         if self.prefix == 1:
             return "Dimension( {}, {} )".format(
                 self.system,
-                self.dim
+                self.dimensions
             )
         else:
             return "Dimension( {}, {}, prefix={} )".format(
                 self.system,
-                self.dim,
+                self.dimensions,
                 self.prefix
             )
  
@@ -195,7 +195,7 @@ class Dimension(object):
         if self.prefix == 1:
             return "{}{}".format(
                 self.system,
-                self.dim
+                self.dimensions
             )
         else:
             if self.prefix.numerator > 1E3 :
@@ -208,7 +208,7 @@ class Dimension(object):
             return "{}*{}{}".format(
                 prefix,
                 self.system,
-                self.dim
+                self.dimensions
             )
  
     def __rmul__(self,x):
@@ -216,7 +216,7 @@ class Dimension(object):
         assert isinstance(x,numbers.Integral)
         return Dimension(
             self.system,
-            self.dim,
+            self.dimensions,
             self.prefix
         )
         
@@ -227,7 +227,8 @@ class Dimension(object):
             
         return Dimension(
             self.system,
-            tuple( i + j for (i,j) in zip(self.dim,rhs.dim) ),
+            tuple( i + j for (i,j) in zip(
+                self.dimensions,rhs.dimensions) ),
             self.prefix*rhs.prefix
         )
             
@@ -239,7 +240,8 @@ class Dimension(object):
             
         return Dimension(
             self.system,
-            tuple( i - j for (i,j) in zip(self.dim,rhs.dim) ),
+            tuple( i - j for (i,j) in zip(
+                self.dimensions,rhs.dimensions) ),
             self.prefix/rhs.prefix
         )
     
@@ -250,7 +252,7 @@ class Dimension(object):
             )
         return Dimension(
             self.system,
-            tuple( n*i for i in self.dim ),
+            tuple( n*i for i in self.dimensions ),
             self.prefix**n
         )
     
