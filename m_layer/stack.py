@@ -198,27 +198,27 @@ class Stack(object):
             else:
                 if o_i == 'mul':
                     x,y = stk.pop(), stk.pop()
-                    stk.append( "{!s}.{!s}".format( y,x ) )
+                    stk.append( "{!r}.{!r}".format( y,x ) )
                                     
                 elif o_i == 'rmul':
                     # `x` must be an integer
                     x,y = stk.pop(), stk.pop()
-                    stk.append( "{:d}.{!s}".format( x,y ) )
+                    stk.append( "{:d}.{!r}".format( x,y ) )
                                     
                 elif o_i == 'div':
                     x,y = stk.pop(), stk.pop()
                     
                     den = str(y)
-                    if den[0] == '(' and den[-1] == ')':
-                        stk.append( "{!s}/{!s}".format( y,x ) )
+                    if len(den) and den[0] == '(' and den[-1] == ')':
+                        stk.append( "{!r}/{!r}".format( y,x ) )
                     else:
-                        stk.append( "{!s}/({!s})".format( y,x ) )
+                        stk.append( "{!r}/({!r})".format( y,x ) )                        
                                     
                 elif o_i == 'pow':
                     # `x` must be an integer
                     x,y = stk.pop(), stk.pop()
                     # Brackets around the term `y` could be added
-                    stk.append( "{!s}^{:d}".format( y,x ) )
+                    stk.append( "{!r}^{:d}".format( y,x ) )
                     
                 else:
                     raise RuntimeError(opn)
