@@ -2,6 +2,23 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect": [
+            "ml_force_moment",
+            313648474034040825357489751369673453388
+        ],
+        "src": [
+            "ml_si_kg.m2.s-2_ratio",
+            92059200321763611267904598246242830863
+        ],
+        "dst": [
+            "ml_si_N.m_ratio",
+            180123565723874772354088506298557924442
+        ],
+        "function": "lambda x: x",
+        "parameters": {}
+    },    
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
             "ml_energy",
             12139911566084412692636353460656684046
         ],
