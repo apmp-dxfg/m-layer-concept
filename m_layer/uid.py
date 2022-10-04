@@ -101,6 +101,9 @@ class CompoundUID(object):
                 for k,v in factors.items()
         }
 
+    def __len__(self):
+        return len(self.factors)
+
     def __contains__(self,item):
         return item in self.factors 
         
