@@ -4,7 +4,7 @@ from collections import defaultdict
 
 from m_layer.context import global_context as cxt
 
-from m_layer.dimension import Dimension, CompoundDimension
+from m_layer.systematic import Systematic, CompoundSystematic
 from m_layer.stack import Stack, normal_form
 from m_layer.uid import UID, CompoundUID 
 
@@ -215,7 +215,7 @@ class System(object):
 # ---------------------------------------------------------------------------
 from ast import literal_eval
 
-def _sys_to_dimension(json_sys):
+def _sys_to_systematic(json_sys):
     """
     """
     # The JSON prefix is a pair of string-formatted
@@ -226,7 +226,7 @@ def _sys_to_dimension(json_sys):
 
     to_dim_tuple = lambda x: tuple( literal_eval(x) )
     
-    return Dimension( 
+    return Systematic( 
         System( UID( json_sys['uid'] ) ),
         to_dim_tuple( json_sys['dimensions'] ),
         to_prefix_tuple( json_sys['prefix'] )
@@ -241,7 +241,7 @@ class Reference(object):
 
     """
 
-    slots = ( '_uid', '_json_entry', '_dimension', '_systematic'  )
+    slots = ( '_uid', '_json_entry', '_systematic', '_is_systematic'  )
     
     def __init__(self,json_uid):
     
@@ -266,23 +266,23 @@ class Reference(object):
         return self._uid 
     
     @property
-    def dimension(self):
-        "A :class:`~dimension.Dimension` representing the unit in its unit system"
+    def systematic(self):
+        "A :class:`~systematic.Systematic` representing the unit in its unit system"
         try:
-            return self._dimension
+            return self._systematic
         except AttributeError:
             if "system" in self._json_entry:
-                self._dimension = _sys_to_dimension(self._json_entry["system"])
+                self._systematic = _sys_to_systematic(self._json_entry["system"])
             else:
                 raise RuntimeError("no unit system for {!r}".format(
                         UID( self._json_entry["uid"] )
                     )
                 )
                 
-            return self._dimension
+            return self._systematic
  
     @property
-    def systematic(self):
+    def is_systematic(self):
         """``True`` if the reference is a systematic unit in its unit system
         
         A systematic unit has a name composed of products of powers of base 
@@ -290,14 +290,14 @@ class Reference(object):
         
         """
         try:
-            return self._systematic
+            return self._is_systematic
         except AttributeError:
             if "system" in self._json_entry :
-                self._systematic = "systematic" in self._json_entry["system"]
+                self._is_systematic = "systematic" in self._json_entry["system"]
             else:    
-                self._systematic = False
+                self._is_systematic = False
                 
-            return self._systematic
+            return self._is_systematic
             
  
 # ---------------------------------------------------------------------------
@@ -308,7 +308,7 @@ class CompoundScaleAspect(object):
     """
     
     __slots__ = ( 
-    "_stack","_uid", "_dimension", "_pops", "_systematic",
+    "_stack","_uid", "_systematic", "_pops", "_is_systematic",
     # "_str", 
     )
 
@@ -352,18 +352,18 @@ class CompoundScaleAspect(object):
         return s[:-1] if s[-1] == "." else s
         
     @property 
-    def systematic(self):
+    def is_systematic(self):
         """A :class:`CompoundScaleAspect` is systematic when all scales are systematic 
         
         """
         try: 
-            return self._systematic
+            return self._is_systematic
         except AttributeError:
-            self._systematic = all(
-                k.systematic 
+            self._is_systematic = all(
+                k.is_systematic 
                     for k in self._pop().factors.keys()
             )
-            return self._systematic
+            return self._is_systematic
 
     @property 
     def composable(self): return True
@@ -401,12 +401,12 @@ class CompoundScaleAspect(object):
         )
     
     @property
-    def dimension(self):
+    def systematic(self):
         try:
-            return self._dimension
+            return self._systematic
         except AttributeError:
-            self._dimension = CompoundDimension(self.stack)
-            return self._dimension
+            self._systematic = CompoundSystematic(self.stack)
+            return self._systematic
 
     @property
     def uid(self):
@@ -459,7 +459,7 @@ class ScaleAspect(object):
     A wrapper around a scale and aspect pair.
     """
 
-    __slots__ = ("_scale","_aspect","_dimension", "_coherent")
+    __slots__ = ("_scale","_aspect","_systematic", "_coherent")
 
     def __init__(self,scale,aspect=no_aspect):
         assert isinstance(scale,Scale), repr(scale)
@@ -480,14 +480,14 @@ class ScaleAspect(object):
     kind_of_quantity = aspect 
 
     @property
-    def dimension(self):
+    def systematic(self):
         try:
-            return self._dimension
+            return self._systematic
         except AttributeError:
             # If there are no defined dimensions a RuntimeError  
             # is raised here. Allow it to propagate.
-            self._dimension = self.scale.dimension
-            return self._dimension
+            self._systematic = self.scale.systematic
+            return self._systematic
 
     @property 
     def uid(self):
@@ -495,8 +495,8 @@ class ScaleAspect(object):
         return (self.scale.uid,self.aspect.uid)
 
     @property 
-    def systematic(self):
-        return self.scale.systematic
+    def is_systematic(self):
+        return self.scale.is_systematic
 
     @property 
     def composable(self):
@@ -577,7 +577,7 @@ class CompoundScale(object):
     """
     
     __slots__ = (
-        '_uid', '_stack', '_dimension', '_systematic', '_pops',
+        '_uid', '_stack', '_systematic', '_is_systematic', '_pops',
         # '_str'
     )
  
@@ -636,13 +636,13 @@ class CompoundScale(object):
             return self._uid
 
     @property
-    def dimension(self):
+    def systematic(self):
         "The dimensions of the component scales"
         try:
-            return self._dimension
+            return self._systematic
         except AttributeError:
-            self._dimension = CompoundDimension(self.stack)
-            return self._dimension
+            self._systematic = CompoundSystematic(self.stack)
+            return self._systematic
  
     @property
     def stack(self):
@@ -653,18 +653,18 @@ class CompoundScale(object):
         return "ratio"
 
     @property 
-    def systematic(self):
+    def is_systematic(self):
         """A :class:`CompoundScale` is systematic when all scales are systematic 
         
         """
         try: 
-            return self._systematic
+            return self._is_systematic
         except AttributeError:
-            self._systematic = all(
-                k.systematic 
+            self._is_systematic = all(
+                k.is_systematic 
                     for k in self._pop().factors.keys()
             )
-            return self._systematic
+            return self._is_systematic
             
     @property 
     def composable(self):
@@ -782,9 +782,9 @@ class Scale(object):
         ) 
  
     @property 
-    def systematic(self):
+    def is_systematic(self):
         if self.scale_type == 'ratio':
-            return self._reference.systematic
+            return self._reference.is_systematic
         else:
             return False
  
@@ -805,15 +805,15 @@ class Scale(object):
         return self._reference
 
     @property 
-    def dimension(self):
+    def systematic(self):
         """
-        Return a :class:`~dimension.Dimension` when a ratio scale
+        Return a :class:`~systematic.Systematic` when a ratio scale
         is associated   with a reference in a coherent system of 
         units, like the SI. Otherwise return ``None``.
         
         """
         if self.scale_type == 'ratio':
-            return self._reference.dimension
+            return self._reference.systematic
         else:
             return None
             
@@ -883,30 +883,30 @@ def build_systematic_conversion_registers(cxt):
         src_scale = Scale( src_scale_uid )  
         dst_scale = Scale( dst_scale_uid ) 
         
-        if src_scale.systematic and dst_scale.systematic:
+        if src_scale.is_systematic and dst_scale.is_systematic:
         
-            src_system = src_scale.dimension.system 
-            src_dimensions = src_scale.dimension.dimensions 
-            dst_system = dst_scale.dimension.system 
-            dst_dimensions = dst_scale.dimension.dimensions 
+            src_system = src_scale.systematic.system 
+            src_dimensions = src_scale.systematic.dimensions 
+            dst_system = dst_scale.systematic.system 
+            dst_dimensions = dst_scale.systematic.dimensions 
 
             cxt.dim_dim_conversion_reg[(
                 (src_system,src_dimensions),
                 (dst_system,dst_dimensions)
             )].add(pair_uid)
             
-        elif dst_scale.systematic:
-            dst_system = dst_scale.dimension.system 
-            dst_dimensions = dst_scale.dimension.dimensions 
+        elif dst_scale.is_systematic:
+            dst_system = dst_scale.systematic.system 
+            dst_dimensions = dst_scale.systematic.dimensions 
 
             cxt.src_dim_conversion_reg[(
                 src_scale_uid,
                 (dst_system,dst_dimensions)
             )].add(pair_uid)
         
-        elif src_scale.systematic:
-            src_system = src_scale.dimension.system 
-            src_dimensions = src_scale.dimension.dimensions 
+        elif src_scale.is_systematic:
+            src_system = src_scale.systematic.system 
+            src_dimensions = src_scale.systematic.dimensions 
             cxt.dim_dst_conversion_reg[(
                 (src_system,src_dimensions),
                 dst_scale_uid
@@ -936,13 +936,13 @@ def build_systematic_conversion_registers(cxt):
             src_scale = Scale( src_scale_uid )  
             dst_scale = Scale( dst_scale_uid ) 
             
-            if src_scale.systematic and dst_scale.systematic:
+            if src_scale.is_systematic and dst_scale.is_systematic:
             
-                src_system = src_scale.dimension.system 
-                src_dimensions = src_scale.dimension.dimensions 
+                src_system = src_scale.systematic.system 
+                src_dimensions = src_scale.systematic.dimensions 
                 
-                dst_system = dst_scale.dimension.system 
-                dst_dimensions = dst_scale.dimension.dimensions 
+                dst_system = dst_scale.systematic.system 
+                dst_dimensions = dst_scale.systematic.dimensions 
                     
                 _conversion_reg = cxt.dim_dim_for_aspect_reg.setdefault( 
                     a_uid,defaultdict(set) 
@@ -953,10 +953,10 @@ def build_systematic_conversion_registers(cxt):
                     (dst_system,dst_dimensions)
                 )].add(pair_uid)
             
-            if dst_scale.systematic:
+            if dst_scale.is_systematic:
             
-                dst_system = dst_scale.dimension.system 
-                dst_dimensions = dst_scale.dimension.dimensions 
+                dst_system = dst_scale.systematic.system 
+                dst_dimensions = dst_scale.systematic.dimensions 
                     
                 _conversion_reg = cxt.src_dim_for_aspect_reg.setdefault( 
                     a_uid,defaultdict(set) 
@@ -967,10 +967,10 @@ def build_systematic_conversion_registers(cxt):
                     (dst_system,dst_dimensions)
                 )].add(pair_uid)
 
-            if src_scale.systematic:
+            if src_scale.is_systematic:
             
-                src_system = src_scale.dimension.system 
-                src_dimensions = src_scale.dimension.dimensions 
+                src_system = src_scale.systematic.system 
+                src_dimensions = src_scale.systematic.dimensions 
                     
                     
                 _conversion_reg = cxt.dim_dst_for_aspect_reg.setdefault( 
@@ -1005,30 +1005,30 @@ def build_systematic_casting_registers(cxt):
         dst_scale = Scale( dst_uid[0] )
         dst_aspect = Aspect( dst_uid[1] )
 
-        if src_scale.systematic and dst_scale.systematic:
+        if src_scale.is_systematic and dst_scale.is_systematic:
         
-            src_system = src_scale.dimension.system 
-            src_dimensions = src_scale.dimension.dimensions 
-            dst_system = dst_scale.dimension.system 
-            dst_dimensions = dst_scale.dimension.dimensions 
+            src_system = src_scale.systematic.system 
+            src_dimensions = src_scale.systematic.dimensions 
+            dst_system = dst_scale.systematic.system 
+            dst_dimensions = dst_scale.systematic.dimensions 
 
             cxt.dim_dim_cast_reg[(
                 ((src_system,src_dimensions),src_aspect.uid),
                 ((dst_system,dst_dimensions),dst_aspect.uid)
             )].add( (src_scale.uid,dst_scale.uid) )
             
-        elif dst_scale.systematic:
-            dst_system = dst_scale.dimension.system 
-            dst_dimensions = dst_scale.dimension.dimensions 
+        elif dst_scale.is_systematic:
+            dst_system = dst_scale.systematic.system 
+            dst_dimensions = dst_scale.systematic.dimensions 
 
             cxt.src_dim_cast_reg[(
                 src_uid,
                 ((dst_system,dst_dimensions),dst_aspect.uid)
             )].add( (src_scale.uid,dst_scale.uid) )
         
-        elif src_scale.systematic:
-            src_system = src_scale.dimension.system 
-            src_dimensions = src_scale.dimension.dimensions 
+        elif src_scale.is_systematic:
+            src_system = src_scale.systematic.system 
+            src_dimensions = src_scale.systematic.dimensions 
 
             cxt.dim_dst_cast_reg[(
                 ((src_system,src_dimensions),src_aspect.uid),

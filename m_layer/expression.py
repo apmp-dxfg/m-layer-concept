@@ -123,11 +123,11 @@ class Expression(object):
             :class:`~lib.Scale`
             
         """
-        dimension = scale.reference.dimension
+        systematic = scale.reference.systematic
         
         # The closest scale factor match
         factors = [
-            abs( math.log10( s_i.dimension.prefix / dimension.prefix ) )
+            abs( math.log10( s_i.systematic.prefix / systematic.prefix ) )
                 for s_i in scale_lst
         ]
         idx = factors.index( min(factors) )
@@ -151,10 +151,10 @@ class Expression(object):
             float
             
         """
-        if src.systematic or dst.systematic:
+        if src.is_systematic or dst.is_systematic:
             
-            src_dim = src.reference.dimension 
-            dst_dim = dst.reference.dimension
+            src_dim = src.reference.systematic 
+            dst_dim = dst.reference.systematic
          
             if src_dim.system != dst_dim.system:
                 raise RuntimeError(
@@ -185,9 +185,9 @@ class Expression(object):
         
         # Systematic alternatives
         src = self.scale_aspect.scale
-        if src.reference.systematic and dst.reference.systematic:
-            src_dim = src.reference.dimension 
-            dst_dim = dst.reference.dimension
+        if src.reference.is_systematic and dst.reference.is_systematic:
+            src_dim = src.reference.systematic 
+            dst_dim = dst.reference.systematic
             
             src_key = (src_dim.system,src_dim.dimensions)
             dst_key = (dst_dim.system,dst_dim.dimensions)
@@ -223,8 +223,8 @@ class Expression(object):
                 )(1)
                 return lambda x: c*x
                 
-        elif src.reference.systematic:
-            src_dim = src.reference.dimension 
+        elif src.reference.is_systematic:
+            src_dim = src.reference.systematic 
             
             src_key = (src_dim.system,src_dim.dimensions)
             dst_key = dst.uid
@@ -254,8 +254,8 @@ class Expression(object):
                 )(1)
                 return lambda x: c*x
 
-        elif dst.reference.systematic:
-            dst_dim = dst.reference.dimension
+        elif dst.reference.is_systematic:
+            dst_dim = dst.reference.systematic
             
             src_key = self.scale_aspect.scale.uid
             dst_key = (dst_dim.system,dst_dim.dimensions)
@@ -448,12 +448,12 @@ class Expression(object):
             else:
                 assert False, repr(dst) 
                 
-            src_dim = self.scale_aspect.dimension.simplify     
-            if src_dim != dst_scale_aspect.dimension:
+            src_dim = self.scale_aspect.systematic.simplify     
+            if src_dim != dst_scale_aspect.systematic:
                 raise RuntimeError(
                     "dimensions must match: {!r}, {!r}".format(
                         src_dim,
-                        dst_scale_aspect.dimension
+                        dst_scale_aspect.systematic
                     )
                 )           
                         
@@ -598,10 +598,10 @@ class Expression(object):
         dst_scale = dst.scale 
         dst_aspect = dst.aspect
         
-        if src_scale.systematic and dst_scale.systematic:
+        if src_scale.is_systematic and dst_scale.is_systematic:
         
-            src_dim = src_scale.dimension 
-            dst_dim = dst_scale.dimension
+            src_dim = src_scale.systematic 
+            dst_dim = dst_scale.systematic
             
             src_key = ((src_dim.system,src_dim.dimensions),src_aspect.uid)
             dst_key = ((dst_dim.system,dst_dim.dimensions),dst_aspect.uid)
@@ -627,8 +627,8 @@ class Expression(object):
                 )(1)
                 return lambda x: c*x
                 
-        elif src_scale.systematic:
-            src_dim = src_scale.dimension   
+        elif src_scale.is_systematic:
+            src_dim = src_scale.systematic   
             
             src_key = ((src_dim.system,src_dim.dimensions),src_aspect.uid)
             dst_key = dst_scale_aspect.uid
@@ -652,8 +652,8 @@ class Expression(object):
                 )(1)
                 return lambda x: c*x 
 
-        elif dst_scale.systematic:
-            dst_dim = dst_scale.dimension
+        elif dst_scale.is_systematic:
+            dst_dim = dst_scale.systematic
             
             src_key = self.scale_aspect.uid
             dst_key = ((dst_dim.system,dst_dim.dimensions), dst_aspect.uid)
@@ -684,8 +684,8 @@ class Expression(object):
  
     # ---------------------------------------------------------------------------
     def _systematic_src_casting(self,src_dimension,dst_scale_aspect):
-        from m_layer.dimension import Dimension
-        assert isinstance(src_dimension,Dimension), repr(src_dimension)
+        from m_layer.systematic import Systematic
+        assert isinstance(src_dimension,Systematic), repr(src_dimension)
         
         dst_key = dst_scale_aspect.uid
         src_key = (src_dimension.system,src_dimension.dimensions)
@@ -796,17 +796,17 @@ class Expression(object):
         elif isinstance(
             self.scale_aspect,(CompoundScale,CompoundScaleAspect)
         ):
-            if not self.scale_aspect.systematic:
+            if not self.scale_aspect.is_systematic:
                 raise RuntimeError(
                     "cannot cast from {} to {}".format(self.scale_aspect,dst)
                 )
                 
-            src_dim = self.scale_aspect.dimension.simplify            
-            if src_dim != dst.dimension:
+            src_dim = self.scale_aspect.systematic.simplify            
+            if src_dim != dst.systematic:
                 raise RuntimeError(
                     "dimensions do not match: {}, {}".format(
                         src_dim,
-                        dst_scale_aspect.dimension
+                        dst_scale_aspect.systematic
                     )
                 )           
             

@@ -22,11 +22,11 @@ from fractions import Fraction
 from m_layer.stack import normal_form
 
 # ---------------------------------------------------------------------------
-class CompoundDimension(object):
+class CompoundSystematic(object):
 
     """
-    A :class:`CompoundDimension` holds an expression 
-    of :class:`Dimension` objects
+    A :class:`CompoundSystematic` holds an expression 
+    of :class:`Systematic` objects
     """
 
     __slots__ = ('prefactor','factors','_stack')
@@ -40,11 +40,11 @@ class CompoundDimension(object):
         # The keys in pop.factors are Python objects.
         # Some may be distinct objects with the same M-layer UID.
         # In that case, each object occurs only once.    
-        # The CompoundDimension representation uses the dimension as key 
+        # The CompoundSystematic representation uses the systematic as key 
         # and a frozenset of exponents as value. 
         
         setter = lambda factors,i,v: (
-            factors[ i.dimension ].add(v) if v != 0 else None
+            factors[ i.systematic ].add(v) if v != 0 else None
         )
         
         factors = defaultdict(set)
@@ -93,7 +93,7 @@ class CompoundDimension(object):
             )
         
     def __repr__(self):
-        return "CompoundDimension({!r})".format(self._stack)
+        return "CompoundSystematic({!r})".format(self._stack)
         
     @property
     def simplify(self):
@@ -108,18 +108,18 @@ class CompoundDimension(object):
         return x
  
     def commensurate(self,other):
-        if isinstance(other,CompoundDimension):
+        if isinstance(other,CompoundSystematic):
             return self.simplify.commensurate(other.simplify)
-        elif isinstance(other,Dimension):
+        elif isinstance(other,Systematic):
             return self.simplify.commensurate(other)
         else:
             return NotImplementedError( repr(other) )
  
 # ---------------------------------------------------------------------------
-class Dimension(object):
+class Systematic(object):
 
     """
-    Dimension(system,dim,prefix=1)
+    Systematic(system,dim,prefix=1)
     """
     
     __slots__ = (
@@ -171,7 +171,7 @@ class Dimension(object):
         
         """
         return (
-            isinstance(other,Dimension)
+            isinstance(other,Systematic)
         and
             self.system == other.system
         and 
@@ -180,12 +180,12 @@ class Dimension(object):
       
     def __repr__(self):
         if self.prefix == 1:
-            return "Dimension( {}, {} )".format(
+            return "Systematic( {}, {} )".format(
                 self.system,
                 self.dimensions
             )
         else:
-            return "Dimension( {}, {}, prefix={} )".format(
+            return "Systematic( {}, {}, prefix={} )".format(
                 self.system,
                 self.dimensions,
                 self.prefix
@@ -214,7 +214,7 @@ class Dimension(object):
     def __rmul__(self,x):
         # a numerical scale factor 
         assert isinstance(x,numbers.Integral)
-        return Dimension(
+        return Systematic(
             self.system,
             self.dimensions,
             self.prefix
@@ -225,7 +225,7 @@ class Dimension(object):
         assert self.system == rhs.system,\
             "different systems: '{}', '{}'".format(self.system, rhs.system)
             
-        return Dimension(
+        return Systematic(
             self.system,
             tuple( i + j for (i,j) in zip(
                 self.dimensions,rhs.dimensions) ),
@@ -238,7 +238,7 @@ class Dimension(object):
         assert self.system == rhs.system,\
             "different systems: '{}', '{}'".format(self.system, rhs.system)
             
-        return Dimension(
+        return Systematic(
             self.system,
             tuple( i - j for (i,j) in zip(
                 self.dimensions,rhs.dimensions) ),
@@ -250,7 +250,7 @@ class Dimension(object):
             raise RuntimeError(
                 "integer required '{!r}'".format(n)
             )
-        return Dimension(
+        return Systematic(
             self.system,
             tuple( n*i for i in self.dimensions ),
             self.prefix**n
@@ -263,6 +263,6 @@ if __name__ == '__main__':
     from m_layer.lib import System 
     
     si = System( ('si_system', 88156805987886421108624908988601219537) )
-    d1 = Dimension(si,[1,2,3],prefix=[100,10])
-    d2 = Dimension(si,[1,-1,0])
+    d1 = Systematic(si,[1,2,3],prefix=[100,10])
+    d2 = Systematic(si,[1,-1,0])
     print(d1)
