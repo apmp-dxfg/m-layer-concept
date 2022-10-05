@@ -111,20 +111,18 @@ class Expression(object):
         return src,dst 
 
     #------------------------------------------------------------------------    
-    def _closest(self,scale,scale_lst):
+    def _closest(self,systematic,scale_lst):
         """
-        Find the Scale in ``scale_lst`` closest to ``scale`` in magnitude
+        Find the Scale in ``scale_lst`` closest to ``systematic`` 
         
         Args:
-            scale (:class:`~lib.Scale`)
+            systematic (:class:`~systematic.Systematic`)
             scale_lst (sequence of :class:`~lib.Scale`)
             
         Returns:
             :class:`~lib.Scale`
             
         """
-        systematic = scale.reference.systematic
-        
         # The closest scale factor match
         factors = [
             abs( math.log10( s_i.systematic.prefix / systematic.prefix ) )
@@ -135,160 +133,144 @@ class Expression(object):
         return scale_lst[idx]
         
     #------------------------------------------------------------------------    
-    def _systematic_conversion_factor(self,src,dst):
+    def _systematic_conversion_factor(self,src_systematic,dst_systematic):
         """
-        Return the conversion factor from ``src`` to ``dst`` 
-        
-        ``src`` and ``dst`` must both be systematic 
-        and have the same dimensional exponents in 
-        the same unit system.
-        
+        Return a conversion factor for ``src`` to ``dst`` 
+                
         Args:
-            src (:class:`Scale`)
-            dst (:class:`Scale`)
+            src_systematic (:class:`~systematic.Systematic`)
+            dst_systematic (:class:`~systematic.Systematic`)
         
         Returns:
             float
             
         """
-        if src.is_systematic or dst.is_systematic:
-            
-            src_dim = src.reference.systematic 
-            dst_dim = dst.reference.systematic
-         
-            if src_dim.system != dst_dim.system:
-                raise RuntimeError(
-                    "different systems: {!r}, {!r}".format(
-                        src_dim.system,
-                        dst_dim.system
-                    )
-                )
-            
-            if src_dim.dimensions != dst_dim.dimensions:
-                raise RuntimeError(
-                    "different dimensions: {!r}, {!r}".format(
-                        src_dim.dimensions,
-                        dst_dim.dimensions
-                    )
-                )
-         
-            return dst_dim.prefix / src_dim.prefix 
-            
-        else:
+        src_key = (src_systematic.system,src_systematic.dimensions)
+        dst_key = (dst_systematic.system,dst_systematic.dimensions)
+     
+        if src_key != dst_key:
             raise RuntimeError(
-                "no conversion from {!r} to {!r}".format(src,dst)
+                "no conversion from {} to {}".format(src_key,dst_key)
             )  
+     
+        return dst_systematic.prefix / src_systematic.prefix 
+                        
+    # ---------------------------------------------------------------------------
+    def _systematic_src_conversion(self,dst_scale_aspect):
+        # Look for a direct match with the destination scale
+
+        # For now, we can't infer a src aspect
+        src_aspect = no_aspect
+    
+        src_systematic = self.scale_aspect.systematic.simplify
+        src_key = (src_systematic.system,src_systematic.dimensions)
+
+        c = None
+        
+        _key = (src_key,dst_scale_aspect.scale.uid)
+        if _key in cxt.dim_dst_conversion_reg:
+            set_of_scale_pairs = cxt.dim_dst_conversion_reg[
+                src_key,
+                dst_scale_aspect.scale.uid
+            ]  
+            src_scales, dst_scales = self._to_src_dst_lists( 
+                set_of_scale_pairs 
+            )
+            int('_systematic_src_conversion: ', src_scales)
+            
+            if (
+                len(src_scales) 
+            and dst_scale_aspect.scale in dst_scales
+            ):
+                ssrc = self._closest(src_systematic,src_scales)
+                
+                c = self._systematic_conversion_factor(
+                    src_systematic,ssrc.systematic
+                )
+                c *= cxt.conversion_from_scale_aspect( 
+                    ssrc.uid,
+                    src_aspect.uid,
+                    dst_scale_aspect.scale.uid 
+                )(1)
+                
+        return c  
             
     # ---------------------------------------------------------------------------
-    def _systematic_conversion(self,dst):
-        assert isinstance(dst,Scale), repr(dst)
+    def _systematic_dst_conversion(self,dst_scale_aspect):
+    
+        src_key = self.scale_aspect.scale.uid
+        dst_key = (dst_systematic.system,dst_systematic.dimensions)
         
-        # Systematic alternatives
-        src = self.scale_aspect.scale
-        if src.reference.is_systematic and dst.reference.is_systematic:
-            src_dim = src.reference.systematic 
-            dst_dim = dst.reference.systematic
-            
-            src_key = (src_dim.system,src_dim.dimensions)
-            dst_key = (dst_dim.system,dst_dim.dimensions)
-            
-            if src_key == dst_key:
-                c = src_dim.prefix / dst_dim.prefix 
-                return lambda x: c*x
-                
-            try:
-                set_of_scale_pairs = cxt.dim_dim_conversion_reg[
-                    (src_key,dst_key)
-                ]  
-            except KeyError:
+        c = None
+        
+        if (src_key,dst_key):
+            set_of_scale_pairs = cxt.src_dim_conversion_reg[
+                (src_key,dst_key)
+            ]                       
+            src_pairs, dst_pairs = self._to_src_dst_lists( set_of_scale_pairs )
+            if len(src_pairs) == 0:
                 raise RuntimeError(
                     "no conversion from {!r} to {!r}".format(self.scale_aspect,dst)
                 )
-            else:
-                src_scales, dst_scales = self._to_src_dst_lists( set_of_scale_pairs )
-                if len(src_scales) == 0:
-                    raise RuntimeError(
-                        "no conversion from {!r} to {!r}".format(self.scale_aspect,dst)
-                    )
+
+            sdst = self._closest(dst_systematic,dst_pairs)
+            c = self._systematic_conversion_factor(dst_systematic,dst)
+            c *= cxt.conversion_from_scale_aspect( 
+                self.scale_aspect.scale.uid,
+                self.scale_aspect.aspect.uid,
+                sdst_uid 
+            )(1)
+            
+        return c
+
+    # ---------------------------------------------------------------------------
+    def _systematic_src_dst_conversion(self,dst_scale_aspect):
+        # Look for a systematic match using the initial and final scales
+    
+        # For now, we can't infer a src aspect
+        src_aspect = no_aspect
+        
+        src_systematic = self.scale_aspect.systematic.simplify
+        src_key = (src_systematic.system,src_systematic.dimensions)
+
+        dst_systematic = dst_scale_aspect.systematic
+        dst_key = (dst_systematic.system,dst_systematic.dimensions)
+        
+        c = None 
+        
+        _key = (src_key,dst_key)
+        if _key in cxt.dim_dim_conversion_reg:
+            set_of_scale_pairs = cxt.dim_dim_conversion_reg[
+                src_key,
+                dst_scale_aspect.scale.uid
+            ]  
+            src_scales, dst_scales = self._to_src_dst_lists( 
+                set_of_scale_pairs 
+            )
+            
+            if len(src_scales) and len(dst_scales):
+                # Use existing conversions
+                ssrc = self._closest(src_systematic,src_scales)
+                sdst = self._closest(dst_systematic,dst_scales)
                 
-                ssrc = self._closest(self.scale_aspect.scale,src_scales)
-                sdst = self._closest(dst_scale_aspect.scale,dst_scales)
-                
-                c = self._systematic_conversion_factor(src,ssrc)
-                c *= self._systematic_conversion_factor(sdst,dst)
+                c = self._systematic_conversion_factor(
+                    src_systematic,ssrc.systematic
+                )
+                c *= self._systematic_conversion_factor(
+                    sdst.systematic,dst_systematic
+                )
                 c *= cxt.conversion_from_scale_aspect( 
                     ssrc.uid,
-                    self.scale_aspect.aspect.uid,
-                    sdst.uid 
+                    src_aspect.uid,
+                    sdst.uid
                 )(1)
-                return lambda x: c*x
                 
-        elif src.reference.is_systematic:
-            src_dim = src.reference.systematic 
-            
-            src_key = (src_dim.system,src_dim.dimensions)
-            dst_key = dst.uid
-            
-            try:
-                set_of_scale_pairs = cxt.dim_dst_conversion_reg[
-                    (src_key,dst_key)
-                ]                       
-            except KeyError:
-                raise RuntimeError(
-                    "no conversion from {!r} to {!r}".format(self.scale_aspect,dst)
-                )
-            else:
-                src_scales, dst_scales = self._to_src_dst_lists( set_of_scale_pairs )
-                if len(src_scales) == 0:
-                    raise RuntimeError(
-                        "no conversion from {!r} to {!r}".format(self.scale_aspect,dst)
-                    )
+        if c is None:
+            c = self._systematic_conversion_factor(
+                src_systematic,dst_systematic
+            )        
 
-                ssrc = self._closest(self.scale_aspect.scale,src_scales)
-                # Could check that dst is in dst_pairs 
-                c = self._systematic_conversion_factor(src,ssrc)
-                c *= cxt.conversion_from_scale_aspect( 
-                    ssrc.uid,
-                    self.scale_aspect.aspect.uid,
-                    sdst_uid 
-                )(1)
-                return lambda x: c*x
-
-        elif dst.reference.is_systematic:
-            dst_dim = dst.reference.systematic
-            
-            src_key = self.scale_aspect.scale.uid
-            dst_key = (dst_dim.system,dst_dim.dimensions)
-            
-            try:
-                set_of_scale_pairs = cxt.src_dim_conversion_reg[
-                    (src_key,dst_key)
-                ]                       
-            except KeyError:
-                raise RuntimeError(
-                    "no conversion from {!r} to {!r}".format(self.scale_aspect,dst)
-                )
-            else:
-                src_pairs, dst_pairs = self._to_src_dst_lists( set_of_scale_pairs )
-                if len(src_pairs) == 0:
-                    raise RuntimeError(
-                        "no conversion from {!r} to {!r}".format(self.scale_aspect,dst)
-                    )
-
-                ssrc = self._closest(self.scale_aspect.scale,src_pairs)
-                sdst = self._closest(dst_scale_aspect.scale,dst_pairs)
-                c = self._systematic_conversion_factor(Scale(sdst_uid),dst)
-                c *= cxt.conversion_from_scale_aspect( 
-                    ssrc_uid,
-                    self.scale_aspect.aspect.uid,
-                    sdst_uid 
-                )(1)
-                return lambda x: c*x
-        else:
-            # Nothing worked         
-            raise RuntimeError(
-                "no conversion from {!r} to {!r}".format(self.scale_aspect,dst)
-            ) 
+        return c
             
     # ---------------------------------------------------------------------------
     def convert(self,dst):
@@ -343,15 +325,37 @@ class Expression(object):
             else:
                 assert False, repr(dst)
             
-            try:
-                fn = cxt.conversion_from_scale_aspect( 
-                    self.scale_aspect.scale.uid,
-                    self.scale_aspect.aspect.uid,
-                    dst_scale_aspect.scale.uid 
-                )
-            except RuntimeError:
+            fn = cxt.conversion_from_scale_aspect( 
+                self.scale_aspect.scale.uid,
+                self.scale_aspect.aspect.uid,
+                dst_scale_aspect.scale.uid 
+            )
+            
+            if fn is None:
 
-                fn = self._systematic_conversion(dst)
+                c = None 
+                
+                if (
+                    self.scale_aspect.is_systematic 
+                and dst_scale_aspect.is_systematic
+                ):
+                    c = self._systematic_src_dst_conversion(dst_scale_aspect)
+                    
+                if c is None and self.scale_aspect.is_systematic:
+                    c = self._systematic_src_conversion(dst_scale_aspect)
+                    
+                elif c is None and dst.is_systematic:
+                    c = self._systematic_dst_conversion(dst_scale_aspect)
+                
+                if c is None:
+                    raise RuntimeError(
+                        "cannot convert {} to {}".format(
+                            self.scale_aspect,
+                            dst_scale_aspect
+                        )
+                    )             
+                else:            
+                    fn = lambda x: c*x 
                 
             new_token = fn(self._token)
         
@@ -425,15 +429,22 @@ class Expression(object):
             # We are limited to just the generic no_aspect. So this  
             # function must fail if there are any non-trivial aspects in 
             # the initial expression.
-            _aspects = self.scale_aspect.to_compound_scales_and_aspects()[1]
-            
+            _scales, _aspects = self.scale_aspect.to_compound_scales_and_aspects()           
             if not _aspects.no_aspect: 
                 raise RuntimeError(
                     "conversion would loose aspect information {!r}".format(
                         self.scale_aspect
                     )
                 )
-                
+
+            # The CompoundScaleAspect must reduce to a systematic scale 
+            if not _scales.is_systematic: 
+                raise RuntimeError(
+                    "compound scale conversion is not supported for {!r}".format(
+                        _scales
+                    )
+                )
+            
             if isinstance(dst,Scale):            
                 dst_scale_aspect = ScaleAspect(dst,no_aspect)
                 
@@ -441,145 +452,31 @@ class Expression(object):
                 if dst.aspect is not no_aspect:
                     # A cast would be required to change the aspect
                     raise RuntimeError(
-                        "cannot change aspect: {!r}".format(dst)
+                        "conversion cannot change the aspect: {!r}".format(dst)
                     ) 
                 else:
                     dst_scale_aspect = dst 
             else:
                 assert False, repr(dst) 
+                            
+            # Look for a direct match to dst 
+            c = self._systematic_src_conversion(dst_scale_aspect)
+            
+            # Otherwise, if the destination scale is systematic
+            # there may be a match.
+            if c is None and dst_scale_aspect.is_systematic:         
+                c = self._systematic_src_dst_conversion(dst_scale_aspect)
                 
-            src_dim = self.scale_aspect.systematic.simplify     
-            if src_dim != dst_scale_aspect.systematic:
+            if c is None:
                 raise RuntimeError(
-                    "dimensions must match: {!r}, {!r}".format(
-                        src_dim,
-                        dst_scale_aspect.systematic
+                    "cannot convert {} to {}".format(
+                        self.scale_aspect,
+                        dst_scale_aspect
                     )
-                )           
-                        
-            # new_token = cxt.dim_dst_conversion_reg( 
-                # src_dim,
-                # dst_scale_aspect.scale.uid 
-            # )(self._token)
-
-                
-            try:
-                set_of_scale_pairs = cxt.dim_dst_conversion_reg[
-                    (src_dim.system,src_dim.dimensions),
-                    dst_scale_aspect.scale.uid
-                ]  
-            except KeyError:
-                raise RuntimeError(
-                    "unable to convert {} to {}".format(src_dim,dst)
-                )
-            else:
-                src_scales, dst_scales = self._to_src_dst_lists( set_of_scale_pairs )
-                ssrc = self._closest(src_scale,src_scales)
-                
-                c = self._systematic_conversion(src_scale,ssrc)
-                c *= self._systematic_conversion(sdst,dst_scale)
-                c *= cxt.convert_from_scale_aspect( 
-                    ssrc.uid,
-                    dst_scale_aspect.scale.uid 
-                )(1)
-                new_token *= c
+                )             
+            else:            
+                new_token = c*self.token
             
-        # elif ( 
-            # isinstance(self.scale_aspect,CompoundScale)
-        # and isinstance(dst,CompoundScale ) 
-        # ):
-            # # This is the generic case, where no aspect is available
-            
-            # # The expressions must be arithmetically equivalent,  
-            # # so that pairs of source-destination scales  
-            # # can be found in the register. 
-                        
-            # # Step 1: convert to products of powers
-            # src_pops = normal_form(self.scale_aspect.stack)            
-            # dst_pops = normal_form(dst.stack)         
-            
-            # # Step 2: take into account any stand-alone numerical factors
-            # conversion_factor = src_pops.prefactor/dst_pops.prefactor
-            
-            # # Step 3: step through the scale terms,
-            # # obtaining a conversion factor for each
-            # src_factors = src_pops.factors
-            # dst_factors = dst_pops.factors
-            # for src_i,dst_i in zip(src_factors.keys(),dst_factors.keys()):
-            
-                # # Each term also has an exponent
-                # src_exp = src_factors[src_i]
-                # assert src_exp == dst_factors[dst_i],\
-                    # "{} != {}".format(src_exp,dst_factors[dst_i])
-
-                # src_s_uid = src_i.uid
-                # dst_s_uid = dst_i.uid
-                # src_a_uid = no_aspect.uid
-
-                # c = cxt.conversion_from_scale_aspect( 
-                        # src_s_uid,src_a_uid,dst_s_uid                     
-                # )(1.0) 
-                # conversion_factor *= c**src_exp
-            
-            # new_token = conversion_factor*self._token
- 
-            # # Set the aspect component of the new CompoundScaleAspect
-            # # to the default value.
-            # dst_scale_aspect = dst._to_compound_scale_aspect() 
- 
-        # elif ( 
-            # isinstance(self.scale_aspect,CompoundScale)
-        # and isinstance(dst,(Scale,ScaleAspect) ) 
-        # ):
-            # # To convert from a compound scale, to a specific one,
-            # # the compound scale must be dimensionally equivalent 
-            # # to the final scale, which must not have an aspect.             
-                
-            # if isinstance(dst,ScaleAspect):
-                # if dst.aspect is not no_aspect:
-                    # raise RuntimeError(
-                        # "conversion cannot change from ``no_aspect`` "
-                        # "to {!r}".format(dst.aspect)
-                    # ) 
-                # else:
-                    # dst_scale_aspect = dst 
-                    
-            # elif isinstance(dst,Scale):            
-                # dst_scale_aspect = ScaleAspect(dst,no_aspect)
-                
-            # else:
-                # assert False, repr(dst) 
-                
-            # # TODO: 
-            # # A pair of commensurate systematic units 
-            # # can always be converted. However, we need
-            # # an exact match otherwise.
-            # src_dim = self.scale_aspect.dimension.simplify     
-            # if self.scale_aspect.systematic and dst.systematic:
-                # if not src_dim.commensurate(dst.dimension):
-                    # raise RuntimeError(
-                        # "incommensurate dimensions: {}, {}".format(
-                        # src_dim, dst.dimension
-                    # )
-                # else:
-                    # new_token = cxt.systematic_conversion(
-                        # src_dim,
-                        # dst_scale_aspect.scale.uid
-                    # )(self._token)
-                    
-            # elif src_dim != dst_scale_aspect.dimension:
-                # raise RuntimeError(
-                    # "dimensions do not match: {}, {}".format(
-                        # src_dim,
-                        # dst_scale_aspect.dimension
-                    # )
-                # )           
-                        
-                # new_token = cxt.conversion_from_dim( 
-                    # src_dim,
-                    # dst_scale_aspect.scale.uid 
-                # )(self._token)
-
         else:
             assert False
             
@@ -590,149 +487,137 @@ class Expression(object):
         
 
     # ---------------------------------------------------------------------------
-    def _systematic_casting(self,dst):
-        # Systematic alternatives
-        
-        src_scale = self.scale_aspect.scale
-        src_aspect = self.scale_aspect.aspect
-        dst_scale = dst.scale 
-        dst_aspect = dst.aspect
-        
-        if src_scale.is_systematic and dst_scale.is_systematic:
-        
-            src_dim = src_scale.systematic 
-            dst_dim = dst_scale.systematic
-            
-            src_key = ((src_dim.system,src_dim.dimensions),src_aspect.uid)
-            dst_key = ((dst_dim.system,dst_dim.dimensions),dst_aspect.uid)
-            
-            try:
-                set_of_scale_pairs = cxt.dim_dim_cast_reg[
-                    (src_key,dst_key)
-                ]  
-            except KeyError:
-                raise RuntimeError(
-                    "unable to cast {} to {}".format(self.scale_aspect,dst)
-                )
-            else:
-                src_scales, dst_scales = self._to_src_dst_lists( set_of_scale_pairs )
-                ssrc = self._closest(src_scale,src_scales)
-                sdst = self._closest(dst_scale,dst_scales)
-                
-                c = self._systematic_conversion(src_scale,ssrc)
-                c *= self._systematic_conversion(sdst,dst_scale)
-                c *= cxt.cast_from_scale_aspect( 
-                    ssrc.uid,src_aspect.uid,
-                    sdst.uid,dst_aspect.uid 
-                )(1)
-                return lambda x: c*x
-                
-        elif src_scale.is_systematic:
-            src_dim = src_scale.systematic   
-            
-            src_key = ((src_dim.system,src_dim.dimensions),src_aspect.uid)
-            dst_key = dst_scale_aspect.uid
-            
-            try:
-                set_of_scale_pairs = cxt.dim_dst_cast_reg[
-                    (src_key,dst_key)
-                ]                       
-            except KeyError:
-                raise RuntimeError(
-                    "unable to cast {} to {}".format(self.scale_aspect,dst)
-                )
-            else:
-                src_scales, dst_scales = self._to_src_dst_lists( set_of_scale_pairs )
-                ssrc = self._closest(src_scale,src_scales)
-                # Could check that dst is in dst_pairs 
-                c = self._systematic_conversion(src_scale,ssrc)
-                c *= cxt.cast_from_scale_aspect( 
-                    ssrc.uid,src_aspect.uid,
-                    dst_scale_aspect.uid 
-                )(1)
-                return lambda x: c*x 
-
-        elif dst_scale.is_systematic:
-            dst_dim = dst_scale.systematic
-            
-            src_key = self.scale_aspect.uid
-            dst_key = ((dst_dim.system,dst_dim.dimensions), dst_aspect.uid)
-            
-            try:
-                set_of_scale_pairs = cxt.src_dim_cast_reg[
-                    (src_key,dst_key)
-                ]                       
-            except KeyError:
-                raise RuntimeError(
-                    "unable to cast {} to {}".format(self.scale_aspect,dst)
-                )
-            else:
-                src_pairs, dst_pairs = self._to_src_dst_lists( set_of_scale_pairs )
-                ssrc = self._closest(self.scale_aspect.scale,src_pairs)
-                sdst = self._closest(dst_scale_aspect.scale,dst_pairs)
-                c = self._systematic_conversion(Scale(sdst_uid),dst)
-                c *= cxt.cast_from_scale_aspect( 
-                    self.scale_aspect.uid,
-                    sdst.uid,dst_aspect.uid 
-                )(1)
-                return lambda x: c*x
+    def _systematic_src_casting(self,dst_scale_aspect):
+    
+        if isinstance(self.scale_aspect,CompoundScaleAspect):
+            src_aspect = no_aspect
+            src_systematic = self.scale_aspect.systematic.simplify 
         else:
-            # Nothing worked         
-            raise RuntimeError(
-                "unable to cast {} to {}".format(self.scale_aspect,dst)
-            ) 
- 
-    # ---------------------------------------------------------------------------
-    def _systematic_src_casting(self,src_dimension,dst_scale_aspect):
-        from m_layer.systematic import Systematic
-        assert isinstance(src_dimension,Systematic), repr(src_dimension)
-        
+            src_aspect = self.scale_aspect.aspect
+            src_systematic = self.scale_aspect.systematic
+            
+        src_key = ( 
+            (src_systematic.system,src_systematic.dimensions),
+            src_aspect.uid
+        )
         dst_key = dst_scale_aspect.uid
-        src_key = (src_dimension.system,src_dimension.dimensions)
         
-        set_of_scale_pairs = set()
+        if (src_key,dst_key) in cxt.dim_dst_cast_reg:
         
-        try:
             set_of_scale_pairs = cxt.dim_dst_cast_reg[
                 (src_key,dst_key)
-            ]                       
-        except KeyError:
-            pass
-
-        try:
-            set_of_scale_pairs = cxt.dim_dst_for_aspect_reg[
-                dst_scale_aspect.aspect.uid][
-                    (src_key,dst_scale_aspect.scale.uid)
-                ]                                 
-        except KeyError:
-            pass
-        
-        if len(set_of_scale_pairs) == 0:
-            raise RuntimeError(
-                "unable to cast {} to {}".format(
-                    self.scale_aspect,dst_scale_aspect
-                )
-            )
+            ]  
             
-        src_scales, dst_scales = self._to_src_dst_lists( set_of_scale_pairs )
-        if not len(src_scales) or dst_scale_aspect.scale not in dst_scales:
-            raise RuntimeError(
-                "unable to cast {} to {}".format(
-                    self.scale_aspect,
-                    dst_scale_aspect
-                )
+            src_scales, dst_scales = self._to_src_dst_lists( 
+                set_of_scale_pairs 
             )
+            ssrc = self._closest(src_systematic,src_scales)
+
+            c = self._systematic_conversion_factor(
+                src_systematic,ssrc.systematic
+            )
+            c *= cxt.cast_from_scale_aspect( 
+                ssrc.uid,
+                src_aspect.uid,
+                dst_scale_aspect.scale.uid, 
+                dst_scale_aspect.aspect.uid 
+            )(1)
+            
+            return lambda x: c*x  
+            
+        else:
+            return None
+            
+    # ---------------------------------------------------------------------------
+    def _systematic_src_dst_casting(self,dst_scale_aspect):
+
+        if isinstance(self.scale_aspect,CompoundScaleAspect):
+            src_aspect = no_aspect
+            src_systematic = self.scale_aspect.systematic.simplify 
+        else:
+            src_aspect = self.scale_aspect.aspect
+            src_systematic = self.scale_aspect.systematic
+            
+        dst_systematic = dst_scale_aspect.scale.systematic
+        dst_aspect = dst_scale_aspect.aspect
         
-        # No way to choose
-        ssrc = src_scales.pop()
+        src_key = (
+            (src_systematic.system,src_systematic.dimensions),
+            src_aspect.uid
+        )
+        dst_key = (
+            (dst_systematic.system,dst_systematic.dimensions),
+            dst_aspect.uid
+        )
         
-        c = src_dimension.prefix
-        c *= cxt.cast_from_scale_aspect( 
-            ssrc.uid,no_aspect.uid,
-            dst_scale_aspect.scale.uid, 
-            dst_scale_aspect.aspect.uid, 
-        )(1)
-        return lambda x: c*x 
+        if (src_key,dst_key) in cxt.dim_dim_cast_reg:
+        
+            set_of_scale_pairs = cxt.dim_dim_cast_reg[
+                (src_key,dst_key)
+            ]  
+
+            src_scales, dst_scales = self._to_src_dst_lists( set_of_scale_pairs )
+            ssrc = self._closest(src_systematic,src_scales)
+            sdst = self._closest(dst_systematic,dst_scales)
+            
+            c = self._systematic_conversion_factor(
+                src_systematic,ssrc.systematic
+            )
+            c *= self._systematic_conversion_fn(sdst,dst_scale)(1)
+            c *= cxt.cast_from_scale_aspect( 
+                ssrc.uid,
+                src_aspect.uid,
+                sdst.uid,
+                dst_aspect.uid 
+            )(1)
+            
+            return lambda x: c*x
+            
+        else:
+            return None
+ 
+    # ---------------------------------------------------------------------------
+    def _systematic_dst_casting(self,dst_scale_aspect):
+    
+        if isinstance(self.scale_aspect,(CompoundScaleAspect,CompoundScale)):
+            assert False, 'should not happen' 
+        if isinstance(dst_scale_aspect,(CompoundScaleAspect,CompoundScale)):
+            assert False, 'not implemented' 
+
+        src_aspect = self.scale_aspect.aspect
+        src_systematic = self.scale_aspect.systematic
+
+        dst_scale = dst_scale_aspect.scale
+        dst_systematic = dst_scale.systematic
+        
+        # Only look for direct match 
+        src_key = self.scale_aspect.uid
+        dst_key = (
+            (dst_systematic.system,dst_systematic.dimensions), 
+            dst_aspect.uid
+        )
+        
+        if (src_key,dst_key) in cxt.src_dim_cast_reg:
+            set_of_scale_pairs = cxt.src_dim_cast_reg[
+                (src_key,dst_key)
+            ] 
+            
+            src_pairs, dst_pairs = self._to_src_dst_lists( 
+                set_of_scale_pairs 
+            )
+            sdst = self._closest(dst_systematic,dst_pairs)
+            c = self._systematic_conversion_factor(
+                sdst.systematic,dst_systematic
+            )
+            c *= cxt.cast_from_scale_aspect( 
+                self.scale_aspect.uid,
+                sdst.uid,
+                dst_aspect.uid 
+            )(1)
+            return lambda x: c*x  
+            
+        else:
+            return None
             
     # ---------------------------------------------------------------------------
     def cast(self,dst,aspect=no_aspect):
@@ -783,33 +668,43 @@ class Expression(object):
             else:
                 assert False, repr(dst)
                
-            try:
-                fn = cxt.cast_from_scale_aspect(
-                    self.scale_aspect.scale.uid,
-                    self.scale_aspect.aspect.uid,
-                    dst_scale_aspect.scale.uid,
-                    dst_scale_aspect.aspect.uid 
-                )
-            except RuntimeError:            
-                fn = self._systematic_casting(dst_scale_aspect)
+            fn = cxt.cast_from_scale_aspect(
+                self.scale_aspect.scale.uid,
+                self.scale_aspect.aspect.uid,
+                dst_scale_aspect.scale.uid,
+                dst_scale_aspect.aspect.uid 
+            )
+            if fn is None:  
+                # Look at systematic possibilities
+                if (
+                    self.scale_aspect.is_systematic 
+                and dst_scale_aspect.is_systematic
+                ):
+                    fn = self._systematic_src_dst_casting(dst)
+                    
+                if fn is None and self.scale_aspect.is_systematic:
+                    fn = self._systematic_src_casting(dst)
+                    
+                elif fn is None and dst_scale_aspect.is_systematic:
+                    fn = self._systematic_dst_casting(dst)
+                
+                if fn is None:
+                    raise RuntimeError(
+                        "cannot cast {} to {}".format(
+                            self.scale_aspect,
+                            dst_scale_aspect
+                        )
+                    )             
 
         elif isinstance(
             self.scale_aspect,(CompoundScale,CompoundScaleAspect)
         ):
             if not self.scale_aspect.is_systematic:
+                # Unsupported at the moment
                 raise RuntimeError(
                     "cannot cast from {} to {}".format(self.scale_aspect,dst)
                 )
                 
-            src_dim = self.scale_aspect.systematic.simplify            
-            if src_dim != dst.systematic:
-                raise RuntimeError(
-                    "dimensions do not match: {}, {}".format(
-                        src_dim,
-                        dst_scale_aspect.systematic
-                    )
-                )           
-            
             if isinstance(dst,Scale):            
                 if aspect is no_aspect:
                     dst_scale_aspect = ScaleAspect(dst,no_aspect)
@@ -821,9 +716,22 @@ class Expression(object):
                 
             else:
                 assert False, repr(dst)
+
+            src_systematic = self.scale_aspect.systematic.simplify                          
             
-            fn = self._systematic_src_casting(src_dim,dst_scale_aspect)
-           
+            # Try a match to dst first
+            fn = self._systematic_src_casting(dst_scale_aspect)
+            if fn is None and dst_scale_aspect.is_systematic:
+                fn = self._systematic_src_dst_casting(dst_scale_aspect)                
+            
+            if fn is None:
+                raise RuntimeError(
+                    "cannot cast {} to {}".format(
+                        self.scale_aspect,
+                        dst_scale_aspect
+                    )
+                )                
+ 
         return Expression(
             fn( self._token ),
             dst_scale_aspect
