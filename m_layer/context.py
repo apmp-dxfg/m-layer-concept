@@ -218,7 +218,7 @@ class Context(object):
             dst_scale_uid: final scale
         
         Returns:
-            A Python function 
+            A Python function or ``None``
             
         """ 
         assert isinstance(src_scale_uid,UID), repr(src_scale_uid)
@@ -247,29 +247,15 @@ class Context(object):
                 pass
                 
         # If a generic conversion is available it can be used 
-        # and the initial aspect is carried forward
+        # in which case the initial aspect is carried forward.
         try:
             return self.conversion_reg[scale_pair] 
         except KeyError:
             pass
                         
         # Otherwise it's a failure 
-        if src_aspect_uid == self.no_aspect_uid:
-            raise RuntimeError(
-                "no conversion from {!r} to {!r}".format(
-                    src_scale_uid,
-                    dst_scale_uid
-                )
-            ) 
-        else:
-            raise RuntimeError(
-                "no conversion from {!r} to {!r} for {!r}".format(
-                    src_scale_uid,
-                    dst_scale_uid,
-                    src_aspect_uid
-                )
-            ) 
-    
+        return None 
+
     #------------------------------------------------------------------------    
     def cast_from_scale_aspect(
         self,
@@ -287,7 +273,7 @@ class Context(object):
             dst_aspect_uid: final aspect
             
         Returns:
-            A Python function 
+            A Python function or ``None``
             
         When the initial and final aspect is the same 
         and no cast has been defined, a matching 
@@ -334,12 +320,7 @@ class Context(object):
                 pass
                 
         # Everything failed
-        raise RuntimeError(
-            "no cast defined from '{}' to '{}'".format(
-                src_pair,
-                dst_pair
-            )
-        )          
+        return None
 
 # ---------------------------------------------------------------------------
 # Configure the global context object 
