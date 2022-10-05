@@ -112,8 +112,8 @@ or ::
     10.1 N m
  
  
-Compound scale dimensions
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Systematic compound scales
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A :class:`~lib.CompoundScale` has a :meth:`systematic<lib.CompoundScale.systematic>` property that returns a :class:`~systematic.CompoundSystematic` associated with an expression :: 
 
@@ -122,19 +122,19 @@ A :class:`~lib.CompoundScale` has a :meth:`systematic<lib.CompoundScale.systemat
 
 The :class:`~systematic.CompoundSystematic` is a collection of :class:`~systematic.Systematic` objects -- one for every scale -- each with an associated exponent. 
 
-A compound dimension can be reduced to a single :class:`~systematic.Systematic` (combining the dimensions and their exponents) ::
+A compound object can be reduced to a single :class:`~systematic.Systematic` (combining the dimensions and their exponents) ::
 
     >>> print( kg_mm_ss.systematic.simplify )
     SI(1, 2, -2, 0, 0, 0, 0)
 
-If a scale is not coherent in the unit system, a factor relating the unit to the corresponding coherent unit is included. For example, using the unit nanometre ::
+If a scale is not coherent in the unit system, there will also be a factor relating the unit to the corresponding coherent unit. For example, using the unit nanometre ::
 
     >>> nm = Scale( ("ml_si_nm_ratio", 257091757625055920788370123828667027186) )
     >>> kg_nmnm_ss = kg*nm**2/s**2
     >>> print( kg_nmnm_ss.systematic )
     { SI(0, 0, 1, 0, 0, 0, 0) : [-2], 1E-09*SI(0, 1, 0, 0, 0, 0, 0) : [2], SI(1, 0, 0, 0, 0, 0, 0) : [1] }
 
-The prefix nano is associated with the metre scale, but the association is lost when the :class:`~systematic.CompoundSystematic` is simplified ::
+The prefix nano is associated with the metre scale, but this association is lost when the :class:`~systematic.CompoundSystematic` is simplified ::
      
     >>> print( kg_nmnm_ss.systematic.simplify )
     1E-18*SI(1, 2, -2, 0, 0, 0, 0)
@@ -176,7 +176,7 @@ The UIDs of these compound scales retain information about the different scales 
     >>> print( pV_nV.uid )
     { ['ml_si_nV_ratio', 2467209754778232353783778251664853474] : [-1], ['ml_si_pV_ratio', 82044477201173066720472034767008183292] : [1] }
 
-and compound dimensions also encode scale differences ::
+and compound systematic objects also encode scale differences ::
 
     >>> print( mV_V.systematic )
     { SI(1, 2, -3, -1, 0, 0, 0) : [-1], 1/1000*SI(1, 2, -3, -1, 0, 0, 0) : [1] }
@@ -184,7 +184,7 @@ and compound dimensions also encode scale differences ::
     >>> print( pV_nV.systematic )
     { 1E-09*SI(1, 2, -3, -1, 0, 0, 0) : [-1], 1E-12*SI(1, 2, -3, -1, 0, 0, 0) : [1] }
     
-Nevertheless, the compound scales are commensurate (have the same dimensional exponents) ::
+Nevertheless, the compound scales are commensurate (have the same system dimensional exponents) ::
 
     >>> print( mV_V.systematic.commensurate( pV_nV.systematic ) )
     True 
@@ -220,7 +220,7 @@ The compound scale volt-per-volt can also be used. However, two Scale objects mu
 Compound scales and base-unit simplification
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
 
-One of the difficulties that arises when compound-unit representation is based on system dimensions, is that arithmetic cancellation of terms with the same dimension may occur. 
+One of the difficulties that arises when using system dimensions, is that arithmetic cancellation of terms with the same dimension may occur. 
 
 For instance, we may wish to express a horizontal velocity gradient with respect to height (e.g., a rate of change in wind speed with altitude). Suitable units are metres per second per metre. A compound scale for this can be declared ::
 
@@ -247,7 +247,7 @@ Similarly, when distinct Scale object are used, the :class:`~systematic.Compound
     >>> print( m_s_m.systematic )
     { SI(0, 1, 0, 0, 0, 0, 0) : [1, -1], SI(0, 0, 1, 0, 0, 0, 0) : [-1] }
 
-The compound dimension can be simplified, which cancels references to the metre Scale ::
+The compound systematic object can be simplified, which cancels references to the metre Scale ::
     
     >>> print( m_s_m.systematic.simplify )
     SI(0, 0, -1, 0, 0, 0, 0)

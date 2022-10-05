@@ -98,7 +98,7 @@ If the reference is a unit belonging to a system of units then
 additional information is entered under the name ``system``. 
 
 The 'system' object holds an M-layer identifier for the system, 
-the dimensions of the unit in the system, and the numerical
+the dimensions of the reference in the system, and the numerical
 prefix of the unit (expressed in rational form, as a numerator and denominator strings)
 with respect to the corresponding coherent system unit.
         

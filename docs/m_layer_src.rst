@@ -60,7 +60,7 @@ The Context
 The :class:`~context.Context` methods used to access registry entries are shown here.
 
 .. autoclass:: context.Context
-    :members: conversion_from_scale_aspect, casting_from_scale_aspect, casting_from_compound_scale_dim, conversion_from_compound_scale_dim
+    :members: conversion_from_scale_aspect, cast_from_scale_aspect
 
 Modules that support the context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -115,17 +115,17 @@ Aspects, Scales or ScaleAspects can be multiplied, divided and exponentiated, wh
     :members: 
     :special-members: __eq__
    
-Dimension and CompoundDimension 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-When the expression encapsulated in a :class:`~lib.CompoundScale` or :class:`~lib.CompoundScaleAspect` consists of scales associated with a unit system, a :class:`dimension.Dimension` can express the dimensional exponents in that system's dimensions. 
+Systematic and CompoundSystematic 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When the expression encapsulated in a :class:`~lib.CompoundScale` or :class:`~lib.CompoundScaleAspect` consists of scales associated with a unit system, a :class:`systematic.Systematic` can express the dimensional exponents in that system's dimensions. 
   
-.. autoclass:: dimension.Dimension
+.. autoclass:: systematic.Systematic
     :members: 
     :special-members: __eq__
  
 Dimensions can be multiplied, divided and exponentiated, which generates a corresponding compound class. 
 
-.. autoclass:: dimension.CompoundDimension
+.. autoclass:: systematic.CompoundSystematic
     :members: 
     :special-members: __eq__
 
