@@ -82,7 +82,7 @@ class CompoundAspect(object):
         )
 
     def __str__(self):
-        return "{!s}".format( self.stack )
+        return "{}".format( self.stack )
         
     def __repr__(self):
         return "CompoundAspect({!r})".format( self.stack )       
@@ -594,7 +594,8 @@ class CompoundScale(object):
             return self._pops
         except AttributeError:
             self._pops = normal_form(self._stack)
-            
+            return self._pops
+        
     def _pop_to_str(self):
         
         # There may be different Scale objects with the same M-layer UID,
