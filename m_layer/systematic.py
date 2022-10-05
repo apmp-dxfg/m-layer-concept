@@ -138,6 +138,10 @@ class Systematic(object):
         "The unit system"
         return self._system
 
+    @property
+    def simplify(self):
+        return self
+
     @property 
     def dimensions(self):
         "The tuple of dimensions"
