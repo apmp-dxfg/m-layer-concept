@@ -126,12 +126,17 @@ class Systematic(object):
         '_system', '_dim', '_prefix'
     )
     
-    def __init__(self,system,dim,prefix=1):
+    def __init__(self,system,dim,prefix=None):
     
         self._system = system 
         self._dim = tuple(dim)
-        self._prefix = Fraction( *prefix ) if isinstance(
-            prefix,abc.Iterable) else Fraction( prefix )
+        
+        if prefix is None:
+            self._prefix = 1
+        elif isinstance(prefix,abc.Iterable):
+            self._prefix = Fraction( *prefix )
+        else:
+            self._prefix = Fraction( prefix )
         
     @property 
     def system(self):

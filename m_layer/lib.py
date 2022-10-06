@@ -226,11 +226,19 @@ def _sys_to_systematic(json_sys):
 
     to_dim_tuple = lambda x: tuple( literal_eval(x) )
     
-    return Systematic( 
-        System( UID( json_sys['uid'] ) ),
-        to_dim_tuple( json_sys['dimensions'] ),
-        to_prefix_tuple( json_sys['prefix'] )
-    )       
+    prefixed = "prefixed" in json_sys
+    
+    if prefixed:
+        return Systematic( 
+            System( UID( json_sys['uid'] ) ),
+            to_dim_tuple( json_sys['dimensions'] ),
+            to_prefix_tuple( json_sys['prefixed']['prefix'] )
+        )   
+    else:
+        return Systematic( 
+            System( UID( json_sys['uid'] ) ),
+            to_dim_tuple( json_sys['dimensions'] )
+        )   
         
 # ---------------------------------------------------------------------------
 class Reference(object):
@@ -241,7 +249,12 @@ class Reference(object):
 
     """
 
-    slots = ( '_uid', '_json_entry', '_systematic', '_is_systematic'  )
+    slots = ( 
+        '_uid', 
+        '_json_entry', 
+        '_systematic', '_is_systematic',
+        '_is_prefixed',
+    )
     
     def __init__(self,json_uid):
     
@@ -267,7 +280,7 @@ class Reference(object):
     
     @property
     def systematic(self):
-        "A :class:`~systematic.Systematic` representing the unit in its unit system"
+        "A :class:`~systematic.Systematic` representing the unit"
         try:
             return self._systematic
         except AttributeError:
@@ -283,7 +296,8 @@ class Reference(object):
  
     @property
     def is_systematic(self):
-        """``True`` if the reference is a systematic unit in its unit system
+        """
+        ``True`` if the reference is a systematic unit in its unit system
         
         A systematic unit has a name composed of products of powers of base 
         unit names (or symbols).
@@ -299,6 +313,21 @@ class Reference(object):
                 
             return self._is_systematic
             
+    @property
+    def is_prefixed(self):
+        """
+        ``True`` if the reference is a prefixed unit in the unit system
+                
+        """
+        try:
+            return self._is_prefixed
+        except AttributeError:
+            if "system" in self._json_entry :
+                self._is_prefixed = "prefixed" in self._json_entry["system"]
+            else:    
+                self._is_prefixed = False
+                
+            return self._is_prefixed
  
 # ---------------------------------------------------------------------------
 class CompoundScaleAspect(object):
