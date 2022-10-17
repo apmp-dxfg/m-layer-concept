@@ -1,6 +1,7 @@
 import numbers
 
 from collections import defaultdict
+from fractions import Fraction
 
 from m_layer.context import global_context as cxt
 
@@ -239,12 +240,31 @@ def _sys_to_systematic(json_sys):
             System( UID( json_sys['uid'] ) ),
             to_dim_tuple( json_sys['dimensions'] )
         )   
-        
+ 
+def _sys_to_prefix(json_sys):
+    """
+    Return a ``Fraction`` for the prefix 
+    
+    """
+    # The JSON prefix is a pair of string-formatted
+    # integers for the numerator and denominator
+    to_prefix_tuple = lambda x: tuple( 
+        int( literal_eval(i) ) for i in x 
+    )
+
+    to_dim_tuple = lambda x: tuple( literal_eval(x) )
+    
+    assert "prefixed" in json_sys, "unexpected"
+    
+    return Fraction(        
+        *to_prefix_tuple( json_sys['prefixed']['prefix'] )
+    )
+
 # ---------------------------------------------------------------------------
 class Reference(object):
 
     """
-    A Reference encapsulates access to an M-layer entry for a
+    A Reference encapsulates an M-layer register entry for a
     unit of measurement or other type of reference.  
 
     """
@@ -280,11 +300,11 @@ class Reference(object):
     
     @property
     def systematic(self):
-        "A :class:`~systematic.Systematic` representing the unit"
+        "A :class:`~systematic.Systematic` object representing the unit"
         try:
             return self._systematic
         except AttributeError:
-            if "system" in self._json_entry:
+            if self.is_systematic:
                 self._systematic = _sys_to_systematic(self._json_entry["system"])
             else:
                 raise RuntimeError("no unit system for {!r}".format(
@@ -329,6 +349,23 @@ class Reference(object):
                 
             return self._is_prefixed
  
+    @property
+    def prefixed(self):
+        """
+        """
+        try:
+            return self._prefix
+        except AttributeError:
+            if self.is_prefixed:
+                self._prefix = _sys_to_prefix(self._json_entry["system"])
+            else:
+                raise RuntimeError("no prefix for {!r}".format(
+                        UID( self._json_entry["uid"] )
+                    )
+                )
+                
+            return self._prefix
+        
 # ---------------------------------------------------------------------------
 class CompoundScaleAspect(object):
 
