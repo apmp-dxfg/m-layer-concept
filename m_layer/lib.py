@@ -6,6 +6,7 @@ from fractions import Fraction
 from m_layer.context import global_context as cxt
 
 from m_layer.systematic import Systematic, CompoundSystematic
+from m_layer prefixed import Prefix
 from m_layer.stack import Stack, normal_form
 from m_layer.uid import UID, CompoundUID 
 
@@ -256,8 +257,9 @@ def _sys_to_prefix(json_sys):
     
     assert "prefixed" in json_sys, "unexpected"
     
-    return Fraction(        
-        *to_prefix_tuple( json_sys['prefixed']['prefix'] )
+    return Prefixed( 
+        UID( json_sys['prefixed']['uid'] ),
+        to_prefix_tuple( json_sys['prefixed']['prefix'] )
     )
 
 # ---------------------------------------------------------------------------
