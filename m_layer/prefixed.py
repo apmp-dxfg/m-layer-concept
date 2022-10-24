@@ -18,7 +18,7 @@ class Prefixed(object):
     """
     
     __slots__ = (
-        '_reference', ''_prefix'
+        '_reference', '_prefix'
     )
     
     def __init__(self,reference,prefix):

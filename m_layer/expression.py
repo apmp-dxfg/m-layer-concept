@@ -271,7 +271,7 @@ class Expression(object):
             )        
 
         return c
-            
+        
     # ---------------------------------------------------------------------------
     def convert(self,dst):
         """Return a new expression in terms of ``dst``
@@ -325,12 +325,14 @@ class Expression(object):
             else:
                 assert False, repr(dst)
             
+            # Look for a direct M-layer conversion
             fn = cxt.conversion_from_scale_aspect( 
                 self.scale_aspect.scale.uid,
                 self.scale_aspect.aspect.uid,
                 dst_scale_aspect.scale.uid 
             )
             
+            # Try to find systematic equivalents
             if fn is None:
 
                 c = None 
@@ -355,7 +357,7 @@ class Expression(object):
                         )
                     )             
                 else:            
-                    fn = lambda x: c*x 
+                    fn = lambda x: c*x                
                 
             new_token = fn(self._token)
         

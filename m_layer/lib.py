@@ -6,7 +6,7 @@ from fractions import Fraction
 from m_layer.context import global_context as cxt
 
 from m_layer.systematic import Systematic, CompoundSystematic
-from m_layer prefixed import Prefix
+from m_layer.prefixed import Prefixed
 from m_layer.stack import Stack, normal_form
 from m_layer.uid import UID, CompoundUID 
 
@@ -244,7 +244,7 @@ def _sys_to_systematic(json_sys):
  
 def _sys_to_prefix(json_sys):
     """
-    Return a ``Fraction`` for the prefix 
+    Return a ``Prefixed`` object 
     
     """
     # The JSON prefix is a pair of string-formatted
@@ -275,7 +275,7 @@ class Reference(object):
         '_uid', 
         '_json_entry', 
         '_systematic', '_is_systematic',
-        '_is_prefixed',
+        '_prefixed', '_is_prefixed',
     )
     
     def __init__(self,json_uid):
@@ -338,7 +338,7 @@ class Reference(object):
     @property
     def is_prefixed(self):
         """
-        ``True`` if the reference is a prefixed unit in the unit system
+        ``True`` if the reference is a prefixed in the unit system
                 
         """
         try:
@@ -356,17 +356,17 @@ class Reference(object):
         """
         """
         try:
-            return self._prefix
+            return self._prefixed
         except AttributeError:
             if self.is_prefixed:
-                self._prefix = _sys_to_prefix(self._json_entry["system"])
+                self._prefixed = _sys_to_prefix(self._json_entry["system"])
             else:
                 raise RuntimeError("no prefix for {!r}".format(
                         UID( self._json_entry["uid"] )
                     )
                 )
                 
-            return self._prefix
+            return self._prefixed
         
 # ---------------------------------------------------------------------------
 class CompoundScaleAspect(object):
@@ -420,20 +420,6 @@ class CompoundScaleAspect(object):
         return s[:-1] if s[-1] == "." else s
         
     @property 
-    def is_systematic(self):
-        """A :class:`CompoundScaleAspect` is systematic when all scales are systematic 
-        
-        """
-        try: 
-            return self._is_systematic
-        except AttributeError:
-            self._is_systematic = all(
-                k.is_systematic 
-                    for k in self._pop().factors.keys()
-            )
-            return self._is_systematic
-
-    @property 
     def composable(self): return True
  
     @property
@@ -468,6 +454,20 @@ class CompoundScaleAspect(object):
             self.stack.push(y).pow()
         )
     
+    @property 
+    def is_systematic(self):
+        """A :class:`CompoundScaleAspect` is systematic when all scales are systematic 
+        
+        """
+        try: 
+            return self._is_systematic
+        except AttributeError:
+            self._is_systematic = all(
+                k.is_systematic 
+                    for k in self._pop().factors.keys()
+            )
+            return self._is_systematic
+
     @property
     def systematic(self):
         try:
@@ -527,7 +527,7 @@ class ScaleAspect(object):
     A wrapper around a scale and aspect pair.
     """
 
-    __slots__ = ("_scale","_aspect","_systematic", "_coherent")
+    __slots__ = ("_scale","_aspect", )
 
     def __init__(self,scale,aspect=no_aspect):
         assert isinstance(scale,Scale), repr(scale)
@@ -547,24 +547,32 @@ class ScaleAspect(object):
     # Alias
     kind_of_quantity = aspect 
 
+    @property 
+    def is_systematic(self):
+        return self.scale.is_systematic
+
     @property
     def systematic(self):
-        try:
-            return self._systematic
-        except AttributeError:
-            # If there are no defined dimensions a RuntimeError  
-            # is raised here. Allow it to propagate.
-            self._systematic = self.scale.systematic
-            return self._systematic
+        if self.is_systematic: 
+            return self.scale.systematic
+        else:
+            return None
+
+    @property 
+    def is_prefixed(self):
+        return self.scale.is_prefixed
+
+    @property
+    def prefixed(self):
+        if self.is_prefixed: 
+            return self.scale.prefixed
+        else:
+            return None
 
     @property 
     def uid(self):
         "A pair of M-layer identifiers for scale and aspect"
         return (self.scale.uid,self.aspect.uid)
-
-    @property 
-    def is_systematic(self):
-        return self.scale.is_systematic
 
     @property 
     def composable(self):
@@ -704,6 +712,20 @@ class CompoundScale(object):
             self._uid = CompoundUID(self.stack)
             return self._uid
 
+    @property 
+    def is_systematic(self):
+        """A :class:`CompoundScale` is systematic when all scales are systematic 
+        
+        """
+        try: 
+            return self._is_systematic
+        except AttributeError:
+            self._is_systematic = all(
+                k.is_systematic 
+                    for k in self._pop().factors.keys()
+            )
+            return self._is_systematic
+            
     @property
     def systematic(self):
         "The dimensions of the component scales"
@@ -721,20 +743,6 @@ class CompoundScale(object):
     def scale_type(self):
         return "ratio"
 
-    @property 
-    def is_systematic(self):
-        """A :class:`CompoundScale` is systematic when all scales are systematic 
-        
-        """
-        try: 
-            return self._is_systematic
-        except AttributeError:
-            self._is_systematic = all(
-                k.is_systematic 
-                    for k in self._pop().factors.keys()
-            )
-            return self._is_systematic
-            
     @property 
     def composable(self):
         return True
@@ -851,13 +859,6 @@ class Scale(object):
         ) 
  
     @property 
-    def is_systematic(self):
-        if self.scale_type == 'ratio':
-            return self._reference.is_systematic
-        else:
-            return False
- 
-    @property 
     def composable(self):
         return self.scale_type == "ratio"
         
@@ -874,15 +875,44 @@ class Scale(object):
         return self._reference
 
     @property 
+    def is_systematic(self):
+        return (
+            self.scale_type == 'ratio'
+        and
+            self._reference.is_systematic
+        )
+ 
+    @property 
     def systematic(self):
         """
         Return a :class:`~systematic.Systematic` when a ratio scale
-        is associated   with a reference in a coherent system of 
+        is associated with a reference in a coherent system of 
         units, like the SI. Otherwise return ``None``.
         
         """
-        if self.scale_type == 'ratio':
+        if self.is_systematic:
             return self._reference.systematic
+        else:
+            return None
+
+    @property 
+    def is_prefixed(self):
+        return (
+            self.scale_type == 'ratio'
+        and
+            self._reference.is_prefixed
+        )
+ 
+    @property 
+    def prefixed(self):
+        """
+        Return a :class:`~prefixed.Prefixed` when a ratio scale
+        is associated with a reference in a coherent system of 
+        units, like the SI. Otherwise return ``None``.
+        
+        """
+        if self.is_prefixed:
+            return self._reference.prefixed
         else:
             return None
             
@@ -1106,7 +1136,41 @@ def build_systematic_casting_registers(cxt):
             
         else:
             pass 
-            
+     
+#----------------------------------------------------------------------------
+# A mapping from reference UID to a mapping of the different scales, 
+# indexed by scale type. This could be a service provided by 
+# the M-layer, rather than implemented in the client.   
+#
+# def build_ref_to_scale_reg(cxt):
+    # """
+    # Create a mapping from each reference to the different scales that use it
+    
+    # """
+    # if not hasattr(cxt, 'ref_to_scale_reg'):
+        # cxt.ref_to_scale_reg = defaultdict( dict )
+        
+    # for scale_uid in cxt.scale_reg._objects.keys():  
+    
+        # scale = Scale(scale_uid)
+        # reference = scale.reference
+        
+        # if reference.uid in cxt.ref_to_scale_reg:
+            # scales = cxt.ref_to_scale_reg[reference.uid]
+            # if scale.scale_type in scales:
+                # raise RuntimeError(
+                    # "Existing entry for {!r}: {!r} != {!r}".format(
+                        # reference,
+                        # scale,
+                        # Scale( scales[scale.scale_type] )
+                    # )
+                # )
+            # else:
+                # scales[scale.scale_type] = scale
+        # else:
+            # cxt.ref_to_scale_reg[reference.uid][scale.scale_type] = scale_uid
+     
 #----------------------------------------------------------------------------
 build_systematic_conversion_registers(cxt) 
 build_systematic_casting_registers(cxt)
+# build_ref_to_scale_reg(cxt)
