@@ -1138,39 +1138,5 @@ def build_systematic_casting_registers(cxt):
             pass 
      
 #----------------------------------------------------------------------------
-# A mapping from reference UID to a mapping of the different scales, 
-# indexed by scale type. This could be a service provided by 
-# the M-layer, rather than implemented in the client.   
-#
-# def build_ref_to_scale_reg(cxt):
-    # """
-    # Create a mapping from each reference to the different scales that use it
-    
-    # """
-    # if not hasattr(cxt, 'ref_to_scale_reg'):
-        # cxt.ref_to_scale_reg = defaultdict( dict )
-        
-    # for scale_uid in cxt.scale_reg._objects.keys():  
-    
-        # scale = Scale(scale_uid)
-        # reference = scale.reference
-        
-        # if reference.uid in cxt.ref_to_scale_reg:
-            # scales = cxt.ref_to_scale_reg[reference.uid]
-            # if scale.scale_type in scales:
-                # raise RuntimeError(
-                    # "Existing entry for {!r}: {!r} != {!r}".format(
-                        # reference,
-                        # scale,
-                        # Scale( scales[scale.scale_type] )
-                    # )
-                # )
-            # else:
-                # scales[scale.scale_type] = scale
-        # else:
-            # cxt.ref_to_scale_reg[reference.uid][scale.scale_type] = scale_uid
-     
-#----------------------------------------------------------------------------
 build_systematic_conversion_registers(cxt) 
 build_systematic_casting_registers(cxt)
-# build_ref_to_scale_reg(cxt)
