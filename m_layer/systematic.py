@@ -126,7 +126,7 @@ class CompoundSystematic(object):
 #
 # Different systematic units can be equivalent in terms of scaling. 
 # For instance, kg/m <=> g/mm. 
-# This class captures the unique scaling properties of a systematic unit.
+# Systematic captures the unique scaling properties of a systematic unit.
 # (So, it would not distinguish between kg/m and g/mm.)
 #
 # We can use the "system" and "dimensions" attributes of this class to 
@@ -135,20 +135,20 @@ class CompoundSystematic(object):
 # each coherent unit expressed systematically, like m.s-2, kg.m2.s-2, etc. 
 #
 # This constraint can be checked in the registry because the JSON 
-# record for a coherent unit has a "systematic" name (but no "prefix" data). 
+# record for a coherent unit has a "systematic" name but no "prefix" data. 
 #
-# Note that the SI allows for different expressions of ONE coherent unit, 
+# Note that the SI allows different expressions for ONE coherent unit, 
 # but it considers these to refer all to the same unit (SI9 p140). 
 # This is difficult to make sense of. It seems that they consider only 
 # scaling. Do they mean that when N.m is used for torque (a derived unit)  
 # it is coherent and when it is used for energy (as a compound unit)
 # it is not? You need to know the aspect to make that distinction.
 # Of course, N.m doesn't take a prefix in either case, nor would 
-# other permutations of the unit names. So, in terms of scaling 
-# they are all equivalent.
+# other permutations of the unit names.  
+# So, in terms of scaling they are all equivalent.
 # 
 # In this project, the joule is distinct from an (arbitrary)  
-# compound unit N.m. There is also a reference si_N.m,
+# compound unit N.m, but there is also a reference si_N.m,
 # which can be used to represent torque. 
 #
 class Systematic(object):

@@ -306,7 +306,7 @@ class Reference(object):
         try:
             return self._systematic
         except AttributeError:
-            if self.is_systematic:
+            if "system" in self._json_entry:
                 self._systematic = _sys_to_systematic(self._json_entry["system"])
             else:
                 raise RuntimeError("no unit system for {!r}".format(
@@ -553,21 +553,7 @@ class ScaleAspect(object):
 
     @property
     def systematic(self):
-        if self.is_systematic: 
-            return self.scale.systematic
-        else:
-            return None
-
-    @property 
-    def is_prefixed(self):
-        return self.scale.is_prefixed
-
-    @property
-    def prefixed(self):
-        if self.is_prefixed: 
-            return self.scale.prefixed
-        else:
-            return None
+        return self.scale.systematic
 
     @property 
     def uid(self):
@@ -877,7 +863,7 @@ class Scale(object):
     @property 
     def is_systematic(self):
         return (
-            self.scale_type == 'ratio'
+            self.scale_type == "ratio"
         and
             self._reference.is_systematic
         )
@@ -890,31 +876,7 @@ class Scale(object):
         units, like the SI. Otherwise return ``None``.
         
         """
-        if self.is_systematic:
-            return self._reference.systematic
-        else:
-            return None
-
-    @property 
-    def is_prefixed(self):
-        return (
-            self.scale_type == 'ratio'
-        and
-            self._reference.is_prefixed
-        )
- 
-    @property 
-    def prefixed(self):
-        """
-        Return a :class:`~prefixed.Prefixed` when a ratio scale
-        is associated with a reference in a coherent system of 
-        units, like the SI. Otherwise return ``None``.
-        
-        """
-        if self.is_prefixed:
-            return self._reference.prefixed
-        else:
-            return None
+        return self._reference.systematic
             
     def __eq__(self,other):
         "True when both objects have the same uids"
