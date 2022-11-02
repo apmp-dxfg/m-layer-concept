@@ -10,7 +10,10 @@
                 "name": "mass",
                 "symbol": "M"
             }
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -23,7 +26,10 @@
                 "name": "length",
                 "symbol": "L"
             }
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -36,7 +42,10 @@
                 "name": "time",
                 "symbol": "t"
             }
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -49,7 +58,10 @@
                 "name": "electric_current",
                 "symbol": "I"
             }
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -62,7 +74,10 @@
                 "name": "thermodynamic temperature",
                 "symbol": "T"
             }
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -75,7 +90,10 @@
                 "name": "amount of substance",
                 "symbol": "n"
             }
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -88,6 +106,9 @@
                 "name": "luminous intensity",
                 "symbol": "I_v"
             }
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     }
 ]

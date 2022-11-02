@@ -10,7 +10,10 @@
                 "name": "area",
                 "symbol": "A"
             }
-        }
+        },
+        "tags": [
+            "si_derived"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -23,6 +26,649 @@
                 "name": "volume",
                 "symbol": "V"
             }
-        }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_speed",
+            239696004207976705357808095771482812099
+        ],
+        "locale": {
+            "default": {
+                "name": "speed",
+                "symbol": "v"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_acceleration",
+            174003774095064737144656838578315048217
+        ],
+        "locale": {
+            "default": {
+                "name": "acceleration",
+                "symbol": "a"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_wavenumber",
+            144971063540877887430756064314490007964
+        ],
+        "locale": {
+            "default": {
+                "name": "wavenumber",
+                "symbol": "\\sigma"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_density",
+            296318587819650086779259095103747989173
+        ],
+        "locale": {
+            "default": {
+                "name": "density",
+                "symbol": "\\rho"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_surface_density",
+            321680100943218494854118518165668520707
+        ],
+        "locale": {
+            "default": {
+                "name": "surface_density",
+                "symbol": "\\rho_A"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_specific_volume",
+            152795471616906264512155935540166704678
+        ],
+        "locale": {
+            "default": {
+                "name": "specific_volume",
+                "symbol": "\\nu"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_current_density",
+            94095966839358932891028010010465816985
+        ],
+        "locale": {
+            "default": {
+                "name": "current_density",
+                "symbol": "j"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_magenetic_field_strength",
+            120658042834346619919463833382105714005
+        ],
+        "locale": {
+            "default": {
+                "name": "magenetic_field_strength",
+                "symbol": "H"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_amount_of_substance_concentration",
+            80143892943198555268826802735357303352
+        ],
+        "locale": {
+            "default": {
+                "name": "amount_of_substance_concentration",
+                "symbol": "c"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_mass_concentration",
+            322617292871696299142853244795286463713
+        ],
+        "locale": {
+            "default": {
+                "name": "mass_concentration",
+                "symbol": "\\rho"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_luminance",
+            320854712030278737930386933703222977395
+        ],
+        "locale": {
+            "default": {
+                "name": "luminance",
+                "symbol": "L_v"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_dynamic_viscosity",
+            321242344810178414895262915398231593977
+        ],
+        "locale": {
+            "default": {
+                "name": "dynamic_viscosity",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_moment_of_force",
+            313648474034040825357489751369673453388
+        ],
+        "locale": {
+            "default": {
+                "name": "moment_of_force",
+                "symbol": "M"
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_surface_tension",
+            146973627935236017834512206165911511699
+        ],
+        "locale": {
+            "default": {
+                "name": "surface_tension",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_angular_velocity",
+            142020414752742106561697777830372500587
+        ],
+        "locale": {
+            "default": {
+                "name": "angular_velocity",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_angular_frequency",
+            304487058398509127428608730284641177906
+        ],
+        "locale": {
+            "default": {
+                "name": "angular_frequency",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_angular_acceleration",
+            116440329620792150160421614557752606910
+        ],
+        "locale": {
+            "default": {
+                "name": "angular_acceleration",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_heat_flux_density",
+            51282319865436730401921568266110641259
+        ],
+        "locale": {
+            "default": {
+                "name": "heat_flux_density",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_irradiance",
+            91292306732674155204763106021002128249
+        ],
+        "locale": {
+            "default": {
+                "name": "irradiance",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_entropy",
+            264141463610326666051043781555088853485
+        ],
+        "locale": {
+            "default": {
+                "name": "entropy",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_specific_heat_capacity",
+            307193004110161679476576772833770051197
+        ],
+        "locale": {
+            "default": {
+                "name": "specific_heat_capacity",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_specific_entropy",
+            193401364478668368996969410731248121191
+        ],
+        "locale": {
+            "default": {
+                "name": "specific_entropy",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_specific_energy",
+            142947593261979505621551124266700533807
+        ],
+        "locale": {
+            "default": {
+                "name": "specific_energy",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_thermal_conductivity",
+            129046349312035221497109378259259673160
+        ],
+        "locale": {
+            "default": {
+                "name": "thermal_conductivity",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_energy_density",
+            135497017115151740803375403327764102690
+        ],
+        "locale": {
+            "default": {
+                "name": "energy_density",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electric_field_strength",
+            117919226006516538277057542159469698552
+        ],
+        "locale": {
+            "default": {
+                "name": "electric_field_strength",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electric_charge_density",
+            72387677738356972247368804545727720716
+        ],
+        "locale": {
+            "default": {
+                "name": "electric_charge_density",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_surface_charge_density",
+            185658702824481674250768562183264348746
+        ],
+        "locale": {
+            "default": {
+                "name": "surface_charge_density",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electric_flux_density",
+            134157035520961592292498676695567359804
+        ],
+        "locale": {
+            "default": {
+                "name": "electric_flux_density",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_electric_displacement",
+            4155094101341702849391489369757796410
+        ],
+        "locale": {
+            "default": {
+                "name": "electric_displacement",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_permittivity",
+            62116650112500540810632751568618029521
+        ],
+        "locale": {
+            "default": {
+                "name": "permittivity",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_permeability",
+            162811549092351050373888768045547537960
+        ],
+        "locale": {
+            "default": {
+                "name": "permeability",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_molar_energy",
+            181121576975034348110028374872991208057
+        ],
+        "locale": {
+            "default": {
+                "name": "molar_energy",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_molar_entropy",
+            323654037353100669651693526869239261970
+        ],
+        "locale": {
+            "default": {
+                "name": "molar_entropy",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_molar_heat_capacity",
+            14854539606111206782847659880064919482
+        ],
+        "locale": {
+            "default": {
+                "name": "molar_heat_capacity",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_exposure",
+            275021482110027717637492806150343586523
+        ],
+        "locale": {
+            "default": {
+                "name": "exposure",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_absorbed_dose_rate",
+            220854194051870277908057241005073779484
+        ],
+        "locale": {
+            "default": {
+                "name": "absorbed_dose_rate",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_radiant_intensity",
+            144538945203864637020357927840110198934
+        ],
+        "locale": {
+            "default": {
+                "name": "radiant_intensity",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_radiance",
+            261650945757211532193351408237579449512
+        ],
+        "locale": {
+            "default": {
+                "name": "radiance",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_catalytic_activity_concentration",
+            125277415325187050292674962801840998296
+        ],
+        "locale": {
+            "default": {
+                "name": "catalytic_activity_concentration",
+                "symbol": ""
+            }
+        },
+        "tags": [
+            "si_derived"
+        ]
     }
 ]

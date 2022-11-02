@@ -10,7 +10,10 @@
                 "name": "plane-angle",
                 "symbol": "ang"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -23,7 +26,10 @@
                 "name": "solid-angle",
                 "symbol": "\\Omega"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -36,7 +42,10 @@
                 "name": "frequency",
                 "symbol": "f"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -49,7 +58,26 @@
                 "name": "force",
                 "symbol": "F"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_pressure",
+            155375278950202741733846697492471590376
+        ],
+        "locale": {
+            "default": {
+                "name": "pressure",
+                "symbol": "P"
+            }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -62,7 +90,10 @@
                 "name": "energy",
                 "symbol": "E"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -75,7 +106,10 @@
                 "name": "power",
                 "symbol": "P"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -88,7 +122,10 @@
                 "name": "electric charge",
                 "symbol": "q"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -101,7 +138,10 @@
                 "name": "electrical_potential",
                 "symbol": "\\varphi"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -114,7 +154,10 @@
                 "name": "capacitance",
                 "symbol": "C"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -127,7 +170,10 @@
                 "name": "electric_resistance",
                 "symbol": "R"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -140,7 +186,10 @@
                 "name": "conductance",
                 "symbol": "G"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -153,7 +202,10 @@
                 "name": "magnetic_flux",
                 "symbol": "\\Phi"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -166,7 +218,10 @@
                 "name": "magnetic_flux_density",
                 "symbol": "B"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -179,7 +234,10 @@
                 "name": "inductance",
                 "symbol": "L "
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -192,7 +250,10 @@
                 "name": "luminous-flux",
                 "symbol": "\\Phi_v"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -205,7 +266,10 @@
                 "name": "illuminance",
                 "symbol": "E_v"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -218,7 +282,10 @@
                 "name": "activity",
                 "symbol": "A"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -231,7 +298,10 @@
                 "name": "absorbed-dose",
                 "symbol": "D"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -244,7 +314,10 @@
                 "name": "dose-equivalent",
                 "symbol": "H"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Aspect",
@@ -257,6 +330,9 @@
                 "name": "catalytic-activity",
                 "symbol": "K"
             }
-        }
+        },
+        "tags": [
+            "si_special"
+        ]
     }
 ]

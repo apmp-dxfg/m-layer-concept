@@ -10,6 +10,9 @@
                 "name": "",
                 "symbol": ""
             }
-        }
+        },
+        "tags": [
+            "no_aspect"
+        ]
     }
 ]

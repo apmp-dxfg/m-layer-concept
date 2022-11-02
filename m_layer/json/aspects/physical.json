@@ -2,32 +2,6 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml_torque",
-            130931339493516375135609650190501980170
-        ],
-        "locale": {
-            "default": {
-                "name": "torque",
-                "symbol": "M"
-            }
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
-            "ml_wavenumber",
-            144971063540877887430756064314490007964
-        ],
-        "locale": {
-            "default": {
-                "name": "wavenumber",
-                "symbol": "\\sigma"
-            }
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
             "ml_wavelength",
             286560112267714281146712032556984229473
         ],
