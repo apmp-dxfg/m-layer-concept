@@ -2,7 +2,7 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect": [
-            "ml_force_moment",
+            "ml_moment_of_force",
             313648474034040825357489751369673453388
         ],
         "src": [

@@ -94,7 +94,7 @@ However, no aspect is specified, so this expression does not distinguish between
 By declaring the aspects ::
 
     >>> energy = Aspect( ("ml_energy", 12139911566084412692636353460656684046) )
-    >>> moment = Aspect( ("ml_force_moment", 313648474034040825357489751369673453388) )
+    >>> moment = Aspect( ("ml_moment_of_force", 313648474034040825357489751369673453388) )
     
 and the scales ::
 
