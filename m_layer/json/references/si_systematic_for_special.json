@@ -22,7 +22,10 @@
         "UCUM": {
             "code": "/s",
             "description": "per second"
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -43,7 +46,10 @@
             ],
             "dimensions": "[0, 2, -2, 0, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -64,7 +70,10 @@
             ],
             "dimensions": "[1, 1, -2, 0, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -85,7 +94,10 @@
             ],
             "dimensions": "[1, -1, -2, 0, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -106,7 +118,10 @@
             ],
             "dimensions": "[1, 2, -2, 0, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -127,7 +142,10 @@
             ],
             "dimensions": "[1, 2, -3, 0, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -148,7 +166,10 @@
             ],
             "dimensions": "[0, 0, 1, 1, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -169,7 +190,10 @@
             ],
             "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -190,7 +214,10 @@
             ],
             "dimensions": "[-1, -2, 4, 2, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -211,7 +238,10 @@
             ],
             "dimensions": "[1, 2, -3, -2, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -232,7 +262,10 @@
             ],
             "dimensions": "[-1, -2, 3, 2, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -253,7 +286,10 @@
             ],
             "dimensions": "[1, 2, -2, -1, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -274,7 +310,10 @@
             ],
             "dimensions": "[1, 0, -2, -1, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -295,7 +334,10 @@
             ],
             "dimensions": "[1, 2, -2, -2, 0, 0, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -316,7 +358,10 @@
             ],
             "dimensions": "[0, -2, 0, 0, 0, 0, 1]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -337,6 +382,9 @@
             ],
             "dimensions": "[0, 0, -1, 0, 0, 1, 0]",
             "systematic": 1
-        }
+        },
+        "tags": [
+            "si_systematic_for_special"
+        ]
     }
 ]

@@ -22,7 +22,10 @@
         "UCUM": {
             "code": "kg",
             "description": "kilogram"
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -47,7 +50,10 @@
         "UCUM": {
             "code": "m",
             "description": "meter"
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -72,7 +78,10 @@
         "UCUM": {
             "code": "s",
             "description": "second"
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -97,7 +106,10 @@
         "UCUM": {
             "code": "A",
             "description": "ampere"
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -122,7 +134,10 @@
         "UCUM": {
             "code": "K",
             "description": "degree Kelvin"
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -147,7 +162,10 @@
         "UCUM": {
             "code": "mol",
             "description": "mole"
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Reference",
@@ -172,6 +190,9 @@
         "UCUM": {
             "code": "cd",
             "description": "candela"
-        }
+        },
+        "tags": [
+            "si_base"
+        ]
     }
 ]

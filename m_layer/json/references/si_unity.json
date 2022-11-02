@@ -16,12 +16,14 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 0, 0, 0, 0, 0, 0]",
-            "special": 1
+            "dimensions": "[0, 0, 0, 0, 0, 0, 0]"
         },
         "UCUM": {
             "code": "1",
             "description": "unity"
-        }
+        },
+        "tags": [
+            "si_unity"
+        ]
     }
 ]
