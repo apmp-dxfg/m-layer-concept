@@ -275,7 +275,9 @@ class TestInit(unittest.TestCase):
                 for i in data:
                     if i['__entry__'] == 'ScalesForAspect':
                         a = i['aspect']
-                        self.assertTrue( str(a[0]) in aspects )
+                        self.assertTrue( str(a[0]) in aspects,
+                            msg="{!r} not found".format(a[0])
+                        )
                         
                         s = i['src']
                         msg = "{} in {}".format(s[0],f_json)
