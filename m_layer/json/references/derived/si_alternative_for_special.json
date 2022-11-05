@@ -218,30 +218,6 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_J.kg-1",
-            271585893875498331839036214326794290244
-        ],
-        "locale": {
-            "default": {
-                "name": "joule per kilogram",
-                "symbol": "J.kg-1"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[0,2,-2,0,0,0,0]"
-        },
-        "tags": [
-            "derived",
-            "si_alternative_for_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
             "si_Pa.s",
             267597846565311257072423030550403147882
         ],
