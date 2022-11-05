@@ -7,7 +7,7 @@
         ],
         "locale": {
             "default": {
-                "name": "plane-angle",
+                "name": "plane angle",
                 "symbol": "ang"
             }
         },
@@ -23,7 +23,7 @@
         ],
         "locale": {
             "default": {
-                "name": "solid-angle",
+                "name": "solid angle",
                 "symbol": "\\Omega"
             }
         },
@@ -82,6 +82,22 @@
     {
         "__entry__": "Aspect",
         "uid": [
+            "ml_stress",
+            319377183970755198224307911630863787292
+        ],
+        "locale": {
+            "default": {
+                "name": "stress",
+                "symbol": "\\sigma"
+            }
+        },
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
             "ml_energy",
             12139911566084412692636353460656684046
         ],
@@ -89,6 +105,38 @@
             "default": {
                 "name": "energy",
                 "symbol": "E"
+            }
+        },
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_work",
+            62946737937109656496250851274661738680
+        ],
+        "locale": {
+            "default": {
+                "name": "work",
+                "symbol": "W"
+            }
+        },
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_amount_of_heat",
+            80771657847191288919573766296720806285
+        ],
+        "locale": {
+            "default": {
+                "name": "amount of heat",
+                "symbol": "Q"
             }
         },
         "tags": [
@@ -135,7 +183,7 @@
         ],
         "locale": {
             "default": {
-                "name": "electrical_potential",
+                "name": "electrical potential",
                 "symbol": "\\varphi"
             }
         },
@@ -167,7 +215,7 @@
         ],
         "locale": {
             "default": {
-                "name": "electric_resistance",
+                "name": "electric resistance",
                 "symbol": "R"
             }
         },
@@ -199,7 +247,7 @@
         ],
         "locale": {
             "default": {
-                "name": "magnetic_flux",
+                "name": "magnetic flux",
                 "symbol": "\\Phi"
             }
         },
@@ -215,7 +263,7 @@
         ],
         "locale": {
             "default": {
-                "name": "magnetic_flux_density",
+                "name": "magnetic flux density",
                 "symbol": "B"
             }
         },
@@ -247,7 +295,7 @@
         ],
         "locale": {
             "default": {
-                "name": "luminous-flux",
+                "name": "luminous flux",
                 "symbol": "\\Phi_v"
             }
         },
@@ -290,12 +338,28 @@
     {
         "__entry__": "Aspect",
         "uid": [
+            "ml_kerma",
+            282150672379715019380909559167862481942
+        ],
+        "locale": {
+            "default": {
+                "name": "kerma",
+                "symbol": "K"
+            }
+        },
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
             "ml_absorbed_dose",
             261054223272012664089159971740322302399
         ],
         "locale": {
             "default": {
-                "name": "absorbed-dose",
+                "name": "absorbed dose",
                 "symbol": "D"
             }
         },
@@ -311,7 +375,7 @@
         ],
         "locale": {
             "default": {
-                "name": "dose-equivalent",
+                "name": "dose equivalent",
                 "symbol": "H"
             }
         },
@@ -327,7 +391,7 @@
         ],
         "locale": {
             "default": {
-                "name": "catalytic-activity",
+                "name": "catalytic activity",
                 "symbol": "K"
             }
         },

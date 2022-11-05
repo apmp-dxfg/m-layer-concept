@@ -128,7 +128,10 @@ class TestInit(unittest.TestCase):
                 for i in data:
                     if i['__entry__'] == 'ScalesForAspect':
                         a = i['aspect']
-                        self.assertTrue( str(a[1]) in aspects )
+                        self.assertTrue( 
+                            str(a[1]) in aspects, 
+                            msg="{!r} not fount in aspects".format(a[1]) 
+                        )
                                                     
                         s = i['src']
                         msg = "{} in {}".format(s[0],f_json)

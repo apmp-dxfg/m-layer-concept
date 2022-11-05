@@ -54,19 +54,6 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml_temperature_difference",
-            212368324110263031011700652725345220325
-        ],
-        "locale": {
-            "default": {
-                "name": "temperature_difference",
-                "symbol": "dT"
-            }
-        }
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
             "ml_transmittance",
             106338157389217634821305827494648287004
         ],

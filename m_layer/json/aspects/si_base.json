@@ -55,7 +55,7 @@
         ],
         "locale": {
             "default": {
-                "name": "electric_current",
+                "name": "electric current",
                 "symbol": "I"
             }
         },
@@ -73,6 +73,22 @@
             "default": {
                 "name": "thermodynamic temperature",
                 "symbol": "T"
+            }
+        },
+        "tags": [
+            "si_base"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_temperature_difference",
+            212368324110263031011700652725345220325
+        ],
+        "locale": {
+            "default": {
+                "name": "temperature difference",
+                "symbol": "dT"
             }
         },
         "tags": [
