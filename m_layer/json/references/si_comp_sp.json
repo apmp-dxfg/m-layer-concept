@@ -1,23 +1,2 @@
 [
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_N.m",
-            137350929878880436554983681177672077695
-        ],
-        "locale": {
-            "default": {
-                "name": "newton metre",
-                "symbol": "N m"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[1, 2, -2, 0, 0, 0, 0]",
-            "special": 1
-        }
-    }
 ]
