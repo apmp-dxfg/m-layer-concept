@@ -138,11 +138,11 @@ allowing the temperature difference to be expressed clearly and converted to kel
     >>> td_C = expr(10,celsius_temperature_differenc)
     >>> display(td_C)
     10 degree C
-    Expression(10,degree C,temperature_difference)
+    Expression(10,degree C,temperature difference)
 
     >>> display( td_C.convert(kelvin_temperature_differenc) )
     10 K
-    Expression(10,K,temperature_difference)
+    Expression(10,K,temperature difference)
     
   
 Plane angle
@@ -211,7 +211,7 @@ However, to change from unbounded to a bounded scale a cast is needed, because s
 
     >>> display( b.cast(ml_imp_degree_bounded_360,ml_plane_angle) ) 
     270.0 deg
-    Expression(270.0,deg,plane-angle)
+    Expression(270.0,deg,plane angle)
   
 Spectroscopic data
 ==================  
