@@ -127,7 +127,7 @@ class Context(object):
             data = json.load(f,**kwargs)        
         self._loader(data)
  
-    def load(self,path,**kwargs):
+    def load(self,type_dir,**kwargs):
         """
         Called to initialise internal M-layer records
         
@@ -136,12 +136,14 @@ class Context(object):
             **kwargs: keyword arguments passed to glob
             
         """
-        for f_json in glob.glob( path ):
+        for f_json in glob.glob( "**/*.json",root_dir=type_dir,recursive=True ):
+
+            f_i = os.path.join(type_dir,f_json)
             try:
-                self.load_json( f_json, **kwargs )
+                self.load_json( f_i, **kwargs )
             except json.decoder.JSONDecodeError as e:
                 # Report errors but do not stop execution
-                print("json.decoder.JSONDecodeError",e, 'in:',f_json)
+                print("json.decoder.JSONDecodeError",e, 'in:',f_i)
  
     @property
     def locale(self):
@@ -339,8 +341,7 @@ for p_i in (
         r'json/scales_for',
         r'json/systems'
     ):
-    path = os.path.join(_dir,p_i, r'*.json')
-    global_context.load(path)
+    global_context.load( os.path.join(_dir,p_i) )
 
 # The `no_aspect` entry is special, we need the uid
 file_path = os.path.join( _dir, r'json/aspects/no_aspect.json' )
