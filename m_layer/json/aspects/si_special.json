@@ -162,6 +162,22 @@
     {
         "__entry__": "Aspect",
         "uid": [
+            "ml_radiant_flux",
+            181776838931720079038130658487297343970
+        ],
+        "locale": {
+            "default": {
+                "name": "radian flux",
+                "symbol": "\\Phi"
+            }
+        },
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
             "ml_electric_charge",
             156116358753013952105463016805539999401
         ],
