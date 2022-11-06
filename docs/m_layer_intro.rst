@@ -59,7 +59,7 @@ The expression ``x`` combines the value 12 with the ``kg`` scale and the ``mass`
     ...    print()
 
     >>> mass = Aspect( ('ml_mass',321881801928222308627062904049725548287) )
-    >>> kg = Scale( ('ml_si_kilogram_ratio',12782167041499057092439851237297548539) )
+    >>> kg = Scale( ('ml_si_kg_ratio',12782167041499057092439851237297548539) )
     >>> lb = Scale( ('ml_imp_pound_ratio',188380796861507506602975683857494523991) )
     
     >>> x = expr(12,kg,mass)

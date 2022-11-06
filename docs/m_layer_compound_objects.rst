@@ -32,8 +32,8 @@ We first import the package and declare scales for length and time ::
 
     >>> from m_layer import *
     
-    >>> m = Scale( ('ml_si_metre_ratio', 17771593641054934856197983478245767638) )
-    >>> s = Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) )
+    >>> m = Scale( ('ml_si_m_ratio', 17771593641054934856197983478245767638) )
+    >>> s = Scale( ('ml_si_s_ratio', 276296348539283398608930897564542275037) )
     
 A compound unit for speed can then be generated and used in an expression ::
 
@@ -60,7 +60,7 @@ Conversion is possible, but the arithmetic expressions defining the compound sca
     
 Note, the compound-scale objects shown above are not automatically resolved to a single M-layer scale for speed. However, when a corresponding scale is available, a compound scale can be converted. In this example, there is an m-layer-concept scale defined for speed, so conversion can be carried out ::
 
-    >>> m_per_s = Scale( ("ml_si_m.s-1_ratio",263223643595076551490114979345460778542) )
+    >>> m_per_s = Scale( ("ml_si_m.s-1_ratio",294302032761295079611018815406253236800) )
     <BLANKLINE>
     >>> print( repr(v) )
     Expression(1.5,m/(s))
@@ -78,9 +78,9 @@ The special unit name joule is used for energy in the SI, and the compound name 
 
 A compound scale for kg.m2.s-2 can be created and used to express data ::
 
-    >>> kg = Scale( ('ml_si_kilogram_ratio', 12782167041499057092439851237297548539) )
-    >>> m = Scale( ('ml_si_metre_ratio', 17771593641054934856197983478245767638) )
-    >>> s = Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) )
+    >>> kg = Scale( ('ml_si_kg_ratio', 12782167041499057092439851237297548539) )
+    >>> m = Scale( ('ml_si_m_ratio', 17771593641054934856197983478245767638) )
+    >>> s = Scale( ('ml_si_s_ratio', 276296348539283398608930897564542275037) )
 
     >>> kg_mm_ss = kg*m**2/s**2
     >>> print(kg_mm_ss)
@@ -98,8 +98,8 @@ By declaring the aspects ::
     
 and the scales ::
 
-    >>> J = Scale( ("ml_si_joule_ratio",165050666678496469850612022016789737781) )
-    >>> N_m = Scale( ("ml_si_N.m_ratio",180123565723874772354088506298557924442) )
+    >>> J = Scale( ("ml_si_J_ratio",165050666678496469850612022016789737781) )
+    >>> N_m = Scale( ("ml_si_N.m_ratio",185449807049376763233547052617606721423) )
 
 it is possible to cast the systematic unit to one that is quantity-specific, such as ::
 
@@ -109,7 +109,7 @@ it is possible to cast the systematic unit to one that is quantity-specific, suc
 or ::
 
     >>> print( w.cast( ScaleAspect(N_m,moment) ) )
-    10.1 N m
+    10.1 N.m
  
  
 Systematic compound scales
@@ -145,7 +145,7 @@ Compound scale identifiers
 The :class:`~lib.CompoundScale` class has a :meth:`uid<lib.CompoundScale.uid>` property that returns a :class:`~uid.CompoundUID` associated with an expression. This encapsulates the identifiers of individual scales and their exponents. :class:`~uid.CompoundUID` objects may be compared for for equality. ::
 
     >>> print( kg_mm_ss.uid )
-    { ['ml_si_second_ratio', 276296348539283398608930897564542275037] : [-2], ['ml_si_metre_ratio', 17771593641054934856197983478245767638] : [2], ['ml_si_kilogram_ratio', 12782167041499057092439851237297548539] : [1] } 
+    { ['ml_si_s_ratio', 276296348539283398608930897564542275037] : [-2], ['ml_si_m_ratio', 17771593641054934856197983478245767638] : [2], ['ml_si_kg_ratio', 12782167041499057092439851237297548539] : [1] } 
     
 
 
@@ -154,7 +154,7 @@ Ratios that form a scale of dimension one
 
 When a compound unit is equivalent to a multiple or submultiple of the SI unit one, It is considered good practice to explicitly retain unit names in the numerator and denominator (e.g., mm/m instead of 1E-3). The m-layer-concept software supports this. For example, ::
 
-    >>> V = Scale( ("ml_si_volt_ratio",324370471112617696659965827203196197232) )
+    >>> V = Scale( ("ml_si_V_ratio",324370471112617696659965827203196197232) )
     >>> mV = Scale( ("ml_si_mV_ratio",198003412807998624987043120288110344365) )
     
     >>> mV_V = mV/V 
@@ -171,7 +171,7 @@ When a compound unit is equivalent to a multiple or submultiple of the SI unit o
 The UIDs of these compound scales retain information about the different scales ::
 
     >>> print( mV_V.uid )
-    { ['ml_si_volt_ratio', 324370471112617696659965827203196197232] : [-1], ['ml_si_mV_ratio', 198003412807998624987043120288110344365] : [1] }
+    { ['ml_si_V_ratio', 324370471112617696659965827203196197232] : [-1], ['ml_si_mV_ratio', 198003412807998624987043120288110344365] : [1] }
 
     >>> print( pV_nV.uid )
     { ['ml_si_nV_ratio', 2467209754778232353783778251664853474] : [-1], ['ml_si_pV_ratio', 82044477201173066720472034767008183292] : [1] }
@@ -202,12 +202,12 @@ and they become indistinguishable when simplified ::
 
 The compound scale volt-per-volt can also be used. However, two Scale objects must be created to retain the numerator and denominator scales (otherwise cancellation will occur, see :ref:`unit_simplicication`) ::
 
-    >>> V1 = Scale( ("ml_si_volt_ratio",324370471112617696659965827203196197232) )
-    >>> V2 = Scale( ("ml_si_volt_ratio",324370471112617696659965827203196197232) )
+    >>> V1 = Scale( ("ml_si_V_ratio",324370471112617696659965827203196197232) )
+    >>> V2 = Scale( ("ml_si_V_ratio",324370471112617696659965827203196197232) )
     
     >>> V_V = V1/V2
     >>> print( V_V.uid )
-    { ['ml_si_volt_ratio', 324370471112617696659965827203196197232] : [1, -1] }
+    { ['ml_si_V_ratio', 324370471112617696659965827203196197232] : [1, -1] }
     
     >>> print( V_V.systematic )
     { SI(1, 2, -3, -1, 0, 0, 0) : [1, -1] }
@@ -224,8 +224,8 @@ One of the difficulties that arises when using system dimensions, is that arithm
 
 For instance, we may wish to express a horizontal velocity gradient with respect to height (e.g., a rate of change in wind speed with altitude). Suitable units are metres per second per metre. A compound scale for this can be declared ::
 
-    >>> m = Scale( ('ml_si_metre_ratio', 17771593641054934856197983478245767638) )
-    >>> s = Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) )
+    >>> m = Scale( ('ml_si_m_ratio', 17771593641054934856197983478245767638) )
+    >>> s = Scale( ('ml_si_s_ratio', 276296348539283398608930897564542275037) )
 
     >>> m_s = m/s
     >>> m_s_m = m_s/m
@@ -233,14 +233,14 @@ For instance, we may wish to express a horizontal velocity gradient with respect
 However, the m-layer-concept software recognises that reference is made to the *same* metre Scale object twice, because metre appears in both the numerator and denominator. The default behaviour is to allow this common factor to be cancelled ::
 
     >>> print( m_s_m.uid )
-    { ['ml_si_second_ratio', 276296348539283398608930897564542275037] : [-1] } 
+    { ['ml_si_s_ratio', 276296348539283398608930897564542275037] : [-1] } 
     
 Nevertheless, the distinction between units of elevation and horizontal length can be made. This requires a second instance of the metre Scale to be created. The software recognises that different objects are involved, and that they have distinct roles in the expression. It also recognises that they are associated with the same M-layer scale. The :class:`~uid.CompoundUID` now shows two exponents associated with the metre Scale, which indicates that the metre appears in the numerator and denominator of the compound unit.  ::
 
-    >>> m_height = Scale( ('ml_si_metre_ratio',17771593641054934856197983478245767638) )
+    >>> m_height = Scale( ('ml_si_m_ratio',17771593641054934856197983478245767638) )
     >>> m_s_m = m_s/m_height 
     >>> print( m_s_m.uid )
-    { ['ml_si_metre_ratio', 17771593641054934856197983478245767638] : [1, -1], ['ml_si_second_ratio', 276296348539283398608930897564542275037] : [-1] } 
+    { ['ml_si_m_ratio', 17771593641054934856197983478245767638] : [1, -1], ['ml_si_s_ratio', 276296348539283398608930897564542275037] : [-1] } 
     
 Similarly, when distinct Scale object are used, the :class:`~systematic.CompoundSystematic` captures two exponents associated with the length dimension ::
 
@@ -264,11 +264,11 @@ Compound scale-aspects
 The functionality described above for scales has also been implemented for scale-aspects. Multiplication, division and exponentiation operations can be used with :class:`~lib.ScaleAspect` objects.  For instance ::
 
     >>> m = ScaleAspect(
-    ...     Scale( ('ml_si_metre_ratio', 17771593641054934856197983478245767638) ),
+    ...     Scale( ('ml_si_m_ratio', 17771593641054934856197983478245767638) ),
     ...     Aspect( ('ml_length', 993853592179723568440264076369400241) )
     ...     )
     >>> s = ScaleAspect( 
-    ...     Scale( ('ml_si_second_ratio', 276296348539283398608930897564542275037) ),
+    ...     Scale( ('ml_si_s_ratio', 276296348539283398608930897564542275037) ),
     ...     Aspect( ('ml_time', 59007067547744628223483093626372886675) )
     ...     )
     >>> print( m/s )
