@@ -1,0 +1,194 @@
+[
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_J.s-1_ratio",
+            136079796798510310904217730429587118751
+        ],
+        "reference": [
+            "si_J.s-1",
+            51839967801285159521940700209664244259
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_W.A-1_ratio",
+            219485696625877427534011247799151034015
+        ],
+        "reference": [
+            "si_W.A-1",
+            145601148744477347496976307246524330491
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_C.V-1_ratio",
+            244368043659630601094148745105034853077
+        ],
+        "reference": [
+            "si_C.V-1",
+            189925708134197779119604895267034969626
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_V.A-1_ratio",
+            214328110766279548092048513477887975744
+        ],
+        "reference": [
+            "si_V.A-1",
+            262212167267280815087148729316481267187
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_A.V-1_ratio",
+            16941533151489237697848204485163890119
+        ],
+        "reference": [
+            "si_A.V-1",
+            200005609448094300461572012488570160618
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_V.s_ratio",
+            313402651003432785026201201495973178370
+        ],
+        "reference": [
+            "si_V.s",
+            220621063076347515536640594625648326726
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_Wb.m-2_ratio",
+            45631498387579254188705647178344710281
+        ],
+        "reference": [
+            "si_Wb.m-2",
+            153009550828051506505776443464688129361
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_Wb.A-1_ratio",
+            144580659399124312897285514986907465600
+        ],
+        "reference": [
+            "si_Wb.A-1",
+            237878117089751247419867977291686756823
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_cd.sr_ratio",
+            40172721189335168946363362453738580852
+        ],
+        "reference": [
+            "si_cd.sr",
+            68282405674747880890247872661689156636
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_cd.sr.m-2_ratio",
+            359563949468450391013484775914271119
+        ],
+        "reference": [
+            "si_cd.sr.m-2",
+            108449187450578081721860002985496582946
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_lm.m-2_ratio",
+            32926033227009740104686789789646791541
+        ],
+        "reference": [
+            "si_lm.m-2",
+            311737243000609599783591760985708917273
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_J.kg-1_ratio",
+            292902112276396422597283735467925603663
+        ],
+        "reference": [
+            "si_J.kg-1",
+            271585893875498331839036214326794290244
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_special",
+            "derived"
+        ]
+    }
+]
