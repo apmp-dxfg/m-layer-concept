@@ -1,0 +1,602 @@
+[
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_dynamic_viscosity",
+            166262343984842585151579112222889039829
+        ],
+        "src": [
+            "ml_si_kg.m-1.s-1_ratio",
+            25087492165006409658820026402631882002
+        ],
+        "dst": [
+            "ml_si_Pa.s_ratio",
+            25428586931158104658287337159710861705
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_moment_of_force",
+            313648474034040825357489751369673453388
+        ],
+        "src": [
+            "ml_si_kg.m2.s-2_ratio",
+            92059200321763611267904598246242830863
+        ],
+        "dst": [
+            "ml_si_N.m_ratio",
+            185449807049376763233547052617606721423
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_surface_tension",
+            255096342532458854265700783671828038498
+        ],
+        "src": [
+            "ml_si_kg.s-2_ratio",
+            273010205332873673263790840685632883806
+        ],
+        "dst": [
+            "ml_si_N.m-1_ratio",
+            189967145055216995426600072117020649187
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_angular_velocity",
+            28018938038567119196075625422180587217
+        ],
+        "src": [
+            "ml_si_s-1_ratio",
+            323506565708733284157918472061580302494
+        ],
+        "dst": [
+            "ml_si_rad.s-1_ratio",
+            93193912609601243462698497984903674350
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_angular_frequency",
+            122803567751476136423908574402339268808
+        ],
+        "src": [
+            "ml_si_s-1_ratio",
+            323506565708733284157918472061580302494
+        ],
+        "dst": [
+            "ml_si_rad.s-1_ratio",
+            93193912609601243462698497984903674350
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_angular_acceleration",
+            223627367302542792234401825234727953115
+        ],
+        "src": [
+            "ml_si_s-2_ratio",
+            10156202364893723800137078379480192818
+        ],
+        "dst": [
+            "ml_si_rad.s-2_ratio",
+            15465484579350196243288022949883601126
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_heat_flux_density",
+            58427575302821805943332517011209431898
+        ],
+        "src": [
+            "ml_si_kg.s-3_ratio",
+            61188539515782687775154490651321478639
+        ],
+        "dst": [
+            "ml_si_W.m-2_ratio",
+            308954451780429168433945718004249358520
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_irradiance",
+            28598340346198296503040279365688980614
+        ],
+        "src": [
+            "ml_si_kg.s-3_ratio",
+            61188539515782687775154490651321478639
+        ],
+        "dst": [
+            "ml_si_W.m-2_ratio",
+            308954451780429168433945718004249358520
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_heat_capacity",
+            292786977980405075302873684611910299135
+        ],
+        "src": [
+            "ml_si_kg.m2.s-2.K-1_ratio",
+            84712467756787748975294568730172708600
+        ],
+        "dst": [
+            "ml_si_J.K-1_ratio",
+            272186302192609575387760298382926276708
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_entropy",
+            292171169832381807118268839936460734608
+        ],
+        "src": [
+            "ml_si_kg.m2.s-2.K-1_ratio",
+            84712467756787748975294568730172708600
+        ],
+        "dst": [
+            "ml_si_J.K-1_ratio",
+            272186302192609575387760298382926276708
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_specific_heat_capacity",
+            16533851294936540469768830848184927510
+        ],
+        "src": [
+            "ml_si_m2.s-2.K-1_ratio",
+            242235920116252792031515822495763014032
+        ],
+        "dst": [
+            "ml_si_J.K-1.kg-1_ratio",
+            106895362228003015011579822507490033594
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_specific_entropy",
+            320755658578927808254041842803185802894
+        ],
+        "src": [
+            "ml_si_m2.s-2.K-1_ratio",
+            242235920116252792031515822495763014032
+        ],
+        "dst": [
+            "ml_si_J.K-1.kg-1_ratio",
+            106895362228003015011579822507490033594
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_specific_energy",
+            285169263373546993097179059972089946141
+        ],
+        "src": [
+            "ml_si_m2.s-2_ratio",
+            328273707104631467998318700468322317239
+        ],
+        "dst": [
+            "ml_si_J.kg-1_ratio",
+            292902112276396422597283735467925603663
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_thermal_conductivity",
+            63215813454465007194964800851423494805
+        ],
+        "src": [
+            "ml_si_kg.m.s-3.K-1_ratio",
+            246880532665936716212822717350204837160
+        ],
+        "dst": [
+            "ml_si_W.m-1.K-1_ratio",
+            130690945230562961774365085775498116520
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_energy_density",
+            15613392042140387488781198834272637387
+        ],
+        "src": [
+            "ml_si_kg.m-1.s-2_ratio",
+            149190310657733236488578855949917957706
+        ],
+        "dst": [
+            "ml_si_J.m-3_ratio",
+            247322428759718224434500084332727909561
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_electric_field_strength",
+            249381933417928249801392312766332808825
+        ],
+        "src": [
+            "ml_si_kg.m.s-3.A-1_ratio",
+            149635595516742703302142641378417711239
+        ],
+        "dst": [
+            "ml_si_V.m-1_ratio",
+            198059517660350944814572996723100776247
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_electric_charge_density",
+            204440925354258441866512656014142582869
+        ],
+        "src": [
+            "ml_si_A.s.m-3_ratio",
+            98763973948421171399501986385684767788
+        ],
+        "dst": [
+            "ml_si_C.m-3_ratio",
+            297069108971557777268418421707370667966
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_surface_charge_density",
+            330150299642188728457096991204568273639
+        ],
+        "src": [
+            "ml_si_A.s.m-2_ratio",
+            154468545366314659499408290420411740390
+        ],
+        "dst": [
+            "ml_si_C.m-2_ratio",
+            178780722991316400503378545547086520529
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_electric_flux_density",
+            129297484078251366135055234315527841701
+        ],
+        "src": [
+            "ml_si_A.s.m-2_ratio",
+            154468545366314659499408290420411740390
+        ],
+        "dst": [
+            "ml_si_C.m-2_ratio",
+            178780722991316400503378545547086520529
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_electric_displacement",
+            69779801130115400913124260181743693808
+        ],
+        "src": [
+            "ml_si_A.s.m-2_ratio",
+            154468545366314659499408290420411740390
+        ],
+        "dst": [
+            "ml_si_C.m-2_ratio",
+            178780722991316400503378545547086520529
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_permittivity",
+            22592011513351683003043730680725469289
+        ],
+        "src": [
+            "ml_si_kg-1.m-3.s4.A2_ratio",
+            246555759966750951976609774279442405810
+        ],
+        "dst": [
+            "ml_si_F.m-1_ratio",
+            264286732034630217104414753931424206972
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_permeability",
+            108279515356498367737982736291800961437
+        ],
+        "src": [
+            "ml_si_kg.m.s-2.A-2_ratio",
+            259874322650154932287891318133505409039
+        ],
+        "dst": [
+            "ml_si_H.m-1_ratio",
+            125631902408900235722214129578080371773
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_molar_energy",
+            325765103902443949800046712610909395622
+        ],
+        "src": [
+            "ml_si_kg.m2.s-2.mol-1_ratio",
+            201753856203286822514602420156625465777
+        ],
+        "dst": [
+            "ml_si_J.mol-1_ratio",
+            142787703895073555958123675452506688153
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_molar_entropy",
+            230191673650130114132886923248545535497
+        ],
+        "src": [
+            "ml_si_kg.m2.s-2.mol-1.K-1_ratio",
+            95735582669071140979774308206357539139
+        ],
+        "dst": [
+            "ml_si_J.K-1.mol-1_ratio",
+            223687495035523008619421313890969963040
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_molar_heat_capacity",
+            319919987276748048926440023351253683503
+        ],
+        "src": [
+            "ml_si_kg.m2.s-2.mol-1.K-1_ratio",
+            95735582669071140979774308206357539139
+        ],
+        "dst": [
+            "ml_si_J.K-1.mol-1_ratio",
+            223687495035523008619421313890969963040
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_exposure",
+            320927240310833854047343008565627464549
+        ],
+        "src": [
+            "ml_si_A.s.kg-1_ratio",
+            333598108020827586619864021125764383308
+        ],
+        "dst": [
+            "ml_si_C.kg-1_ratio",
+            330679663938868132755865376007642554598
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    }, 
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_absorbed_dose_rate",
+            3935969607569344397974638090806057231
+        ],
+        "src": [
+            "ml_si_m2.s-3_ratio",
+            253393044558344788091192414737417220680
+        ],
+        "dst": [
+            "ml_si_Gy.s-1_ratio",
+            13854171213719800587869881012947958020
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_radiant_intensity",
+            31390502930782468010164710861072490976
+        ],
+        "src": [
+            "ml_si_kg.m2.s-3_ratio",
+            180600896591959760499259333574999503075
+        ],
+        "dst": [
+            "ml_si_W.sr-1_ratio",
+            268207483547420366535536794945143045281
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_radiance",
+            42966132116312003974662091801899990985
+        ],
+        "src": [
+            "ml_si_kg.s-3_ratio",
+            61188539515782687775154490651321478639
+        ],
+        "dst": [
+            "ml_si_W.sr-1.m-2_ratio",
+            251675114438868142095976765136307785858
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "ScalesForAspect",
+        "aspect": [
+            "ml_catalytic_activity_concentration",
+            305102063005857024695134413296166355367
+        ],
+        "src": [
+            "ml_si_mol.s-1.m-3_ratio",
+            260280237239834058409261089763090791865
+        ],
+        "dst": [
+            "ml_si_kat.m-3_ratio",
+            324724605313824224991571784371239543235
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    }
+]
