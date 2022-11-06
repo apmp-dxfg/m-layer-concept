@@ -14,11 +14,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_radian_bounded_pi",
+            "ml_si_rad_bounded_pi",
             181367268705518406168243034119604185497
         ],
         "reference": [
-            "si_radian",
+            "si_rad",
             311561499536022904630229742672799278060
         ],
         "scale_type": "bounded"
@@ -26,11 +26,11 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_radian_bounded_two_pi",
+            "ml_si_rad_bounded_two_pi",
             300556212736422769570885306883285535638
         ],
         "reference": [
-            "si_radian",
+            "si_rad",
             311561499536022904630229742672799278060
         ],
         "scale_type": "bounded"

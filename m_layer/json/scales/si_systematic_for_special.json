@@ -9,19 +9,10 @@
             "si_s-1",
             116741812607130898126240371497946537198
         ],
-        "scale_type": "ratio"
-    },
-    {
-        "__entry__": "Scale",
-        "uid": [
-            "ml_si_m2.s-2_ratio",
-            328273707104631467998318700468322317239
-        ],
-        "reference": [
-            "si_m2.s-2",
-            43884249580662399686209013824067636999
-        ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -33,7 +24,10 @@
             "si_kg.m.s-2",
             42491345314260602784861712066199660422
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -45,7 +39,10 @@
             "si_kg.m-1.s-2",
             83097223821115425098330032535404536494
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -57,7 +54,10 @@
             "si_kg.m2.s-2",
             336418795013753717299145887275402842834
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -69,7 +69,10 @@
             "s-_kg.m2.s-3",
             20608495247943734382135871803409918502
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -81,7 +84,10 @@
             "si_A.s",
             283302541399235689666323745568467797393
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -93,7 +99,10 @@
             "si_kg.m2.s-3.A-1",
             106244046109467309848568258112891877139
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -105,7 +114,10 @@
             "si_kg-1,m-2.s4.A2",
             134814508174849618107610628962028799628
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -117,7 +129,10 @@
             "si_kg.m2.s-3.A-2",
             171578473862491388196612187226588461531
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -129,7 +144,10 @@
             "si_kg-1.m-2.s3.A2",
             4579579696975120193473697195778175127
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -141,7 +159,10 @@
             "si_kg.m2.s-2.A-1",
             120753861936841495090145936718753092107
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -153,7 +174,10 @@
             "si_kg.s-2.A-1",
             195281169203572148079814223897622612124
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -165,7 +189,10 @@
             "si_kg.m2.s-2.A-2",
             63645404309296881020712034930539290090
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -177,7 +204,25 @@
             "si_cd.m-2",
             190854967573003511214075922116323989609
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
+    },
+    {
+        "__entry__": "Scale",
+        "uid": [
+            "ml_si_m2.s-2_ratio",
+            328273707104631467998318700468322317239
+        ],
+        "reference": [
+            "si_m2.s-2",
+            43884249580662399686209013824067636999
+        ],
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     },
     {
         "__entry__": "Scale",
@@ -189,6 +234,9 @@
             "si_mol.s-1",
             177768032996776331701140181644133084931
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_systematic_for_special"
+        ]
     }
 ]

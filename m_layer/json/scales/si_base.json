@@ -2,85 +2,106 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_kilogram_ratio",
+            "ml_si_kg_ratio",
             12782167041499057092439851237297548539
         ],
         "reference": [
-            "si_kilogram",
+            "si_kg",
             188151331508313165897603768130808181784
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_metre_ratio",
+            "ml_si_m_ratio",
             17771593641054934856197983478245767638
         ],
         "reference": [
-            "si_metre",
+            "si_m",
             61268972265076316018593147152102406832
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_second_ratio",
+            "ml_si_s_ratio",
             276296348539283398608930897564542275037
         ],
         "reference": [
-            "si_second",
+            "si_s",
             110730041758233939215703442037761569190
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_ampere_ratio",
+            "ml_si_A_ratio",
             257680203120950316968604264670884361610
         ],
         "reference": [
-            "si_ampere",
+            "si_A",
             264081801568151063132838497538090031099
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_kelvin_ratio",
+            "ml_si_K_ratio",
             302952256288207449238881076502466548054
         ],
         "reference": [
-            "si_kelvin",
+            "si_K",
             25703533220788919988679332108037098600
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_mole_ratio",
+            "ml_si_mol_ratio",
             15496259120657933158664487705643275334
         ],
         "reference": [
-            "si_mole",
+            "si_mol",
             96713855510406467826626480289106173630
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_base"
+        ]
     },
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_candela_ratio",
+            "ml_si_cd_ratio",
             13171319201648801065089085279216910048
         ],
         "reference": [
-            "si_candela",
+            "si_cd",
             107700549721211215242458620140782394628
         ],
-        "scale_type": "ratio"
+        "scale_type": "ratio",
+        "tags": [
+            "si_base"
+        ]
     }
 ]
