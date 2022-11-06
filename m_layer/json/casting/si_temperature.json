@@ -3,7 +3,7 @@
         "__entry__": "Cast",
         "src": [
             [
-                "ml_si_kelvin_ratio",
+                "ml_si_K_ratio",
                 302952256288207449238881076502466548054
             ],
             [
@@ -13,7 +13,7 @@
         ],
         "dst": [
             [
-                "ml_si_kelvin_ratio",
+                "ml_si_K_ratio",
                 302952256288207449238881076502466548054
             ],
             [
@@ -22,13 +22,47 @@
             ]
         ],
         "function": "lambda x: x",
-        "parameters": {}
+        "parameters": {},
+        "tags": [
+            "si_temperature"
+        ]
     },
     {
         "__entry__": "Cast",
         "src": [
             [
-                "ml_si_kelvin_ratio",
+                "ml_si_Cel_interval",
+                245795086332095731716589481707012001072
+            ],
+            [
+                "ml_no_aspect",
+                295504637700214937127120941173285352815
+            ]
+        ],
+        "dst": [
+            [
+                "ml_si_K_ratio",
+                302952256288207449238881076502466548054
+            ],
+            [
+                "ml_thermodynamic_temperature",
+                227327310217856015944698060802418784871
+            ]
+        ],
+        "function": "lambda x: ml_math.interval_convert(x,a,b)",
+        "parameters": {
+            "a": "1",
+            "b": "+273.15"
+        },
+        "tags": [
+            "si_temperature"
+        ]
+    },
+    {
+        "__entry__": "Cast",
+        "src": [
+            [
+                "ml_si_K_ratio",
                 302952256288207449238881076502466548054
             ],
             [
@@ -38,7 +72,7 @@
         ],
         "dst": [
             [
-                "ml_si_celsius_interval",
+                "ml_si_Cel_interval",
                 245795086332095731716589481707012001072
             ],
             [
@@ -50,6 +84,9 @@
         "parameters": {
             "a": "1",
             "b": "-273.15"
-        }
+        },
+        "tags": [
+            "si_temperature"
+        ]
     }
 ]

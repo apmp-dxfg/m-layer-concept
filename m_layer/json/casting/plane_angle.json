@@ -3,7 +3,7 @@
         "__entry__": "Cast",
         "src": [
             [
-                "ml_si_radian_ratio",
+                "ml_si_rad_ratio",
                 273301153578020696303516833405033923738
             ],
             [
@@ -32,7 +32,7 @@
         "__entry__": "Cast",
         "src": [
             [
-                "ml_si_radian_ratio",
+                "ml_si_rad_ratio",
                 273301153578020696303516833405033923738
             ],
             [
@@ -61,7 +61,7 @@
         "__entry__": "Cast",
         "src": [
             [
-                "ml_si_radian_ratio",
+                "ml_si_rad_ratio",
                 273301153578020696303516833405033923738
             ],
             [
@@ -100,7 +100,7 @@
         ],
         "dst": [
             [
-                "ml_si_radian_ratio",
+                "ml_si_rad_ratio",
                 273301153578020696303516833405033923738
             ],
             [
