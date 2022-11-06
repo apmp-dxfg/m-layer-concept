@@ -36,7 +36,7 @@
             150280610960339969789551668292960104920
         ],
         "dst": [
-            "ml_si_metre_ratio",
+            "ml_si_m_ratio",
             17771593641054934856197983478245767638
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
@@ -47,7 +47,7 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_metre_ratio",
+            "ml_si_m_ratio",
             17771593641054934856197983478245767638
         ],
         "dst": [
@@ -62,7 +62,7 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_metre_ratio",
+            "ml_si_m_ratio",
             17771593641054934856197983478245767638
         ],
         "dst": [

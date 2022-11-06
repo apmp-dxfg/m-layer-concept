@@ -2,7 +2,7 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_second_ratio",
+            "ml_si_s_ratio",
             276296348539283398608930897564542275037
         ],
         "dst": [
@@ -21,7 +21,7 @@
             219754916679293138667106941253484129447
         ],
         "dst": [
-            "ml_si_second_ratio",
+            "ml_si_s_ratio",
             276296348539283398608930897564542275037
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",

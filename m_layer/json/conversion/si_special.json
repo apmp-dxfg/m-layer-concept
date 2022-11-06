@@ -2,7 +2,137 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_volt_ratio",
+            "ml_si_rad_ratio",
+            273301153578020696303516833405033923738
+        ],
+        "dst": [
+            "ml_si_one_ratio",
+            200437119122738863945813053269398165973
+            
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_sr_ratio",
+            32770856226407901062990983569518403912
+        ],
+        "dst": [
+            "ml_si_one_ratio",
+            200437119122738863945813053269398165973
+            
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_Hz_ratio",
+            307647520921278207356294979342476646905
+        ],
+        "dst": [
+            "ml_si_s-1_ratio",
+            323506565708733284157918472061580302494
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_N_ratio",
+            189557404890962043877029120197866874763
+        ],
+        "dst": [
+            "ml_si_kg.m.s-2_ratio",
+            35234412914800825315591096943321504820
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_Pa_ratio",
+            199464436713473108245543012442027658237
+        ],
+        "dst": [
+            "ml_si_kg.m-1.s-2_ratio",
+            149190310657733236488578855949917957706
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_J_ratio",
+            165050666678496469850612022016789737781
+        ],
+        "dst": [
+            "ml_si_kg.m2.s-2_ratio",
+            92059200321763611267904598246242830863
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_W_ratio",
+            187283128390663390999796624059676699282
+        ],
+        "dst": [
+            "ml_si_kg.m2.s-3_ratio",
+            180600896591959760499259333574999503075
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_C_ratio",
+            198748368208800477995348327936593700088
+        ],
+        "dst": [
+            "ml_si_A.s_ratio",
+            283423571638756205017396583655815438594
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_V_ratio",
             324370471112617696659965827203196197232
         ],
         "dst": [
@@ -10,12 +140,15 @@
             99600280752733052556150747434649814921
         ],
         "function": "lambda x: x",
-        "parameters": {}
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_farad_ratio",
+            "ml_si_F_ratio",
             336913163134845067118985388522794592386
         ],
         "dst": [
@@ -23,12 +156,15 @@
             310174906794003749777876070854583690996
         ],
         "function": "lambda x: x",
-        "parameters": {}
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_ohm_ratio",
+            "ml_si_Ohm_ratio",
             303280496571585261425542097983003197755
         ],
         "dst": [
@@ -36,12 +172,15 @@
             154120316111741118419407192208214050914
         ],
         "function": "lambda x: x",
-        "parameters": {}
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_siemens_ratio",
+            "ml_si_S_ratio",
             223990350734561749169194412894610930505
         ],
         "dst": [
@@ -49,12 +188,15 @@
             235675064333026759565068955231833764452
         ],
         "function": "lambda x: x",
-        "parameters": {}
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_weber_ratio",
+            "ml_si_Wb_ratio",
             106266035350012799757898573540667841681
         ],
         "dst": [
@@ -62,12 +204,15 @@
             123074114253301537873407416011262630402
         ],
         "function": "lambda x: x",
-        "parameters": {}
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_tesla_ratio",
+            "ml_si_T_ratio",
             63565002149316643705463155466715720636
         ],
         "dst": [
@@ -75,12 +220,15 @@
             167967338865671657984242700764339160196
         ],
         "function": "lambda x: x",
-        "parameters": {}
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
     },
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_henry_ratio",
+            "ml_si_H_ratio",
             201687168262850561730483492138349131967
         ],
         "dst": [
@@ -88,6 +236,140 @@
             254136790182074053006532385644940274064
         ],
         "function": "lambda x: x",
-        "parameters": {}
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_Cel_ratio",
+            26419982651148365554713345789323816873
+        ],
+        "dst": [
+            "ml_si_K_ratio",
+            302952256288207449238881076502466548054
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_Cel_interval",
+            245795086332095731716589481707012001072
+        ],
+        "dst": [
+            "ml_si_K_ratio",
+            302952256288207449238881076502466548054
+        ],
+        "function": "lambda x: ml_math.interval_convert(x,a,b)",
+        "parameters": {
+            "a": "1",
+            "b": "+273.15"
+        },
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_lm_ratio",
+            136780883433708489065848897588637818235
+        ],
+        "dst": [
+            "ml_si_cd_ratio",
+            13171319201648801065089085279216910048
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_lx_ratio",
+            133525930046188902301745875083134807036
+        ],
+        "dst": [
+            "ml_si_cd.m-2_ratio",
+            26829029423487127998243722714180622300
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_Bq_ratio",
+            327022986202149438703681911339752143822
+        ],
+        "dst": [
+            "ml_si_s-1_ratio",
+            323506565708733284157918472061580302494
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_Gy_ratio",
+            23633034713414612299487808194790293197
+        ],
+        "dst": [
+            "ml_si_m2.s-2_ratio",
+            328273707104631467998318700468322317239
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_Sv_ratio",
+            53186499560198469150916689883346793995
+        ],
+        "dst": [
+            "ml_si_m2.s-2_ratio",
+            328273707104631467998318700468322317239
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
+    },
+    {
+        "__entry__": "Conversion",
+        "src": [
+            "ml_si_kat_ratio",
+            336666281013545490110035254871921983511
+        ],
+        "dst": [
+            "ml_si_mol.s-1_ratio",
+            102667543201822845784901417753808731789
+        ],
+        "function": "lambda x: x",
+        "parameters": {},
+        "tags": [
+            "si_special"
+        ]
     }
 ]

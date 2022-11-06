@@ -2,7 +2,7 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_joule_ratio",
+            "ml_si_J_ratio",
             165050666678496469850612022016789737781
         ],
         "dst": [
@@ -21,7 +21,7 @@
             121864523473489992307630707008460819401
         ],
         "dst": [
-            "ml_si_joule_ratio",
+            "ml_si_J_ratio",
             165050666678496469850612022016789737781
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",

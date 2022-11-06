@@ -2,7 +2,7 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_radian_ratio",
+            "ml_si_rad_ratio",
             273301153578020696303516833405033923738
         ],
         "dst": [
@@ -21,7 +21,7 @@
             124567088583703716502057160299542649451
         ],
         "dst": [
-            "ml_si_radian_ratio",
+            "ml_si_rad_ratio",
             273301153578020696303516833405033923738
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
@@ -32,11 +32,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_radian_bounded_two_pi",
+            "ml_si_rad_bounded_two_pi",
             300556212736422769570885306883285535638
         ],
         "dst": [
-            "ml_si_radian_ratio",
+            "ml_si_rad_ratio",
             273301153578020696303516833405033923738
         ],
         "function": "lambda x: x",
@@ -45,11 +45,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_radian_bounded_pi",
+            "ml_si_rad_bounded_pi",
             181367268705518406168243034119604185497
         ],
         "dst": [
-            "ml_si_radian_ratio",
+            "ml_si_rad_ratio",
             273301153578020696303516833405033923738
         ],
         "function": "lambda x: x",
@@ -88,7 +88,7 @@
             273805538217618733078298377573965188309
         ],
         "dst": [
-            "ml_si_radian_ratio",
+            "ml_si_rad_ratio",
             273301153578020696303516833405033923738
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
@@ -103,7 +103,7 @@
             125066222841962802760576607996391537405
         ],
         "dst": [
-            "ml_si_radian_ratio",
+            "ml_si_rad_ratio",
             273301153578020696303516833405033923738
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
@@ -148,7 +148,7 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_radian_bounded_two_pi",
+            "ml_si_rad_bounded_two_pi",
             300556212736422769570885306883285535638
         ],
         "dst": [
@@ -163,7 +163,7 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_radian_bounded_pi",
+            "ml_si_rad_bounded_pi",
             181367268705518406168243034119604185497
         ],
         "dst": [
@@ -178,11 +178,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_radian_bounded_two_pi",
+            "ml_si_rad_bounded_two_pi",
             300556212736422769570885306883285535638
         ],
         "dst": [
-            "ml_si_radian_bounded_pi",
+            "ml_si_rad_bounded_pi",
             181367268705518406168243034119604185497
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
@@ -195,11 +195,11 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_radian_bounded_pi",
+            "ml_si_rad_bounded_pi",
             181367268705518406168243034119604185497
         ],
         "dst": [
-            "ml_si_radian_bounded_two_pi",
+            "ml_si_rad_bounded_two_pi",
             300556212736422769570885306883285535638
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
@@ -212,7 +212,7 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_radian_bounded_two_pi",
+            "ml_si_rad_bounded_two_pi",
             300556212736422769570885306883285535638
         ],
         "dst": [
@@ -233,7 +233,7 @@
             125066222841962802760576607996391537405
         ],
         "dst": [
-            "ml_si_radian_bounded_two_pi",
+            "ml_si_rad_bounded_two_pi",
             300556212736422769570885306883285535638
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
@@ -250,7 +250,7 @@
             273805538217618733078298377573965188309
         ],
         "dst": [
-            "ml_si_radian_bounded_two_pi",
+            "ml_si_rad_bounded_two_pi",
             300556212736422769570885306883285535638
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
@@ -267,7 +267,7 @@
             273805538217618733078298377573965188309
         ],
         "dst": [
-            "ml_si_radian_bounded_pi",
+            "ml_si_rad_bounded_pi",
             181367268705518406168243034119604185497
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",
@@ -284,7 +284,7 @@
             125066222841962802760576607996391537405
         ],
         "dst": [
-            "ml_si_radian_bounded_pi",
+            "ml_si_rad_bounded_pi",
             181367268705518406168243034119604185497
         ],
         "function": "lambda x: ml_math.bounded_convert(x,a,y_lb,y_ub)",

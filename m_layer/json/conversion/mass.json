@@ -2,7 +2,7 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_kilogram_ratio",
+            "ml_si_kg_ratio",
             12782167041499057092439851237297548539
         ],
         "dst": [
@@ -21,7 +21,7 @@
             188380796861507506602975683857494523991
         ],
         "dst": [
-            "ml_si_kilogram_ratio",
+            "ml_si_kg_ratio",
             12782167041499057092439851237297548539
         ],
         "function": "lambda x: ml_math.ratio_convert(x,a)",
