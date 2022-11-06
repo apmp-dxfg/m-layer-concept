@@ -2,13 +2,13 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_rad",
-            311561499536022904630229742672799278060
+            "si_Pa.s",
+            267597846565311257072423030550403147882
         ],
         "locale": {
             "default": {
-                "name": "radian",
-                "symbol": "rad"
+                "name": "pascal second",
+                "symbol": "Pa.s"
             }
         },
         "system": {
@@ -16,27 +16,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 0, 0, 0, 0, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "rad",
-            "description": "radian"
+            "dimensions": "[1,-1,-1,0,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_sr",
-            306592660820534377373397144190459295073
+            "si_N.m-1",
+            219353184059364684446229484982383908333
         ],
         "locale": {
             "default": {
-                "name": "steradian",
-                "symbol": "sr"
+                "name": "newton per metre",
+                "symbol": "N.m-1"
             }
         },
         "system": {
@@ -44,23 +40,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 0, 0, 0, 0, 0, 0]",
-            "special": 1
+            "dimensions": "[1,0,-2,0,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_Hz",
-            198610898083606115768120013170738979781
+            "si_rad.s-1",
+            311909029913203496297778261458656804689
         ],
         "locale": {
             "default": {
-                "name": "hertz",
-                "symbol": "Hz"
+                "name": "radian per second",
+                "symbol": "rad.s-1"
             }
         },
         "system": {
@@ -68,27 +64,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 0, -1, 0, 0, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "Hz",
-            "description": "hertz"
+            "dimensions": "[0,0,-1,0,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_N",
-            65199853203390813538946972276645893542
+            "si_rad.s-2",
+            319775003213990759675618975128628653381
         ],
         "locale": {
             "default": {
-                "name": "newton",
-                "symbol": "N"
+                "name": "radian per second squared",
+                "symbol": "rad.s-2"
             }
         },
         "system": {
@@ -96,23 +88,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, 1, -2, 0, 0, 0, 0]",
-            "special": 1
+            "dimensions": "[0,0,-2,0,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_Pa",
-            10531565617424090279276785027015767559
+            "si_W.m-2",
+            68260972887141488799030912277875611902
         ],
         "locale": {
             "default": {
-                "name": "pascal",
-                "symbol": "Pa"
+                "name": "watt per metre squared",
+                "symbol": "W.m-2"
             }
         },
         "system": {
@@ -120,23 +112,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, -1, -2, 0, 0, 0, 0]",
-            "special": 1
+            "dimensions": "[1,0,-3,0,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_J",
-            100917883444018504706749879854610536252
+            "si_J.K-1",
+            39523472852200669908745797392214303919
         ],
         "locale": {
             "default": {
-                "name": "joule",
-                "symbol": "J"
+                "name": "joule per kelvin",
+                "symbol": "J.K-1"
             }
         },
         "system": {
@@ -144,27 +136,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, 2, -2, 0, 0, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "J",
-            "description": "joule"
+            "dimensions": "[1,2,-2,0,-1,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_W",
-            129413603491642245256399180650298918787
+            "si_J.K-1.kg-1",
+            264064664235492501670841572618502898047
         ],
         "locale": {
             "default": {
-                "name": "watt",
-                "symbol": "W"
+                "name": "joule per kelvin kilogram",
+                "symbol": "J.K-1.kg-1"
             }
         },
         "system": {
@@ -172,23 +160,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, 2, -3, 0, 0, 0, 0]",
-            "special": 1
+            "dimensions": "[0,2,-2,0,-1,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_C",
-            5618510566188282954608530194550214044
+            "si_W.m-1.K-1",
+            340094423302336339993913062019610764981
         ],
         "locale": {
             "default": {
-                "name": "coulomb",
-                "symbol": "C"
+                "name": "watt per metre kelvin",
+                "symbol": "W.m-1.K-1"
             }
         },
         "system": {
@@ -196,23 +184,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 0, 1, 1, 0, 0, 0]",
-            "special": 1
+            "dimensions": "[1,1,-3,0,-1,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_V",
-            329937729914753562634885805595267532595
+            "si_J.m-3",
+            7822681061618192763654564823412771152
         ],
         "locale": {
             "default": {
-                "name": "volt",
-                "symbol": "V"
+                "name": "joule per metre cubed",
+                "symbol": "J.m-3"
             }
         },
         "system": {
@@ -220,27 +208,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "V",
-            "description": "volt"
+            "dimensions": "[1,-1,-2,0,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_F",
-            326980191860455759475006183606607318398
+            "si_V.m-1",
+            87183180676037857618816061759786576766
         ],
         "locale": {
             "default": {
-                "name": "farad",
-                "symbol": "F"
+                "name": "volt per metre",
+                "symbol": "V.m-1"
             }
         },
         "system": {
@@ -248,27 +232,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[-1, -2, 4, 2, 0, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "F",
-            "description": "farad"
+            "dimensions": "[1,1,-3,-1,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_Ohm",
-            301106267988465836015458636243981467619
+            "si_C.m-3",
+            191130565460784494874996157963198072470
         ],
         "locale": {
             "default": {
-                "name": "ohm",
-                "symbol": "\\omega"
+                "name": "coulomb per metre cubed",
+                "symbol": "C.m-3"
             }
         },
         "system": {
@@ -276,27 +256,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, 2, -3, -2, 0, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "Ohm",
-            "description": "ohm"
+            "dimensions": "[0,-3,1,1,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_S",
-            141362926343587532391331354060487382910
+            "si_C.m-2",
+            219164856102939044800747977121755571606
         ],
         "locale": {
             "default": {
-                "name": "siemens",
-                "symbol": "S"
+                "name": "coulomb per metre squared",
+                "symbol": "C.m-2"
             }
         },
         "system": {
@@ -304,27 +280,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[-1, -2, 3, 2, 0, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "S",
-            "description": "siemens"
+            "dimensions": "[0,-2,1,1,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_Wb",
-            3389824025561912595583897462196041346
+            "si_F.m-1",
+            185477649547686676475475143179912522165
         ],
         "locale": {
             "default": {
-                "name": "weber",
-                "symbol": "Wb"
+                "name": "farad per metre",
+                "symbol": "F.m-1"
             }
         },
         "system": {
@@ -332,27 +304,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, 2, -2, -1, 0, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "Wb",
-            "description": "weber"
+            "dimensions": "[-1,-3,4,2,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_T",
-            15906806309243323560382538299228898627
+            "si_H.m-1",
+            39594501541408778851792751573606205750
         ],
         "locale": {
             "default": {
-                "name": "tesla",
-                "symbol": "T"
+                "name": "henry per metre",
+                "symbol": "H.m-1"
             }
         },
         "system": {
@@ -360,27 +328,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, 0, -2, -1, 0, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "T",
-            "description": "tesla"
+            "dimensions": "[1,1,-2,-2,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_H",
-            11327962629869551145083263853955388968
+            "si_J.mol-1",
+            119511094616473354181769197302834342405
         ],
         "locale": {
             "default": {
-                "name": "henry",
-                "symbol": "H"
+                "name": "joule per mole",
+                "symbol": "J.mol-1"
             }
         },
         "system": {
@@ -388,27 +352,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, 2, -2, -2, 0, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "H",
-            "description": "henry"
+            "dimensions": "[1,2,-2,0,0,-1,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_Cel",
-            318617443485372744730332268230803752214
+            "si_J.K-1.mol-1",
+            49016105560149469692513113814836561458
         ],
         "locale": {
             "default": {
-                "name": "celsius",
-                "symbol": "degree C"
+                "name": "joule per kelvin per mole",
+                "symbol": "J.K-1.mol-1"
             }
         },
         "system": {
@@ -416,27 +376,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 0, 0, 0, 1, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "Cel",
-            "description": "degree Celsius"
+            "dimensions": "[1,2,-2,0,-1,-1,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_lm",
-            178604853758124415947190859599928060691
+            "si_C.kg-1",
+            24796878720875956540758552931060115597
         ],
         "locale": {
             "default": {
-                "name": "lumen",
-                "symbol": "lm"
+                "name": "coulomb per kilogram",
+                "symbol": "C.kg-1"
             }
         },
         "system": {
@@ -444,23 +400,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 0, 0, 0, 0, 0, 1]",
-            "special": 1
+            "dimensions": "[-1,0,1,1,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_lx",
-            251981903838384865021301348395596094419
+            "si_Gy.s-1",
+            4021959662175999718428940391076333306
         ],
         "locale": {
             "default": {
-                "name": "lux",
-                "symbol": "lx"
+                "name": "gray per second",
+                "symbol": "Gy.s-1"
             }
         },
         "system": {
@@ -468,23 +424,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, -2, 0, 0, 0, 0, 1]",
-            "special": 1
+            "dimensions": "[0,2,-3,0,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_Bq",
-            242810001130839645194060996978894233380
+            "si_W.sr-1",
+            60869154353748301546800026075190471655
         ],
         "locale": {
             "default": {
-                "name": "becquerel",
-                "symbol": "Bq"
+                "name": "watt per steradian",
+                "symbol": "W.sr-1"
             }
         },
         "system": {
@@ -492,27 +448,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 0, -1, 0, 0, 0, 0]",
-            "special": 1
-        },
-        "UCUM": {
-            "code": "Bq",
-            "description": "becquerel"
+            "dimensions": "[1,2,-3,0,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_Gy",
-            42625819543687514969872652687928706428
+            "si_W.sr-1.m-2",
+            9389915669756280435031060787679786410
         ],
         "locale": {
             "default": {
-                "name": "gray",
-                "symbol": "Gy"
+                "name": "watt per steradian per metre squared",
+                "symbol": "W.sr-1.m-2"
             }
         },
         "system": {
@@ -520,23 +472,23 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 2, -2, 0, 0, 0, 0]",
-            "special": 1
+            "dimensions": "[1,0,-3,0,0,0,0]"
         },
         "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_Sv",
-            260800576749023642398207910270708676006
+            "si_kat.m-3",
+            165785172279766298122631533804557190303
         ],
         "locale": {
             "default": {
-                "name": "sievert",
-                "symbol": "Sv"
+                "name": "katal per metre cubed",
+                "symbol": "kat.m-3"
             }
         },
         "system": {
@@ -544,35 +496,11 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 2, -2, 0, 0, 0, 0]",
-            "special": 1
+            "dimensions": "[0,-3,-1,0,0,1,0]"
         },
         "tags": [
-            "si_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_kat",
-            210050588990714299280261293485706188845
-        ],
-        "locale": {
-            "default": {
-                "name": "katal",
-                "symbol": "kat"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[0, 0, -1, 0, 0, 1, 0]",
-            "special": 1
-        },
-        "tags": [
-            "si_special"
+            "derived",
+            "si_alternative_derived"
         ]
     }
 ]

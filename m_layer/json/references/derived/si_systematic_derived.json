@@ -2,13 +2,13 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_s-1",
-            116741812607130898126240371497946537198
+            "si_s-2",
+            247974256622714010577259330464904734776
         ],
         "locale": {
             "default": {
-                "name": "per second",
-                "symbol": "1/s"
+                "name": "",
+                "symbol": "s-2"
             }
         },
         "system": {
@@ -16,27 +16,24 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 0, -1, 0, 0, 0, 0]",
+            "dimensions": "[0,0,-2,0,0,0,0]",
             "systematic": 1
         },
-        "UCUM": {
-            "code": "/s",
-            "description": "per second"
-        },
         "tags": [
-            "si_systematic_for_special"
+            "derived",
+            "si_systematic_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_kg.m.s-2",
-            42491345314260602784861712066199660422
+            "si_kg.m-1.s-1",
+            154802641722507090145617255538611825919
         ],
         "locale": {
             "default": {
-                "name": "kilogram metre per second squared",
-                "symbol": "kg.m.s-2"
+                "name": "",
+                "symbol": "kg.m-1.s-1"
             }
         },
         "system": {
@@ -44,23 +41,24 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, 1, -2, 0, 0, 0, 0]",
+            "dimensions": "[1,-1,-1,0,0,0,0]",
             "systematic": 1
         },
         "tags": [
-            "si_systematic_for_special"
+            "derived",
+            "si_systematic_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_kg.m-1.s-2",
-            83097223821115425098330032535404536494
+            "si_kg.s-2",
+            271285912031327544800846410814703629574
         ],
         "locale": {
             "default": {
-                "name": "kilogram per metre per second squared",
-                "symbol": "kg.m-1.s-2"
+                "name": "",
+                "symbol": "kg.s-2"
             }
         },
         "system": {
@@ -68,23 +66,24 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, -1, -2, 0, 0, 0, 0]",
+            "dimensions": "[1,0,-2,0,0,0,0]",
             "systematic": 1
         },
         "tags": [
-            "si_systematic_for_special"
+            "derived",
+            "si_systematic_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_kg.m2.s-2",
-            336418795013753717299145887275402842834
+            "si_kg.s-3",
+            241676998035659005696365663480311179574
         ],
         "locale": {
             "default": {
-                "name": "kilogram metre squared per second squared",
-                "symbol": "kg.m2.s-2"
+                "name": "",
+                "symbol": "kg.s-3"
             }
         },
         "system": {
@@ -92,22 +91,323 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, 2, -2, 0, 0, 0, 0]",
+            "dimensions": "[1,0,-3,0,0,0,0]",
             "systematic": 1
         },
         "tags": [
-            "si_systematic_for_special"
+            "derived",
+            "si_systematic_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "s-_kg.m2.s-3",
-            20608495247943734382135871803409918502
+            "si_kg.m2.s-2.K-1",
+            231287676652618148235844892282483780923
         ],
         "locale": {
             "default": {
-                "name": "kilogram metre squared per second cubed",
+                "name": "",
+                "symbol": "kg.m2.s-2.K-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1,2,-2,0,-1,0,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_m2.s-2.K-1",
+            66618679048955176866052657724979637550
+        ],
+        "locale": {
+            "default": {
+                "name": "",
+                "symbol": "m2.s-2.K-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0,2,-2,0,-1,0,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m.s-3.K-1",
+            104442002641892182901050563882604176970
+        ],
+        "locale": {
+            "default": {
+                "name": "",
+                "symbol": "kg.m.s-3.K-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1,1,-3,0,-1,0,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m.s-3.A-1",
+            211538887368336241932496364265190810083
+        ],
+        "locale": {
+            "default": {
+                "name": "",
+                "symbol": "kg.m.s-3.A-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1,1,-3,-1,0,0,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_A.s.m-3",
+            277361495871895162340788628950914825282
+        ],
+        "locale": {
+            "default": {
+                "name": "",
+                "symbol": "A.s.m-3"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0,-3,1,1,0,0,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_A.s.m-2",
+            70403085000780255565492646285904901179
+        ],
+        "locale": {
+            "default": {
+                "name": "",
+                "symbol": "A.s.m-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0,-2,1,1,0,0,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg-1.m-3.s4.A2",
+            253848307210927634607137725182291120786
+        ],
+        "locale": {
+            "default": {
+                "name": "",
+                "symbol": "kg-1.m-3.s4.A2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[-1,-3,4,2,0,0,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m.s-2.A-2",
+            142808038779962959668095770881534306054
+        ],
+        "locale": {
+            "default": {
+                "name": "",
+                "symbol": "kg.m.s-2.A-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1,1,-2,-2,0,0,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-2.mol-1",
+            4139346358079415911083128165701770861
+        ],
+        "locale": {
+            "default": {
+                "name": "",
+                "symbol": "kg.m2.s-2.mol-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1,2,-2,0,0,-1,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-2.mol-1.K-1",
+            24191742337017656222799175234430491195
+        ],
+        "locale": {
+            "default": {
+                "name": "",
+                "symbol": "kg.m2.s-2.mol-1.K-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1,2,-2,0,-1,-1,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_A.s.kg-1",
+            323471053731337704084538817936267415256
+        ],
+        "locale": {
+            "default": {
+                "name": "",
+                "symbol": "A.s.kg-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[-1,0,1,1,0,0,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_m2.s-3",
+            263168265811205855094149298729933620446
+        ],
+        "locale": {
+            "default": {
+                "name": "",
+                "symbol": "m2.s-3"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0,2,-3,0,0,0,0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_systematic_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m2.s-3",
+            138783071790252995131182640635882427388
+        ],
+        "locale": {
+            "default": {
+                "name": "",
                 "symbol": "kg.m2.s-3"
             }
         },
@@ -116,23 +416,24 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[1, 2, -3, 0, 0, 0, 0]",
+            "dimensions": "[1,2,-3,0,0,0,0]",
             "systematic": 1
         },
         "tags": [
-            "si_systematic_for_special"
+            "derived",
+            "si_systematic_derived"
         ]
     },
     {
         "__entry__": "Reference",
         "uid": [
-            "si_A.s",
-            283302541399235689666323745568467797393
+            "si_mol.s-1.m-3",
+            274045131311155246737780460688541480577
         ],
         "locale": {
             "default": {
-                "name": "ampere second",
-                "symbol": "A.s"
+                "name": "",
+                "symbol": "mol.s-1.m-1"
             }
         },
         "system": {
@@ -140,251 +441,12 @@
                 "si_system",
                 88156805987886421108624908988601219537
             ],
-            "dimensions": "[0, 0, 1, 1, 0, 0, 0]",
+            "dimensions": "[0,-3,-1,0,0,1,0]",
             "systematic": 1
         },
         "tags": [
-            "si_systematic_for_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_kg.m2.s-3.A-1",
-            106244046109467309848568258112891877139
-        ],
-        "locale": {
-            "default": {
-                "name": "kilogram metre squared per second cubed per ampere",
-                "symbol": "kg.m2.s-3.A-1"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[1, 2, -3, -1, 0, 0, 0]",
-            "systematic": 1
-        },
-        "tags": [
-            "si_systematic_for_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_kg-1,m-2.s4.A2",
-            134814508174849618107610628962028799628
-        ],
-        "locale": {
-            "default": {
-                "name": "per kilogram per metre squared second quadrupled ampere squared",
-                "symbol": "kg-1,m-2.s4.A2"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[-1, -2, 4, 2, 0, 0, 0]",
-            "systematic": 1
-        },
-        "tags": [
-            "si_systematic_for_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_kg.m2.s-3.A-2",
-            171578473862491388196612187226588461531
-        ],
-        "locale": {
-            "default": {
-                "name": "kilogram metre squared per second cubed per ampere squared",
-                "symbol": "kg.m2.s-3.A-2"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[1, 2, -3, -2, 0, 0, 0]",
-            "systematic": 1
-        },
-        "tags": [
-            "si_systematic_for_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_kg-1.m-2.s3.A2",
-            4579579696975120193473697195778175127
-        ],
-        "locale": {
-            "default": {
-                "name": "per kilogram per metre squared second cubed ampere squared",
-                "symbol": "kg-1.m-2.s3.A2"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[-1, -2, 3, 2, 0, 0, 0]",
-            "systematic": 1
-        },
-        "tags": [
-            "si_systematic_for_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_kg.m2.s-2.A-1",
-            120753861936841495090145936718753092107
-        ],
-        "locale": {
-            "default": {
-                "name": "kilogram metre squared per second squared per ampere",
-                "symbol": "kg.m2.s-2.A-1"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[1, 2, -2, -1, 0, 0, 0]",
-            "systematic": 1
-        },
-        "tags": [
-            "si_systematic_for_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_kg.s-2.A-1",
-            195281169203572148079814223897622612124
-        ],
-        "locale": {
-            "default": {
-                "name": "kilogram per second squared per ampere",
-                "symbol": "kg.s-2.A-1"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[1, 0, -2, -1, 0, 0, 0]",
-            "systematic": 1
-        },
-        "tags": [
-            "si_systematic_for_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_kg.m2.s-2.A-2",
-            63645404309296881020712034930539290090
-        ],
-        "locale": {
-            "default": {
-                "name": "kilogram metre squared per second squared per ampere squared",
-                "symbol": "kg.m2.s-2.A-2"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[1, 2, -2, -2, 0, 0, 0]",
-            "systematic": 1
-        },
-        "tags": [
-            "si_systematic_for_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_cd.m-2",
-            190854967573003511214075922116323989609
-        ],
-        "locale": {
-            "default": {
-                "name": "candela per metre squared ",
-                "symbol": "cd.m-2"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[0, -2, 0, 0, 0, 0, 1]",
-            "systematic": 1
-        },
-        "tags": [
-            "si_systematic_for_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_m2.s-2",
-            43884249580662399686209013824067636999
-        ],
-        "locale": {
-            "default": {
-                "name": "metre squared per second squared",
-                "symbol": "m2.s-2"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[0, 2, -2, 0, 0, 0, 0]",
-            "systematic": 1
-        },
-        "tags": [
-            "si_systematic_for_special"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
-            "si_mol.s-1",
-            177768032996776331701140181644133084931
-        ],
-        "locale": {
-            "default": {
-                "name": "mole per second",
-                "symbol": "mol.s-1"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[0, 0, -1, 0, 0, 1, 0]",
-            "systematic": 1
-        },
-        "tags": [
-            "si_systematic_for_special"
+            "derived",
+            "si_systematic_derived"
         ]
     }
 ]

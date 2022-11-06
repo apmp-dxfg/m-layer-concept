@@ -27,6 +27,31 @@
     {
         "__entry__": "Reference",
         "uid": [
+            "si_m3",
+            137831144605415188177503541296507331930
+        ],
+        "locale": {
+            "default": {
+                "name": "metre cubed",
+                "symbol": "m3"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 3, 0, 0, 0, 0, 0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
             "si_m.s-1",
             209336055680499528994573882116031757760
         ],
@@ -67,6 +92,181 @@
                 88156805987886421108624908988601219537
             ],
             "dimensions": "[0, 1, -2, 0, 0, 0, 0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_m-1",
+            276726793797424878828710191985121127007
+        ],
+        "locale": {
+            "default": {
+                "name": "per metre",
+                "symbol": "m-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, -1, 0, 0, 0, 0, 0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m-3",
+            131704910938735585222854533170347750577
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram per metre cubed",
+                "symbol": "kg.m-3"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, -3, 0, 0, 0, 0, 0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_kg.m-2",
+            240447186901980135053581985072361039658
+        ],
+        "locale": {
+            "default": {
+                "name": "kilogram per metre squared",
+                "symbol": "kg.m-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[1, -2, 0, 0, 0, 0, 0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_m3.kg-1",
+            267258693001462483340502243069519748894
+        ],
+        "locale": {
+            "default": {
+                "name": "metre cubed per kilogram",
+                "symbol": "kg.m-3"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[-1, 3, 0, 0, 0, 0, 0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_A.m-2",
+            92419680895778368343478274002591728906
+        ],
+        "locale": {
+            "default": {
+                "name": "ampere per metre squared",
+                "symbol": "A.m-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, -2, 0, 1, 0, 0, 0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_A.m-1",
+            186871442125536916218370571816210175231
+        ],
+        "locale": {
+            "default": {
+                "name": "ampere per metre",
+                "symbol": "A.m-1"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, -1, 0, 1, 0, 0, 0]",
+            "systematic": 1
+        },
+        "tags": [
+            "derived",
+            "si_derived"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_mol.m-3",
+            170616886316140391877295133145425822600
+        ],
+        "locale": {
+            "default": {
+                "name": "mole per metre cubed",
+                "symbol": "A.m-2"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, -3, 0, 0, 0, 1, 0]",
             "systematic": 1
         },
         "tags": [
