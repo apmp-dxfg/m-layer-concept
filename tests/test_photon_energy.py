@@ -5,7 +5,7 @@ from m_layer import *
 
 ml_photon_energy = Aspect( ('ml_photon_energy', 291306321925738991196807372973812640971) )
 
-ml_si_joule_ratio = Scale( ('ml_si_joule_ratio', 165050666678496469850612022016789737781) )
+ml_si_joule_ratio = Scale( ('ml_si_J_ratio', 165050666678496469850612022016789737781) )
 ml_electronvolt_ratio = Scale( ('ml_electronvolt_ratio', 121864523473489992307630707008460819401) )
 ml_si_terahertz_ratio = Scale( ('ml_si_THz_ratio', 271382954339420591832277422907953823861) )
 ml_si_per_centimetre_ratio = Scale( ('ml_si_cm-1_ratio', 333995508470114516586033303775415043902) )

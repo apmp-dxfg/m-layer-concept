@@ -221,9 +221,6 @@ class TestInit(unittest.TestCase):
                         msg = "file {},\nthe name in [{},{}] is already used for\n{}".format( 
                             f_i,name,UUID,name_mapping[name]
                         )
-                        # msg = "{} is used for {}".format(
-                            # name,name_mapping[name]
-                        # )
                         self.fail(msg)
                     else:
                         name_mapping[name] = (UUID, f_i)
