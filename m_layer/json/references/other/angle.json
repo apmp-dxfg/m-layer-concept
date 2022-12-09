@@ -19,5 +19,61 @@
             "code": "deg",
             "description": "degree - plane angle"
         }
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "imp_degree_bound_360",
+            225268637992220606713907952899704335717
+        ],
+        "locale": {
+            "default": {
+                "name": "degree",
+                "symbol": "deg"
+            }
+        },
+        "range": ["0","360"]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "imp_degree_bound_180",
+            171618074131800038201830023169101715816
+        ],
+        "locale": {
+            "default": {
+                "name": "degree",
+                "symbol": "deg"
+            }
+        },
+        "range": ["-180","180"]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_rad_bound_2pi",
+            100427803738551480581424520205086175798
+        ],
+        "locale": {
+            "default": {
+                "name": "radian",
+                "symbol": "rad"
+            }
+        },
+        "range": ["0","2*pi"]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_rad_bound_pi",
+            211872404329261487890979049128182375351
+        ],
+        "locale": {
+            "default": {
+                "name": "radian",
+                "symbol": "rad"
+            }
+        },
+        "range": ["-pi","+pi"]
     }
 ]
