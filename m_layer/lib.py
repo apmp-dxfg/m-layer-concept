@@ -914,6 +914,10 @@ class Scale(object):
         
     def __str__(self):
         return str(self._reference)
+        # return "[{!s}|{!s}]".format(
+            # self._reference,
+            # self.scale_type
+        # )
         
     def __repr__(self):
         return "Scale( {!s} )".format( self.uid )

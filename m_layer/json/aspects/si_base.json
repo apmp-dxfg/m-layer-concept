@@ -82,22 +82,6 @@
     {
         "__entry__": "Aspect",
         "uid": [
-            "ml_temperature_difference",
-            212368324110263031011700652725345220325
-        ],
-        "locale": {
-            "default": {
-                "name": "temperature difference",
-                "symbol": "dT"
-            }
-        },
-        "tags": [
-            "si_base"
-        ]
-    },
-    {
-        "__entry__": "Aspect",
-        "uid": [
             "ml_amount_of_substance",
             184187687006002221991950252819085446201
         ],

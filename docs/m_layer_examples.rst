@@ -42,33 +42,32 @@ We can express a temperature and convert between expressions in Fahrenheit and C
     22.22222222222222 degree C
     Expression(22.22222222222222,degree C)
 
-We can also convert to kelvin (this scale type change is a promotion from interval to ratio, which is legitimate) ::
+We can also convert to kelvin (this is a legitimate scale type promotion from interval to ratio) ::
 
     >>> t_K = t_C.convert(kelvin)
     >>> display(t_K)
     295.3722222222222 K
     Expression(295.3722222222222,K)
     
-Note, these operations did not involve use of an M-layer aspect yet. However, the M-layer will not allow conversion from kelvin to Celsius, unless the aspect is known to be temperature ::
+Note, these operations do not involve the M-layer aspect yet. Conversion in the opposite sense, from kelvin to Celsius, is not allowed because the change of scale type involves a change of invariant properties ::
 
     >>> t_K.convert(celsius_interval)
     Traceback (most recent call last):
     ...
     RuntimeError: cannot convert K to degree C
 
-This fails because the initial scale (`kelvin`) is a ratio scale and the target scale (`celsius_interval`) is an interval scale. As a general rule, conversion from a ratio scale to an interval scale may impact on the invariant properties of data. In this case, the data expressed in kelvin could be temperature or temperature difference, which is important because different conversion rules apply.
+In this case, different conversion rules apply depending on whether the data expressed in kelvin is a temperature or a temperature difference. The conversion fails because the initial scale (`kelvin`) is a ratio scale and the target scale (`celsius_interval`) is an interval scale. As a general rule, conversion from a ratio scale to an interval scale reduces the invariant properties of data. 
 
-There are several ways to deal with this situation. Given the object ``t_K``, above, we can coerce the expression to accept an aspect, after which a second cast is needed to change the type of scale ::
+A cast is needed to change the type of scale, which also requires that the aspect be specified  ::
 
     >>> T = Aspect( ('ml_thermodynamic_temperature', 227327310217856015944698060802418784871) )
-
-    >>> t_K = t_K.cast(kelvin,T)
     >>> t_C = t_K.cast(celsius_interval,T)  
     >>> display(t_C)
     22.22222222222223 degree C
     Expression(22.22222222222223,degree C,thermodynamic temperature)
 
-Alternatively, the aspect could be specified in the initial expression ::
+Alternatively, the aspect could have been specified in the initial expression. 
+The aspect is retained in any related expression obtained by conversion ::
 
     >>> t_F = expr(72,fahrenheit,T)
     >>> t_C = t_F.convert(celsius_interval)
@@ -76,8 +75,7 @@ Alternatively, the aspect could be specified in the initial expression ::
     >>> display( t_K.cast(celsius_interval) )
     22.22222222222223 degree C
     Expression(22.22222222222223,degree C,thermodynamic temperature)
-    
-Once an aspect is specified, it is retained in any related expression obtained by conversion. 
+
 
 Pairing scales with aspects provides a more complete and safer way of expressing data. So, the M-layer class :class:`~lib.ScaleAspect` is provided for this purpose.
 
@@ -98,7 +96,7 @@ Here, we might have proceeded as follows ::
 Temperature difference  
 ----------------------
 
-Here, we see that a temperature difference can be expressed in degrees Celsius (without specifying an aspect) and converted to kelvin ::
+A temperature difference can be expressed in degrees Celsius (without specifying an aspect) and converted to kelvin ::
 
     >>> celsius_ratio = Scale( ('ml_si_Cel_ratio', 26419982651148365554713345789323816873) )
 
@@ -118,32 +116,21 @@ However, conversion to Fahrenheit is not possible, ::
     ...
     RuntimeError: cannot convert degree C to degree F
     
-Nor is it possible to convert to Celsius temperature ::
+Nor is it possible to change the type of scale ::
 
     >>> td_C.convert(celsius_interval)
     Traceback (most recent call last):
     ...
     RuntimeError: cannot convert degree C to degree C
 
-These restrictions arise because the M-layer has not defined conversion operations between the different scales. Aspect was not used to make the distinction in this case. As shown above, an expression in terms of the kelvin scale (a ratio scale) cannot be converted to an expression in terms of the scale for Celsius temperature (an interval scale), without explicit coercion (casting). 
+These restrictions arise because the M-layer does not define corresponding conversions and because conversion from a ratio scale to an interval scale reduces the invariant properties of data. The aspect temperature does not play a role here ::
 
-The representation can be made clearer by including the temperature difference aspect.  ::
 
-    >>> dT = Aspect( ('ml_temperature_difference', 212368324110263031011700652725345220325) )
-    >>> celsius_temperature_difference = ScaleAspect( celsius_ratio, dT )
-    >>> kelvin_temperature_difference = ScaleAspect( kelvin, dT )
-
-allowing the temperature difference to be expressed clearly and converted to kelvin again. ::
-
-    >>> td_C = expr(10,celsius_temperature_difference)
-    >>> display(td_C)
-    10 degree C
-    Expression(10,degree C,temperature difference)
-
-    >>> display( td_C.convert(kelvin_temperature_difference) )
-    10 K
-    Expression(10,K,temperature difference)
-    
+    >>> td_C = expr(10,celsius_ratio,T)
+    >>> td_C.convert(celsius_interval)
+    Traceback (most recent call last):
+    ...
+    RuntimeError: cannot convert (degree C, thermodynamic temperature) to (degree C, thermodynamic temperature)
   
 Plane angle
 ===========
