@@ -402,31 +402,6 @@
     {
         "__entry__": "Reference",
         "uid": [
-            "si_kg.m2.s-3",
-            138783071790252995131182640635882427388
-        ],
-        "locale": {
-            "default": {
-                "name": "",
-                "symbol": "kg.m2.s-3"
-            }
-        },
-        "system": {
-            "uid": [
-                "si_system",
-                88156805987886421108624908988601219537
-            ],
-            "dimensions": "[1,2,-3,0,0,0,0]",
-            "systematic": 1
-        },
-        "tags": [
-            "derived",
-            "si_systematic_derived"
-        ]
-    },
-    {
-        "__entry__": "Reference",
-        "uid": [
             "si_mol.s-1.m-3",
             274045131311155246737780460688541480577
         ],
