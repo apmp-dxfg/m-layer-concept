@@ -5,6 +5,7 @@
             "si_kg",
             188151331508313165897603768130808181784
         ],
+        "zero" : null,
         "locale": {
             "default": {
                 "name": "kilogram",
@@ -33,6 +34,7 @@
             "si_m",
             61268972265076316018593147152102406832
         ],
+        "zero" : null,
         "locale": {
             "default": {
                 "name": "metre",
@@ -61,6 +63,7 @@
             "si_s",
             110730041758233939215703442037761569190
         ],
+        "zero" : null,
         "locale": {
             "default": {
                 "name": "second",
@@ -89,6 +92,7 @@
             "si_A",
             264081801568151063132838497538090031099
         ],
+        "zero" : null,
         "locale": {
             "default": {
                 "name": "ampere",
@@ -117,6 +121,36 @@
             "si_K",
             25703533220788919988679332108037098600
         ],
+        "zero" : null,
+        "locale": {
+            "default": {
+                "name": "kelvin",
+                "symbol": "K"
+            }
+        },
+        "system": {
+            "uid": [
+                "si_system",
+                88156805987886421108624908988601219537
+            ],
+            "dimensions": "[0, 0, 0, 0, 1, 0, 0]",
+            "systematic": 1
+        },
+        "UCUM": {
+            "code": "K",
+            "description": "degree Kelvin"
+        },
+        "tags": [
+            "si_base"
+        ]
+    },
+    {
+        "__entry__": "Reference",
+        "uid": [
+            "si_K_z",
+            62937600630257607363114158259173229639
+        ],
+        "zero" : "thermodynamic absolute zero",
         "locale": {
             "default": {
                 "name": "kelvin",
@@ -145,6 +179,7 @@
             "si_mol",
             96713855510406467826626480289106173630
         ],
+        "zero" : null,
         "locale": {
             "default": {
                 "name": "mole",
@@ -173,6 +208,7 @@
             "si_cd",
             107700549721211215242458620140782394628
         ],
+        "zero" : null,
         "locale": {
             "default": {
                 "name": "candela",
