@@ -7,22 +7,56 @@
                 302952256288207449238881076502466548054
             ],
             [
-                "ml_no_aspect",
-                295504637700214937127120941173285352815
+                "ml_thermodynamic_temperature",
+                227327310217856015944698060802418784871
             ]
         ],
         "dst": [
             [
-                "ml_si_K_ratio",
-                302952256288207449238881076502466548054
+                "ml_si_Cel_interval",
+                245795086332095731716589481707012001072
             ],
             [
                 "ml_thermodynamic_temperature",
                 227327310217856015944698060802418784871
             ]
         ],
-        "function": "lambda x: x",
-        "parameters": {},
+        "function": "lambda x: ml_math.interval_convert(x,a,b)",
+        "parameters": {
+            "a": "1",
+            "b": "-273.15"
+        },
+        "tags": [
+            "si_temperature"
+        ]
+    },
+    {
+        "__entry__": "Cast",
+        "src": [
+            [
+                "ml_si_K_ratio_z",
+                275392817634043449043764890579233469585
+            ],
+            [
+                "ml_thermodynamic_temperature",
+                227327310217856015944698060802418784871
+            ]
+        ],
+        "dst": [
+            [
+                "ml_si_Cel_interval",
+                245795086332095731716589481707012001072
+            ],
+            [
+                "ml_thermodynamic_temperature",
+                227327310217856015944698060802418784871
+            ]
+        ],
+        "function": "lambda x: ml_math.interval_convert(x,a,b)",
+        "parameters": {
+            "a": "1",
+            "b": "-273.15"
+        },
         "tags": [
             "si_temperature"
         ]
@@ -62,8 +96,8 @@
         "__entry__": "Cast",
         "src": [
             [
-                "ml_si_K_ratio_z",
-                275392817634043449043764890579233469585
+                "ml_si_Cel_interval",
+                245795086332095731716589481707012001072
             ],
             [
                 "ml_thermodynamic_temperature",
@@ -72,8 +106,8 @@
         ],
         "dst": [
             [
-                "ml_si_Cel_interval",
-                245795086332095731716589481707012001072
+                "ml_si_K_ratio_z",
+                275392817634043449043764890579233469585
             ],
             [
                 "ml_thermodynamic_temperature",
@@ -83,7 +117,7 @@
         "function": "lambda x: ml_math.interval_convert(x,a,b)",
         "parameters": {
             "a": "1",
-            "b": "-273.15"
+            "b": "+273.15"
         },
         "tags": [
             "si_temperature"

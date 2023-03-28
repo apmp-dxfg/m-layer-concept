@@ -244,41 +244,6 @@
     {
         "__entry__": "Conversion",
         "src": [
-            "ml_si_Cel_ratio",
-            26419982651148365554713345789323816873
-        ],
-        "dst": [
-            "ml_si_K_ratio",
-            302952256288207449238881076502466548054
-        ],
-        "function": "lambda x: x",
-        "parameters": {},
-        "tags": [
-            "si_special"
-        ]
-    },
-    {
-        "__entry__": "Conversion",
-        "src": [
-            "ml_si_Cel_interval",
-            245795086332095731716589481707012001072
-        ],
-        "dst": [
-            "ml_si_K_ratio_z",
-            275392817634043449043764890579233469585
-        ],
-        "function": "lambda x: ml_math.interval_convert(x,a,b)",
-        "parameters": {
-            "a": "1",
-            "b": "+273.15"
-        },
-        "tags": [
-            "si_special"
-        ]
-    },
-    {
-        "__entry__": "Conversion",
-        "src": [
             "ml_si_lm_ratio",
             136780883433708489065848897588637818235
         ],

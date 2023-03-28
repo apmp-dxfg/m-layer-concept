@@ -382,26 +382,6 @@
     {
         "__entry__": "ScalesForAspect",
         "aspect": [
-            "ml_thermodynamic_temperature",
-            227327310217856015944698060802418784871
-        ],
-        "src": [
-            "ml_si_K_ratio",
-            302952256288207449238881076502466548054
-        ],
-        "dst": [
-            "ml_si_Cel_ratio",
-            26419982651148365554713345789323816873
-        ],
-        "function": "lambda x: x",
-        "parameters": {},
-        "tags": [
-            "si_special"
-        ]
-    },
-    {
-        "__entry__": "ScalesForAspect",
-        "aspect": [
             "ml_luminous_flux",
             184374416391180047623543658952093985674
         ],
