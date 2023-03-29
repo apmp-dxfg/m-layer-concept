@@ -285,25 +285,36 @@ class Context(object):
         aspect-specific conversion can be used.
             
         """ 
-        dst_pair = dst_scale_uid, dst_aspect_uid
         src_pair = src_scale_uid, src_aspect_uid    
+        dst_pair = dst_scale_uid, dst_aspect_uid
         
+        # First, is there an exact match?
         try:
             return self.casting_reg[ src_pair,dst_pair ]   
         except KeyError:
             pass 
-            
+ 
+        # Is there a match after replacing the source aspect?
         if src_aspect_uid == self.no_aspect_uid:
+            try:
+                return self.casting_reg[ 
+                    (src_scale_uid, dst_aspect_uid),
+                    dst_pair 
+                ]   
+            except KeyError:
+                pass 
+ 
+        # No registered casting found, but conversions may apply
+        if src_aspect_uid == self.no_aspect_uid:
+            
             if src_scale_uid == dst_scale_uid:
                 # Accept the dst aspect without question
                 # This is the same as defining a ScaleAspect using
                 # a Scale and an aspect.
                 return lambda x: x 
                          
-        # A conversion may be possible for 
-        # a common aspect; 
-        # casting may promote an unspecified 
-        # aspect to the final aspect.
+        # A conversion may be possible for a common aspect.
+        # Or casting may promote an unspecified aspect to the final aspect.
         if src_aspect_uid == self.no_aspect_uid or src_aspect_uid == dst_aspect_uid:   
         
             # Aspect-specific conversions

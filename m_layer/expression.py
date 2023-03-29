@@ -490,9 +490,9 @@ class Expression(object):
 
     # ---------------------------------------------------------------------------
     def _systematic_src_casting(self,dst_scale_aspect):
-    
         if isinstance(self.scale_aspect,CompoundScaleAspect):
-            src_aspect = no_aspect
+            # Unknown aspect => try to match to dst aspect
+            src_aspect = dst_scale_aspect.aspect  
             src_systematic = self.scale_aspect.systematic.simplify 
         else:
             src_aspect = self.scale_aspect.aspect
@@ -534,7 +534,8 @@ class Expression(object):
     def _systematic_src_dst_casting(self,dst_scale_aspect):
 
         if isinstance(self.scale_aspect,CompoundScaleAspect):
-            src_aspect = no_aspect
+            # Unknown aspect => try to match to dst aspect
+            src_aspect = dst_scale_aspect.aspect  
             src_systematic = self.scale_aspect.systematic.simplify 
         else:
             src_aspect = self.scale_aspect.aspect
