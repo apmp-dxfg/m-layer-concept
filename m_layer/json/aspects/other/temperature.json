@@ -1,0 +1,67 @@
+[
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_thermodynamic_temperature.absolute",
+            83157989672001194147659865454644354252
+        ],
+        "locale": {
+            "default": {
+                "name": "thermodynamic temperature",
+                "symbol": "T"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_thermodynamic_temperature.difference",
+            20537273019634807833918760344401377273
+        ],
+        "locale": {
+            "default": {
+                "name": "thermodynamic temperature difference",
+                "symbol": "dT"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_ITS-90",
+            131142853230747219458157073866266157165
+        ],
+        "locale": {
+            "default": {
+                "name": "ITS-90 temperature",
+                "symbol": "T_90"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_ITS-90.absolute",
+            258268306673109972702959499895045930918
+        ],
+        "locale": {
+            "default": {
+                "name": "ITS-90 temperature",
+                "symbol": "T_90"
+            }
+        }
+    },
+    {
+        "__entry__": "Aspect",
+        "uid": [
+            "ml_ITS-90.difference",
+            147308881722280230986099018119185472421
+        ],
+        "locale": {
+            "default": {
+                "name": "ITS-90 temperature difference",
+                "symbol": "dT_90"
+            }
+        }
+    }
+]

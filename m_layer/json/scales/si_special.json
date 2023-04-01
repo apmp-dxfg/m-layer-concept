@@ -227,7 +227,7 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_Cel_ratio",
+            "ml_si_celsius_ratio",
             26419982651148365554713345789323816873
         ],
         "reference": [
@@ -242,7 +242,7 @@
     {
         "__entry__": "Scale",
         "uid": [
-            "ml_si_Cel_interval",
+            "ml_si_celsius_interval",
             245795086332095731716589481707012001072
         ],
         "reference": [

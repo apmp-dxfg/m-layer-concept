@@ -7,28 +7,25 @@
                 302952256288207449238881076502466548054
             ],
             [
-                "ml_thermodynamic_temperature",
-                227327310217856015944698060802418784871
+                "ml_no_aspect",
+                295504637700214937127120941173285352815
             ]
         ],
         "dst": [
             [
-                "ml_si_Cel_interval",
+                "ml_si_celsius_interval",
                 245795086332095731716589481707012001072
             ],
             [
-                "ml_thermodynamic_temperature",
-                227327310217856015944698060802418784871
+                "ml_no_aspect",
+                295504637700214937127120941173285352815
             ]
         ],
         "function": "lambda x: ml_math.interval_convert(x,a,b)",
         "parameters": {
             "a": "1",
             "b": "-273.15"
-        },
-        "tags": [
-            "si_temperature"
-        ]
+        }
     },
     {
         "__entry__": "Cast",
@@ -44,162 +41,7 @@
         ],
         "dst": [
             [
-                "ml_si_Cel_interval",
-                245795086332095731716589481707012001072
-            ],
-            [
-                "ml_no_aspect",
-                295504637700214937127120941173285352815
-            ]
-        ],
-        "function": "lambda x: ml_math.interval_convert(x,a,b)",
-        "parameters": {
-            "a": "1",
-            "b": "-273.15"
-        },
-        "tags": [
-            "si_temperature"
-        ]
-    },
-    {
-        "__entry__": "Cast",
-        "src": [
-            [
-                "ml_si_K_ratio_z",
-                275392817634043449043764890579233469585
-            ],
-            [
-                "ml_thermodynamic_temperature",
-                227327310217856015944698060802418784871
-            ]
-        ],
-        "dst": [
-            [
-                "ml_si_Cel_interval",
-                245795086332095731716589481707012001072
-            ],
-            [
-                "ml_thermodynamic_temperature",
-                227327310217856015944698060802418784871
-            ]
-        ],
-        "function": "lambda x: ml_math.interval_convert(x,a,b)",
-        "parameters": {
-            "a": "1",
-            "b": "-273.15"
-        },
-        "tags": [
-            "si_temperature"
-        ]
-    },
-    {
-        "__entry__": "Cast",
-        "src": [
-            [
-                "ml_si_K_ratio_z",
-                275392817634043449043764890579233469585
-            ],
-            [
-                "ml_no_aspect",
-                295504637700214937127120941173285352815
-            ]
-        ],
-        "dst": [
-            [
-                "ml_si_Cel_interval",
-                245795086332095731716589481707012001072
-            ],
-            [
-                "ml_no_aspect",
-                295504637700214937127120941173285352815
-            ]
-        ],
-        "function": "lambda x: ml_math.interval_convert(x,a,b)",
-        "parameters": {
-            "a": "1",
-            "b": "-273.15"
-        },
-        "tags": [
-            "si_temperature"
-        ]
-    },
-    {
-        "__entry__": "Cast",
-        "src": [
-            [
-                "ml_si_Cel_interval",
-                245795086332095731716589481707012001072
-            ],
-            [
-                "ml_no_aspect",
-                295504637700214937127120941173285352815
-            ]
-        ],
-        "dst": [
-            [
-                "ml_si_K_ratio",
-                302952256288207449238881076502466548054
-            ],
-            [
-                "ml_no_aspect",
-                295504637700214937127120941173285352815
-            ]
-        ],
-        "function": "lambda x: ml_math.interval_convert(x,a,b)",
-        "parameters": {
-            "a": "1",
-            "b": "+273.15"
-        },
-        "tags": [
-            "si_temperature"
-        ]
-    },
-    {
-        "__entry__": "Cast",
-        "src": [
-            [
-                "ml_si_Cel_interval",
-                245795086332095731716589481707012001072
-            ],
-            [
-                "ml_thermodynamic_temperature",
-                227327310217856015944698060802418784871
-            ]
-        ],
-        "dst": [
-            [
-                "ml_si_K_ratio_z",
-                275392817634043449043764890579233469585
-            ],
-            [
-                "ml_thermodynamic_temperature",
-                227327310217856015944698060802418784871
-            ]
-        ],
-        "function": "lambda x: ml_math.interval_convert(x,a,b)",
-        "parameters": {
-            "a": "1",
-            "b": "+273.15"
-        },
-        "tags": [
-            "si_temperature"
-        ]
-    },
-    {
-        "__entry__": "Cast",
-        "src": [
-            [
-                "ml_si_K_ratio",
-                302952256288207449238881076502466548054
-            ],
-            [
-                "ml_no_aspect",
-                295504637700214937127120941173285352815
-            ]
-        ],
-        "dst": [
-            [
-                "ml_si_Cel_ratio",
+                "ml_si_celsius_ratio",
                 26419982651148365554713345789323816873
             ],
             [
@@ -208,9 +50,140 @@
             ]
         ],
         "function": "lambda x: x",
-        "parameters": {},
-        "tags": [
-            "si_temperature"
-        ]
+        "parameters": {}
+    },
+    {
+        "__entry__": "Cast",
+        "src": [
+            [
+                "ml_si_K_ratio",
+                302952256288207449238881076502466548054
+            ],
+            [
+                "ml_thermodynamic_temperature",
+                227327310217856015944698060802418784871
+            ]
+        ],
+        "dst": [
+            [
+                "ml_si_celsius_interval",
+                245795086332095731716589481707012001072
+            ],
+            [
+                "ml_thermodynamic_temperature",
+                227327310217856015944698060802418784871
+            ]
+        ],
+        "function": "lambda x: ml_math.interval_convert(x,a,b)",
+        "parameters": {
+            "a": "1",
+            "b": "-273.15"
+        }
+    },
+    {
+        "__entry__": "Cast",
+        "src": [
+            [
+                "ml_si_K_ratio",
+                302952256288207449238881076502466548054
+            ],
+            [
+                "ml_thermodynamic_temperature",
+                227327310217856015944698060802418784871
+            ]
+        ],
+        "dst": [
+            [
+                "ml_si_celsius_ratio",
+                26419982651148365554713345789323816873
+            ],
+            [
+                "ml_thermodynamic_temperature",
+                227327310217856015944698060802418784871
+            ]
+        ],
+        "function": "lambda x: x",
+        "parameters": {}
+    },
+    {
+        "__entry__": "Cast",
+        "src": [
+            [
+                "ml_si_K_ratio",
+                302952256288207449238881076502466548054
+            ],
+            [
+                "ml_thermodynamic_temperature",
+                227327310217856015944698060802418784871
+            ]
+        ],
+        "dst": [
+            [
+                "ml_si_celsius_interval",
+                245795086332095731716589481707012001072
+            ],
+            [
+                "ml_thermodynamic_temperature.absolute",
+                83157989672001194147659865454644354252
+            ]
+        ],
+        "function": "lambda x: ml_math.interval_convert(x,a,b)",
+        "parameters": {
+            "a": "1",
+            "b": "-273.15"
+        }
+    },    
+    {
+        "__entry__": "Cast",
+        "src": [
+            [
+                "ml_si_K_ratio",
+                302952256288207449238881076502466548054
+            ],
+            [
+                "ml_thermodynamic_temperature",
+                227327310217856015944698060802418784871
+            ]
+        ],
+        "dst": [
+            [
+                "ml_si_celsius_ratio",
+                26419982651148365554713345789323816873
+            ],
+            [
+                "ml_thermodynamic_temperature.difference",
+                20537273019634807833918760344401377273
+            ]
+        ],
+        "function": "lambda x: x",
+        "parameters": {}
+    },
+    {
+        "__entry__": "Cast",
+        "src": [
+            [
+                "ml_si_K_ratio",
+                302952256288207449238881076502466548054
+            ],
+            [
+                "ml_thermodynamic_temperature.absolute",
+                83157989672001194147659865454644354252
+            ]
+        ],
+        "dst": [
+            [
+                "ml_si_celsius_interval",
+                245795086332095731716589481707012001072
+            ],
+            [
+                "ml_thermodynamic_temperature.absolute",
+                83157989672001194147659865454644354252
+            ]
+        ],
+        "function": "lambda x: ml_math.interval_convert(x,a,b)",
+        "parameters": {
+            "a": "1",
+            "b": "-273.15"
+        }
     }
 ]

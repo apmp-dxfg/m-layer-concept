@@ -7,15 +7,9 @@ Examples
 .. contents::
    :local:
 
-Temperature
+Preliminary
 ===========
-
-Absolute (thermodynamic) temperature and temperature differences can be expressed in the SI using kelvin or in degrees Celsius. However, unit conversion depends on which quantity is expressed. There are other familiar scales for expressing temperature, like the degree Fahrenheit.
-
-
-Temperature
------------
-First, we set up an environment to display the example data and we create scale objects to express temperature in degrees Celsius and degrees Fahrenheit  ::
+The examples below all use a simple function to display data on the console ::
 
     >>> from m_layer import *
     
@@ -24,78 +18,111 @@ First, we set up an environment to display the example data and we create scale 
     ...    print(repr(xp)) # Representation format
     ...    print()
 
-    >>> celsius = Scale( ('ml_si_Cel_interval', 245795086332095731716589481707012001072) )
-    >>> fahrenheit = Scale( ('ml_imp_fahrenheit_interval', 22817745368296240233220712518826840767) )
-    
-We can express a temperature and convert between expressions in Fahrenheit and Celsius ::
 
-    >>> t_F = expr(72,fahrenheit)
-    >>> display(t_F)
-    72 degree F
-    Expression(72,degree F)
+Temperature
+===========
+
+Units for temperature are quite different from other SI units. 
+Absolute (thermodynamic) temperature and temperature differences can be expressed with the SI unit kelvin or in degrees Celsius. However, unit conversion between kelvin and degrees Celsius depends on the quantity that is expressed. 
+
+
+Temperature
+-----------
+
+We can express a temperature in degrees Celsius ::
+
+    >>> celsius = Scale( ('ml_si_celsius_interval', 245795086332095731716589481707012001072) )
     
-    >>> t_C = t_F.convert(celsius)
+    >>> t_C = expr(20,celsius)
     >>> display(t_C)
-    22.22222222222222 degree C
-    Expression(22.22222222222222,degree C)
-    
+    20 degree C
+    Expression(20,degree C)
+
 Conversion to kelvin is possible ::
 
     >>> kelvin = Scale( ('ml_si_K_ratio', 302952256288207449238881076502466548054) )
     >>> t_K = t_C.convert(kelvin)
-
-However, conversion from kelvin back to degrees Celsius is more complicated, because it depends on whether we are converting a temperature or a temperature difference. Nothing in the data can resolve this ambiguity, so a casting operation is required::
+    >>> display(t_K)
+    293.15 K
+    Expression(293.15,K)
+    
+However, conversion from kelvin back to degrees Celsius is more complicated. The form of that transformation depends on whether we are converting a temperature or a temperature difference, but nothing in the data can resolve this ambiguity. For this reason, so a casting operation is required ::
 
     >>> display( t_K.cast(celsius) )
-    22.22222222222223 degree C
-    Expression(22.22222222222223,degree C)
-    
-The M-layer also defines a special kelvin scale to express kelvin temperatures but not temperature differences ::
+    20.0 degree C
+    Expression(20.0,degree C)
+ 
+There is another M-layer scale for temperature in degrees Celsius, which is a ratio scale ::
 
-    >>> kelvin_z = Scale( ('ml_si_K_ratio_z', 275392817634043449043764890579233469585) )
+    >>> celsius_ratio = Scale( ('ml_si_celsius_ratio', 26419982651148365554713345789323816873) )
 
-Using this scale, casting to a temperature in degrees Celsius is possible (converting units from kelvin to degrees Celsius still requires casting, because there is a change of scale type). ::
+This is appropriate for temperature differences. For example, ::
 
-    >>> t_K_z = t_C.convert( kelvin_z ) 
-    >>> display( t_K_z.cast(celsius) )
-    22.22222222222223 degree C
-    Expression(22.22222222222223,degree C)
-    
-When data are expressed with this scale, casting to a temperature is not allowed ::
-    
-    >>> celsius_ratio = Scale( ('ml_si_Cel_ratio', 26419982651148365554713345789323816873) )
-    >>> t_K_z.cast(celsius_ratio)
+    >>> dt_C = expr(6,celsius_ratio)
+ 
+Conversion to kelvin is straightforward ::
+
+    >>> dt_K = dt_C.convert(kelvin)
+    >>> display(dt_K)
+    6 K
+    Expression(6,K)
+
+Because there are two different scales using degrees Celisus, conversion from kelvin back to Celsius requires casting. ::
+
+    >>> display( dt_K.cast(celsius_ratio) )
+    6 degree C
+    Expression(6,degree C)
+
+Aspects for temperature 
+-----------------------
+
+The kind of quantity associated with temperatures and with temperature differences; it is *temperature*. Absolute temperature and temperature difference are, however, different quantities.
+
+The M-layer defines an aspect for temperature in general = ::
+
+    >>> T = Aspect( ('ml_thermodynamic_temperature', 227327310217856015944698060802418784871) )
+
+but it also defines aspects for absolute temperature ::
+
+    >>> aT = Aspect( ("ml_thermodynamic_temperature.absolute", 83157989672001194147659865454644354252) )
+
+and for temperature difference ::
+
+    >>> dT = Aspect( ("ml_thermodynamic_temperature.difference", 20537273019634807833918760344401377273) )
+
+The more specialised aspects can deal with the problems of ambiguity mentioned above. 
+
+We can declare scales for the different cases::
+
+    >>> celsius_temperature = ScaleAspect(celsius,aT)
+    >>> celsius_temperature_difference = ScaleAspect(celsius_ratio,dT)
+
+A temperature can be expressed in degrees Celsius and converted to kelvin ::
+
+    >>> t_C = expr(20,celsius_temperature)
+    >>> display(t_C)
+    20 degree C
+    Expression(20,degree C,thermodynamic temperature)
+
+Conversion to kelvin is possible ::
+
+    >>> t_K = t_C.convert(kelvin)
+    >>> display(t_K)
+    293.15 K
+    Expression(293.15,K,thermodynamic temperature)
+
+Transformation back to degrees Celsius still requires a casting, but this is because the transformation is from a ratio scale to an interval scale ::
+
+    >>> display( t_K.cast(celsius_temperature) )
+    20.0 degree C
+    Expression(20.0,degree C,thermodynamic temperature)
+
+Note that defining the aspect specific to absolute temperature prevents data from being cast incorrectly to the Celsius ratio scale (which would be appropriate for temperature difference data) ::  
+
+    >>> t_K.cast(celsius_temperature_difference)
     Traceback (most recent call last):
     ...
-    RuntimeError: cannot cast K to degree C
-        
-Temperature difference  
-----------------------
-
-A temperature difference can be expressed in degrees Celsius and converted to kelvin ::
-
-    >>> td_C = expr(10,celsius_ratio)
-    >>> display(td_C)
-    10 degree C
-    Expression(10,degree C)
-
-    >>> display( td_C.convert(kelvin) )
-    10 K
-    Expression(10,K)
-
-However, conversion to Fahrenheit temperature is not possible (a scale for temperature difference in degrees Fahrenheit is required), ::
-
-    >>> td_C.convert(fahrenheit)
-    Traceback (most recent call last):
-    ...
-    RuntimeError: cannot convert degree C to degree F
-    
-Nor is it possible to convert to Celsius temperature ::
-
-    >>> td_C.convert(celsius)
-    Traceback (most recent call last):
-    ...
-    RuntimeError: cannot convert degree C to degree C
+    RuntimeError: cannot cast (K, thermodynamic temperature) to (degree C, thermodynamic temperature difference)
 
 Plane angle
 ===========
