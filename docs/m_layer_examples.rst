@@ -78,7 +78,7 @@ Aspects for temperature
 
 The kind of quantity associated with temperatures and with temperature differences; it is *temperature*. Absolute temperature and temperature difference are, however, different quantities.
 
-The M-layer defines an aspect for temperature in general = ::
+The M-layer defines an aspect for temperature in general ::
 
     >>> T = Aspect( ('ml_thermodynamic_temperature', 227327310217856015944698060802418784871) )
 
