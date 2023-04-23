@@ -167,7 +167,7 @@ class System(object):
     __slots__ = (
         '_uid',
         '_name',
-        '_basis'
+        '_base_units'
     )
 
     def __init__(self,uid):
@@ -176,15 +176,22 @@ class System(object):
         
         self._name = cxt.system_reg[uid]['name']
         
-        # The basis is a sequence of M-layer reference uids
-        basis = [ UID( tuple(s_i) ) for s_i in cxt.system_reg[uid]['basis'] ] 
-        names = [ cxt.reference_reg[ uid_i ]['locale']['default']['symbol'] 
-            for uid_i in basis
-        ]
+        # The basis is a sequence of M-layer scale-aspect pairs
+        base_scales = []
+        base_aspects = []   # Not used yet
+        for _i in cxt.system_reg[uid]['basis']:
+            base_scales.append( UID( tuple( _i[0]) ) )
+            base_aspects.append( UID( tuple( _i[1]) ) )
+
+        names = []
+        for uid_i in base_scales:
+            ref_i = UID( cxt.scale_reg[ uid_i ]['reference'] )
+            names.append( cxt.reference_reg[ ref_i ]['locale']['default']['symbol'] )
+
         # A namedtuple keeps the order of base units and allows 
         # the reference uids to be indexed or accessed by attribute  
         # using the reference symbol
-        self._basis = namedtuple(self._name,names)._make(basis)
+        self._base_units = namedtuple(self._name,names)._make(base_scales)
                     
     @property
     def uid(self):
@@ -311,8 +318,8 @@ class Reference(object):
             else:
                 raise RuntimeError("no unit system for {!r}".format(
                         UID( self._json_entry["uid"] )
-                    )
-                )
+                    ) 
+                ) 
                 
             return self._systematic
  
